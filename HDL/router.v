@@ -3,38 +3,69 @@
 //Organization: CAAD lab @ Boston University
 //Start date: Dec 9th 2015
 //
+//
+//the 256-bit data format will be like this
+//Outside the router 
+/*
+    *|255      |254---152|151-----144|143-----128|127--96|95--64|63--32|31--0|
+    *|valid bit|unused   |log  weight|table Index|type   |z     |y     |z    |
+
+    *
+
+    */
+//inside the router
+/*
+    *|255      |254---152|151-----144|143--136|135---128|127--96|95--64|63--32|31--0|
+    *|valid bit|unused   |log  weight|priority|exit port|type   |z     |y     |z    |
+
+    *
+
+    */
+
 
 module 
 #(
     parameter srcID=3'd0,
-    parameter DataLenInside=
-    parameter DataLenOutside=256
+    parameter PayloadLen=128,
+    parameter DataWidth=256,
+    parameter WeightPos=144,
+    parameter WeightWidth=8,
+    parameter IndexPos=128,
+    parameter IndexWidth=16,
+    parameter PriorityPos=136,
+    parameter PriorityWidth=8,
+    parameter ExitPos=128,
+    parameter ExitWidth=8
 )
 router(
 //input
-	clk, rst,
-	ClockwiseIn, 
-	CounterClockwiseIn,
-	inject,
-	inject_receive,
-	ClockwiseReceive,
-	CounterClockwiseReceive,
-	ClockwiseNextSlotAvail,
-	CounterClockwiseNextSlotAvail,
-	EjectSlotAvail,
+    input clk,
+    input rst,
+    input [DataWidth-1:0] ClockwiseIn,
+    input [DataWidth-1:0] CounterClockwiseIn,
+    input [DataWidth-1:0] inject, //data injected from other node or local
+    input inject_receive,//write signal at the inject port
+    input ClockwiseReceive,//write signal at the clockwise port
+    input CounterClockwiseReceive,//write signal at the CounterClockwise port
+    input ClockwiseNextSlotAvail,
+    input CounterClockwiseNextSlotAvail,
+    input EjectSlotAvail,
+
+
 //output
-	ClockwiseOut,
-	CounterClockwiseOut,
-	eject_send,
-	ClockwiseSend,
-	CounterClockwiseSend,
-	ClockwiseSlotAvail,
-	CounterClockwiseSlotAvail,
-	InjectSlotAvail,
-    ClockwiseUtil,`
-    CounterClockwiseUtil,
-    InjectUtil,
-	eject);
+    output [DataWidth-1:0] ClockwiseOut,
+    output [DataWidth-1:0] CounterClockwiseOut,
+    output [DataWidth-1:0] eject,
+    output eject_send,
+    output ClockwiseSend,
+    output CounterClockwiseSend,
+    output ClockwiseAvail,
+    output CounterClockwiseAvail,
+    output InjectSlotAvail,
+    output [7:0] CounterClockwiseUtil,
+    output [7:0] ClockwiseUtil,
+    output [7:0] InjectUtil
+);
 	
 	parameter srcID=3'd0;
 //	parameter DataLenInside=24;
