@@ -8,7 +8,7 @@
 //Outside the router 
 /*
     *|255      |254---152|151-----144|143-----128|127--96|95--64|63--32|31--0|
-    *|valid bit|unused   |log  weight|table Index|type   |z     |y     |z    |
+    *|valid bit|unused   |log  weight|table Index|type   |z     |y     |x    |
 
     *
 
@@ -16,11 +16,41 @@
 //inside the router
 /*
     *|255      |254---152|151-----144|143--136|135---128|127--96|95--64|63--32|31--0|
-    *|valid bit|unused   |log  weight|priority|exit port|type   |z     |y     |z    |
+    *|valid bit|unused   |log  weight|priority|exit port|type   |z     |y     |x    |
 
     *
 
     */
+//routing table entry format
+/*
+* 32 bits in total
+    * |packetType|dst       |table index|priority|
+    * |4   bits  |4     bits|16 bits    |8 bits  | 
+    * if the packet type is a singlecast packet, the dst field will be the exiting port on current node, the table index is the index on next node. 
+      if the packet type is a multicast packet, the dst field is a dont-care field. The table index is the corresponding entry on the multicast table, the down stream packet will inherent the priority field of the parent packet
+      if the packet type is a reduction packet, the dst field is a dont-care field. The table index is the corresponding entry on the reduction table, the up stream packet will have the same prioity as the largest one among the largest packet
+      The first bit of the packet type field is valid bit
+      1000 is single cast packet
+      1001 is the mutlicast packet
+      1010 is the reduction packet
+        
+    * /
+//multicast table entry format
+/*
+* at most 5 fan-out for 3D-torus network.
+  for each fanout, format is as below:
+  |packet type|dst  |table index|
+  |4 bits     |4bits|16 bits    | 
+* |1st packet| 2nd packet| 3rd packet| 4th packet| 5th packet| 120 bits in total
+*
+* */
+//reduction table entry format
+/*
+* at most fan-in for 3D-torus network.
+  for each fanin, format is as below:
+  |5-bit expect mask|5-bit arrival bookkeeping mask|packet Type|dst   |table index| weight accumulator| payload accumulator|
+  |5 bits           | 5 bits                       | 4 bits    |4 bits|16 bits    | 8 bits            | 128 bits           | 170 bits in total 
+* */
 
 
 module 
@@ -35,7 +65,16 @@ module
     parameter PriorityPos=136,
     parameter PriorityWidth=8,
     parameter ExitPos=128,
-    parameter ExitWidth=8
+    parameter ExitWidth=8,
+    parameter InterNodeFIFODepth=128,
+    parameter IntraNodeFIFODepth=1,
+    parameter RoutingTableWidth=32,
+    parameter RoutingTablesize=256,
+    parameter MulticastTableWidth=128,
+    parameter MulticastTablesize=256,
+    parameter ReductionTableWidth=170,
+    parameter ReductionTablesize=256,
+    parameter PcktTypeLen=4
 )
 router(
 //input
@@ -66,6 +105,11 @@ router(
     output [7:0] ClockwiseUtil,
     output [7:0] InjectUtil
 );
+
+    parameter SINGLECAST=1;
+    parameter MULTICAST=2;
+    parameter REDUCTION=3;
+
 	
 	parameter srcID=3'd0;
 //	parameter DataLenInside=24;
@@ -81,47 +125,26 @@ router(
 	parameter InterRingFIFODepth=1000;
 	parameter table_size=1024;
 	
-	input clk,rst;
-	input [DataLenInside-1:0] ClockwiseIn,CounterClockwiseIn;
-	input [DataLenOutside-1:0] inject;
-	input inject_receive;
-	input ClockwiseReceive;
-	input CounterClockwiseReceive;
-	input ClockwiseNextSlotAvail;
-	input CounterClockwiseNextSlotAvail;
-	input EjectSlotAvail;
-	
-	output [DataLenInside-1:0] ClockwiseOut,CounterClockwiseOut;
-	output [DataLenOutside-1:0] eject;
-	output eject_send;
-	output ClockwiseSend;
-	output CounterClockwiseSend;
-	output ClockwiseSlotAvail;
-	output CounterClockwiseSlotAvail;
-	output InjectSlotAvail;
-    output [31:0] ClockwiseUtil;
-    output [31:0] CounterClockwiseUtil;
-    output [31:0] InjectUtil;
 	//output fifo0_full;
 	//output fifo1_full;
 	
 	
 	
-	wire[DataLenInside-1:0] ejector0_in;
-	wire[DataLenInside-1:0] ejector0_out0;//out0 is the ejecting port
-	wire[DataLenInside-1:0] ejector0_out1;//out1 is the port that directs to the next router
+	wire[DataWidth-1:0] ejector0_in;
+	wire[DataWidth-1:0] ejector0_out0;//out0 is the ejecting port
+	wire[DataWidth-1:0] ejector0_out1;//out1 is the port that directs to the next router
 	//wire ejection0_match;
-	wire[DataLenInside-1:0] ejector1_in;
-	wire[DataLenInside-1:0] ejector1_out0;
-	wire[DataLenInside-1:0] ejector1_out1;
+	wire[DataWidth-1:0] ejector1_in;
+	wire[DataWidth-1:0] ejector1_out0;
+	wire[DataWidth-1:0] ejector1_out1;
 	//wire ejection1_match;
 	
-	wire[DataLenOutside-1:0] input_fifo_out;
+	wire[DataWidth-1:0] input_fifo_out;
 	
-	wire[DataLenInside-1:0] injector_in;
-	wire[IDLen-1:0] dstID;
-	reg[DataLenInside-1:0] injector_out0;//counterclockwise
-	reg[DataLenInside-1:0] injector_out1;//clockwise
+	reg[DataWidth-1:0] injector_in;
+	wire[2:0] dstID;
+	reg[DataWidth-1:0] injector_out0;//counterclockwise
+	reg[DataWidth-1:0] injector_out1;//clockwise
 	
 	wire fifo0_full;
 	wire fifo0_empty;
@@ -135,11 +158,9 @@ router(
 	
 	reg [1:0] inject_turn; //2 is for Counterclockwise, 3 is for Clockwise, 0 is no turn
 	reg eject_enable0;//the counterclockwise input is ejected
-	reg eject_enable1;//the clockwise input is ejected
+	reg eject_enable1;//the clockwise input is ejected	
 
-	
-	
-	
+    wire [RoutingTableWidth-1:0] routing_table_entry;
 	
 /*Only for simulation*/
   integer fd;
@@ -149,50 +170,77 @@ router(
     cycle_counter<=cycle_counter+1;
   end
 
-/*  always@(posedge clk)
-    begin
-    if(srcID==0 && inject_receive && injector_in[7:0]<=8'd64 &&dstID!=0)
-      begin
-      fd=$fopen("dump.txt","a");
-      if(fd)
-        $display("file open successfully\n");
-      else
-        $display("file open failed\n");
-      $strobe("Displaying in %m\t");
-      $strobe("data from (%d,%d) whose id # %d is injected into the network at cycle %d",injector_in[15:12],injector_in[11:8],injector_in[7:0],cycle_counter);
-// format [src.x] [src.y] [id] [time]
-      $fdisplay(fd,"Departure from %m\t");
-      $fdisplay(fd,"%d %d %d %d",injector_in[15:12],injector_in[11:8],injector_in[7:0],cycle_counter);
-      $fclose(fd);
-    end
-  end*/
-    
-
-
-	
-	
-	
-	//register on counterclockwise ring
-	defparam fifo0.FIFO_depth=IntraRingFIFODepth;
-	defparam fifo0.FIFO_width=DataLenInside;
-	FIFO fifo0(clk,rst,CounterClockwiseIn,ejector0_in,fifo0_consume,CounterClockwiseReceive,fifo0_full,fifo0_empty,CounterClockwiseUtil);
+  //register on counterclockwise ring
+    FIFO #(
+        .FIFO_depth(IntraNodeFIFODepth),
+        .FIFO_width(DataWidth)
+    )
+    fifo0(
+        .clk(clk),
+        .rst(rst),
+        .in(CounterClockwiseIn),
+        .consume(fifo0_consume),//read enabling to out port from FIFO
+        .produce(CounterClockwiseReceive),//write enabling to in port to FIFO 
+        .out(ejector0_in),
+        .full(fifo0_full),
+        .empty(fifo0_empty),
+        .util(CounterClockwiseUtil)
+    );
 	
 	//register on clockwise ring
-	defparam fifo1.FIFO_depth=IntraRingFIFODepth;
-	defparam fifo1.FIFO_width=DataLenInside;
-	FIFO fifo1(clk,rst,ClockwiseIn,ejector1_in,fifo1_consume,ClockwiseReceive,fifo1_full,fifo1_empty,ClockwiseUtil);
+    //
+    FIFO #(
+        .FIFO_depth(IntraNodeFIFODepth),
+        .FIFO_width(DataWidth)
+    )
+    fifo1(
+        .clk(clk),
+        .rst(rst),
+        .in(ClockwiseIn),
+        .consume(fifo1_consume),//read enabling to out port from FIFO
+        .produce(ClockwiseReceive),//write enabling to in port to FIFO 
+        .out(ejector1_in),
+        .full(fifo1_full),
+        .empty(fifo1_empty),
+        .util(ClockwiseUtil)
+    );
 	
 	//input fifo
-	defparam fifo2.FIFO_depth=InterRingFIFODepth;
-	defparam fifo2.FIFO_width=DataLenOutside;
-	FIFO fifo2(clk,rst,inject,input_fifo_out,fifo2_consume,inject_receive,fifo2_full,fifo2_empty,InjectUtil);
+    //
+    FIFO #(
+        .FIFO_depth(InterNodeFIFODepth),
+        .FIFO_width(DataWidth)
+    )
+    fifo2(
+        .clk(clk),
+        .rst(rst),
+        .in(inject),
+        .consume(fifo2_consume),//read enabling to out port from FIFO
+        .produce(inject_receive),//write enabling to in port to FIFO 
+        .out(input_fifo_out),
+        .full(fifo2_full),
+        .empty(fifo2_empty),
+        .util(InjectUtil)
+    );
+
 	
 	//routing table
-	reg[DataLenInside-DataLenOutside-1+TableIndexFieldLen:0] routing_table[table_size-1:0];
-	//initial $readmemh("table",routing_table);
-	//packet assembler
-	
+	reg[RoutingTableWidth-1:0] routing_table[RoutingTablesize-1:0];
+    reg[MulticastTableWidth-1:0] multicast_table[MulticastTablesize-1:0];
+    reg[ReductionTableWidth-1:0] reduction_table[RedeuctionTablesize-1:0];
+	//packet assembler	
+    //injector_in should depend on the packet type
+    //
+    assign routing_table_entry=routing_table[input_fifo_out[PayLoadLen+IndexWidth-1:PayLoadLen]];
+    always@(*)begin
+        if(routing_table_entry[RoutingTableWidth-1:RoutingTableWidth-PcktTypeLen]==SINGLECAST)
+            injector_in={input_fifo_out[DataWidth-1:PayLoad+IndexWidth],routing_table[PriorityWidth-1:PrioirtyWidth],4'b0000,routing_table[28:25],input_fifo_out[PayloadLen-1:0]};
+        else if(routing_table_entry[RoutingTableWidth-1:RoutingTableWidth-PcktTypeLen]==MULTICAST)
+
+
+    end
 	assign injector_in={routing_table[input_fifo_out[DataLenOutside-1:DataLenOutside-TableIndexFieldLen]],input_fifo_out[DataLenOutside-TableIndexFieldLen-1:0]};
+    
 	
 	
 	
