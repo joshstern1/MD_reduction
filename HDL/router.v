@@ -1,4 +1,4 @@
-//Purpose: 
+//Purpose: one router among the six router on the ring-based switch
 //Author: Jiayi Sheng
 //Organization: CAAD lab @ Boston University
 //Start date: Dec 9th 2015
@@ -15,8 +15,8 @@
     */
 //inside the router
 /*
-    *|255      |254---152|151-----144|143--136|135---128|127--96|95--64|63--32|31--0|
-    *|valid bit|unused   |log  weight|priority|exit port|type   |z     |y     |x    |
+    *|255      |254--164 |163---160|159---152|151-----144|143-----128|127--96|95--64|63--32|31--0|
+    *|valid bit|unused   |dst      |priority |log  weight|table index|type   |z     |y     |x    |
 
     *
 
@@ -39,14 +39,14 @@
 /*
 * at most 5 fan-out for 3D-torus network.
   for each fanout, format is as below:
-  |packet type|dst  |table index|
-  |4 bits     |4bits|16 bits    | 
-* |1st packet| 2nd packet| 3rd packet| 4th packet| 5th packet| 120 bits in total
-*
+  |dst   |table index|
+  |4 bits|16 bits    | 
+* |counter of valid packets|1st packet| 2nd packet| 3rd packet| 4th packet| 5th packet| 103 bits in total
+* | 3 bits                 |20 bits   | 20 bits   | 20 bits   | 20 bits   | 20 bits   | 
 * */
 //reduction table entry format
 /*
-* at most fan-in for 3D-torus network.
+* at most five fan-in for 3D-torus network.
   for each fanin, format is as below:
   |5-bit expect mask|5-bit arrival bookkeeping mask|packet Type|dst   |table index| weight accumulator| payload accumulator|
   |5 bits           | 5 bits                       | 4 bits    |4 bits|16 bits    | 8 bits            | 128 bits           | 170 bits in total 
@@ -62,15 +62,15 @@ module
     parameter WeightWidth=8,
     parameter IndexPos=128,
     parameter IndexWidth=16,
-    parameter PriorityPos=136,
+    parameter PriorityPos=152,
     parameter PriorityWidth=8,
-    parameter ExitPos=128,
-    parameter ExitWidth=8,
+    parameter ExitPos=160,
+    parameter ExitWidth=4,
     parameter InterNodeFIFODepth=128,
     parameter IntraNodeFIFODepth=1,
     parameter RoutingTableWidth=32,
     parameter RoutingTablesize=256,
-    parameter MulticastTableWidth=128,
+    parameter MulticastTableWidth=103,
     parameter MulticastTablesize=256,
     parameter ReductionTableWidth=170,
     parameter ReductionTablesize=256,
@@ -161,6 +161,13 @@ router(
 	reg eject_enable1;//the clockwise input is ejected	
 
     wire [RoutingTableWidth-1:0] routing_table_entry;
+    wire [MulticastWidth-1:0] multicast_table_entry;
+    wire [ReductionWidth-1:0] reduction_table_entry;
+
+    wire [DataWidth-1:0] multicast_children[4:0]; //There are five fan-out at most
+    reg [WeigthWidth-1:0] weigth_split[4:0]; //weight split
+
+    
 	
 /*Only for simulation*/
   integer fd;
@@ -226,23 +233,83 @@ router(
 	
 	//routing table
 	reg[RoutingTableWidth-1:0] routing_table[RoutingTablesize-1:0];
+    //Multicast table
     reg[MulticastTableWidth-1:0] multicast_table[MulticastTablesize-1:0];
+    //reduction table
     reg[ReductionTableWidth-1:0] reduction_table[RedeuctionTablesize-1:0];
 	//packet assembler	
     //injector_in should depend on the packet type
     //
     assign routing_table_entry=routing_table[input_fifo_out[PayLoadLen+IndexWidth-1:PayLoadLen]];
+    assign multicast_table_entry=multicast_table[routing_table_entry[23:8]];//when the packet is not multicast packet, this is invalid
+    assign reduction_table_entry=reduction_table[routing_table_entry[23:8]];//whne the packet is not reduction packet, this is invalid
     always@(*)begin
         if(routing_table_entry[RoutingTableWidth-1:RoutingTableWidth-PcktTypeLen]==SINGLECAST)
-            injector_in={input_fifo_out[DataWidth-1:PayLoad+IndexWidth],routing_table[PriorityWidth-1:PrioirtyWidth],4'b0000,routing_table[28:25],input_fifo_out[PayloadLen-1:0]};
+            injector_in={input_fifo_out[DataWidth-1:ExitPos+ExitWidth],routing_table[27:24],routing_table[7:0],input_fifo_out[WeightPos+WeightWidth-1:WeightPos],routing_table[23:8],input_fifo_out[PayloadLen-1:0]};
         else if(routing_table_entry[RoutingTableWidth-1:RoutingTableWidth-PcktTypeLen]==MULTICAST)
-
-
+            injector_in=multicast_unit_out;
+        else if(routing_table_entry[RoutingTableWidth-1:RoutingTableWidth-PcktTypeLen]==REDUCTION)
+            injector_in=reduction_unit_out;
+        else
+            injector_in=0;//invalid packet
     end
-	assign injector_in={routing_table[input_fifo_out[DataLenOutside-1:DataLenOutside-TableIndexFieldLen]],input_fifo_out[DataLenOutside-TableIndexFieldLen-1:0]};
     
-	
-	
+
+   //multicast_unit
+    //this unit will distribute the packets marked in the multicast entry to their destinations
+    //the multicast children inherent the priority and data paylaoad from the parent, the weight will be split
+    assign multicast_children[0]={1'b1,91'd0,multicast_table_entry[19:16],routing_table_entry[PriortyPos+priorityWidth-1:PriorityPos],weight_split[0],multicast_table_entry[15:0],input_fifo_out[PayloadLen-1:0]};
+    assign multicast_children[1]={1'b1,91'd0,multicast_table_entry[39:36],routing_table_entry[PriortyPos+priorityWidth-1:PriorityPos],weight_split[1],multicast_table_entry[35:20],input_fifo_out[PayloadLen-1:0]};
+    assign multicast_children[2]={1'b1,91'd0,multicast_table_entry[59:56],routing_table_entry[PriortyPos+priorityWidth-1:PriorityPos],weight_split[2],multicast_table_entry[55:50],input_fifo_out[PayloadLen-1:0]};
+    assign multicast_children[3]={1'b1,91'd0,multicast_table_entry[79:76],routing_table_entry[PriortyPos+priorityWidth-1:PriorityPos],weight_split[3],multicast_table_entry[75:70],input_fifo_out[PayloadLen-1:0]};
+    assign multicast_children[4]={1'b1,91'd0,multicast_table_entry[99:96],routing_table_entry[PriortyPos+priorityWidth-1:PriorityPos],weight_split[3],multicast_table_entry[95:90],input_fifo_out[PayloadLen-1:0]};
+
+            
+       always@(*) begin
+        if(multicast_table_entry[127:120]==2) begin//the counter of valid packets can only be 2,3,4,5
+            weight_split[0]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>1;//1/2
+            weight_split[1]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>1;//1/2
+            weight_split[2]=0;
+            weight_split[3]=0;
+            weight_split[4]=0;
+        end
+        else if(multicast_table_entry[127:120]==3) begin
+            weight_split[0]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>1;//1/2
+            weight_split[1]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
+            weight_split[2]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
+            weight_split[3]=0;
+            weight_split[4]=0;
+        end
+        else if(multicast_table_entry[127:120]==4) begin
+            weight_split[0]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
+            weight_split[1]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
+            weight_split[2]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
+            weight_split[3]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
+            weight_split[4]=0;
+        end
+        else if(multicast_table_entry[127:120]==5) begin
+            weight_split[0]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
+            weight_split[1]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
+            weight_split[2]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
+            weight_split[3]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
+            weight_split[4]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
+        end
+        else begin
+            weight_split[0]=0;
+            weight_split[1]=0;
+            weight_split[2]=0;
+            weight_split[3]=0;
+            weight_split[4]=0;
+        end
+    end
+
+    always@(posedge clk) begin
+        if(rst) begin
+            
+
+
+
+    
 	
 	//ejector0 on counterclockwise direction
 	assign ejector0_match=(ejector0_in[DataLenInside-1:DataLenInside-IDLen]==srcID);
