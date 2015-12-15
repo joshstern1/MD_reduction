@@ -162,11 +162,11 @@ router(
 	reg eject_enable1;//the clockwise input is ejected	
 
     wire [RoutingTableWidth-1:0] routing_table_entry;
-    wire [MulticastWidth-1:0] multicast_table_entry;
     wire [ReductionWidth-1:0] reduction_table_entry;
 
-    wire [DataWidth-1:0] multicast_children[4:0]; //There are five fan-out at most
     reg [WeigthWidth-1:0] weigth_split[4:0]; //weight split
+    wire multicast_active; //indicate the multicast unit is active
+    wire fifo2_consume_multicast;
 
     
 	
@@ -240,7 +240,7 @@ router(
     //injector_in should depend on the packet type
     //
     assign routing_table_entry=routing_table[input_fifo_out[PayLoadLen+IndexWidth-1:PayLoadLen]];
-       assign reduction_table_entry=reduction_table[routing_table_entry[23:8]];//whne the packet is not reduction packet, this is invalid
+    assign reduction_table_entry=reduction_table[routing_table_entry[23:8]];//whne the packet is not reduction packet, this is invalid
     always@(*)begin
         if(routing_table_entry[RoutingTableWidth-1:RoutingTableWidth-PcktTypeLen]==SINGLECAST)
             injector_in={input_fifo_out[DataWidth-1:ExitPos+ExitWidth],routing_table[27:24],routing_table[7:0],input_fifo_out[WeightPos+WeightWidth-1:WeightPos],routing_table[23:8],input_fifo_out[PayloadLen-1:0]};
@@ -255,7 +255,37 @@ router(
 
    //multicast_unit
     //this unit will distribute the packets marked in the multicast entry to their destinations
-    multicast_unit#(        
+    multicast_unit#(    
+        .PayloadLen(PayLoadLen),
+        .DataWidth(DataWidth),
+        .WeightPos(WeightPos),
+        .WeightWidth(WeightWidth),
+        .IndexPos(IndexPos),
+        .IndexWidth(IndexWidth),
+        .PriorityPos(PriorityPos),
+        .PriorityWidth(PriorityWidth),
+        .ExitPos(ExitPos),
+        .ExitWidth(ExitWidth),
+        .InterNodeFIFODepth(InterNodeFIFODepth),
+        .IntraNodeFIFODepth(IntraNodeFIFODepth),
+        .RoutingTableWidth(RoutingTableWidth),
+        .RoutingTablesize(RoutingTablesize),
+        .MulticastTableWidth(MulticastTableWidth),
+        .MulticastTablesize(MulticastTablesize),
+        .ReductionTableWidth(ReductionTableWidth),
+        .ReductionTablesize(ReductionTablesize),
+        .PcktTypeLen(PcktTypeLen)
+    )(
+        .clk(clk),
+        .rst(rst),
+        .input_fifo_out(input_fifo_out),
+        .consume_inject(),
+        .routing_table_entry(routing_table_entry),
+        .injector_in_multicast(multicast_unit_out),
+        .start(multicast_active),
+        .fifo2_consume_multicast(fifo2_consume_multicast)
+    );
+
 
 
 

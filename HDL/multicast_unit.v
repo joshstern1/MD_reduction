@@ -65,23 +65,26 @@ module multicast_unit#(
     parameter RoutingTablesize=256,
     parameter MulticastTableWidth=103,
     parameter MulticastTablesize=256,
-    parameter ReductionTableWidth=170,
+    parameter ReductionTableWidth=162,
     parameter ReductionTablesize=256,
     parameter PcktTypeLen=4
 )
 (
     input clk,
     input rst,
-    input [PayloadLen-1:0] payload,
+    input [DataWidth-1:0] input_fifo_out,
     input consume_inject,//read signal to read the data in the multicast queue
     input [RoutingTableWidth-1:0] routing_table_entry,
     output [DataWidth-1:0] injector_in_multicast,
+    output start,//indicate the mulitcast unit is taking control of the injecting
     output fifo2_consume_multicast //read signal to the data in the inject queue, which will be asserted when all of the data in the multicast queue has all been sent
 );
+    
+    wire [MulticastTableWidth-1:0] multicast_table_entry;
    
     wire [DataWidth-1:0] multicast_children[4:0]; //There are five fan-out at most
     reg [WeigthWidth-1:0] weigth_split[4:0]; //weight split
-    wire start;//when asserted, means the multicast unit is active.
+//    wire start;//when asserted, means the multicast unit is active.
     reg start_reg;
     reg[MulticastTableWidth-1:0] multicast_table[MulticastTablesize-1:0];
     reg [2:0] children_ptr;//point to the children packet that is about to be sent
@@ -115,7 +118,7 @@ module multicast_unit#(
 
 
 
-    assign multicast_table_entry=multicast_table[routing_table_entry[23:8]];//when the packet is not multicast 
+    assign multicast_table_entry=multicast_table[routing_table_entry[23:8]];//when the packet is not multicast, this is invalid
     
     assign multicast_children[0]={1'b1,91'd0,multicast_table_entry[19:16],routing_table_entry[PriortyPos+priorityWidth-1:PriorityPos],weight_split[0],multicast_table_entry[15:0],input_fifo_out[PayloadLen-1:0]};
     assign multicast_children[1]={1'b1,91'd0,multicast_table_entry[39:36],routing_table_entry[PriortyPos+priorityWidth-1:PriorityPos],weight_split[1],multicast_table_entry[35:20],input_fifo_out[PayloadLen-1:0]};
