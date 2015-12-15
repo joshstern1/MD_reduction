@@ -72,7 +72,6 @@ module multicast_unit#(
 (
     input clk,
     input rst,
-    input enable,
     input [PayloadLen-1:0] payload,
     input consume_inject,//read signal to read the data in the multicast queue
     input [RoutingTableWidth-1:0] routing_table_entry,
@@ -82,22 +81,38 @@ module multicast_unit#(
    
     wire [DataWidth-1:0] multicast_children[4:0]; //There are five fan-out at most
     reg [WeigthWidth-1:0] weigth_split[4:0]; //weight split
-    reg start;
-    //Multicast table
+    wire start;//when asserted, means the multicast unit is active.
+    reg start_reg;
     reg[MulticastTableWidth-1:0] multicast_table[MulticastTablesize-1:0];
-    reg [2:0] children_ptr;
+    reg [2:0] children_ptr;//point to the children packet that is about to be sent
     wire [2:0] multicast_counter;
-    always@(posedge clk) begin
-        enable_reg<=enable;
-    end
-    assign 
+    
+    assign start=routing_table_entry[RoutingTableWidth-1:RoutingTableWidth-PcktTypeLen]==2; //packet type equals to multicast
+
     assign multicast_counter=multicast_table_entry[102:100];
 
+    always@(posedge clk) begin
+        start<=start_reg;
+    end
 
-    always@(posedge clk)
-        if(rst)
+    always@(posedge clk) begin
+        if(rst) begin
             children_ptr<=0;
-        else if(enable)
+        end
+        else if(start && ~start_reg) begin
+            children_ptr<=multicast_counter;// the initial counter is between 1 and 5
+        end
+        else if(start && consume_inject) begin
+            children_ptr<=children_ptr-1;
+        end
+        else begin
+            children_ptr<=children_ptr;
+        end
+      end
+  
+    assign injector_in_multicast=multicast_children[children_ptr];
+    assign fifo2_consume_multicast=start&&(children_ptr==0);  
+
 
 
     assign multicast_table_entry=multicast_table[routing_table_entry[23:8]];//when the packet is not multicast 
@@ -148,4 +163,4 @@ module multicast_unit#(
 
  
 
-
+endmodule
