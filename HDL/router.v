@@ -49,8 +49,8 @@
 /*
 * at most five fan-in for 3D-torus network.
   for each fanin, format is as below:
-  |5-bit expect mask|5-bit arrival bookkeeping mask|packet Type|dst   |table index| weight accumulator| payload accumulator|
-  |5 bits           | 5 bits                       | 4 bits    |4 bits|16 bits    | 8 bits            | 128 bits           | 170 bits in total 
+  |3-bit expect counter|3-bit arrival bookkeeping counter|dst   |table index| weight accumulator| payload accumulator|
+  |3 bits              | 3 bits                          |4 bits|16 bits    | 8 bits            | 128 bits           | 162 bits in total 
 * */
 
 
@@ -73,7 +73,7 @@ module
     parameter RoutingTablesize=256,
     parameter MulticastTableWidth=103,
     parameter MulticastTablesize=256,
-    parameter ReductionTableWidth=170,
+    parameter ReductionTableWidth=162,
     parameter ReductionTablesize=256,
     parameter PcktTypeLen=4
 )
@@ -164,9 +164,22 @@ router(
     wire [RoutingTableWidth-1:0] routing_table_entry;
     wire [ReductionWidth-1:0] reduction_table_entry;
 
+
+    wire inject_consume;//the read signal to read from multicast unit or reduction unit or direct input fifo
     reg [WeigthWidth-1:0] weigth_split[4:0]; //weight split
     wire multicast_active; //indicate the multicast unit is active
     wire fifo2_consume_multicast;
+    wire [DataWidth-1:0] multicast_unit_out;
+
+    wire fifo2_consume_reduction;
+    wire reduction_ready;
+    wire reduction_hold;
+    wire [DataWidth-1:0] reduction_unit_out;
+    
+    
+    
+
+    
 
     
 	
@@ -242,6 +255,9 @@ router(
     assign routing_table_entry=routing_table[input_fifo_out[PayLoadLen+IndexWidth-1:PayLoadLen]];
     assign reduction_table_entry=reduction_table[routing_table_entry[23:8]];//whne the packet is not reduction packet, this is invalid
     always@(*)begin
+        if(reduction_ready) begin// the reduction unit has the highest priority
+            reduction_ready
+        end
         if(routing_table_entry[RoutingTableWidth-1:RoutingTableWidth-PcktTypeLen]==SINGLECAST)
             injector_in={input_fifo_out[DataWidth-1:ExitPos+ExitWidth],routing_table[27:24],routing_table[7:0],input_fifo_out[WeightPos+WeightWidth-1:WeightPos],routing_table[23:8],input_fifo_out[PayloadLen-1:0]};
         else if(routing_table_entry[RoutingTableWidth-1:RoutingTableWidth-PcktTypeLen]==MULTICAST)
@@ -275,16 +291,57 @@ router(
         .ReductionTableWidth(ReductionTableWidth),
         .ReductionTablesize(ReductionTablesize),
         .PcktTypeLen(PcktTypeLen)
-    )(
+    )
+    multicast_unit_inst(
         .clk(clk),
         .rst(rst),
         .input_fifo_out(input_fifo_out),
-        .consume_inject(),
+        .consume_inject(inject_consume),
         .routing_table_entry(routing_table_entry),
         .injector_in_multicast(multicast_unit_out),
         .start(multicast_active),
         .fifo2_consume_multicast(fifo2_consume_multicast)
     );
+
+    reduction_unit#(    
+        .PayloadLen(PayLoadLen),
+        .DataWidth(DataWidth),
+        .WeightPos(WeightPos),
+        .WeightWidth(WeightWidth),
+        .IndexPos(IndexPos),
+        .IndexWidth(IndexWidth),
+        .PriorityPos(PriorityPos),
+        .PriorityWidth(PriorityWidth),
+        .ExitPos(ExitPos),
+        .ExitWidth(ExitWidth),
+        .InterNodeFIFODepth(InterNodeFIFODepth),
+        .IntraNodeFIFODepth(IntraNodeFIFODepth),
+        .RoutingTableWidth(RoutingTableWidth),
+        .RoutingTablesize(RoutingTablesize),
+        .MulticastTableWidth(MulticastTableWidth),
+        .MulticastTablesize(MulticastTablesize),
+        .ReductionTableWidth(ReductionTableWidth),
+        .ReductionTablesize(ReductionTablesize),
+        .PcktTypeLen(PcktTypeLen)
+    )
+    reduction_unit_inst(
+        .clk(clk),
+        .rst(rst),
+        .input_fifo_out(input_fifo_out),
+        .consume_inject(inject_consume),
+        .fifo2_consume_reduction(fifo2_consume_reduction),
+        .ready(reduction_ready),
+        .hold(reduction_hold),
+        .injector_in_reduction(reduction_unit_out)
+    );
+    
+    always@(*) begin
+
+
+
+    
+    
+    
 
 
 
@@ -382,18 +439,18 @@ router(
 					begin
 					if(injector_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]>ejector1_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]&&(~fifo2_empty))
 						begin
-						fifo2_consume<=1;
+						inject_consume<=1;
 						inject_turn<=3;
 					end
 					else
 						begin
-						fifo2_consume<=0;
+						inject_consume<=0;
 						inject_turn<=0;
 					end
 				end
 				else
 					begin
-					fifo2_consume<=0;
+					inject_consume<=0;
 					inject_turn<=0;
 				end
 			end
@@ -403,19 +460,19 @@ router(
 				begin
 					if(injector_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]>ejector0_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]&&(~fifo2_empty))
 						begin
-						fifo2_consume<=1;
+						inject_consume<=1;
 						inject_turn<=2;
 						//CounterClockwiseSend<=1;
 					end
 					else
 						begin
-						fifo2_consume<=0;
+						inject_consume<=0;
 						inject_turn<=0;
 					end
 				end
 				else
 					begin
-					fifo2_consume<=0;
+					inject_consume<=0;
 					inject_turn<=0;
 				end
 			end
@@ -428,19 +485,19 @@ router(
 				begin
 					if(injector_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]>ejector0_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]&&(~fifo2_empty))
 						begin
-						fifo2_consume<=1;
+						inject_consume<=1;
 						inject_turn<=2;
 						//CounterClockwiseSend<=1;
 					end
 					else
 						begin
-						fifo2_consume<=0;
+						inject_consume<=0;
 						inject_turn<=0;
 					end
 				end
 				else
 					begin
-					fifo2_consume<=0;
+					inject_consume<=0;
 					inject_turn<=0;
 				end
 				
@@ -453,18 +510,18 @@ router(
 					begin
 					if(injector_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]>ejector1_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]&&(~fifo2_empty))
 						begin
-						fifo2_consume<=1;
+						inject_consume<=1;
 						inject_turn<=3;
 					end
 					else
 						begin
-						fifo2_consume<=0;
+						inject_consume<=0;
 						inject_turn<=0;
 					end
 				end
 				else
 					begin
-					fifo2_consume<=0;
+					inject_consume<=0;
 					inject_turn<=0;
 				end
 			end
@@ -473,12 +530,12 @@ router(
 		  begin 
 		  if(injector_in[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]!=0)
 		    begin
-		    fifo2_consume<=1;//discard the local communication
+		    inject_consume<=1;//discard the local communication
 		    inject_turn<=0;  
 		  end
 		  else
 		    begin
-		    fifo2_consume<=0;//do nothing
+		    inject_consume<=0;//do nothing
 		    inject_turn<=0;
 		  end
 		end
