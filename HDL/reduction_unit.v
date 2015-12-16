@@ -90,19 +90,37 @@ reduction_unit(
     assign hold=routing_table_entry[RoutingTableWidth-1:RoutingTableWidth-PcktTypeLen]==3; //packet type equals to reduction
     //data is ready to sent to outside when all the expected packtes have arrived
     always@(posedge clk) begin
-        if(hold) begin
-            ready<=(routing_table_entry[ReductionTableWidth-1:ReductionTableWidth-3]==routing_table_entry[ReductionTableWidth-4:ReductionTableWIdth-6]+1);//in next cycle, this table entry will have all data ready
+        if(~ready) begin
+            if(hold) begin
+                ready<=(reduction_table_entry[ReductionTableWidth-1:ReductionTableWidth-3]==reduction_table_entry[ReductionTableWidth-4:ReductionTableWIdth-6]+1);//in next cycle, this table entry will have all data ready
+            end
+            else begin
+                ready<=0;
+            end
         end
+        else begin
+            if(consume_inject)
+                ready<=0;
+            else
+                ready<=1;
+        end
+
     end
 
     always@(posedge clk) begin
         if(hold) begin
-            if(routing_table_entry[ReductionTableWidth-1:ReductionTableWidth-3]==routing_table_entry[ReductionTableWidth-4:ReductionTableWIdth-6]+1)
-                injector_in_reduction<=
+            if(reduction_table_entry[ReductionTableWidth-1:ReductionTableWidth-3]==reduction_table_entry[ReductionTableWidth-4:ReductionTableWIdth-6]+1)
+                injector_in_reduction<={1'b1,91'd0,reduction_table_entry[155:152],input_fifo_out[PriorityPos+PriorityLen-1:PriorityPos],reduction_table_entry[135:128],reduction_table_entry[151:136],reduction_table_entry[127:0]};
+            else
+                injector_in_reduction<=injector_in_reduction;
+        end
+        else
+            injector_in_reduction<=injector_in_reduction;
+    end
 
     always@(*) begin
-        if(hold) begin
-            fifo2_consume_reduction=(routing_table_entry[ReductionTableWidth-1:ReductionTableWidth-3]>routing_table_entry[ReductionTableWidth-4:ReductionTableWIdth-6]);
+        if(hold&&~ready) begin
+            fifo2_consume_reduction=(reduction_table_entry[ReductionTableWidth-1:ReductionTableWidth-3]>reduction_table_entry[ReductionTableWidth-4:ReductionTableWIdth-6]);
         end
         else begin
             fifo2_consume_reduction=0;
