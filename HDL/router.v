@@ -54,7 +54,7 @@
 * */
 
 
-module 
+module router
 #(
     parameter srcID=3'd0,
     parameter PayloadLen=128,
@@ -112,24 +112,6 @@ module
     parameter REDUCTION=3;
 
 	
-	parameter srcID=3'd0;
-//	parameter DataLenInside=24;
-//	parameter DataLenOutside=16;
-	parameter DataLenInside=48;
-	parameter DataLenOutside=40;
-	//parameter IntraRingFIFODepth=2;
-	parameter IntraRingFIFODepth=3;
-	parameter IDLen=3;
-	parameter PriorityLen=5; //priority field has 5 bits, 0 is the lowest priority
-	parameter TableIndexFieldLen=16;
-	
-	parameter InterRingFIFODepth=1000;
-	parameter table_size=1024;
-	
-	//output fifo0_full;
-	//output fifo1_full;
-	
-	
 	
 	wire[DataWidth-1:0] ejector0_in;
 	wire[DataWidth-1:0] ejector0_out0;//out0 is the ejecting port
@@ -155,25 +137,26 @@ module
 	wire fifo2_empty;
 	reg fifo0_consume;
 	reg fifo1_consume;
-	reg fifo2_consume;
+	wire fifo2_consume;
 	
 	reg [1:0] inject_turn; //2 is for Counterclockwise, 3 is for Clockwise, 0 is no turn
 	reg eject_enable0;//the counterclockwise input is ejected
 	reg eject_enable1;//the clockwise input is ejected	
 
     wire [RoutingTableWidth-1:0] routing_table_entry;
-    wire [ReductionWidth-1:0] reduction_table_entry;
+    wire [ReductionTableWidth-1:0] reduction_table_entry;
 
 
-    wire inject_consume_singlecast;
+    reg inject_consume;
+    reg inject_consume_singlecast;
 
-    wire inject_consume_multicast;//the read signal to read from multicast unit or reduction unit or direct input fifo
-    reg [WeigthWidth-1:0] weigth_split[4:0]; //weight split
+    reg inject_consume_multicast;//the read signal to read from multicast unit or reduction unit or direct input fifo
+    reg [WeightWidth-1:0] weigth_split[4:0]; //weight split
     wire multicast_active; //indicate the multicast unit is active
     wire fifo2_consume_multicast;
     wire [DataWidth-1:0] multicast_unit_out;
 
-    wire inject_consume_reduction;
+    reg inject_consume_reduction;
     wire fifo2_consume_reduction;
     wire reduction_ready;
     wire reduction_hold;
@@ -253,8 +236,8 @@ module
 	//packet assembler	
     //injector_in should depend on the packet type
     //
-    assign fifo2_consume=inject_consume_singlecast;
-    assign routing_table_entry=routing_table[input_fifo_out[PayLoadLen+IndexWidth-1:PayLoadLen]];
+    assign fifo2_consume=inject_consume;
+    assign routing_table_entry=routing_table[input_fifo_out[IndexPos+IndexWidth-1:IndexPos]];
     always@(*)begin
         if(reduction_ready) begin// the reduction unit has the highest priority when one reduction has collected all the expectations
             injector_in=reduction_unit_out;
@@ -269,7 +252,7 @@ module
             inject_consume_reduction=0;
         end
         else if(routing_table_entry[RoutingTableWidth-1:RoutingTableWidth-PcktTypeLen]==SINGLECAST) begin
-            injector_in={input_fifo_out[DataWidth-1:ExitPos+ExitWidth],routing_table[27:24],routing_table[7:0],input_fifo_out[WeightPos+WeightWidth-1:WeightPos],routing_table[23:8],input_fifo_out[PayloadLen-1:0]};
+            injector_in={input_fifo_out[DataWidth-1:ExitPos+ExitWidth],routing_table_entry[27:24],routing_table_entry[7:0],input_fifo_out[WeightPos+WeightWidth-1:WeightPos],routing_table_entry[23:8],input_fifo_out[PayloadLen-1:0]};
             inject_consume_singlecast=inject_consume;
             inject_consume_multicast=0;
             inject_consume_reduction=0;
@@ -286,7 +269,7 @@ module
    //multicast_unit
     //this unit will distribute the packets marked in the multicast entry to their destinations
     multicast_unit#(    
-        .PayloadLen(PayLoadLen),
+        .PayloadLen(PayloadLen),
         .DataWidth(DataWidth),
         .WeightPos(WeightPos),
         .WeightWidth(WeightWidth),
@@ -319,7 +302,7 @@ module
 //reduction unit
 //this unit will collect the expect packet in each reduction entry, which will send a new packet when all the expectations are collected
     reduction_unit#(    
-        .PayloadLen(PayLoadLen),
+        .PayloadLen(PayloadLen),
         .DataWidth(DataWidth),
         .WeightPos(WeightPos),
         .WeightWidth(WeightWidth),

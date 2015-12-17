@@ -54,7 +54,7 @@
 * */
 
 
-module 
+module router
 #(
     parameter srcID=3'd0,
     parameter PayloadLen=128,
@@ -77,7 +77,7 @@ module
     parameter ReductionTablesize=256,
     parameter PcktTypeLen=4
 )
-router(
+(
 //input
     input clk,
     input rst,
@@ -112,24 +112,6 @@ router(
     parameter REDUCTION=3;
 
 	
-	parameter srcID=3'd0;
-//	parameter DataLenInside=24;
-//	parameter DataLenOutside=16;
-	parameter DataLenInside=48;
-	parameter DataLenOutside=40;
-	//parameter IntraRingFIFODepth=2;
-	parameter IntraRingFIFODepth=3;
-	parameter IDLen=3;
-	parameter PriorityLen=5; //priority field has 5 bits, 0 is the lowest priority
-	parameter TableIndexFieldLen=16;
-	
-	parameter InterRingFIFODepth=1000;
-	parameter table_size=1024;
-	
-	//output fifo0_full;
-	//output fifo1_full;
-	
-	
 	
 	wire[DataWidth-1:0] ejector0_in;
 	wire[DataWidth-1:0] ejector0_out0;//out0 is the ejecting port
@@ -155,25 +137,26 @@ router(
 	wire fifo2_empty;
 	reg fifo0_consume;
 	reg fifo1_consume;
-	reg fifo2_consume;
+	wire fifo2_consume;
 	
 	reg [1:0] inject_turn; //2 is for Counterclockwise, 3 is for Clockwise, 0 is no turn
 	reg eject_enable0;//the counterclockwise input is ejected
 	reg eject_enable1;//the clockwise input is ejected	
 
     wire [RoutingTableWidth-1:0] routing_table_entry;
-    wire [ReductionWidth-1:0] reduction_table_entry;
+    wire [ReductionTableWidth-1:0] reduction_table_entry;
 
 
-    wire inject_consume_singlecast;
+    reg inject_consume;
+    reg inject_consume_singlecast;
 
-    wire inject_consume_multicast;//the read signal to read from multicast unit or reduction unit or direct input fifo
-    reg [WeigthWidth-1:0] weigth_split[4:0]; //weight split
+    reg inject_consume_multicast;//the read signal to read from multicast unit or reduction unit or direct input fifo
+    reg [WeightWidth-1:0] weigth_split[4:0]; //weight split
     wire multicast_active; //indicate the multicast unit is active
     wire fifo2_consume_multicast;
     wire [DataWidth-1:0] multicast_unit_out;
 
-    wire inject_consume_reduction;
+    reg inject_consume_reduction;
     wire fifo2_consume_reduction;
     wire reduction_ready;
     wire reduction_hold;
@@ -254,7 +237,7 @@ router(
     //injector_in should depend on the packet type
     //
     assign fifo2_consume=inject_consume_singlecast;
-    assign routing_table_entry=routing_table[input_fifo_out[PayLoadLen+IndexWidth-1:PayLoadLen]];
+    assign routing_table_entry=routing_table[input_fifo_out[IndexPos+IndexWidth-1:IndexPos]];
     always@(*)begin
         if(reduction_ready) begin// the reduction unit has the highest priority when one reduction has collected all the expectations
             injector_in=reduction_unit_out;
@@ -269,7 +252,7 @@ router(
             inject_consume_reduction=0;
         end
         else if(routing_table_entry[RoutingTableWidth-1:RoutingTableWidth-PcktTypeLen]==SINGLECAST) begin
-            injector_in={input_fifo_out[DataWidth-1:ExitPos+ExitWidth],routing_table[27:24],routing_table[7:0],input_fifo_out[WeightPos+WeightWidth-1:WeightPos],routing_table[23:8],input_fifo_out[PayloadLen-1:0]};
+            injector_in={input_fifo_out[DataWidth-1:ExitPos+ExitWidth],routing_table_entry[27:24],routing_table_entry[7:0],input_fifo_out[WeightPos+WeightWidth-1:WeightPos],routing_table_entry[23:8],input_fifo_out[PayloadLen-1:0]};
             inject_consume_singlecast=inject_consume;
             inject_consume_multicast=0;
             inject_consume_reduction=0;
@@ -286,7 +269,7 @@ router(
    //multicast_unit
     //this unit will distribute the packets marked in the multicast entry to their destinations
     multicast_unit#(    
-        .PayloadLen(PayLoadLen),
+        .PayloadLen(PayloadLen),
         .DataWidth(DataWidth),
         .WeightPos(WeightPos),
         .WeightWidth(WeightWidth),
@@ -319,7 +302,7 @@ router(
 //reduction unit
 //this unit will collect the expect packet in each reduction entry, which will send a new packet when all the expectations are collected
     reduction_unit#(    
-        .PayloadLen(PayLoadLen),
+        .PayloadLen(PayloadLen),
         .DataWidth(DataWidth),
         .WeightPos(WeightPos),
         .WeightWidth(WeightWidth),
@@ -349,25 +332,13 @@ router(
         .hold(reduction_hold),
         .injector_in_reduction(reduction_unit_out)
     );
-    
-
-
-
-    
-    
-    
-
-
-
-
-    
 	
 	//ejector0 on counterclockwise direction
-	assign ejector0_match=(ejector0_in[DataLenInside-1:DataLenInside-IDLen]==srcID);
+	assign ejector0_match=(ejector0_in[ExitPos+ExitWidth-1:ExitPos]==srcID);
 	assign ejector0_out0=ejector0_match?ejector0_in:0;
 	assign ejector0_out1=(~ejector0_match)?ejector0_in:0;
 	//ejector1 on clockwise direction
-	assign ejector1_match=(ejector1_in[DataLenInside-1:DataLenInside-IDLen]==srcID);
+	assign ejector1_match=(ejector1_in[ExitPos+ExitWidth-1:ExitPos]==srcID);
 	assign ejector1_out0=ejector1_match?ejector1_in:0;
 	assign ejector1_out1=(~ejector1_match)?ejector1_in:0;
 	
@@ -385,7 +356,7 @@ router(
 	//     ||     ||     ||
 	//     -x     +z     -z
 	
-	assign dstID=injector_in[DataLenInside-1:DataLenInside-IDLen];
+	assign dstID=injector_in[ExitPos+ExitWidth-1:ExitPos];
 	//injector block
 	always@(*)
 		begin
@@ -423,17 +394,17 @@ router(
 	end
 	
 	//mux for counter clockwise out	
-	assign CounterClockwiseOut=(injector_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]>ejector0_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen])?
+	assign CounterClockwiseOut=(injector_out0[PriorityPos+PriorityWidth-1:PriorityPos]>ejector0_out1[PriorityPos+PriorityWidth-1:PriorityPos])?
 						(injector_out0):(ejector0_out1);
 
 	//mux for clockwise out
-	assign ClockwiseOut=(injector_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]>ejector1_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen])?
+	assign ClockwiseOut=(injector_out1[PriorityPos+PriorityWidth-1:PriorityPos]>ejector1_out1[PriorityPos+PriorityWidth-1:PriorityPos])?
 						(injector_out1):(ejector1_out1);
 						
 	
 	//mux for ejector
-	assign eject=(ejector0_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]>ejector1_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen])?
-					(ejector0_out0[DataLenOutside-1:0]):(ejector1_out0[DataLenOutside-1:0]);
+	assign eject=(ejector0_out0[PriorityPos+PriorityWidth-1:PriorityPos]>ejector1_out0[PriorityPos+PriorityWidth-1:PriorityPos])?
+					(ejector0_out0):(ejector1_out0);
 	
 	
 
@@ -451,7 +422,7 @@ router(
 				begin
 				if(ClockwiseNextSlotAvail)
 					begin
-					if(injector_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]>ejector1_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]&&(~fifo2_empty))
+					if(injector_out1[PriorityPos+PriorityWidth-1:PriorityPos]>ejector1_out1[PriorityPos+PriorityWidth-1:PriorityPos]&&(~fifo2_empty))
 						begin
 						inject_consume<=1;
 						inject_turn<=3;
@@ -472,7 +443,7 @@ router(
 				begin
 				if(CounterClockwiseNextSlotAvail)
 				begin
-					if(injector_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]>ejector0_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]&&(~fifo2_empty))
+					if(injector_out0[PriorityPos+PriorityWidth-1:PriorityPos]>ejector0_out1[PriorityPos+PriorityWidth-1:PriorityPos]&&(~fifo2_empty))
 						begin
 						inject_consume<=1;
 						inject_turn<=2;
@@ -497,7 +468,7 @@ router(
 				begin
 				if(CounterClockwiseNextSlotAvail)
 				begin
-					if(injector_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]>ejector0_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]&&(~fifo2_empty))
+					if(injector_out0[PriorityPos+PriorityWidth-1:PriorityPos]>ejector0_out1[PriorityPos+PriorityWidth-1:PriorityPos]&&(~fifo2_empty))
 						begin
 						inject_consume<=1;
 						inject_turn<=2;
@@ -522,7 +493,7 @@ router(
 				begin
 				if(ClockwiseNextSlotAvail)
 					begin
-					if(injector_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]>ejector1_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]&&(~fifo2_empty))
+					if(injector_out1[PriorityPos+PriorityWidth-1:PriorityPos]>ejector1_out1[PriorityPos+PriorityWidth-1:PriorityPos]&&(~fifo2_empty))
 						begin
 						inject_consume<=1;
 						inject_turn<=3;
@@ -542,7 +513,7 @@ router(
 		end
 		else//srcD==dstID
 		  begin 
-		  if(injector_in[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]!=0)
+		  if(injector_in[PriorityPos+PriorityWidth-1:PriorityPos]!=0)
 		    begin
 		    inject_consume<=1;//discard the local communication
 		    inject_turn<=0;  
@@ -558,11 +529,11 @@ router(
 	
 	always@(*)
 		begin
-		if(ejector0_in[DataLenInside-1:DataLenInside-IDLen]==srcID)//being ejected
+		if(ejector0_in[ExitPos+ExitWidth-1:ExitPos]==srcID)//being ejected
 			begin
 			if(EjectSlotAvail)
 				begin
-				if(ejector0_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]>ejector1_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]&&(~fifo0_empty))
+				if(ejector0_out0[PriorityPos+PriorityWidth-1:PriorityPos]>ejector1_out0[PriorityPos+PriorityWidth-1:PriorityPos]&&(~fifo0_empty))
 					begin
 					eject_enable0<=1;
 					fifo0_consume<=1;
@@ -584,7 +555,7 @@ router(
 			eject_enable0<=0;
 			if(CounterClockwiseNextSlotAvail)
 				begin
-				if(injector_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]<=ejector0_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]&&(~fifo0_empty))
+				if(injector_out0[PriorityPos+PriorityWidth-1:PriorityPos]<=ejector0_out1[PriorityPos+PriorityWidth-1:PriorityPos]&&(~fifo0_empty))
 					begin
 					fifo0_consume<=1;
 				end
@@ -604,11 +575,11 @@ router(
 	
 	always@(*)
 		begin
-		if(ejector1_in[DataLenInside-1:DataLenInside-IDLen]==srcID)//being ejected
+		if(ejector1_in[ExitPos+ExitWidth-1:ExitPos]==srcID)//being ejected
 			begin
 			if(EjectSlotAvail)
 				begin
-				if(ejector0_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]<=ejector1_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]&&(~fifo1_empty))
+				if(ejector0_out0[PriorityPos+PriorityWidth-1:PriorityPos]<=ejector1_out0[PriorityPos+PriorityWidth-1:PriorityPos]&&(~fifo1_empty))
 					begin
 					eject_enable1<=1;
 					fifo1_consume<=1;
@@ -630,7 +601,7 @@ router(
 			eject_enable1<=0;
 			if(ClockwiseNextSlotAvail)
 				begin
-				if(injector_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]<=ejector1_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]&&(~fifo1_empty))
+				if(injector_out1[PriorityPos+PriorityWidth-1:PriorityPos]<=ejector1_out1[PriorityPos+PriorityWidth-1:PriorityPos]&&(~fifo1_empty))
 					begin
 					fifo1_consume<=1;
 				end
