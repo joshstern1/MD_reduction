@@ -47,7 +47,7 @@ module internode_link
             end
         end
     end
-    assign tx_ser_data=shift_reg_tx[DELAY/2-1];
+    assign tx_ser_data=shift_reg_tx[DElAY/2-1];
 
     always@(posedge rx_clk) begin
         if(rst) begin
@@ -62,7 +62,7 @@ module internode_link
             end
         end
     end
-    assign rx_par_data=shift_reg_rx[0];
+    assign rx_par_data<=shift_reg_rx[0];
 endmodule
     
 

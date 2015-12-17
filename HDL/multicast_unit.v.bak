@@ -95,7 +95,7 @@ module multicast_unit#(
     assign multicast_counter=multicast_table_entry[102:100];
 
     always@(posedge clk) begin
-        start_reg<=start;
+        start<=start_reg;
     end
 
     always@(posedge clk) begin

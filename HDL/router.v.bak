@@ -77,7 +77,7 @@ module
     parameter ReductionTablesize=256,
     parameter PcktTypeLen=4
 )
-(
+router(
 //input
     input clk,
     input rst,
@@ -349,13 +349,25 @@ module
         .hold(reduction_hold),
         .injector_in_reduction(reduction_unit_out)
     );
+    
+
+
+
+    
+    
+    
+
+
+
+
+    
 	
 	//ejector0 on counterclockwise direction
-	assign ejector0_match=(ejector0_in[ExitPos+ExitWidth-1:ExitPos]==srcID);
+	assign ejector0_match=(ejector0_in[DataLenInside-1:DataLenInside-IDLen]==srcID);
 	assign ejector0_out0=ejector0_match?ejector0_in:0;
 	assign ejector0_out1=(~ejector0_match)?ejector0_in:0;
 	//ejector1 on clockwise direction
-	assign ejector1_match=(ejector1_in[ExitPos+ExitWidth-1:ExitPos]==srcID);
+	assign ejector1_match=(ejector1_in[DataLenInside-1:DataLenInside-IDLen]==srcID);
 	assign ejector1_out0=ejector1_match?ejector1_in:0;
 	assign ejector1_out1=(~ejector1_match)?ejector1_in:0;
 	
@@ -373,7 +385,7 @@ module
 	//     ||     ||     ||
 	//     -x     +z     -z
 	
-	assign dstID=injector_in[ExitPos+ExitWidth-1:ExitPos];
+	assign dstID=injector_in[DataLenInside-1:DataLenInside-IDLen];
 	//injector block
 	always@(*)
 		begin
@@ -411,17 +423,17 @@ module
 	end
 	
 	//mux for counter clockwise out	
-	assign CounterClockwiseOut=(injector_out0[PriorityPos+PriorityWidth-1:PriorityPos]>ejector0_out1[PriorityPos+PriorityWidth-1:PriorityPos])?
+	assign CounterClockwiseOut=(injector_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]>ejector0_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen])?
 						(injector_out0):(ejector0_out1);
 
 	//mux for clockwise out
-	assign ClockwiseOut=(injector_out1[PriorityPos+PriorityWidth-1:PriorityPos]>ejector1_out1[PriorityPos+PriorityWidth-1:PriorityPos])?
+	assign ClockwiseOut=(injector_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]>ejector1_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen])?
 						(injector_out1):(ejector1_out1);
 						
 	
 	//mux for ejector
-	assign eject=(ejector0_out0[PriorityPos+PriorityWidth-1:PriorityPos]>ejector1_out0[PriorityPos+PriorityWidth-1:PriorityPos])?
-					(ejector0_out0):(ejector1_out0);
+	assign eject=(ejector0_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]>ejector1_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen])?
+					(ejector0_out0[DataLenOutside-1:0]):(ejector1_out0[DataLenOutside-1:0]);
 	
 	
 
@@ -439,7 +451,7 @@ module
 				begin
 				if(ClockwiseNextSlotAvail)
 					begin
-					if(injector_out1[PriorityPos+PriorityWidth-1:PriorityPos]>ejector1_out1[PriorityPos+PriorityWidth-1:PriorityPos]&&(~fifo2_empty))
+					if(injector_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]>ejector1_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]&&(~fifo2_empty))
 						begin
 						inject_consume<=1;
 						inject_turn<=3;
@@ -460,7 +472,7 @@ module
 				begin
 				if(CounterClockwiseNextSlotAvail)
 				begin
-					if(injector_out0[PriorityPos+PriorityWidth-1:PriorityPos]>ejector0_out1[PriorityPos+PriorityWidth-1:PriorityPos]&&(~fifo2_empty))
+					if(injector_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]>ejector0_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]&&(~fifo2_empty))
 						begin
 						inject_consume<=1;
 						inject_turn<=2;
@@ -485,7 +497,7 @@ module
 				begin
 				if(CounterClockwiseNextSlotAvail)
 				begin
-					if(injector_out0[PriorityPos+PriorityWidth-1:PriorityPos]>ejector0_out1[PriorityPos+PriorityWidth-1:PriorityPos]&&(~fifo2_empty))
+					if(injector_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]>ejector0_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]&&(~fifo2_empty))
 						begin
 						inject_consume<=1;
 						inject_turn<=2;
@@ -510,7 +522,7 @@ module
 				begin
 				if(ClockwiseNextSlotAvail)
 					begin
-					if(injector_out1[PriorityPos+PriorityWidth-1:PriorityPos]>ejector1_out1[PriorityPos+PriorityWidth-1:PriorityPos]&&(~fifo2_empty))
+					if(injector_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]>ejector1_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]&&(~fifo2_empty))
 						begin
 						inject_consume<=1;
 						inject_turn<=3;
@@ -530,7 +542,7 @@ module
 		end
 		else//srcD==dstID
 		  begin 
-		  if(injector_in[PriorityPos+PriorityWidth-1:PriorityPos]!=0)
+		  if(injector_in[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]!=0)
 		    begin
 		    inject_consume<=1;//discard the local communication
 		    inject_turn<=0;  
@@ -546,11 +558,11 @@ module
 	
 	always@(*)
 		begin
-		if(ejector0_in[ExitPos+ExitWidth-1:ExitPos]==srcID)//being ejected
+		if(ejector0_in[DataLenInside-1:DataLenInside-IDLen]==srcID)//being ejected
 			begin
 			if(EjectSlotAvail)
 				begin
-				if(ejector0_out0[PriorityPos+PriorityWidth-1:PriorityPos]>ejector1_out0[PriorityPos+PriorityWidth-1:PriorityPos]&&(~fifo0_empty))
+				if(ejector0_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]>ejector1_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]&&(~fifo0_empty))
 					begin
 					eject_enable0<=1;
 					fifo0_consume<=1;
@@ -572,7 +584,7 @@ module
 			eject_enable0<=0;
 			if(CounterClockwiseNextSlotAvail)
 				begin
-				if(injector_out0[PriorityPos+PriorityWidth-1:PriorityPos]<=ejector0_out1[PriorityPos+PriorityWidth-1:PriorityPos]&&(~fifo0_empty))
+				if(injector_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]<=ejector0_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]&&(~fifo0_empty))
 					begin
 					fifo0_consume<=1;
 				end
@@ -592,11 +604,11 @@ module
 	
 	always@(*)
 		begin
-		if(ejector1_in[ExitPos+ExitWidth-1:ExitPos]==srcID)//being ejected
+		if(ejector1_in[DataLenInside-1:DataLenInside-IDLen]==srcID)//being ejected
 			begin
 			if(EjectSlotAvail)
 				begin
-				if(ejector0_out0[PriorityPos+PriorityWidth-1:PriorityPos]<=ejector1_out0[PriorityPos+PriorityWidth-1:PriorityPos]&&(~fifo1_empty))
+				if(ejector0_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]<=ejector1_out0[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]&&(~fifo1_empty))
 					begin
 					eject_enable1<=1;
 					fifo1_consume<=1;
@@ -618,7 +630,7 @@ module
 			eject_enable1<=0;
 			if(ClockwiseNextSlotAvail)
 				begin
-				if(injector_out1[PriorityPos+PriorityWidth-1:PriorityPos]<=ejector1_out1[PriorityPos+PriorityWidth-1:PriorityPos]&&(~fifo1_empty))
+				if(injector_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]<=ejector1_out1[DataLenInside-IDLen-1:DataLenInside-IDLen-PriorityLen]&&(~fifo1_empty))
 					begin
 					fifo1_consume<=1;
 				end

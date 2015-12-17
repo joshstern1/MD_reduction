@@ -18,7 +18,7 @@ module FIFO
     output [FIFO_depth-1:0] out,
     output full,
     output empty,
-    output reg [FIFO_depth-1:0] util
+    output [FIFO_depth-1:0] util
 );
 	wire[FIFO_depth-1:0] head_next;
 	wire[FIFO_depth-1:0] tail_next;

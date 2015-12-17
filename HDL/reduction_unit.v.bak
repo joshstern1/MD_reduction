@@ -74,7 +74,7 @@ module reduction_unit
     input [DataWidth-1:0] input_fifo_out,
     input consume_inject,
     input [RoutingTableWidth-1:0] routing_table_entry, 
-    output reg fifo2_consume_reduction,
+    output fifo2_consume_reduction,
     output reg ready,//all the expected data have arrived
     output hold,//assert when the input_fifo_out is the reduction type
     output reg [DataWidth-1:0] injector_in_reduction
