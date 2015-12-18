@@ -88,27 +88,7 @@ module switch
     output [7:0] zneg_InjectUtil
 );
 	
-	input clk,rst;
-	input inject_receive_xpos, EjectSlotAvail_xpos;
-	input inject_receive_xneg, EjectSlotAvail_xneg;
-	input inject_receive_ypos, EjectSlotAvail_ypos;
-	input inject_receive_yneg, EjectSlotAvail_yneg;
-	input inject_receive_zpos, EjectSlotAvail_zpos;
-	input inject_receive_zneg, EjectSlotAvail_zneg;
-	
-	output eject_send_xpos, InjectSlotAvail_xpos;
-	output eject_send_xneg, InjectSlotAvail_xneg;
-	output eject_send_ypos, InjectSlotAvail_ypos;
-	output eject_send_yneg, InjectSlotAvail_yneg;
-	output eject_send_zpos, InjectSlotAvail_zpos;
-	output eject_send_zneg, InjectSlotAvail_zneg;
-	
-	input [DataWidth-1:0] inject_xpos, inject_xneg;
-	input [DataWidth-1:0] inject_ypos, inject_yneg;
-	input [DataWidth-1:0] inject_zpos, inject_zneg;
-	output [DataWidth-1:0] eject_xpos, eject_xneg;
-	output [DataWidth-1:0] eject_ypos, eject_yneg;
-	output [DataWidth-1:0] eject_zpos, eject_zneg;
+
 	
 	wire inject_receive_local, eject_send_local;
 	wire EjectSlotAvail_local, InjectSlotAvail_local;
@@ -233,32 +213,11 @@ module switch
         .ClockwiseAvail(ClockwiseSlotAvail_xneg_xpos),
         .CounterClockwiseAvail(CounterClockwiseSlotAvail_ypos_xpos),
         .InjectSlotAvail(InjectSlotAvail_xpos),
-        .CounterClockwiseUtil( xpos_CounterClockwiseUtil),
-        .ClockwiseUtil( xpos_ClockwiseUtil),
+        .CounterClockwiseUtil(xpos_CounterClockwiseUtil),
+        .ClockwiseUtil(xpos_ClockwiseUtil),
         .InjectUtil(xpos_InjectUtil)
     );
 
-//input
-	clk, rst,
-	ClockwiseIn_xneg_xpos, 
-	CounterClockwiseIn_ypos_xpos,
-	inject_xpos,
-	inject_receive_xpos,
-	ClockwiseReceive_xneg_xpos,
-	CounterClockwiseReceive_ypos_xpos,
-	ClockwiseNextSlotAvail_xpos_ypos,
-	CounterClockwiseNextSlotAvail_xpos_xneg,
-	EjectSlotAvail_xpos,
-//output
-	ClockwiseOut_xpos_ypos,
-	CounterClockwiseOut_xpos_xneg,
-	eject_send_xpos,
-	ClockwiseSend_xpos_ypos,
-	CounterClockwiseSend_xpos_xneg,
-	ClockwiseSlotAvail_xneg_xpos,
-	CounterClockwiseSlotAvail_ypos_xpos,
-	InjectSlotAvail_xpos,
-	eject_xpos);
 	
 /*	assign ClockwiseIn_xneg_xpos=ClockwiseOut_xneg_xpos;
 	assign CounterClockwiseIn_xpos_xneg=CounterClockwiseOut_xpos_xneg;
@@ -267,199 +226,282 @@ module switch
 	assign ClockwiseNextSlotAvail_xneg_xpos=ClockwiseSlotAvail_xneg_xpos;
 	assign CounterClockwiseSlotAvail_xpos_xneg=CounterClockwiseNextSlotAvail_xpos_xneg;
 */	
-	defparam XNEG.srcID=4;
-	//initial $readmemh("table1.txt",XNEG.routing_table);
-	router XNEG(
+	router #(
+        .srcID(4),
+        .PayloadLen(PayloadLen),
+        .DataWidth(DataWidth),
+        .WeightPos(WeightPos),
+        .WeightWidth(WeightWidth),
+        .IndexPos(IndexPos),
+        .IndexWidth(IndexWidth),
+        .PriorityPos(PriorityPos),
+        .PriorityWidth(PriorityWidth),
+        .ExitPos(ExitPos),
+        .ExitWidth(ExitWidth),
+        .InterNodeFIFODepth(InterNodeFIFODepth),
+        .IntraNodeFIFODepth(IntraNodeFIFODepth),
+        .RoutingTableWidth(RoutingTableWidth),
+        .RoutingTablesize(RoutingTablesize),
+        .MulticastTableWidth(MulticastTableWidth),
+        .MulticastTablesize(MulticastTablesize),
+        .ReductionTableWidth(ReductionTableWidth),
+        .ReductionTablesize(ReductionTablesize),
+        .PcktTypeLen(PcktTypeLen)
+    )XNEG(
 //input
-	clk, rst,
-	ClockwiseIn_zpos_xneg, 
-	CounterClockwiseIn_xpos_xneg,
-	inject_xneg,
-	inject_receive_xneg,
-	ClockwiseReceive_zpos_xneg,
-	CounterClockwiseReceive_xpos_xneg,
-	ClockwiseNextSlotAvail_xneg_xpos,
-	CounterClockwiseNextSlotAvail_xneg_zpos,
-	EjectSlotAvail_xneg,
+	    .clk(clk), 
+        .rst(rst),
+	    .ClockwiseIn(ClockwiseIn_zpos_xneg), 
+	    .CounterClockwiseIn(CounterClockwiseIn_xpos_xneg),
+	    .inject(inject_xneg),
+	    .inject_receive(inject_receive_xneg),
+    	.ClockwiseReceive(ClockwiseReceive_zpos_xneg),
+	    .CounterClockwiseReceive(CounterClockwiseReceive_xpos_xneg),
+	    .ClockwiseNextSlotAvail(ClockwiseNextSlotAvail_xneg_xpos),
+	    .CounterClockwiseNextSlotAvail(CounterClockwiseNextSlotAvail_xneg_zpos),
+	    .EjectSlotAvail(EjectSlotAvail_xneg),
 //output
-	ClockwiseOut_xneg_xpos,
-	CounterClockwiseOut_xneg_zpos,
-	eject_send_xneg,
-	ClockwiseSend_xneg_xpos,
-	CounterClockwiseSend_xneg_zpos,
-	ClockwiseSlotAvail_zpos_xneg,
-	CounterClockwiseSlotAvail_xpos_xneg,
-	InjectSlotAvail_xneg,
-	eject_xneg);
+	    .ClockwiseOut(ClockwiseOut_xneg_xpos),
+	    .CounterClockwiseOut(CounterClockwiseOut_xneg_zpos),
+	    .eject_send(eject_send_xneg),
+	    .ClockwiseSend(ClockwiseSend_xneg_xpos),
+	    .CounterClockwiseSend(CounterClockwiseSend_xneg_zpos),
+	    .ClockwiseAvail(ClockwiseSlotAvail_zpos_xneg),
+	    .CounterClockwiseAvail(CounterClockwiseSlotAvail_xpos_xneg),
+	    .InjectSlotAvail(InjectSlotAvail_xneg),
+	    .eject(eject_xneg)
+    );
 	
-/*	assign ClockwiseIn_zpos_xneg=ClockwiseOut_zpos_xneg;
-	assign CounterClockwiseIn_xneg_zpos=CounterClockwiseOut_xneg_zpos;
-	assign CounterClockwiseReceive_xneg_zpos=CounterClockwiseSend_xneg_zpos;
-	assign ClockwiseReceive_zpos_xneg=ClockwiseSend_zpos_xneg;
-	assign ClockwiseNextSlotAvail_zpos_xneg=ClockwiseSlotAvail_zpos_xneg;
-	assign CounterClockwiseSlotAvail_xneg_zpos=CounterClockwiseNextSlotAvail_xneg_zpos;
-	*/
-	defparam ZPOS.srcID=5;
-	//initial $readmemh("table1.txt",ZPOS.routing_table);
-	router ZPOS(
+	router #(
+        .srcID(5),
+        .PayloadLen(PayloadLen),
+        .DataWidth(DataWidth),
+        .WeightPos(WeightPos),
+        .WeightWidth(WeightWidth),
+        .IndexPos(IndexPos),
+        .IndexWidth(IndexWidth),
+        .PriorityPos(PriorityPos),
+        .PriorityWidth(PriorityWidth),
+        .ExitPos(ExitPos),
+        .ExitWidth(ExitWidth),
+        .InterNodeFIFODepth(InterNodeFIFODepth),
+        .IntraNodeFIFODepth(IntraNodeFIFODepth),
+        .RoutingTableWidth(RoutingTableWidth),
+        .RoutingTablesize(RoutingTablesize),
+        .MulticastTableWidth(MulticastTableWidth),
+        .MulticastTablesize(MulticastTablesize),
+        .ReductionTableWidth(ReductionTableWidth),
+        .ReductionTablesize(ReductionTablesize),
+        .PcktTypeLen(PcktTypeLen)
+    ) ZPOS(
 //input
-	clk, rst,
-	ClockwiseIn_zneg_zpos, 
-	CounterClockwiseIn_xneg_zpos,
-	inject_zpos,
-	inject_receive_zpos,
-	ClockwiseReceive_zneg_zpos,
-	CounterClockwiseReceive_xneg_zpos,
-	ClockwiseNextSlotAvail_zpos_xneg,
-	CounterClockwiseNextSlotAvail_zpos_zneg,
-	EjectSlotAvail_zpos,
+	    .clk(clk), 
+        .rst(rst),
+	    .ClockwiseIn(ClockwiseIn_zneg_zpos), 
+	    .CounterClockwiseIn(CounterClockwiseIn_xneg_zpos),
+	    .inject(inject_zpos),
+	    .inject_receive(inject_receive_zpos),
+	    .ClockwiseReceive(ClockwiseReceive_zneg_zpos),
+	    .CounterClockwiseReceive(CounterClockwiseReceive_xneg_zpos),
+	    .ClockwiseNextSlotAvail(ClockwiseNextSlotAvail_zpos_xneg),
+	    .CounterClockwiseNextSlotAvail(CounterClockwiseNextSlotAvail_zpos_zneg),
+	    .EjectSlotAvail(EjectSlotAvail_zpos),
 //output
-	ClockwiseOut_zpos_xneg,
-	CounterClockwiseOut_zpos_zneg,
-	eject_send_zpos,
-	ClockwiseSend_zpos_xneg,
-	CounterClockwiseSend_zpos_zneg,
-	ClockwiseSlotAvail_zneg_zpos,
-	CounterClockwiseSlotAvail_xneg_zpos,
-	InjectSlotAvail_zpos,
-	eject_zpos);
-/*	
-	assign ClockwiseIn_zneg_zpos=ClockwiseOut_zneg_zpos;
-	assign CounterClockwiseIn_zpos_zneg=CounterClockwiseOut_zpos_zneg;
-	assign CounterClockwiseReceive_zpos_zneg=CounterClockwiseSend_zpos_zneg;
-	assign ClockwiseReceive_zneg_zpos=ClockwiseSend_zneg_zpos;
-	assign ClockwiseNextSlotAvail_zneg_zpos=ClockwiseSlotAvail_zneg_zpos;
-	assign CounterClockwiseSlotAvail_zpos_zneg=CounterClockwiseNextSlotAvail_zpos_zneg;
-	*/
-	defparam ZNEG.srcID=6;
-	//initial $readmemh("table",ZNEG.routing_table);
-	router ZNEG(
+	    .ClockwiseOut(ClockwiseOut_zpos_xneg),
+	    .CounterClockwiseOut(CounterClockwiseOut_zpos_zneg),
+	    .eject_send(eject_send_zpos),
+	    .ClockwiseSend(ClockwiseSend_zpos_xneg),
+	    .CounterClockwiseSend(CounterClockwiseSend_zpos_zneg),
+	    .ClockwiseAvail(ClockwiseSlotAvail_zneg_zpos),
+	    .CounterClockwiseAvail(CounterClockwiseSlotAvail_xneg_zpos),
+	    .InjectSlotAvail(InjectSlotAvail_zpos),
+	    .eject(eject_zpos)
+    );
+
+    router#(
+        .srcID(6),
+        .PayloadLen(PayloadLen),
+        .DataWidth(DataWidth),
+        .WeightPos(WeightPos),
+        .WeightWidth(WeightWidth),
+        .IndexPos(IndexPos),
+        .IndexWidth(IndexWidth),
+        .PriorityPos(PriorityPos),
+        .PriorityWidth(PriorityWidth),
+        .ExitPos(ExitPos),
+        .ExitWidth(ExitWidth),
+        .InterNodeFIFODepth(InterNodeFIFODepth),
+        .IntraNodeFIFODepth(IntraNodeFIFODepth),
+        .RoutingTableWidth(RoutingTableWidth),
+        .RoutingTablesize(RoutingTablesize),
+        .MulticastTableWidth(MulticastTableWidth),
+        .MulticastTablesize(MulticastTablesize),
+        .ReductionTableWidth(ReductionTableWidth),
+        .ReductionTablesize(ReductionTablesize),
+        .PcktTypeLen(PcktTypeLen)
+    ) ZNEG(
 //input
-	clk, rst,
-	ClockwiseIn_local_zneg, 
-	CounterClockwiseIn_zpos_zneg,
-	inject_zneg,
-	inject_receive_zneg,
-	ClockwiseReceive_local_zneg,
-	CounterClockwiseReceive_zpos_zneg,
-	ClockwiseNextSlotAvail_zneg_zpos,
-	CounterClockwiseNextSlotAvail_zneg_local,
-	EjectSlotAvail_zneg,
+    	.clk(clk), 
+        .rst(rst),
+	    .ClockwiseIn(ClockwiseIn_local_zneg), 
+	    .CounterClockwiseIn(CounterClockwiseIn_zpos_zneg),
+	    .inject(inject_zneg),
+	    .inject_receive(inject_receive_zneg),
+	    .ClockwiseReceive(ClockwiseReceive_local_zneg),
+	    .CounterClockwiseReceive(CounterClockwiseReceive_zpos_zneg),
+	    .ClockwiseNextSlotAvail(ClockwiseNextSlotAvail_zneg_zpos),
+	    .CounterClockwiseNextSlotAvail(CounterClockwiseNextSlotAvail_zneg_local),
+	    .EjectSlotAvail(EjectSlotAvail_zneg),
 //output
-	ClockwiseOut_zneg_zpos,
-	CounterClockwiseOut_zneg_local,
-	eject_send_zneg,
-	ClockwiseSend_zneg_zpos,
-	CounterClockwiseSend_zneg_local,
-	ClockwiseSlotAvail_local_zneg,
-	CounterClockwiseSlotAvail_zpos_zneg,
-	InjectSlotAvail_zneg,
-	eject_zneg);
-/*	
-	assign ClockwiseIn_local_zneg=ClockwiseOut_local_zneg;
-	assign CounterClockwiseIn_zneg_local=CounterClockwiseOut_zneg_local;
-	assign CounterClockwiseReceive_zneg_local=CounterClockwiseSend_zneg_local;
-	assign ClockwiseReceive_local_zneg=ClockwiseSend_local_zneg;
-	assign ClockwiseNextSlotAvail_local_zneg=ClockwiseSlotAvail_local_zneg;
-	assign CounterClockwiseSlotAvail_zneg_local=CounterClockwiseNextSlotAvail_zneg_local;
-	*/
-	defparam LOCAL.srcID=0;
-	//initial $readmemh("table1.txt",LOCAL.routing_table);
-	router LOCAL(
+	    .ClockwiseOut(ClockwiseOut_zneg_zpos),
+	    .CounterClockwiseOut(CounterClockwiseOut_zneg_local),
+	    .eject_send(eject_send_zneg),
+	    .ClockwiseSend(ClockwiseSend_zneg_zpos),
+	    .CounterClockwiseSend(CounterClockwiseSend_zneg_local),
+	    .ClockwiseAvail(ClockwiseSlotAvail_local_zneg),
+	    .CounterClockwiseAvail(CounterClockwiseSlotAvail_zpos_zneg),
+	    .InjectSlotAvail(InjectSlotAvail_zneg),
+	    .eject(eject_zneg)
+    );
+
+    router #(
+        .srcID(0),
+        .PayloadLen(PayloadLen),
+        .DataWidth(DataWidth),
+        .WeightPos(WeightPos),
+        .WeightWidth(WeightWidth),
+        .IndexPos(IndexPos),
+        .IndexWidth(IndexWidth),
+        .PriorityPos(PriorityPos),
+        .PriorityWidth(PriorityWidth),
+        .ExitPos(ExitPos),
+        .ExitWidth(ExitWidth),
+        .InterNodeFIFODepth(InterNodeFIFODepth),
+        .IntraNodeFIFODepth(IntraNodeFIFODepth),
+        .RoutingTableWidth(RoutingTableWidth),
+        .RoutingTablesize(RoutingTablesize),
+        .MulticastTableWidth(MulticastTableWidth),
+        .MulticastTablesize(MulticastTablesize),
+        .ReductionTableWidth(ReductionTableWidth),
+        .ReductionTablesize(ReductionTablesize),
+        .PcktTypeLen(PcktTypeLen)
+    )LOCAL(
 //input
-	clk, rst,
-	ClockwiseIn_yneg_local, 
-	CounterClockwiseIn_zneg_local,
-	inject_local,
-	inject_receive_local,
-	ClockwiseReceive_yneg_local,
-	CounterClockwiseReceive_zneg_local,
-	ClockwiseNextSlotAvail_local_zneg,
-	CounterClockwiseNextSlotAvail_local_yneg,
-	EjectSlotAvail_local,
+	.clk(clk), 
+    .rst(rst),
+	.ClockwiseIn(ClockwiseIn_yneg_local), 
+	.CounterClockwiseIn(CounterClockwiseIn_zneg_local),
+	.inject(inject_local),
+	.inject_receive(inject_receive_local),
+	.ClockwiseReceive(ClockwiseReceive_yneg_local),
+	.CounterClockwiseReceive(CounterClockwiseReceive_zneg_local),
+	.ClockwiseNextSlotAvail(ClockwiseNextSlotAvail_local_zneg),
+	.CounterClockwiseNextSlotAvail(CounterClockwiseNextSlotAvail_local_yneg),
+	.EjectSlotAvail(EjectSlotAvail_local),
 //output
-	ClockwiseOut_local_zneg,
-	CounterClockwiseOut_local_yneg,
-	eject_send_local,
-	ClockwiseSend_local_zneg,
-	CounterClockwiseSend_local_yneg,
-	ClockwiseSlotAvail_yneg_local,
-	CounterClockwiseSlotAvail_zneg_local,
-	InjectSlotAvail_local,
-	eject_local);
+	.ClockwiseOut(ClockwiseOut_local_zneg),
+	.CounterClockwiseOut(CounterClockwiseOut_local_yneg),
+	.eject_send(eject_send_local),
+	.ClockwiseSend(ClockwiseSend_local_zneg),
+    .CounterClockwiseSend(CounterClockwiseSend_local_yneg),
+	.ClockwiseAvail(ClockwiseSlotAvail_yneg_local),
+	.CounterClockwiseAvail(CounterClockwiseSlotAvail_zneg_local),
+	.InjectSlotAvail(InjectSlotAvail_local),
+	.eject(eject_local)
+    );
 	
-/*
-	assign ClockwiseIn_yneg_local=ClockwiseOut_yneg_local;
-	assign CounterClockwiseIn_local_yneg=CounterClockwiseOut_local_yneg;
-	assign CounterClockwiseReceive_local_yneg=CounterClockwiseSend_local_yneg;
-	assign ClockwiseReceive_yneg_local=ClockwiseSend_yneg_local;
-	assign ClockwiseNextSlotAvail_yneg_local=ClockwiseSlotAvail_yneg_local;
-	assign CounterClockwiseSlotAvail_local_yneg=CounterClockwiseNextSlotAvail_local_yneg;
-	*/
-	defparam YNEG.srcID=1;
-	//initial $readmemh("table1.txt",YNEG.routing_table);
-	router YNEG(
+	router #(
+        .srcID(1),
+        .PayloadLen(PayloadLen),
+        .DataWidth(DataWidth),
+        .WeightPos(WeightPos),
+        .WeightWidth(WeightWidth),
+        .IndexPos(IndexPos),
+        .IndexWidth(IndexWidth),
+        .PriorityPos(PriorityPos),
+        .PriorityWidth(PriorityWidth),
+        .ExitPos(ExitPos),
+        .ExitWidth(ExitWidth),
+        .InterNodeFIFODepth(InterNodeFIFODepth),
+        .IntraNodeFIFODepth(IntraNodeFIFODepth),
+        .RoutingTableWidth(RoutingTableWidth),
+        .RoutingTablesize(RoutingTablesize),
+        .MulticastTableWidth(MulticastTableWidth),
+        .MulticastTablesize(MulticastTablesize),
+        .ReductionTableWidth(ReductionTableWidth),
+        .ReductionTablesize(ReductionTablesize),
+        .PcktTypeLen(PcktTypeLen)
+    )YNEG(
 //input
-	clk, rst,
-	ClockwiseIn_ypos_yneg, 
-	CounterClockwiseIn_local_yneg,
-	inject_yneg,
-	inject_receive_yneg,
-	ClockwiseReceive_ypos_yneg,
-	CounterClockwiseReceive_local_yneg,
-	ClockwiseNextSlotAvail_yneg_local,
-	CounterClockwiseNextSlotAvail_yneg_ypos,
-	EjectSlotAvail_yneg,
+	.clk(clk), 
+    .rst(rst),
+	.ClockwiseIn(ClockwiseIn_ypos_yneg), 
+	.CounterClockwiseIn(CounterClockwiseIn_local_yneg),
+	.inject(inject_yneg),
+	.inject_receive(inject_receive_yneg),
+	.ClockwiseReceive(ClockwiseReceive_ypos_yneg),
+	.CounterClockwiseReceive(CounterClockwiseReceive_local_yneg),
+	.ClockwiseNextSlotAvail(ClockwiseNextSlotAvail_yneg_local),
+	.CounterClockwiseNextSlotAvail(CounterClockwiseNextSlotAvail_yneg_ypos),
+	.EjectSlotAvail(EjectSlotAvail_yneg),
 //output
-	ClockwiseOut_yneg_local,
-	CounterClockwiseOut_yneg_ypos,
-	eject_send_yneg,
-	ClockwiseSend_yneg_local,
-	CounterClockwiseSend_yneg_ypos,
-	ClockwiseSlotAvail_ypos_yneg,
-	CounterClockwiseSlotAvail_local_yneg,
-	InjectSlotAvail_yneg,
-	eject_yneg);
-/*	
-	assign ClockwiseIn_ypos_yneg=ClockwiseOut_ypos_yneg;
-	assign CounterClockwiseIn_yneg_ypos=CounterClockwiseOut_yneg_ypos;
-	assign CounterClockwiseReceive_yneg_ypos=CounterClockwiseSend_yneg_ypos;
-	assign ClockwiseReceive_ypos_yneg=ClockwiseSend_ypos_yneg;
-	assign ClockwiseNextSlotAvail_ypos_yneg=ClockwiseSlotAvail_ypos_yneg;
-	assign CounterClockwiseSlotAvail_yneg_ypos=CounterClockwiseNextSlotAvail_yneg_ypos;
-	*/
-	defparam YPOS.srcID=2;
-	//initial $readmemh("table1.txt",YPOS.routing_table);
-	router YPOS(
+	.ClockwiseOut(ClockwiseOut_yneg_local),
+	.CounterCLockwiseOut(CounterClockwiseOut_yneg_ypos),
+	.eject_send(eject_send_yneg),
+	.ClockwiseSend(ClockwiseSend_yneg_local),
+	.CounterClockwiseSend(CounterClockwiseSend_yneg_ypos),
+	.ClockwiseAvail(ClockwiseSlotAvail_ypos_yneg),
+	.CounterClockwiseAvail(CounterClockwiseSlotAvail_local_yneg),
+	.InjectSlotAvail(InjectSlotAvail_yneg),
+	.eject(eject_yneg)
+    );
+
+    router #(
+        .srcID(2),
+        .PayloadLen(PayloadLen),
+        .DataWidth(DataWidth),
+        .WeightPos(WeightPos),
+        .WeightWidth(WeightWidth),
+        .IndexPos(IndexPos),
+        .IndexWidth(IndexWidth),
+        .PriorityPos(PriorityPos),
+        .PriorityWidth(PriorityWidth),
+        .ExitPos(ExitPos),
+        .ExitWidth(ExitWidth),
+        .InterNodeFIFODepth(InterNodeFIFODepth),
+        .IntraNodeFIFODepth(IntraNodeFIFODepth),
+        .RoutingTableWidth(RoutingTableWidth),
+        .RoutingTablesize(RoutingTablesize),
+        .MulticastTableWidth(MulticastTableWidth),
+        .MulticastTablesize(MulticastTablesize),
+        .ReductionTableWidth(ReductionTableWidth),
+        .ReductionTablesize(ReductionTablesize),
+        .PcktTypeLen(PcktTypeLen)
+    )YPOS(
 //input
-	clk, rst,
-	ClockwiseIn_xpos_ypos, 
-	CounterClockwiseIn_yneg_ypos,
-	inject_ypos,
-	inject_receive_ypos,
-	ClockwiseReceive_xpos_ypos,
-	CounterClockwiseReceive_yneg_ypos,
-	ClockwiseNextSlotAvail_ypos_yneg,
-	CounterClockwiseNextSlotAvail_ypos_xpos,
-	EjectSlotAvail_ypos,
+	.clk(clk), 
+    .rst(rst),
+	.ClockwiseIn(ClockwiseIn_xpos_ypos), 
+	.CounterClockwiseIn(CounterClockwiseIn_yneg_ypos),
+	.inject(inject_ypos),
+	.inject_receive(inject_receive_ypos),
+	.ClockwiseReceive(ClockwiseReceive_xpos_ypos),
+	.CounterClockwiseReceive(CounterClockwiseReceive_yneg_ypos),
+	.ClockwiseNextSlotAvail(ClockwiseNextSlotAvail_ypos_yneg),
+	.CounterClockwiseNextSlotAvail(CounterClockwiseNextSlotAvail_ypos_xpos),
+	.EjectSlotAvail(EjectSlotAvail_ypos),
 //output
-	ClockwiseOut_ypos_yneg,
-	CounterClockwiseOut_ypos_xpos,
-	eject_send_ypos,
-	ClockwiseSend_ypos_yneg,
-	CounterClockwiseSend_ypos_xpos,
-	ClockwiseSlotAvail_xpos_ypos,
-	CounterClockwiseSlotAvail_yneg_ypos,
-	InjectSlotAvail_ypos,
-	eject_ypos);
-/*
-	assign ClockwiseIn_xpos_ypos=ClockwiseOut_xpos_ypos;
-	assign CounterClockwiseIn_ypos_xpos=CounterClockwiseOut_ypos_xpos;
-	assign CounterClockwiseReceive_ypos_xpos=CounterClockwiseSend_ypos_xpos;
-	assign ClockwiseReceive_xpos_ypos=ClockwiseSend_xpos_ypos;
-	assign ClockwiseNextSlotAvail_xpos_ypos=ClockwiseSlotAvail_xpos_ypos;
-	assign CounterClockwiseSlotAvail_ypos_xpos=CounterClockwiseNextSlotAvail_ypos_xpos;
-*/	
+	.ClockwiseOut(ClockwiseOut_ypos_yneg),
+	.CounterClockwiseOut(CounterClockwiseOut_ypos_xpos),
+	.eject_send(eject_send_ypos),
+	.ClockwiseSend(ClockwiseSend_ypos_yneg),
+	.CounterClockwiseSend(CounterClockwiseSend_ypos_xpos),
+	.ClockwiseSlotAvail(ClockwiseSlotAvail_xpos_ypos),
+	.CounterClockwiseSlotAvail(CounterClockwiseSlotAvail_yneg_ypos),
+	.InjectSlotAvail(InjectSlotAvail_ypos),
+	.eject(eject_ypos)
+    );
+
 	
 	assign ClockwiseIn_xneg_xpos=ClockwiseOut_xneg_xpos;
 	assign CounterClockwiseIn_xpos_xneg=CounterClockwiseOut_xpos_xneg;
