@@ -120,11 +120,11 @@ module multicast_unit#(
 
     assign multicast_table_entry=multicast_table[routing_table_entry[23:8]];//when the packet is not multicast, this is invalid
     
-    assign multicast_children[0]={1'b1,91'd0,multicast_table_entry[19:16],routing_table_entry[PriorityPos+PriorityWidth-1:PriorityPos],weight_split[0],multicast_table_entry[15:0],input_fifo_out[PayloadLen-1:0]};
-    assign multicast_children[1]={1'b1,91'd0,multicast_table_entry[39:36],routing_table_entry[PriorityPos+PriorityWidth-1:PriorityPos],weight_split[1],multicast_table_entry[35:20],input_fifo_out[PayloadLen-1:0]};
-    assign multicast_children[2]={1'b1,91'd0,multicast_table_entry[59:56],routing_table_entry[PriorityPos+PriorityWidth-1:PriorityPos],weight_split[2],multicast_table_entry[55:50],input_fifo_out[PayloadLen-1:0]};
-    assign multicast_children[3]={1'b1,91'd0,multicast_table_entry[79:76],routing_table_entry[PriorityPos+PriorityWidth-1:PriorityPos],weight_split[3],multicast_table_entry[75:70],input_fifo_out[PayloadLen-1:0]};
-    assign multicast_children[4]={1'b1,91'd0,multicast_table_entry[99:96],routing_table_entry[PriorityPos+PriorityWidth-1:PriorityPos],weight_split[3],multicast_table_entry[95:90],input_fifo_out[PayloadLen-1:0]};
+    assign multicast_children[0]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth-1],multicast_table_entry[19:16],routing_table_entry[PriorityPos+PriorityWidth-1:PriorityPos],weight_split[0],multicast_table_entry[15:0],input_fifo_out[PayloadLen-1:0]};
+    assign multicast_children[1]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth-1],multicast_table_entry[39:36],routing_table_entry[PriorityPos+PriorityWidth-1:PriorityPos],weight_split[1],multicast_table_entry[35:20],input_fifo_out[PayloadLen-1:0]};
+    assign multicast_children[2]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth-1],multicast_table_entry[59:56],routing_table_entry[PriorityPos+PriorityWidth-1:PriorityPos],weight_split[2],multicast_table_entry[55:50],input_fifo_out[PayloadLen-1:0]};
+    assign multicast_children[3]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth-1],multicast_table_entry[79:76],routing_table_entry[PriorityPos+PriorityWidth-1:PriorityPos],weight_split[3],multicast_table_entry[75:70],input_fifo_out[PayloadLen-1:0]};
+    assign multicast_children[4]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth-1],multicast_table_entry[99:96],routing_table_entry[PriorityPos+PriorityWidth-1:PriorityPos],weight_split[3],multicast_table_entry[95:90],input_fifo_out[PayloadLen-1:0]};
     
     always@(*) begin
         if(multicast_table_entry[127:120]==2) begin//the counter of valid packets can only be 2,3,4,5
