@@ -111,7 +111,7 @@ module reduction_unit
     always@(posedge clk) begin
         if(hold) begin
             if(reduction_table_entry[ReductionTableWidth-1:ReductionTableWidth-3]==reduction_table_entry[ReductionTableWidth-4:ReductionTableWidth-6]+1)
-                injector_in_reduction<={1'b1,91'd0,reduction_table_entry[155:152],input_fifo_out[PriorityPos+PriorityWidth-1:PriorityPos],reduction_table_entry[135:128],reduction_table_entry[151:136],reduction_table_entry[127:0]};
+                injector_in_reduction<={1'b1,input_fifo_out[254:156],reduction_table_entry_next[155:152],input_fifo_out[PriorityPos+PriorityWidth-1:PriorityPos],reduction_table_entry_next[135:128],reduction_table_entry_next[151:136],reduction_table_entry_next[127:0]};
             else
                 injector_in_reduction<=injector_in_reduction;
         end
