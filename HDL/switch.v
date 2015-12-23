@@ -47,6 +47,9 @@ module switch
 	input [DataWidth-1:0] inject_zneg,	
     input inject_receive_zneg, 
     input EjectSlotAvail_zneg,
+    input [DataWidth-1:0] inject_local,
+    input inject_receive_local,
+    input EjectSlotAvail_local,
 	
 //output
 	output [DataWidth-1:0] eject_xpos, 
@@ -67,6 +70,9 @@ module switch
 	output [DataWidth-1:0] eject_zneg, 
     output eject_send_zneg, 
     output InjectSlotAvail_zneg,
+    output [DataWidth-1:0] eject_local,
+    output eject_send_local,
+    output InjectSlotAvail_local,
 
     output [7:0] xpos_ClockwiseUtil, 
     output [7:0] xpos_CounterClockwiseUtil, 
@@ -90,9 +96,9 @@ module switch
 	
 
 	
-	wire inject_receive_local, eject_send_local;
-	wire EjectSlotAvail_local, InjectSlotAvail_local;
-	wire [DataWidth-1:0] inject_local, eject_local;
+//	wire inject_receive_local, eject_send_local;
+//	wire EjectSlotAvail_local, InjectSlotAvail_local;
+//	wire [DataWidth-1:0] inject_local, eject_local;
 	
 	wire [DataWidth-1:0] ClockwiseIn_xneg_xpos, ClockwiseOut_xneg_xpos;
 	wire [DataWidth-1:0] CounterClockwiseIn_xpos_xneg, CounterClockwiseOut_xpos_xneg;
@@ -165,8 +171,6 @@ module switch
 	//     ||     ||     ||
 	//     -x     +z     -z
 	
-	local_unit u0(clk,rst,eject_local,eject_send_local,InjectSlotAvail_local,
-				inject_local,inject_receive_local,EjectSlotAvail_local);
 	
 
 	router #(

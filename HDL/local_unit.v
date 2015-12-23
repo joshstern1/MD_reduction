@@ -137,6 +137,7 @@ module local_unit
         end
     end
 
+    //initial weight is 128
     assign inject_local={1'b1,ZCoord,YCoord,XCoord,packet_counter,routing_table[packet_counter][31:28],71'd0,8'd128,packet_counter,32'd0,32'd1,32'd1,32'd1};
     
 
