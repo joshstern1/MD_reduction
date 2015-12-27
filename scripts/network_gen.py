@@ -56,7 +56,7 @@ def var_gen(size):
         for j in range(0,size):
             for k in range(0,size):
                 tag="_"+str(i)+"_"+str(j)+"_"+str(k)
-                tmp="\twire inject_receive_xpos"+tag+" ,EjectSlotAvail_xpos"+tag+";\n"
+                tmp="\twire[DataWidth-1:0] inject_xpos_ser"+tag+" ,EjectSlotAvail_xpos"+tag+";\n"
                 tmp+="\twire inject_receive_xneg"+tag+" ,EjectSlotAvail_xneg"+tag+";\n"
                 tmp+="\twire inject_receive_ypos"+tag+" ,EjectSlotAvail_ypos"+tag+";\n"
                 tmp+="\twire inject_receive_yneg"+tag+" ,EjectSlotAvail_yneg"+tag+";\n"
@@ -159,32 +159,73 @@ def node_gen(size):
         for j in range(0,size):
             for k in range(0,size):
                 tag="_"+str(i)+"_"+str(j)+"_"+str(k)
-                tmp="node_active n"+tag+"(\n"+'''//input\n'''+"clk,rst,\n"
-                tmp+="\tinject_xpos"+tag+",inject_receive_xpos"+tag+",EjectSlotAvail_xpos"+tag+",\n"
-                tmp+="\tinject_xneg"+tag+",inject_receive_xneg"+tag+",EjectSlotAvail_xneg"+tag+",\n"
-                tmp+="\tinject_ypos"+tag+",inject_receive_ypos"+tag+",EjectSlotAvail_ypos"+tag+",\n"
-                tmp+="\tinject_yneg"+tag+",inject_receive_yneg"+tag+",EjectSlotAvail_yneg"+tag+",\n"
-                tmp+="\tinject_zpos"+tag+",inject_receive_zpos"+tag+",EjectSlotAvail_zpos"+tag+",\n"
-                tmp+="\tinject_zneg"+tag+",inject_receive_zneg"+tag+",EjectSlotAvail_zneg"+tag+",\n"
-                tmp+='''//output\n'''
-                tmp+="\teject_xpos"+tag+",eject_send_xpos"+tag+",InjectSlotAvail_xpos"+tag+",\n"
-                tmp+="\teject_xneg"+tag+",eject_send_xneg"+tag+",InjectSlotAvail_xneg"+tag+",\n"
-                tmp+="\teject_ypos"+tag+",eject_send_ypos"+tag+",InjectSlotAvail_ypos"+tag+",\n"
-                tmp+="\teject_yneg"+tag+",eject_send_yneg"+tag+",InjectSlotAvail_yneg"+tag+",\n"
-                tmp+="\teject_zpos"+tag+",eject_send_zpos"+tag+",InjectSlotAvail_zpos"+tag+",\n"
-                tmp+="\teject_zneg"+tag+",eject_send_zneg"+tag+",InjectSlotAvail_zneg"+tag+",\n"
-
-                tmp+="\txpos_ClockwiseUtil"+tag+",xpos_CounterClockwiseUtil"+tag+",xpos_InjectUtil"+tag+",\n"
-                tmp+="\txneg_ClockwiseUtil"+tag+",xneg_CounterClockwiseUtil"+tag+",xneg_InjectUtil"+tag+",\n"
-                tmp+="\typos_ClockwiseUtil"+tag+",ypos_CounterClockwiseUtil"+tag+",ypos_InjectUtil"+tag+",\n"
-                tmp+="\tyneg_ClockwiseUtil"+tag+",yneg_CounterClockwiseUtil"+tag+",yneg_InjectUtil"+tag+",\n"
-                tmp+="\tzpos_ClockwiseUtil"+tag+",zpos_CounterClockwiseUtil"+tag+",zpos_InjectUtil"+tag+",\n"
-                tmp+="\tzneg_ClockwiseUtil"+tag+",zneg_CounterClockwiseUtil"+tag+",zneg_InjectUtil"+tag+");\n\n"
+                tmp="    node#(
+        .X("+str(i)+"),
+        .Y("+str(j)+"),
+        .Z("+str(k)+"),
+        .CoordWidth(CoordWidth),
+        .XCoordPos(XCoordPos),
+        .YCoordPos(YCoordPos),
+        .ZCoordPos(ZCoordPos),
+        .PacketIDPos(PacketIDPos),
+        .PacketTypePos(PacketTypePos),
+        .packet_count(packet_count),
+        .PayloadLen(PayloadLen),
+        .DataWidth(DataWidth),
+        .WeightPos(WeightPos),
+        .WeightWidth(WeightWidth),
+        .IndexPos(IndexPos),
+        .IndexWidth(IndexWidth),
+        .PriorityPos(PriorityPos),
+        .PriorityWidth(PriorityWidth),
+        .ExitPos(ExitPos),
+        .ExitWidth(ExitWidth),
+        .InterNodeFIFODepth(InterNodeFIFODepth),
+        .IntraNodeFIFODepth(IntraNodeFIFODepth),
+        .RoutingTableWidth(RoutingTableWidth),
+        .RoutingTablesize(RoutingTablesize),
+        .MulticastTableWidth(MulticastTableWidth),
+        .MulticastTablesize(MulticastTablesize),
+        .ReductionTableWidth(ReductionTableWIdth),
+        .ReductionTablesize(ReductionTablesize),
+        .PcktTypeLen(PcktTypeLen)
+        )"\n
+                tmp+="n"+tag+"(
+        .clk(clk),
+        .rst(rst),
+        .inject_xpos_ser(inject_xpos_ser"+tag+"),
+        .eject_xpos_ser(eject_xpos_ser"+tag+"),
+        .inject_xneg_ser(inject_xneg_ser"+tag+").
+        .eject_xneg_ser(eject_xneg_ser"+tag+"),
+        .inject_ypos_ser(inject_ypos_ser"+tag+"),
+        .eject_ypos_ser(eject_ypos_ser"+tag+"),
+        .inject_yneg_ser(inject_yneg_ser"+tag+").
+        .eject_yneg_ser(eject_yneg_ser"+tag+"),
+        .inject_zpos_ser(inject_zpos_ser"+tag+"),
+        .eject_zpos_ser(eject_zpos_ser"+tag+"),
+        .inject_zneg_ser(inject_zneg_ser"+tag+").
+        .eject_zneg_ser(eject_zneg_ser"+tag+"),
+        .xpos_ClockwiseUtil(xpos_ClockwiseUtil"+tag+"),
+        .xpos_CounterClockwiseUtil(xpos_CounterClockwiseUtil"+tag+"),
+        .xpos_InjectUtil(xpos_InjectUtil"+tag+"),
+        .xneg_ClockwiseUtil(xneg_ClockwiseUtil"+tag+"),
+        .xneg_CounterClockwiseUtil(xneg_CounterClockwiseUtil"+tag+"),
+        .xneg_InjectUtil(xneg_InjectUtil"+tag+"),
+        .ypos_ClockwiseUtil(ypos_ClockwiseUtil"+tag+"),
+        .ypos_CounterClockwiseUtil(ypos_CounterClockwiseUtil"+tag+"),
+        .ypos_InjectUtil(ypos_InjectUtil"+tag+"),
+        .yneg_ClockwiseUtil(yneg_ClockwiseUtil"+tag+"),
+        .yneg_CounterClockwiseUtil(yneg_CounterClockwiseUtil"+tag+"),
+        .yneg_InjectUtil(yneg_InjectUtil"+tag+"),
+        .zpos_ClockwiseUtil(zpos_ClockwiseUtil"+tag+"),
+        .zpos_CounterClockwiseUtil(zpos_CounterClockwiseUtil"+tag+"),
+        .zpos_InjectUtil(zpos_InjectUtil"+tag+"),
+        .zneg_ClockwiseUtil(zneg_ClockwiseUtil"+tag+"),
+        .zneg_CounterClockwiseUtil(zneg_CounterClockwiseUtil"+tag+"),
+        .zneg_InjectUtil(zneg_InjectUtil"+tag+")
+);\n"
 
                 node+=tmp
-                node+="\tdefparam n"+tag+".u0.x="+str(i)+";\n"
-                node+="\tdefparam n"+tag+".u0.y="+str(j)+";\n"
-                node+="\tdefparam n"+tag+".u0.z="+str(k)+";\n\n"
     return node
 
 def link_gen(size):

@@ -246,7 +246,7 @@ module node
         .z(z),
         .dir(3'b001)
     )
-    xpos_link_inst(
+    xneg_link_inst(
         .rst(rst),
         .tx_clk(clk),
         .tx_par_data({eject_send_xneg,eject_xneg[DataWidth-2:0]}),
@@ -257,7 +257,97 @@ module node
         .rx_ser_data(inject_xneg_ser),
         .rx_ready(rx_ready_xneg)
     );
-    assign inject_receive_xneg=eject_xpos[DataWidth-1] && rx_ready_xpos;
+    assign inject_receive_xneg=eject_xneg[DataWidth-1] && rx_ready_xneg;
+
+//ypos link
+    internode_link#(
+        .WIDTH(DataWIDTH),
+        .DELAY(LinkDelay),
+        .x(x),
+        .y(y),
+        .z(z),
+        .dir(3'b010)
+    )
+    ypos_link_inst(
+        .rst(rst),
+        .tx_clk(clk),
+        .tx_par_data({eject_send_ypos,eject_ypos[DataWidth-2:0]}),
+        .tx_ser_data(eject_ypos_ser),
+        .tx_ready(EjectSlotAvail_ypos),
+        .rx_clk(clk),
+        .rx_par_data(inject_ypos),
+        .rx_ser_data(inject_ypos_ser),
+        .rx_ready(rx_ready_ypos)
+    );
+    assign inject_receive_ypos=eject_ypos[DataWidth-1] && rx_ready_ypos;
+
+//yneg link
+    internode_link#(
+        .WIDTH(DataWIDTH),
+        .DELAY(LinkDelay),
+        .x(x),
+        .y(y),
+        .z(z),
+        .dir(3'b011)
+    )
+    yneg_link_inst(
+        .rst(rst),
+        .tx_clk(clk),
+        .tx_par_data({eject_send_yneg,eject_yneg[DataWidth-2:0]}),
+        .tx_ser_data(eject_yneg_ser),
+        .tx_ready(EjectSlotAvail_yneg),
+        .rx_clk(clk),
+        .rx_par_data(inject_yneg),
+        .rx_ser_data(inject_yneg_ser),
+        .rx_ready(rx_ready_yneg)
+    );
+    assign inject_receive_yneg=eject_yneg[DataWidth-1] && rx_ready_yneg;
+
+//zpos link
+    internode_link#(
+        .WIDTH(DataWIDTH),
+        .DELAY(LinkDelay),
+        .x(x),
+        .y(y),
+        .z(z),
+        .dir(3'b100)
+    )
+    zpos_link_inst(
+        .rst(rst),
+        .tx_clk(clk),
+        .tx_par_data({eject_send_zpos,eject_zpos[DataWidth-2:0]}),
+        .tx_ser_data(eject_zpos_ser),
+        .tx_ready(EjectSlotAvail_zpos),
+        .rx_clk(clk),
+        .rx_par_data(inject_zpos),
+        .rx_ser_data(inject_zpos_ser),
+        .rx_ready(rx_ready_zpos)
+    );
+    assign inject_receive_zpos=eject_zpos[DataWidth-1] && rx_ready_zpos;
+
+//zneg link
+    internode_link#(
+        .WIDTH(DataWIDTH),
+        .DELAY(LinkDelay),
+        .x(x),
+        .y(y),
+        .z(z),
+        .dir(3'b101)
+    )
+    zneg_link_inst(
+        .rst(rst),
+        .tx_clk(clk),
+        .tx_par_data({eject_send_zneg,eject_zneg[DataWidth-2:0]}),
+        .tx_ser_data(eject_zneg_ser),
+        .tx_ready(EjectSlotAvail_zneg),
+        .rx_clk(clk),
+        .rx_par_data(inject_zneg),
+        .rx_ser_data(inject_zneg_ser),
+        .rx_ready(rx_ready_zneg)
+    );
+    assign inject_receive_zneg=eject_zneg[DataWidth-1] && rx_ready_zneg;
+
+
 
 
 
