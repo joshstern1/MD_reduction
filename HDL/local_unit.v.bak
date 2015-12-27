@@ -156,7 +156,7 @@ module local_unit
                 else
                     $display("file open failed\n");
                 $strobe("Displaying in %m\t");
-                if(inject_local[PacketIDPos+PcktTypeLen-1:PacketIDPos]==4'b1010)
+                if(inject_local[PacketIDPos+PcktLen-1:PacketIDPos]==4'b1010)
                     $strobe("reduction packet\t");
                 else
                     $strobe("multicast packet\t");

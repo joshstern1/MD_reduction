@@ -1,3 +1,8 @@
+#Purpose: Python scripts to generate the testbench for network.v to connect all the nodes and switches in the 3D torus
+#Author: Jiayi Sheng
+#Organization: CAAD lab @ Boston University
+#Start date: Dec 27th 2015
+#
 import sys
 import os
 import getopt
@@ -8,15 +13,27 @@ def module_gen():
     return module
 
 def parameter_gen():
-    parameter='''	parameter DataLenInside=48;
-    parameter DataLenOutside=40;
-	parameter IntraRingFIFODepth=2;
-	parameter IDLen=3;
-	parameter PriorityLen=5; //priority field has 5 bits, 0 is the lowest priority
-	parameter TableIndexFieldLen=16;
-
-	parameter InterRingFIFODepth=10;
-	parameter table_size=8192;\n '''
+    parameter='''	parameter PayloadLen=128;
+    parameter DataWidth=256;
+    parameter WeightPos=144;
+    parameter WeightWidth=8;
+    parameter IndexPos=128;
+    parameter IndexWidth=16;
+    parameter PriorityPos=152;
+    parameter PriorityWidth=8;
+    parameter ExitPos=160;
+    parameter ExitWidth=4;
+    parameter InterNodeFIFODepth=128;
+    parameter IntraNodeFIFODepth=1;
+    parameter RoutingTableWidth=32;
+    parameter RoutingTablesize=256;
+    parameter MulticastTableWidth=103;
+    parameter MulticastTablesize=256;
+    parameter ReductionTableWidth=162;
+    parameter ReductionTablesize=256;
+    parameter PcktTypeLen=4;
+    parameter profiling_freq=10;\n
+\n '''
     return parameter
 
 def var_gen(size):
@@ -39,14 +56,27 @@ def initial_gen(size):
         for j in range(0,size):
             for k in range(0,size):
                 tag="_"+str(i)+"_"+str(j)+"_"+str(k)
-                tmp="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/phd/offline_routing_v2/data/table"+tag+"_local.txt\",net0.n"+tag+".LOCAL.routing_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/phd/offline_routing_v2/data/table"+tag+"_local.txt\",net0.n"+tag+".u0.routing_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/phd/offline_routing_v2/data/table"+tag+"_xpos.txt\",net0.n"+tag+".XPOS.routing_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/phd/offline_routing_v2/data/table"+tag+"_xneg.txt\",net0.n"+tag+".XNEG.routing_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/phd/offline_routing_v2/data/table"+tag+"_ypos.txt\",net0.n"+tag+".YPOS.routing_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/phd/offline_routing_v2/data/table"+tag+"_yneg.txt\",net0.n"+tag+".YNEG.routing_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/phd/offline_routing_v2/data/table"+tag+"_zpos.txt\",net0.n"+tag+".ZPOS.routing_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/phd/offline_routing_v2/data/table"+tag+"_zneg.txt\",net0.n"+tag+".ZNEG.routing_table);\n"
+                tmp="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/routing_tables/routing_table"+tag+"_local.txt\",net0.n"+tag+".local_unit_inst.routing_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/routing_tables/routing_table"+tag+"_xpos.txt\",net0.n"+tag+".switch_inst.XPOS.routing_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/routing_tables/routing_table"+tag+"_xneg.txt\",net0.n"+tag+".switch_inst.XNEG.routing_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/routing_tables/routing_table"+tag+"_ypos.txt\",net0.n"+tag+".switch_inst.YPOS.routing_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/routing_tables/routing_table"+tag+"_yneg.txt\",net0.n"+tag+".switch_inst.YNEG.routing_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/routing_tables/routing_table"+tag+"_zpos.txt\",net0.n"+tag+".switch_inst.ZPOS.routing_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/routing_tables/routing_table"+tag+"_zneg.txt\",net0.n"+tag+".switch_inst.ZNEG.routing_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/multicast_tables/multicast_table"+tag+"_xpos.txt\",net0.n"+tag+".switch_inst.XPOS.multicast_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/multicast_tables/multicast_table"+tag+"_xneg.txt\",net0.n"+tag+".switch_inst.XNEG.multicast_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/multicast_tables/multicast_table"+tag+"_ypos.txt\",net0.n"+tag+".switch_inst.YPOS.multicast_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/multicast_tables/multicast_table"+tag+"_yneg.txt\",net0.n"+tag+".switch_inst.YNEG.multicast_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/multicast_tables/multicast_table"+tag+"_zpos.txt\",net0.n"+tag+".switch_inst.ZPOS.multicast_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/multicast_tables/multicast_table"+tag+"_zneg.txt\",net0.n"+tag+".switch_inst.ZNEG.multicast_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/reduction_tables/reduction_table"+tag+"_xpos.txt\",net0.n"+tag+".switch_inst.XPOS.reduction_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/reduction_tables/reduction_table"+tag+"_xneg.txt\",net0.n"+tag+".switch_inst.XNEG.reduction_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/reduction_tables/reduction_table"+tag+"_ypos.txt\",net0.n"+tag+".switch_inst.YPOS.reduction_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/reduction_tables/reduction_table"+tag+"_yneg.txt\",net0.n"+tag+".switch_inst.YNEG.reduction_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/reduction_tables/reduction_table"+tag+"_zpos.txt\",net0.n"+tag+".switch_inst.ZPOS.reduction_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/reduction_tables/reduction_table"+tag+"_zneg.txt\",net0.n"+tag+".switch_inst.ZNEG.reduction_table);\n"
+
+
                 initial+=tmp
     initial+='''	initial begin
 		clk=0;
@@ -94,7 +124,7 @@ def main(argv):
    #         print(opt)
             size=int(arg)
     code=network_gen(size)
-    f=open("..\src\\network_tb.v",'w')
+    f=open("..\HDL\\network_tb.v",'w')
     f.write(code)
     f.close()
 

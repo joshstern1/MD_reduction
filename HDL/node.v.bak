@@ -260,7 +260,7 @@ module node
 
 //xneg link
     internode_link#(
-        .WIDTH(DataWidth),
+        .WIDTH(DataWIDTH),
         .DELAY(LinkDelay),
         .x(X),
         .y(Y),
@@ -282,7 +282,7 @@ module node
 
 //ypos link
     internode_link#(
-        .WIDTH(DataWidth),
+        .WIDTH(DataWIDTH),
         .DELAY(LinkDelay),
         .x(X),
         .y(Y),
@@ -304,7 +304,7 @@ module node
 
 //yneg link
     internode_link#(
-        .WIDTH(DataWidth),
+        .WIDTH(DataWIDTH),
         .DELAY(LinkDelay),
         .x(X),
         .y(Y),
@@ -326,7 +326,7 @@ module node
 
 //zpos link
     internode_link#(
-        .WIDTH(DataWidth),
+        .WIDTH(DataWIDTH),
         .DELAY(LinkDelay),
         .x(X),
         .y(Y),
@@ -348,7 +348,7 @@ module node
 
 //zneg link
     internode_link#(
-        .WIDTH(DataWidth),
+        .WIDTH(DataWIDTH),
         .DELAY(LinkDelay),
         .x(X),
         .y(Y),
