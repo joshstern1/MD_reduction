@@ -82,20 +82,20 @@ module multicast_unit#(
     
     wire [MulticastTableWidth-1:0] multicast_table_entry;
    
-    wire [DataWidth-1:0] multicast_children[4:0]; //There are five fan-out at most
-    reg [WeightWidth-1:0] weight_split[4:0]; //weight split
+    wire [DataWidth-1:0] multicast_children[5:0]; //There are five fan-out at most and one to local
+    reg [WeightWidth-1:0] weight_split[5:0]; //weight split
 //    wire start;//when asserted, means the multicast unit is active.
     reg start_reg;
     reg[MulticastTableWidth-1:0] multicast_table[MulticastTablesize-1:0];
     reg [2:0] children_ptr;//point to the children packet that is about to be sent
     wire [2:0] multicast_counter;
     
-    assign start=routing_table_entry[RoutingTableWidth-1:RoutingTableWidth-PcktTypeLen]==2; //packet type equals to multicast
+    assign start=routing_table_entry[RoutingTableWidth-1:RoutingTableWidth-PcktTypeLen]==4'b1001; //packet type equals to multicast
 
-    assign multicast_counter=multicast_table_entry[102:100];
+    assign multicast_counter=multicast_table_entry[102:100]+1;
 
     always@(posedge clk) begin
-        start<=start_reg;
+        start_reg<=start;
     end
 
     always@(posedge clk) begin
@@ -120,40 +120,55 @@ module multicast_unit#(
 
     assign multicast_table_entry=multicast_table[routing_table_entry[23:8]];//when the packet is not multicast, this is invalid
     
-    assign multicast_children[0]={1'b1,91'd0,multicast_table_entry[19:16],routing_table_entry[PriorityPos+PriorityWidth-1:PriorityPos],weight_split[0],multicast_table_entry[15:0],input_fifo_out[PayloadLen-1:0]};
-    assign multicast_children[1]={1'b1,91'd0,multicast_table_entry[39:36],routing_table_entry[PriorityPos+PriorityWidth-1:PriorityPos],weight_split[1],multicast_table_entry[35:20],input_fifo_out[PayloadLen-1:0]};
-    assign multicast_children[2]={1'b1,91'd0,multicast_table_entry[59:56],routing_table_entry[PriorityPos+PriorityWidth-1:PriorityPos],weight_split[2],multicast_table_entry[55:50],input_fifo_out[PayloadLen-1:0]};
-    assign multicast_children[3]={1'b1,91'd0,multicast_table_entry[79:76],routing_table_entry[PriorityPos+PriorityWidth-1:PriorityPos],weight_split[3],multicast_table_entry[75:70],input_fifo_out[PayloadLen-1:0]};
-    assign multicast_children[4]={1'b1,91'd0,multicast_table_entry[99:96],routing_table_entry[PriorityPos+PriorityWidth-1:PriorityPos],weight_split[3],multicast_table_entry[95:90],input_fifo_out[PayloadLen-1:0]};
+
+    assign multicast_children[0]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth-1],{4'b0},{7'b0,1'b1},weight_split[0],16'd0,input_fifo_out[PayLoadLen-1:0]};// local pckt has the lowest priority and the table entry is a dont care value
+    assign multicast_children[1]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth-1],multicast_table_entry[19:16],routing_table_entry[PriorityPos+PriorityWidth-1:PriorityPos],weight_split[1],multicast_table_entry[15:0],input_fifo_out[PayloadLen-1:0]};
+    assign multicast_children[2]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth-1],multicast_table_entry[39:36],routing_table_entry[PriorityPos+PriorityWidth-1:PriorityPos],weight_split[2],multicast_table_entry[35:20],input_fifo_out[PayloadLen-1:0]};
+    assign multicast_children[3]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth-1],multicast_table_entry[59:56],routing_table_entry[PriorityPos+PriorityWidth-1:PriorityPos],weight_split[3],multicast_table_entry[55:50],input_fifo_out[PayloadLen-1:0]};
+    assign multicast_children[4]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth-1],multicast_table_entry[79:76],routing_table_entry[PriorityPos+PriorityWidth-1:PriorityPos],weight_split[4],multicast_table_entry[75:70],input_fifo_out[PayloadLen-1:0]};
+    assign multicast_children[5]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth-1],multicast_table_entry[99:96],routing_table_entry[PriorityPos+PriorityWidth-1:PriorityPos],weight_split[5],multicast_table_entry[95:90],input_fifo_out[PayloadLen-1:0]};
     
     always@(*) begin
-        if(multicast_table_entry[127:120]==2) begin//the counter of valid packets can only be 2,3,4,5
+        if(multicast_table_entry[127:120]==1) begin//the counter of valid packets can only be 1,2,3,4,5
             weight_split[0]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>1;//1/2
             weight_split[1]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>1;//1/2
             weight_split[2]=0;
             weight_split[3]=0;
             weight_split[4]=0;
+            weight_split[5]=0;
         end
-        else if(multicast_table_entry[127:120]==3) begin
-            weight_split[0]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>1;//1/2
+        else if(multicast_table_entry[127:120]==2) begin//the counter of valid packets can only be 1,2,3,4,5
+            weight_split[0]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
             weight_split[1]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
-            weight_split[2]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
+            weight_split[2]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>1;//1/2
             weight_split[3]=0;
             weight_split[4]=0;
+            weight_split[5]=0;
         end
-        else if(multicast_table_entry[127:120]==4) begin
+        else if(multicast_table_entry[127:120]==3) begin
             weight_split[0]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
             weight_split[1]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
             weight_split[2]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
             weight_split[3]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
             weight_split[4]=0;
+            weight_split[5]=0;
+        end
+        else if(multicast_table_entry[127:120]==4) begin
+            weight_split[0]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
+            weight_split[1]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
+            weight_split[2]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
+            weight_split[3]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
+            weight_split[4]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
+            weight_split[5]=0;
         end
         else if(multicast_table_entry[127:120]==5) begin
-            weight_split[0]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
-            weight_split[1]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
-            weight_split[2]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
+            weight_split[0]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
+            weight_split[1]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
+            weight_split[2]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
             weight_split[3]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
-            weight_split[4]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
+            weight_split[4]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
+            weight_split[5]=input_fifo_out[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
+
         end
         else begin
             weight_split[0]=0;
@@ -161,6 +176,7 @@ module multicast_unit#(
             weight_split[2]=0;
             weight_split[3]=0;
             weight_split[4]=0;
+            weight_split[5]=0;
         end
     end
 

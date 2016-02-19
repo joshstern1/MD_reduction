@@ -5,16 +5,10 @@
 
 module node
 #(
-   parameter X=4'd0,
-    parameter Y=4'd0,
-    parameter Z=4'd0,
-    parameter CoordWidth=4,
-    parameter XCoordPos=243,
-    parameter YCoordPos=247,
-    parameter ZCoordPos=251,
-    parameter PacketIDPos=227,
-    parameter PacketTypePos=223,
-    parameter packet_count=256,
+    parameter DataSize=8'd172,
+    parameter X=8'd0,
+    parameter Y=8'd0,
+    parameter Z=8'd0,
     parameter PayloadLen=128,
     parameter DataWidth=256,
     parameter WeightPos=144,
@@ -105,16 +99,10 @@ module node
     wire InjectSlotAvail_local,EjectSlotAvail_local; 
 //local unit
     local_unit#(
+        .DataSize(DataSize),
         .X(X),
         .Y(Y),
         .Z(Z),
-        .CoordWidth(CoordWidth),
-        .XCoordPos(XCoordPos),
-        .YCoordPos(YCoordPos),
-        .ZCoordPos(ZCoordPos),
-        .PacketIDPos(PacketIDPos),
-        .PacketTypePos(PacketTypePos),
-        .packet_count(packet_count),
         .PayloadLen(PayloadLen),
         .DataWidth(DataWidth),
         .WeightPos(WeightPos),
@@ -147,6 +135,7 @@ module node
     );
     
     switch#(
+        .ReductionBitPos(ReductionBitPos),
         .PayloadLen(PayloadLen),
         .DataWidth(DataWidth),
         .WeightPos(WeightPos),
@@ -260,7 +249,7 @@ module node
 
 //xneg link
     internode_link#(
-        .WIDTH(DataWIDTH),
+        .WIDTH(DataWidth),
         .DELAY(LinkDelay),
         .x(X),
         .y(Y),
@@ -282,7 +271,7 @@ module node
 
 //ypos link
     internode_link#(
-        .WIDTH(DataWIDTH),
+        .WIDTH(DataWidth),
         .DELAY(LinkDelay),
         .x(X),
         .y(Y),
@@ -304,7 +293,7 @@ module node
 
 //yneg link
     internode_link#(
-        .WIDTH(DataWIDTH),
+        .WIDTH(DataWidth),
         .DELAY(LinkDelay),
         .x(X),
         .y(Y),
@@ -326,7 +315,7 @@ module node
 
 //zpos link
     internode_link#(
-        .WIDTH(DataWIDTH),
+        .WIDTH(DataWidth),
         .DELAY(LinkDelay),
         .x(X),
         .y(Y),
@@ -348,7 +337,7 @@ module node
 
 //zneg link
     internode_link#(
-        .WIDTH(DataWIDTH),
+        .WIDTH(DataWidth),
         .DELAY(LinkDelay),
         .x(X),
         .y(Y),

@@ -11,13 +11,7 @@ import getopt
 
 def module_gen():
     module='''module network#(
-    parameter CoordWidth=4,
-    parameter XCoordPos=243,
-    parameter YCoordPos=247,
-    parameter ZCoordPos=251,
-    parameter PacketIDPos=227,
-    parameter PacketTypePos=223,
-    parameter packet_count=256,
+    parameter DataSize=8'd172,
     parameter PayloadLen=128,
     parameter DataWidth=256,
     parameter WeightPos=144,
@@ -37,7 +31,7 @@ def module_gen():
     parameter ReductionTableWidth=162,
     parameter ReductionTablesize=256,
     parameter PcktTypeLen=4,
-    parameter profiling_freq=10
+    parameter LinkDelay=20
 )(
     input clk,
     input rst
@@ -48,7 +42,7 @@ def parameter_gen():
     parameter=""
     return parameter
 
-def var_gen(size):
+def var_gen(xsize,ysize,zsize):
     var=""
     tag=""
     tmp=""
@@ -59,9 +53,9 @@ def var_gen(size):
     tmp+="\treg[15:0] link_sum,Clockwise_sum,CounterClockwise_sum,Inject_sum,port_sum;\n"
     tmp+="\treg[15:0] counter, time_counter;\n"
     var+=tmp;
-    for i in range(0,size):
-        for j in range(0,size):
-            for k in range(0,size):
+    for i in range(0,xsize):
+        for j in range(0,ysize):
+            for k in range(0,zsize):
                 tag="_"+str(i)+"_"+str(j)+"_"+str(k)
                 tmp="\twire[DataWidth-1:0] inject_xpos_ser"+tag+", eject_xpos_ser"+tag+";\n"
                 tmp+="\twire[DataWidth-1:0] inject_xneg_ser"+tag+", eject_xneg_ser"+tag+";\n"
@@ -83,62 +77,56 @@ def var_gen(size):
 
 
 
-def assign_gen(size):
+def assign_gen(xsize,ysize,zsize):
     assign=""
     tag0=""
     tag1=""
     tag2=""
     tmp=""
-    for i in range(0,size):
-        for j in range(0,size):
-            for k in range(0,size):
-                tag0="_"+str((i-1+size)%size)+"_"+str(j)+"_"+str(k)
+    for i in range(0,xsize):
+        for j in range(0,ysize):
+            for k in range(0,zsize):
+                tag0="_"+str((i-1+xsize)%xsize)+"_"+str(j)+"_"+str(k)
                 tag1="_"+str(i)+"_"+str(j)+"_"+str(k)
-                tag2="_"+str((i+1)%size)+"_"+str(j)+"_"+str(k)
+                tag2="_"+str((i+1)%xsize)+"_"+str(j)+"_"+str(k)
                 tmp="\tassign inject_xpos_ser"+tag1+"=eject_xneg_ser"+tag2+";\n"
                 tmp+="\tassign inject_xneg_ser"+tag1+"=eject_xpos_ser"+tag0+";\n"
                 assign+=tmp
 
-    for i in range(0,size):
-        for j in range(0,size):
-            for k in range(0,size):
-                tag0="_"+str(i)+"_"+str((j-1+size)%size)+"_"+str(k)
+    for i in range(0,xsize):
+        for j in range(0,ysize):
+            for k in range(0,zsize):
+                tag0="_"+str(i)+"_"+str((j-1+ysize)%ysize)+"_"+str(k)
                 tag1="_"+str(i)+"_"+str(j)+"_"+str(k)
-                tag2="_"+str(i)+"_"+str((j+1)%size)+"_"+str(k)
+                tag2="_"+str(i)+"_"+str((j+1)%ysize)+"_"+str(k)
                 tmp="\tassign inject_ypos_ser"+tag1+"=eject_yneg_ser"+tag2+";\n"
                 tmp+="\tassign inject_yneg_ser"+tag1+"=eject_ypos_ser"+tag0+";\n"
                 assign+=tmp
 
-    for i in range(0,size):
-        for j in range(0,size):
-            for k in range(0,size):
-                tag0="_"+str(i)+"_"+str(j)+"_"+str((k-1+size)%size)
+    for i in range(0,xsize):
+        for j in range(0,ysize):
+            for k in range(0,zsize):
+                tag0="_"+str(i)+"_"+str(j)+"_"+str((k-1+zsize)%zsize)
                 tag1="_"+str(i)+"_"+str(j)+"_"+str(k)
-                tag2="_"+str(i)+"_"+str(j)+"_"+str((k+1)%size)
+                tag2="_"+str(i)+"_"+str(j)+"_"+str((k+1)%zsize)
                 tmp="\tassign inject_zpos_ser"+tag1+"=eject_zneg_ser"+tag2+";\n"
                 tmp+="\tassign inject_zneg_ser"+tag1+"=eject_zpos_ser"+tag0+";\n"
                 assign+=tmp
     return assign
 
-def node_gen(size):
+def node_gen(xsize,ysize,zsize):
     node=""
     tag=""
     tmp=""
-    for i in range(0,size):
-        for j in range(0,size):
-            for k in range(0,size):
+    for i in range(0,xsize):
+        for j in range(0,ysize):
+            for k in range(0,zsize):
                 tag="_"+str(i)+"_"+str(j)+"_"+str(k)
                 tmp='''    node#(
+        .DataSize(DataSize),
         .X('''+str(i)+'''),
         .Y('''+str(j)+'''),
         .Z('''+str(k)+'''),
-        .CoordWidth(CoordWidth),
-        .XCoordPos(XCoordPos),
-        .YCoordPos(YCoordPos),
-        .ZCoordPos(ZCoordPos),
-        .PacketIDPos(PacketIDPos),
-        .PacketTypePos(PacketTypePos),
-        .packet_count(packet_count),
         .PayloadLen(PayloadLen),
         .DataWidth(DataWidth),
         .WeightPos(WeightPos),
@@ -157,7 +145,8 @@ def node_gen(size):
         .MulticastTablesize(MulticastTablesize),
         .ReductionTableWidth(ReductionTableWidth),
         .ReductionTablesize(ReductionTablesize),
-        .PcktTypeLen(PcktTypeLen)
+        .PcktTypeLen(PcktTypeLen),
+        .LinkDelay(LinkDelay)
         )'''
                 tmp+="n"+tag+'''(
         .clk(clk),
@@ -193,45 +182,51 @@ def node_gen(size):
         .zneg_CounterClockwiseUtil(zneg_CounterClockwiseUtil'''+tag+'''),
         .zneg_InjectUtil(zneg_InjectUtil'''+tag+''')
 );\n'''
-            node+=tmp
+                node+=tmp
     return node
 
 
 
-def network_gen(size):
+def network_gen(xsize,ysize,zsize):
     module=module_gen()
     paramter=parameter_gen()
-    var=var_gen(size)
+    var=var_gen(xsize,ysize,zsize)
    # var_extra=var_extra_gen(size)
-    assign=assign_gen(size)
-    unit=node_gen(size)
+    assign=assign_gen(xsize,ysize,zsize)
+    unit=node_gen(xsize,ysize,zsize)
     #profiling=profiling_gen(size)
     return module+paramter+var+assign+unit+"endmodule\n"
 
 def usage():
     print ('''Usage: ./network -h (helper)
-    ./network -s [size] denote the size of the 3D torus network default value=2''')
+    ./network -x [xsize] -y [ysize] -z [zsize] denote the size of the 3D torus network default value=2''')
 
 
 def main(argv):
     print(argv)
     try:
-        opts,args=getopt.getopt(argv,"hs:",["help","size"])
+        opts,args=getopt.getopt(argv,"hx:y:z:",["help","xsize","ysize","zsize"])
     except getopt.GetoptError:
         usage()
         sys.exit(2);
 
     size=2
-   # print(opts)
-  #  print(args)
+    print(opts)
+    print(args)
     for opt,arg in opts:
         if opt in ("-h","--help"):
             usage()
             sys.exit()
-        elif opt in("-s","--size"):
-   #         print(opt)
-            size=int(arg)
-    code=network_gen(size)
+        elif opt in("-x","--xsize"):
+            xsize=int(arg)
+            print(xsize)
+        elif opt in("-y","--ysize"):
+            ysize=int(arg)
+            print(ysize)
+        elif opt in("-z","--zsize"):
+            zsize=int(arg)
+            print(zsize)
+    code=network_gen(xsize,ysize,zsize)
     f=open("..\HDL\\network.v",'w')
     f.write(code)
     f.close()

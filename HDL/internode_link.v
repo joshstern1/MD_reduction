@@ -36,13 +36,13 @@ module internode_link
     integer i=0;
     always@(posedge tx_clk) begin
         if(rst) begin
-            for(i=0;i<DELAY/2-1;i=i+1) begin
+            for(i=0;i<DELAY/2;i=i+1) begin
                 shift_reg_tx[i]<=0;
             end
         end
         else begin
             shift_reg_tx[0]<=tx_par_data;
-            for(i=0;i<DELAY/2-2;i=i+1) begin
+            for(i=0;i<DELAY/2-1;i=i+1) begin
                 shift_reg_tx[i+1]<=shift_reg_tx[i];
             end
         end
@@ -51,7 +51,7 @@ module internode_link
 
     always@(posedge rx_clk) begin
         if(rst) begin
-            for(i=0;i<DELAY/2-1;i=i+1) begin
+            for(i=0;i<DELAY/2;i=i+1) begin
                 shift_reg_rx[i]<=0;
             end
         end

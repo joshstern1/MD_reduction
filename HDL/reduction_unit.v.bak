@@ -18,8 +18,8 @@
     */
 //inside the router
 /*
-    *|255      |254--164 |163---160|159---152|151-----144|143-----128|127--96|95--64|63--32|31--0|
-    *|valid bit|unused   |dst      |priority |log  weight|table index|type   |z     |y     |x    |
+    *|255      |254          |253--164|163---160|159---152|151-----144|143-----128|127--96|95--64|63--32|31--0|
+    *|valid bit|reduction bit|unused  |dst      |priority |log  weight|table index|type   |z     |y     |x    |
 
     *
 
@@ -48,6 +48,7 @@
 module reduction_unit
 #(
     parameter srcID=3'd0,
+    parameter ReductionBitPos=254,
     parameter PayloadLen=128,
     parameter DataWidth=256,
     parameter WeightPos=144,
@@ -71,24 +72,31 @@ module reduction_unit
 (
     input clk,
     input rst,
-    input [DataWidth-1:0] input_fifo_out,
-    input consume_inject,
+    input EjectSlotAvail,
+    input [DataWidth-1:0] reduction_eject,
     input [RoutingTableWidth-1:0] routing_table_entry, 
-    output fifo2_consume_reduction,
+    output reg reduction_consume, //read signal to read data from either ejector0 or ejector1
     output reg ready,//all the expected data have arrived
-    output hold,//assert when the input_fifo_out is the reduction type
-    output reg [DataWidth-1:0] injector_in_reduction
+    output hold,//assert when the reduction_eject is the reduction type
+    output reg [DataWidth-1:0] eject_out_reduction
 );
     
     reg[ReductionTableWidth-1:0] reduction_table[ReductionTablesize-1:0];
     wire[ReductionTableWidth-1:0] reduction_table_entry;
     wire[ReductionTableWidth-1:0] reduction_table_entry_next;
 
-    assign reduction_table_entry_next={reduction_table_entry[161:159],(reduction_table_entry[158:156]+1),reduction_table_entry[155:136],(reduction_table_entry+input_fifo_out[WeightPos+WeightWidth-1:WeightPos]),(reduction_table_entry[PayloadLen-1:0]+input_fifo_out[PayloadLen-1:0])};
+    wire [IndexWidth-1:0] reduction_table_index;
 
-    assign reduction_table_entry=reduction_table[routing_table_entry[23:8]];//when the packet is not reduction, this is invalid
+    wire hold;
+
+    assign hold=reduction_eject[ReductionBitPos]//incoming packet is reduction packet
+    assign reduction_table_index=reduction_eject[IndexPos+IndexWidth-1:IndexPos];
+
+
+    assign reduction_table_entry_next={reduction_table_entry[161:159],(reduction_table_entry[158:156]+1),reduction_table_entry[155:136],(reduction_table_entry+reduction_eject[WeightPos+WeightWidth-1:WeightPos]),(reduction_table_entry[PayloadLen-1:0]+reduction_eject[PayloadLen-1:0])};
+
+    assign reduction_table_entry=reduction_table[reduction_table_index];//when the packet is not reduction, this is invalid
     
-    assign hold=routing_table_entry[RoutingTableWidth-1:RoutingTableWidth-PcktTypeLen]==3; //packet type equals to reduction
     //data is ready to sent to outside when all the expected packtes have arrived
     always@(posedge clk) begin
         if(~ready) begin
@@ -100,7 +108,7 @@ module reduction_unit
             end
         end
         else begin
-            if(consume_inject)
+            if(EjectSlotAvail)
                 ready<=0;
             else
                 ready<=1;
@@ -111,26 +119,26 @@ module reduction_unit
     always@(posedge clk) begin
         if(hold) begin
             if(reduction_table_entry[ReductionTableWidth-1:ReductionTableWidth-3]==reduction_table_entry[ReductionTableWidth-4:ReductionTableWidth-6]+1)
-                injector_in_reduction<={1'b1,91'd0,reduction_table_entry[155:152],input_fifo_out[PriorityPos+PriorityWidth-1:PriorityPos],reduction_table_entry[135:128],reduction_table_entry[151:136],reduction_table_entry[127:0]};
+                 eject_out_reduction<={1'b1,103'b0,reduction_table_entry_next[135:128],reduction_table_entry_next[151:136],reduction_table_entry_next[127:0]};
             else
-                injector_in_reduction<=injector_in_reduction;
+                eject_out_reduction<=ejector_out_reduction;               
         end
         else
-            injector_in_reduction<=injector_in_reduction;
+                eject_out_reduction<=ejector_out_reduction;               
     end
 
     always@(*) begin
         if(hold&&~ready) begin
-            fifo2_consume_reduction=(reduction_table_entry[ReductionTableWidth-1:ReductionTableWidth-3]>reduction_table_entry[ReductionTableWidth-4:ReductionTableWidth-6]);
+            reduction_consume=(reduction_table_entry[ReductionTableWidth-1:ReductionTableWidth-3]>reduction_table_entry[ReductionTableWidth-4:ReductionTableWidth-6]);
         end
         else begin
-            fifo2_consume_reduction=0;
+            reduction_consume=0;//this should not happen
         end
     end
 
     always@(posedge clk) begin
-        if(fifo2_consume_reduction) begin
-            reduction_table[routing_table_entry[23:8]]<=reduction_table_entry_next;
+        if(reduction_consume) begin
+            reduction_table[reduction_table_index]<=reduction_table_entry_next;
         end
     end
 

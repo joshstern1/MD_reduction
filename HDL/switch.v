@@ -5,6 +5,7 @@
 //
 module switch
 #(
+    parameter ReductionBitPos=254,
     parameter PayloadLen=128,
     parameter DataWidth=256,
     parameter WeightPos=144,
@@ -174,6 +175,7 @@ module switch
 	
 
 	router #(
+        .ReductionBitPos(ReductionBitPos),
         .srcID(3),
         .PayloadLen(PayloadLen),
         .DataWidth(DataWidth),
@@ -213,9 +215,9 @@ module switch
         .eject(eject_xpos),
         .eject_send(eject_send_xpos),
         .ClockwiseSend(ClockwiseSend_xpos_ypos),
-        .CounterClockwiseSend(CounterClockwiseOut_xpos_xneg),
-        .ClockwiseAvail(ClockwiseSlotAvail_xneg_xpos),
-        .CounterClockwiseAvail(CounterClockwiseSlotAvail_ypos_xpos),
+        .CounterClockwiseSend(CounterClockwiseSend_xpos_xneg),
+        .ClockwiseSlotAvail(ClockwiseSlotAvail_xneg_xpos),
+        .CounterClockwiseSlotAvail(CounterClockwiseSlotAvail_ypos_xpos),
         .InjectSlotAvail(InjectSlotAvail_xpos),
         .CounterClockwiseUtil(xpos_CounterClockwiseUtil),
         .ClockwiseUtil(xpos_ClockwiseUtil),
@@ -231,6 +233,7 @@ module switch
 	assign CounterClockwiseSlotAvail_xpos_xneg=CounterClockwiseNextSlotAvail_xpos_xneg;
 */	
 	router #(
+        .ReductionBitPos(ReductionBitPos),
         .srcID(4),
         .PayloadLen(PayloadLen),
         .DataWidth(DataWidth),
@@ -251,6 +254,7 @@ module switch
         .ReductionTableWidth(ReductionTableWidth),
         .ReductionTablesize(ReductionTablesize),
         .PcktTypeLen(PcktTypeLen)
+
     )XNEG(
 //input
 	    .clk(clk), 
@@ -270,13 +274,18 @@ module switch
 	    .eject_send(eject_send_xneg),
 	    .ClockwiseSend(ClockwiseSend_xneg_xpos),
 	    .CounterClockwiseSend(CounterClockwiseSend_xneg_zpos),
-	    .ClockwiseAvail(ClockwiseSlotAvail_zpos_xneg),
-	    .CounterClockwiseAvail(CounterClockwiseSlotAvail_xpos_xneg),
+	    .ClockwiseSlotAvail(ClockwiseSlotAvail_zpos_xneg),
+	    .CounterClockwiseSlotAvail(CounterClockwiseSlotAvail_xpos_xneg),
 	    .InjectSlotAvail(InjectSlotAvail_xneg),
-	    .eject(eject_xneg)
+	    .eject(eject_xneg),
+        .CounterClockwiseUtil(xneg_CounterClockwiseUtil),
+        .ClockwiseUtil(xneg_ClockwiseUtil),
+        .InjectUtil(xneg_InjectUtil)
+
     );
 	
 	router #(
+        .ReductionBitPos(ReductionBitPos),
         .srcID(5),
         .PayloadLen(PayloadLen),
         .DataWidth(DataWidth),
@@ -316,13 +325,19 @@ module switch
 	    .eject_send(eject_send_zpos),
 	    .ClockwiseSend(ClockwiseSend_zpos_xneg),
 	    .CounterClockwiseSend(CounterClockwiseSend_zpos_zneg),
-	    .ClockwiseAvail(ClockwiseSlotAvail_zneg_zpos),
-	    .CounterClockwiseAvail(CounterClockwiseSlotAvail_xneg_zpos),
+	    .ClockwiseSlotAvail(ClockwiseSlotAvail_zneg_zpos),
+	    .CounterClockwiseSlotAvail(CounterClockwiseSlotAvail_xneg_zpos),
 	    .InjectSlotAvail(InjectSlotAvail_zpos),
-	    .eject(eject_zpos)
+	    .eject(eject_zpos),
+        .CounterClockwiseUtil(zpos_CounterClockwiseUtil),
+        .ClockwiseUtil(zpos_ClockwiseUtil),
+        .InjectUtil(zpos_InjectUtil)
+
+
     );
 
     router#(
+        .ReductionBitPos(ReductionBitPos),
         .srcID(6),
         .PayloadLen(PayloadLen),
         .DataWidth(DataWidth),
@@ -362,13 +377,19 @@ module switch
 	    .eject_send(eject_send_zneg),
 	    .ClockwiseSend(ClockwiseSend_zneg_zpos),
 	    .CounterClockwiseSend(CounterClockwiseSend_zneg_local),
-	    .ClockwiseAvail(ClockwiseSlotAvail_local_zneg),
-	    .CounterClockwiseAvail(CounterClockwiseSlotAvail_zpos_zneg),
+	    .ClockwiseSlotAvail(ClockwiseSlotAvail_local_zneg),
+	    .CounterClockwiseSlotAvail(CounterClockwiseSlotAvail_zpos_zneg),
 	    .InjectSlotAvail(InjectSlotAvail_zneg),
-	    .eject(eject_zneg)
+	    .eject(eject_zneg),
+        .CounterClockwiseUtil(zneg_CounterClockwiseUtil),
+        .ClockwiseUtil(zneg_ClockwiseUtil),
+        .InjectUtil(zneg_InjectUtil)
+
+
     );
 
     router #(
+        .ReductionBitPos(ReductionBitPos),
         .srcID(0),
         .PayloadLen(PayloadLen),
         .DataWidth(DataWidth),
@@ -391,30 +412,36 @@ module switch
         .PcktTypeLen(PcktTypeLen)
     )LOCAL(
 //input
-	.clk(clk), 
-    .rst(rst),
-	.ClockwiseIn(ClockwiseIn_yneg_local), 
-	.CounterClockwiseIn(CounterClockwiseIn_zneg_local),
-	.inject(inject_local),
-	.inject_receive(inject_receive_local),
-	.ClockwiseReceive(ClockwiseReceive_yneg_local),
-	.CounterClockwiseReceive(CounterClockwiseReceive_zneg_local),
-	.ClockwiseNextSlotAvail(ClockwiseNextSlotAvail_local_zneg),
-	.CounterClockwiseNextSlotAvail(CounterClockwiseNextSlotAvail_local_yneg),
-	.EjectSlotAvail(EjectSlotAvail_local),
+	    .clk(clk), 
+        .rst(rst),
+	    .ClockwiseIn(ClockwiseIn_yneg_local), 
+	    .CounterClockwiseIn(CounterClockwiseIn_zneg_local),
+	    .inject(inject_local),
+	    .inject_receive(inject_receive_local),
+	    .ClockwiseReceive(ClockwiseReceive_yneg_local),
+	    .CounterClockwiseReceive(CounterClockwiseReceive_zneg_local),
+	    .ClockwiseNextSlotAvail(ClockwiseNextSlotAvail_local_zneg),
+	    .CounterClockwiseNextSlotAvail(CounterClockwiseNextSlotAvail_local_yneg),
+	    .EjectSlotAvail(EjectSlotAvail_local),
 //output
-	.ClockwiseOut(ClockwiseOut_local_zneg),
-	.CounterClockwiseOut(CounterClockwiseOut_local_yneg),
-	.eject_send(eject_send_local),
-	.ClockwiseSend(ClockwiseSend_local_zneg),
-    .CounterClockwiseSend(CounterClockwiseSend_local_yneg),
-	.ClockwiseAvail(ClockwiseSlotAvail_yneg_local),
-	.CounterClockwiseAvail(CounterClockwiseSlotAvail_zneg_local),
-	.InjectSlotAvail(InjectSlotAvail_local),
-	.eject(eject_local)
+	    .ClockwiseOut(ClockwiseOut_local_zneg),
+	    .CounterClockwiseOut(CounterClockwiseOut_local_yneg),
+	    .eject_send(eject_send_local),
+	    .ClockwiseSend(ClockwiseSend_local_zneg),
+        .CounterClockwiseSend(CounterClockwiseSend_local_yneg),
+	    .ClockwiseSlotAvail(ClockwiseSlotAvail_yneg_local),
+	    .CounterClockwiseSlotAvail(CounterClockwiseSlotAvail_zneg_local),
+	    .InjectSlotAvail(InjectSlotAvail_local),
+	    .eject(eject_local),
+        .CounterClockwiseUtil(zneg_CounterClockwiseUtil),
+        .ClockwiseUtil(zneg_ClockwiseUtil),
+        .InjectUtil(zneg_InjectUtil)
+
+
     );
 	
 	router #(
+        .ReductionBitPos(ReductionBitPos),
         .srcID(1),
         .PayloadLen(PayloadLen),
         .DataWidth(DataWidth),
@@ -437,30 +464,35 @@ module switch
         .PcktTypeLen(PcktTypeLen)
     )YNEG(
 //input
-	.clk(clk), 
-    .rst(rst),
-	.ClockwiseIn(ClockwiseIn_ypos_yneg), 
-	.CounterClockwiseIn(CounterClockwiseIn_local_yneg),
-	.inject(inject_yneg),
-	.inject_receive(inject_receive_yneg),
-	.ClockwiseReceive(ClockwiseReceive_ypos_yneg),
-	.CounterClockwiseReceive(CounterClockwiseReceive_local_yneg),
-	.ClockwiseNextSlotAvail(ClockwiseNextSlotAvail_yneg_local),
-	.CounterClockwiseNextSlotAvail(CounterClockwiseNextSlotAvail_yneg_ypos),
-	.EjectSlotAvail(EjectSlotAvail_yneg),
+	    .clk(clk), 
+        .rst(rst),
+	    .ClockwiseIn(ClockwiseIn_ypos_yneg), 
+	    .CounterClockwiseIn(CounterClockwiseIn_local_yneg),
+	    .inject(inject_yneg),
+	    .inject_receive(inject_receive_yneg),
+	    .ClockwiseReceive(ClockwiseReceive_ypos_yneg),
+	    .CounterClockwiseReceive(CounterClockwiseReceive_local_yneg),
+	    .ClockwiseNextSlotAvail(ClockwiseNextSlotAvail_yneg_local),
+	    .CounterClockwiseNextSlotAvail(CounterClockwiseNextSlotAvail_yneg_ypos),
+	    .EjectSlotAvail(EjectSlotAvail_yneg),
 //output
-	.ClockwiseOut(ClockwiseOut_yneg_local),
-	.CounterCLockwiseOut(CounterClockwiseOut_yneg_ypos),
-	.eject_send(eject_send_yneg),
-	.ClockwiseSend(ClockwiseSend_yneg_local),
-	.CounterClockwiseSend(CounterClockwiseSend_yneg_ypos),
-	.ClockwiseAvail(ClockwiseSlotAvail_ypos_yneg),
-	.CounterClockwiseAvail(CounterClockwiseSlotAvail_local_yneg),
-	.InjectSlotAvail(InjectSlotAvail_yneg),
-	.eject(eject_yneg)
+	    .ClockwiseOut(ClockwiseOut_yneg_local),
+	    .CounterClockwiseOut(CounterClockwiseOut_yneg_ypos),
+	    .eject_send(eject_send_yneg),
+	    .ClockwiseSend(ClockwiseSend_yneg_local),
+	    .CounterClockwiseSend(CounterClockwiseSend_yneg_ypos),
+	    .ClockwiseSlotAvail(ClockwiseSlotAvail_ypos_yneg),
+	    .CounterClockwiseSlotAvail(CounterClockwiseSlotAvail_local_yneg),
+	    .InjectSlotAvail(InjectSlotAvail_yneg),
+	    .eject(eject_yneg),
+        .CounterClockwiseUtil(zneg_CounterClockwiseUtil),
+        .ClockwiseUtil(zneg_ClockwiseUtil),
+        .InjectUtil(zneg_InjectUtil)
+
     );
 
     router #(
+        .ReductionBitPos(ReductionBitPos),
         .srcID(2),
         .PayloadLen(PayloadLen),
         .DataWidth(DataWidth),
@@ -483,27 +515,31 @@ module switch
         .PcktTypeLen(PcktTypeLen)
     )YPOS(
 //input
-	.clk(clk), 
-    .rst(rst),
-	.ClockwiseIn(ClockwiseIn_xpos_ypos), 
-	.CounterClockwiseIn(CounterClockwiseIn_yneg_ypos),
-	.inject(inject_ypos),
-	.inject_receive(inject_receive_ypos),
-	.ClockwiseReceive(ClockwiseReceive_xpos_ypos),
-	.CounterClockwiseReceive(CounterClockwiseReceive_yneg_ypos),
-	.ClockwiseNextSlotAvail(ClockwiseNextSlotAvail_ypos_yneg),
-	.CounterClockwiseNextSlotAvail(CounterClockwiseNextSlotAvail_ypos_xpos),
-	.EjectSlotAvail(EjectSlotAvail_ypos),
+	    .clk(clk), 
+        .rst(rst),
+	    .ClockwiseIn(ClockwiseIn_xpos_ypos), 
+	    .CounterClockwiseIn(CounterClockwiseIn_yneg_ypos),
+	    .inject(inject_ypos),
+	    .inject_receive(inject_receive_ypos),
+	    .ClockwiseReceive(ClockwiseReceive_xpos_ypos),
+	    .CounterClockwiseReceive(CounterClockwiseReceive_yneg_ypos),
+	    .ClockwiseNextSlotAvail(ClockwiseNextSlotAvail_ypos_yneg),
+	    .CounterClockwiseNextSlotAvail(CounterClockwiseNextSlotAvail_ypos_xpos),
+	    .EjectSlotAvail(EjectSlotAvail_ypos),
 //output
-	.ClockwiseOut(ClockwiseOut_ypos_yneg),
-	.CounterClockwiseOut(CounterClockwiseOut_ypos_xpos),
-	.eject_send(eject_send_ypos),
-	.ClockwiseSend(ClockwiseSend_ypos_yneg),
-	.CounterClockwiseSend(CounterClockwiseSend_ypos_xpos),
-	.ClockwiseSlotAvail(ClockwiseSlotAvail_xpos_ypos),
-	.CounterClockwiseSlotAvail(CounterClockwiseSlotAvail_yneg_ypos),
-	.InjectSlotAvail(InjectSlotAvail_ypos),
-	.eject(eject_ypos)
+	    .ClockwiseOut(ClockwiseOut_ypos_yneg),
+	    .CounterClockwiseOut(CounterClockwiseOut_ypos_xpos),
+	    .eject_send(eject_send_ypos),
+	    .ClockwiseSend(ClockwiseSend_ypos_yneg),
+	    .CounterClockwiseSend(CounterClockwiseSend_ypos_xpos),
+	    .ClockwiseSlotAvail(ClockwiseSlotAvail_xpos_ypos),
+	    .CounterClockwiseSlotAvail(CounterClockwiseSlotAvail_yneg_ypos),
+	    .InjectSlotAvail(InjectSlotAvail_ypos),
+	    .eject(eject_ypos),
+        .CounterClockwiseUtil(ypos_CounterClockwiseUtil),
+        .ClockwiseUtil(ypos_ClockwiseUtil),
+        .InjectUtil(ypos_InjectUtil)
+
     );
 
 	

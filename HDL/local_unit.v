@@ -4,18 +4,19 @@
 //Start date: Dec 9th 2015
 //
 //the 256-bit data format will be like this
+//the 256-bit data format will be like this
 //Outside the router 
 /*
-    *|255      |254--251     |250--247     |246--243     |242--227        |226--223   |222--152|151-----144|143-----128|127--96|95--64|63--32|31--0|
-    *|valid bit|Z of src node|Y of src node|X of src onde|id of the packet|packet type|unused  |log  weight|table Index|type   |z     |y     |x    |
+    *|255      |254          | 253--246    |245--238     |237--230     |229--222        |221--218   |217--210     |209--202     |201--194     |193--186            |185--152|151-----144|143-----128|127--96|95--64|63--32|31--0|
+    *|valid bit|reduction bit|z of src node|y of src node|x of src onde|src id of packet|packet type|z of dst node|y of dst node|x of dst node|dst id of the packet|unused  |log  weight|table index|type   |z     |y     |x    |
 
     *
 
     */
 //inside the router
 /*
-    *|255      |254--251     |250--247     |246--243     |242--227        |226---223  |222--164|163---160|159---152|151-----144|143-----128|127--96|95--64|63--32|31--0|
-    *|valid bit|Z of src node|Y of src node|X of src onde|id of the packet|packet type|unused  |dst      |priority |log  weight|table index|type   |z     |y     |x    |
+    *|255      |254          |253--246     |245--238     |237--230     |229--222        |221---218  |217--210     |209--202     |201--194     |193--186            |185-164|163---160|159---152|151-----144|143-----128|127--96|95--64|63--32|31--0|
+    *|valid bit|reduction bit|Z of src node|Y of src node|X of src onde|src id of packet|packet type|z of dst node|y of dst node|x of dst node|dst id of the packet|unused  |dst      |priority |log  weight|table index|type   |z     |y     |x    |
 
     *
 
@@ -34,20 +35,30 @@
       1010 is the reduction packet
         
     */
+
+`define REDUCTION
+
 module local_unit
 #(
-    parameter X=4'd0,
-    parameter Y=4'd0,
-    parameter Z=4'd0,
-    parameter CoordWidth=4,
-    parameter XCoordPos=243,
-    parameter YCoordPos=247,
-    parameter ZCoordPos=251,
-    parameter PacketIDPos=227,
-    parameter PacketTypePos=223,
+    parameter DataSize=8'd172,
+    parameter X=8'd0,
+    parameter Y=8'd0,
+    parameter Z=8'd0,
+    parameter CoordWidth=8,
+    parameter SrcXCoordPos=230,
+    parameter SrcYCoordPos=238,
+    parameter SrcZCoordPos=246,
+    parameter DstXCoordPos=194,
+    parameter DstYCoordPos=202,
+    parameter DstZCoordPos=210,
+    parameter SrcPacketIDPos=222,
+    parameter DstPacketIDPos=186,
+    parameter PacketTypePos=218,
     parameter packet_count=256,
+    parameter ReductionBitPos=254,
     parameter PayloadLen=128,
     parameter DataWidth=256,
+    parameter ReductionBitWidth=254,
     parameter WeightPos=144,
     parameter WeightWidth=8,
     parameter IndexPos=128,
@@ -62,7 +73,7 @@ module local_unit
     parameter RoutingTablesize=256,
     parameter MulticastTableWidth=103,
     parameter MulticastTablesize=256,
-    parameter ReductionTableWidth=162,
+    parameter ReductionTableWidth=19,
     parameter ReductionTablesize=256,
     parameter PcktTypeLen=4
 )
@@ -85,89 +96,194 @@ module local_unit
     wire [CoordWidth-1:0] XCoord;
     wire [CoordWidth-1:0] YCoord;
     wire [CoordWidth-1:0] ZCoord;
-    reg [31:0] cycle_counter;
+    reg [31:0] cycle_counter=0;
 
     reg [IndexWidth-1:0] packet_counter=0;
 //routing table copy
     reg [RoutingTableWidth-1:0] routing_table[RoutingTablesize-1:0];
 //data is register based 
+//
+    reg [DataWidth-1:0] eject_local_reg;
     
-    
-    assign XCoord=X;
-    assign YCoord=Y;
-    assign ZCoord=Z;
-//local FIFO instantiated
-    FIFO #(
-        .FIFO_depth(packet_count),
-        .FIFO_width(DataWidth)
-    )
-    local_fifo(
-        .clk(clk),
-        .rst(rst),
-        .in(eject_local),
-        .consume(1'b0),//read enabling to out port from FIFO
-        .produce(eject_send_local),//write enabling to in port to FIFO 
-        .out(local_fifo_out),
-        .full(local_fifo_full),
-        .empty(local_fifo_empty),
-        .util(local_fifo_util)
-    );
-	always@(posedge clk) begin
+
+    always@(posedge clk) begin
         if(rst)
             cycle_counter<=0;
-        else 
-	        cycle_counter<=cycle_counter+1;
-	end
-    
-    assign EjectSlotAvail_local=~local_fifo_full;
-    always@(posedge clk) begin
-        if(eject_send_local && EjectSlotAvail_local) begin
-            fd=$fopen("dump.txt","a");
-            $strobe("Displaying in %m\t");
-            if(eject_local[PacketTypePos+PcktTypeLen-1:PacketTypePos]==4'b1010)
-                $strobe("reduction packet\t");
-            else
-                $strobe("multicast packet\t");
-            $strobe("packet arrives from (%d,%d,%d) whose id is %d at cycle #%d\n",eject_local[XCoordPos+CoordWidth-1:XCoordPos],eject_local[YCoordPos+CoordWidth-1:YCoordPos],eject_local[ZCoordPos+CoordWidth-1:ZCoordPos],eject_local[PacketIDPos+PcktTypeLen-1:PacketIDPos],cycle_counter);
-            $fdisplay(fd,"Arriving at %m\t");
-//format [src.x] [src.y] [src.z] [dst.x] [dst.y] [dst.z] [id] [time] [packet type]
+        else
+            cycle_counter<=cycle_counter+1;
+    end
 
-            $fdisplay(fd,"%d %d %d %d %d %d %d %d %d",eject_local[XCoordPos+CoordWidth-1:XCoordPos],eject_local[YCoordPos+CoordWidth-1:YCoordPos],eject_local[ZCoordPos+CoordWidth-1:ZCoordPos],X,Y,Z,eject_local[PacketIDPos+PcktTypeLen-1:PacketIDPos],cycle_counter,eject_local[PacketTypePos+PcktTypeLen-1:PacketTypePos]);
+
+`ifdef MULTICAST
+    reg [DataWidth-1:0] data[DataSize-1:0];
+    //all the data share the same path, so each data will use the same table entry
+    reg [7:0] data_ptr;
+    wire [15:0] table_ptr;
+
+    assign inject_local=(data_ptr>=DataSize)?0:data[data_ptr];
+    assign inject_receive_local=inject_local[DataWidth-1];
+
+    always@(posedge clk) begin
+        if(rst) begin
+            data_ptr<=0;
+        end
+        else if(InjectSlotAvail_local&&inject_receive_local) begin
+            data_ptr<=data_ptr+1;
+            fd=$fopen("dump.txt","a");
+            if(fd)
+                $display("file: dump.txt open successfully\n");
+            else
+                $display("file open failed\n");
+            $strobe("Displaying in %m\t");
+            $strobe("multicast packet\t");
+            $strobe("data from (%d, %d, %d) whose id #%d is injected into the network at cycle %d",XCoord,YCoord,ZCoord,data_ptr,cycle_counter);
+            //format [src.x] [src.y] [src.z] [id] [time] [packet type]
+            $fdisplay(fd,"Departuring: \n %d %d %d %d %d 9",XCoord,YCoord,ZCoord,data_ptr,cycle_counter);
             $fclose(fd);
         end
     end
 
-    //initial weight is 128
-    assign inject_local={1'b1,ZCoord,YCoord,XCoord,packet_counter,routing_table[packet_counter][31:28],71'd0,8'd128,packet_counter,32'd0,32'd1,32'd1,32'd1};
-    
+    always@(posedge clk) begin
+        eject_local_reg<=eject_local;
+    end
+            
+    assign EjectSlotAvail_local=1;
+    always@(posedge clk) begin
+        if(eject_send_local && EjectSlotAvail_local) begin
+            fd=$fopen("dump.txt","a");
+            $strobe("Displaying in %m\t");
+            $strobe("multicast packet\t");
+            $strobe("packet arrives from (%d,%d,%d) whose id is %d at cycle #%d\n",eject_local_reg[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_local_reg[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_local_reg[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],eject_local_reg[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $fdisplay(fd,"Arriving\t");
+            //format [src.x] [src.y] [src.z] [dst.x] [dst.y] [dst.z] [id] [time] [packet type]
+            $fdisplay(fd,"%d %d %d %d %d %d %d %d 9",eject_local[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_local[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_local[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],X,Y,Z,eject_local[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $fclose(fd);
+        end
+    end
 
+`endif
 
+`ifdef REDUCTION
+    //each packet has its own routing table entry
+    reg [DataWidth-1:0] data[DataSize-1:0];
+    //all the data share the same path, so each data will use the same table entry
+    reg [7:0] data_ptr;
+    wire [15:0] table_ptr;
+    assign inject_local=(data_ptr>=DataSize)?0:data[data_ptr];
+    assign inject_receive_local=inject_local[DataWidth-1];
     always@(posedge clk) begin
         if(rst) begin
-            packet_counter<=0;
+            data_ptr<=0;
         end
-        else if(InjectSlotAvail_local&&packet_counter<=packet_count) begin
-            if(routing_table[packet_counter][RoutingTableWidth-1]) begin//valid bit is high means the table entry is valid
-                packet_counter<=packet_counter+1;
+        else if(InjectSlotAvail_local&&inject_receive_local) begin
+            data_ptr<=data_ptr+1;
+            fd=$fopen("dump.txt","a");
+            if(fd)
+                $display("file: dump.txt open successfully\n");
+            else
+                $display("file open failed\n");
+            $strobe("Displaying in %m\t");
+            $strobe("reduction packet\t");
+            $strobe("data from (%d, %d, %d) whose id #%d is injected into the network at cycle %d",XCoord,YCoord,ZCoord,data_ptr,cycle_counter);
+            //format [src.x] [src.y] [src.z] [id] [time] [packet type]
+            $fdisplay(fd,"Departuring: \n %d %d %d %d %d 10",XCoord,YCoord,ZCoord,packet_counter,cycle_counter);
+            $fclose(fd);
+        end
+    end
+    always@(posedge clk) begin
+        eject_local_reg<=eject_local;
+    end
             
+            
+    assign EjectSlotAvail_local=1;
+    always@(posedge clk) begin
+        if(eject_send_local && EjectSlotAvail_local) begin
+            fd=$fopen("dump.txt","a");
+            $strobe("Displaying in %m\t");
+            $strobe("reduction packet\t");
+            $strobe("packet arrives from (%d,%d,%d) whose id is %d at cycle #%d\n",eject_local_reg[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_local_reg[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_local_reg[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],eject_local_reg[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $fdisplay(fd,"Arriving\t");
+            //format [src.x] [src.y] [src.z] [dst.x] [dst.y] [dst.z] [id] [time] [packet type]
+            $fdisplay(fd,"%d %d %d %d %d %d %d %d 10",eject_local[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_local[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_local[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],X,Y,Z,eject_local[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $fclose(fd);
+        end
+    end
+
+
+`endif
+`ifdef SINGLECAST
+    reg [DataWidth-1:0] data[DataSize-1:0];
+    //all the data share the same path, so each data will use all the entry
+    reg [7:0] data_ptr;
+    reg [IndexWidth-1:0] table_index;
+
+
+    assign inject_receive_local=inject_local[DataWidth-1];
+
+    assign inject_local=(data_ptr>=DataSize)?0:{data[data_ptr][DataWidth-1:IndexPos+IndexWidth],table_index,data[data_ptr][IndexPos-1:0]};
+    
+    always@(posedge clk) begin
+        if(rst) begin
+            table_index<=0;
+            data_ptr<=0;
+        end
+        else if(routing_table[table_index+1][RoutingTableWidth-1]&&inject_receive_local) begin
+            if(InjectSlotAvail_local) begin
+                table_index<=table_index+1;
+                data_ptr<=data_ptr;
                 fd=$fopen("dump.txt","a");
                 if(fd)
-                    $display("file open successfully\n");
+                    $display("file: dump.txt open successfully\n");
                 else
                     $display("file open failed\n");
                 $strobe("Displaying in %m\t");
-                if(inject_local[PacketIDPos+PcktTypeLen-1:PacketIDPos]==4'b1010)
-                    $strobe("reduction packet\t");
-                else
-                    $strobe("multicast packet\t");
-                $strobe("data from (%d, %d, %d) whose id #%d is injected into the network at cycle %d",XCoord,YCoord,ZCoord,packet_counter,cycle_counter);
-//format [src.x] [src.y] [src.z] [id] [time] [packet type]
-                $fdisplay(fd,"%d %d %d %d %d %d",XCoord,YCoord,ZCoord,packet_counter,cycle_counter,inject_local[PacketIDPos+PcktLen-1:PacketIDPos]);
+                $strobe("reduction packet\t");
+                $strobe("data from (%d, %d, %d) whose id #%d is injected into the network at cycle %d",XCoord,YCoord,ZCoord,data_ptr,cycle_counter);
+                //format [src.x] [src.y] [src.z] [id] [time] [packet type]
+                $fdisplay(fd,"Departuring: \n %d %d %d %d %d 10",XCoord,YCoord,ZCoord,data_ptr,cycle_counter);
                 $fclose(fd);
-        
+
+            end
+            else begin
+                table_index<=table_index;
+                data_ptr<=data_ptr;
             end
         end
+        else begin
+            table_index<=0;
+            if(data[data_ptr][DataWidth-1]) begin
+                data_ptr<=data_ptr+1;
+            end
+            else
+                data_ptr<=data_ptr;
+        end
     end
+    assign EjectSlotAvail_local=1;
+    always@(posedge clk) begin
+        eject_local_reg<=eject_local;
+    end
+    always@(posedge clk) begin
+        if(eject_send_local && EjectSlotAvail_local) begin
+            fd=$fopen("dump.txt","a");
+            $strobe("Displaying in %m\t");
+            $strobe("singcast packet\t");
+            $strobe("packet arrives from (%d,%d,%d) whose id is %d at cycle #%d\n",eject_local_reg[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_local_reg[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_local_reg[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],eject_local_reg[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $fdisplay(fd,"Arriving\t");
+            //format [src.x] [src.y] [src.z] [dst.x] [dst.y] [dst.z] [id] [time] [packet type]
+            $fdisplay(fd,"%d %d %d %d %d %d %d %d 8",eject_local[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_local[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_local[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],X,Y,Z,eject_local[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $fclose(fd);
+        end
+    end
+
+
+    
+`endif
+
+
+    
+    assign XCoord=X;
+    assign YCoord=Y;
+    assign ZCoord=Z;
             
                 
 endmodule

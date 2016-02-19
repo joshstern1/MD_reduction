@@ -15,7 +15,7 @@ module FIFO
     input [FIFO_width-1:0] in,
     input consume,//read enabling to out port from FIFO
     input produce,//write enabling to in port to FIFO 
-    output [FIFO_depth-1:0] out,
+    output [FIFO_width-1:0] out,
     output full,
     output empty,
     output reg [FIFO_depth-1:0] util

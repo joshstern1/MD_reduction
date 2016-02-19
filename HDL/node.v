@@ -5,18 +5,13 @@
 
 module node
 #(
-   parameter X=4'd0,
-    parameter Y=4'd0,
-    parameter Z=4'd0,
-    parameter CoordWidth=4,
-    parameter XCoordPos=243,
-    parameter YCoordPos=247,
-    parameter ZCoordPos=251,
-    parameter PacketIDPos=227,
-    parameter PacketTypePos=223,
-    parameter packet_count=256,
+    parameter DataSize=8'd172,
+    parameter X=8'd0,
+    parameter Y=8'd0,
+    parameter Z=8'd0,
     parameter PayloadLen=128,
     parameter DataWidth=256,
+    parameter ReductionBitPos=254,
     parameter WeightPos=144,
     parameter WeightWidth=8,
     parameter IndexPos=128,
@@ -105,16 +100,10 @@ module node
     wire InjectSlotAvail_local,EjectSlotAvail_local; 
 //local unit
     local_unit#(
+        .DataSize(DataSize),
         .X(X),
         .Y(Y),
         .Z(Z),
-        .CoordWidth(CoordWidth),
-        .XCoordPos(XCoordPos),
-        .YCoordPos(YCoordPos),
-        .ZCoordPos(ZCoordPos),
-        .PacketIDPos(PacketIDPos),
-        .PacketTypePos(PacketTypePos),
-        .packet_count(packet_count),
         .PayloadLen(PayloadLen),
         .DataWidth(DataWidth),
         .WeightPos(WeightPos),
@@ -147,6 +136,7 @@ module node
     );
     
     switch#(
+        .ReductionBitPos(ReductionBitPos),
         .PayloadLen(PayloadLen),
         .DataWidth(DataWidth),
         .WeightPos(WeightPos),
@@ -256,7 +246,7 @@ module node
         .rx_ser_data(inject_xpos_ser),
         .rx_ready(rx_ready_xpos)
     );
-    assign inject_receive_xpos=eject_xpos[DataWidth-1] && rx_ready_xpos;
+    assign inject_receive_xpos=inject_xpos[DataWidth-1] && rx_ready_xpos;
 
 //xneg link
     internode_link#(
@@ -278,7 +268,7 @@ module node
         .rx_ser_data(inject_xneg_ser),
         .rx_ready(rx_ready_xneg)
     );
-    assign inject_receive_xneg=eject_xneg[DataWidth-1] && rx_ready_xneg;
+    assign inject_receive_xneg=inject_xneg[DataWidth-1] && rx_ready_xneg;
 
 //ypos link
     internode_link#(
@@ -300,7 +290,7 @@ module node
         .rx_ser_data(inject_ypos_ser),
         .rx_ready(rx_ready_ypos)
     );
-    assign inject_receive_ypos=eject_ypos[DataWidth-1] && rx_ready_ypos;
+    assign inject_receive_ypos=inject_ypos[DataWidth-1] && rx_ready_ypos;
 
 //yneg link
     internode_link#(
@@ -322,7 +312,7 @@ module node
         .rx_ser_data(inject_yneg_ser),
         .rx_ready(rx_ready_yneg)
     );
-    assign inject_receive_yneg=eject_yneg[DataWidth-1] && rx_ready_yneg;
+    assign inject_receive_yneg=inject_yneg[DataWidth-1] && rx_ready_yneg;
 
 //zpos link
     internode_link#(
@@ -344,7 +334,7 @@ module node
         .rx_ser_data(inject_zpos_ser),
         .rx_ready(rx_ready_zpos)
     );
-    assign inject_receive_zpos=eject_zpos[DataWidth-1] && rx_ready_zpos;
+    assign inject_receive_zpos=inject_zpos[DataWidth-1] && rx_ready_zpos;
 
 //zneg link
     internode_link#(
@@ -366,7 +356,7 @@ module node
         .rx_ser_data(inject_zneg_ser),
         .rx_ready(rx_ready_zneg)
     );
-    assign inject_receive_zneg=eject_zneg[DataWidth-1] && rx_ready_zneg;
+    assign inject_receive_zneg=inject_zneg[DataWidth-1] && rx_ready_zneg;
 
 
 

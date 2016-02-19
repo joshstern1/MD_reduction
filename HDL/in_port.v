@@ -1,25 +1,21 @@
-//Purpose: unit that can handle the multicast in the router
-//this unit will distribute the packets marked in the multicast entry to their destinations
-//
+//Purpose: crossbar-based switch that is composed of 7 routers
 //Author: Jiayi Sheng
 //Organization: CAAD lab @ Boston University
-//Start date: Dec 14th 2015
-//
-////
+//Start date: Feb 10th 2015
 //
 //the 256-bit data format will be like this
 //Outside the router 
 /*
-    *|255      |254---152|151-----144|143-----128|127--96|95--64|63--32|31--0|
-    *|valid bit|unused   |log  weight|table Index|type   |z     |y     |x    |
+    *|255      |254          | 253--246    |245--238     |237--230     |229--222        |221--218   |217--210     |209--202     |201--194     |193--186            |185--152|151-----144|143-----128|127--96|95--64|63--32|31--0|
+    *|valid bit|reduction bit|z of src node|y of src node|x of src onde|src id of packet|packet type|z of dst node|y of dst node|x of dst node|dst id of the packet|unused  |log  weight|table index|type   |z     |y     |x    |
 
     *
 
     */
 //inside the router
 /*
-    *|255      |254--164 |163---160|159---152|151-----144|143-----128|127--96|95--64|63--32|31--0|
-    *|valid bit|unused   |dst      |priority |log  weight|table index|type   |z     |y     |x    |
+    *|255      |254          |253--246     |245--238     |237--230     |229--222        |221---218  |217--210     |209--202     |201--194     |193--186            |185-164|163---160|159---152|151-----144|143-----128|127--96|95--64|63--32|31--0|
+    *|valid bit|reduction bit|Z of src node|Y of src node|X of src onde|src id of packet|packet type|z of dst node|y of dst node|x of dst node|dst id of the packet|unused  |dst      |priority |log  weight|table index|type   |z     |y     |x    |
 
     *
 
@@ -44,12 +40,19 @@
   for each fanout, format is as below:
   |dst   |table index|
   |4 bits|16 bits    | 
-* |counter of valid packets|5th packet| 4th packet| 3rd packet| 2nd packet| 1th packet| 103 bits in total
+* |counter of valid packets|1st packet| 2nd packet| 3rd packet| 4th packet| 5th packet| 103 bits in total
 * | 3 bits                 |20 bits   | 20 bits   | 20 bits   | 20 bits   | 20 bits   | 
+  the counter are between 1 and 5
 * */
 
-module multicast_unit#(
-    parameter SrcID=4'd0,//if this is on local unit, which means it is the root, it does not need to send the singlecast packet to itself
+in_port
+#(
+    parameter DataSize=8'd172,
+    parameter X=8'd0,
+    parameter Y=8'd0,
+    parameter Z=8'd0,
+    parameter srcID=4'd0,
+    parameter ReductionBitPos=254,
     parameter PayloadLen=128,
     parameter DataWidth=256,
     parameter WeightPos=144,
@@ -73,123 +76,126 @@ module multicast_unit#(
 (
     input clk,
     input rst,
-    input [DataWidth-1:0] input_fifo_out,
-    input consume_inject,//read signal to read the data in the multicast queue
-    input [RoutingTableWidth-1:0] routing_table_entry,
-    output [DataWidth-1:0] injector_in_multicast,
-    output start,//indicate the mulitcast unit is taking control of the injecting
-    output fifo2_consume_multicast, //read signal to the data in the inject queue, which will be asserted when all of the data in the multicast queue has all been sent
-    output start_but_not_ready// there is a not ready cycle when the last of children is sent  
-);
-    
-    wire [MulticastTableWidth-1:0] multicast_table_entry;
-   
-    wire [DataWidth-1:0] multicast_children[5:0]; //There are five fan-out at most and one to local
-    reg [WeightWidth-1:0] weight_split[5:0]; //weight split
-//    wire start;//when asserted, means the multicast unit is active.
-    reg start_reg;
-    reg[MulticastTableWidth-1:0] multicast_table[MulticastTablesize-1:0];
-    reg [2:0] children_ptr;//point to the children packet that is about to be sent
-    reg [2:0] children_ptr_reg;
-    wire [2:0] multicast_counter;
-    reg sending_the_last;
-    reg sending_the_last_reg;
 
-    wire [3:0] SrcID_wire;
- //   wire start_but_not_ready;
+//interfaces between the input port and fifos
+    input [DataWidth-1:0] in,
+    input data_in_avail,
 
-    assign SrcID_wire=SrcID;
+    output input_fifo_full,
 
-    assign base_children_ptr=(SrcID_wire==4'd0);
-    
-    assign start=(routing_table_entry[RoutingTableWidth-1:RoutingTableWidth-PcktTypeLen]==4'b1001) && (input_fifo_out[DataWidth-1]); //packet type equals to multicast
+//interfaces between muxes and in_port
+    output reg [Datawidth-1:0] out_port_in[7];
+    input out_avail[7];
+)
 
-    assign multicast_counter=multicast_table_entry[102:100];
+    //pipeline has three stages:
+    //first stage: input buffer consume stage (IC)
+    //second stage: routing table read stage (RR)
+    //third stage: multicast table read stage (MR)
+    //fourth stage: muxes input stage (MI) this is the stage before the muxes
 
-    always@(posedge clk) begin
-        if(rst)
-            start_reg<=0;
-        else
-            start_reg<=start;
-    end
-
-
-    always@(posedge clk) begin
-        if(rst)
-            children_ptr_reg<=0;
-        else
-            children_ptr_reg<=children_ptr;
-    end
-
-    always@(posedge clk) begin
-        if(rst) begin
-            sending_the_last<=0;
-        end
-        else begin
-            if(children_ptr==base_children_ptr+1) begin
-                if(consume_inject)
-                    sending_the_last<=1;
-                else
-                    sending_the_last<=0;
-            end
-            else if(children_ptr==base_children_ptr) begin
-                if(sending_the_last) begin
-                    if(consume_inject) begin
-                        sending_the_last<=0;
-                    end
-                    else begin
-                        sending_the_last<=1;
-                    end
-                end
-                else begin
-                    sending_the_last<=0;
-                end
-            end
-            else
-                sending_the_last<=sending_the_last;
-        end
-    end
-
-    always@(posedge clk) begin
-        sending_the_last_reg<=sending_the_last;
-    end
-
-    assign start_but_not_ready=start && children_ptr==base_children_ptr && children_ptr!= multicast_counter && sending_the_last==0;
-
-
-
-    always@(posedge clk) begin
-        if(rst) begin
-            children_ptr<=base_children_ptr;
-        end
-        else if(children_ptr==base_children_ptr) begin
-            if(sending_the_last) begin
-                children_ptr<=base_children_ptr;
-            end
-            else if(start) begin
-                children_ptr<=multicast_counter;
-            end
-            else
-                children_ptr<=base_children_ptr;
-        end
-        else begin
-            if(start && consume_inject) 
-                children_ptr<=children_ptr-1;
-            else
-                children_ptr<=children_ptr;
-        end
-    end
-            
-
-  
-    assign injector_in_multicast=multicast_children[children_ptr];
-    assign fifo2_consume_multicast=start&& sending_the_last && consume_inject; //when the local port, do not need to send the multicast_children[0]  
- 
-
-
-    assign multicast_table_entry=multicast_table[routing_table_entry[23:8]];//when the packet is not multicast, this is invalid
+    //pipeline control signals
+    wire stall;
+    wire input_fifo_consume;
     
 
+	//the ID mapping on the crossbar ports is shown below
+    //local:0
+    //yneg:1
+    //ypos:2
+    //xpos:3
+    //xneg:4
+    //zpos:5
+    //zneg:6
+    //
+	//routing table
+	reg[RoutingTableWidth-1:0] routing_table[RoutingTablesize-1:0];
+    
+    //multicast table
+    reg[RoutingTableWidth-1:0] multicast_table[MulticastTablesize-1:0];
+
+    
+
+    wire input_fifo_full;
+    wire input_fifo_empty;
+    wire [DataWidth-1:0] input_fifo_out_IC; //input fifo out from buffer at IC(input buffer consumption) stage
+
+    reg [DataWidth-1:0] input_fifo_out_RR; //input fifo out at routing table read stage
+
+    reg [DataWidth-1:0] input_fifo_out_MR; //input fifo out at multicast table read stage
+
+    
+
+
+    wire [IndexWidth-1:0] routing_table_index;
+    reg [RoutingTableWidth-1:0] routing_table_entry;
+
+
+
+    wire [PcktTypeLen-1:0] packet_type;
+    wire is_multicast;
+    reg is_multicast_MI;// the state register of is_multicast
+    reg [MulticastTableWidth-1:0] multicast_table_entry;
+    wire [IndexWidth-1:0] multicast_table_index;
+
+    wire [DataWidth-1:0] multicast_children[5:0];
+    wire [WeightWidth-1:0] weight_split[5:0];
+
+
+    
+    //pipeline stage1 IC
+    buffer#(
+        .buffer_depth(InterNodeFIFODepth),
+        .buffer_width(DataWidth)
+    )(
+        .clk(clk),
+        .rst(rst),
+        .in(in),
+        .produce(data_in_avail),
+        .consume(input_fifo_consume),
+        .full(input_fifo_full),
+        .empty(input_fifo_empty),
+        .out(input_fifo_out_IC)
+    )
+
+    
+    assign routing_table_index=input_fifo_out[IndexPos+IndexWidth-1:IndexPos];
+
+    //pipeline stage2 RR
+    always@(posedge clk) begin
+        routing_table_entry<=routing_table[routing_table_index];
+    end
+
+    always@(posedge clk) begin
+        input_fifo_out_RR<=input_fifo_out_IC;
+    end
+
+    //pipeline stage 3 MR
+    always@(posedge clk) begin
+        input_fifo_out_MR<=input_fifo_out_RR;
+    end
+    assign packet_type=routing_table_entry[31:28];
+    assign is_multicast=(packet_type==4'd9);
+    assign mutlicast_table_index=(is_multicast)?routing_table_entry[23:8]:0;
+
+    always@(posedge clk) begin
+        if(is_multicast) begin
+            multicast_table_entry<=multicast_table[multicast_table_index];
+        end
+    end
+
+    always@(posedge clk) begin
+        is_multicast_MI<=is_multicast;
+    end
+
+
+
+
+    //pipeline stage 4 MI
+    //
+    //
+    //
+    assign multicast_table_entry[19:16]
     assign multicast_children[0]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth],{4'b0},{7'b0,1'b1},weight_split[0],16'd0,input_fifo_out[PayloadLen-1:0]};// local pckt has the lowest priority and the table entry is a dont care value
     assign multicast_children[1]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth],multicast_table_entry[19:16],routing_table_entry[7:0],weight_split[1],multicast_table_entry[15:0],input_fifo_out[PayloadLen-1:0]};
     assign multicast_children[2]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth],multicast_table_entry[39:36],routing_table_entry[7:0],weight_split[2],multicast_table_entry[35:20],input_fifo_out[PayloadLen-1:0]};
@@ -303,6 +309,25 @@ module multicast_unit#(
         end
     end
 
- 
+    
+
+    always@(posedge clk) begin
+        if(multicast_table_entry[19:16] && multicast_table_entry[39:36] && multicast_table_entry[59:56] &&  multicast_table_entry[79:76] && multicast_table_entry[99:96]) begin
+            
+            
+        end
+        else if(multicast
+    end        
+
 
 endmodule
+
+    
+
+    
+    
+
+    
+
+
+    
