@@ -128,18 +128,23 @@ in_port
 
 
     wire [IndexWidth-1:0] routing_table_index;
-    reg [RoutingTableWidth-1:0] routing_table_entry;
+    reg [RoutingTableWidth-1:0] routing_table_entry;//routing table entry register at RR stage
+    reg [RoutingTableWidth-1:0] routing_table_entry_MR;//routing table entry regiester at MR stage
 
 
 
     wire [PcktTypeLen-1:0] packet_type;
     wire is_multicast;
-    reg is_multicast_MI;// the state register of is_multicast
+    reg is_multicast_MR;// the state register of is_multicast at MR stage
     reg [MulticastTableWidth-1:0] multicast_table_entry;
     wire [IndexWidth-1:0] multicast_table_index;
 
     wire [DataWidth-1:0] multicast_children[5:0];
     wire [WeightWidth-1:0] weight_split[5:0];
+
+    wire [2:0] perm_multicast[7]; //the permutation pattern from the multicast children to the output ports out[i]<=multicast_children[perm[i]]; if perm[i]=8 means the out[i] should get a zero value.
+
+    wire [DataWidth-1:0] singcast_children;    
 
 
     
@@ -182,12 +187,18 @@ in_port
         if(is_multicast) begin
             multicast_table_entry<=multicast_table[multicast_table_index];
         end
+        else begin
+            multicast_table_entry<=0;
+        end
     end
 
     always@(posedge clk) begin
-        is_multicast_MI<=is_multicast;
+        is_multicast_MR<=is_multicast;
     end
-
+    
+    always@(posedge clk) begin
+        routing_table_entry_MR<=routing_table_entry;
+    end
 
 
 
@@ -195,14 +206,190 @@ in_port
     //
     //
     //
-    assign multicast_table_entry[19:16]
+    //
+    always@(*) begin
+        if(is_multicast_MR) begin
+            singlecast_children=0;
+        end
+        else if(routing_table_entry_MR[RoutingTableWidth-1:RoutingTableWidth-PcktTypeLen]==SINGLECAST) begin
+            singlecast_children={input_fifo_out_MR[DataWidth-1],1'b0,input_fifo_out_MR[ReductionBitPos-1:ExitPos+ExitWidth],routing_table_entry_MR[27:24],routing_table_entry_MR[7:0],input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos],routing_table_entry_MR[23:8],input_fifo_out_MR[PayloadLen-1:0]};
+        end
+        else if(routing_table_entry_MR[RoutingTableWidth-1:RoutingTableWidth-PcktTypeLen]==REDUCTION) begin
+            singlecast_children={input_fifo_out_MR[DataWidth-1],1'b1,input_fifo_out_MR[ReductionBitPos-1:ExitPos+ExitWidth],routing_table_entry_MR[27:24],routing_table_entry_MR[7:0],input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos],routing_table_entry_MR[23:8],input_fifo_out_MR[PayloadLen-1:0]};
+        end
+        else begin
+            singlecast_children=0;
+        end
+    end
+
+    always@(posedge clk) begin
+        if(is_multicast_MR) begin
+            out_port_in[0]<=multicast_children[0];
+            out_port_in[1]<=(perm[1]==7)?0:multicast_children[perm[1]];
+            out_port_in[2]<=(perm[2]==7)?0:multicast_children[perm[2]];
+            out_port_in[3]<=(perm[3]==7)?0:multicast_children[perm[3]];
+            out_port_in[4]<=(perm[4]==7)?0:multicast_children[perm[4]];
+            out_port_in[5]<=(perm[5]==7)?0:multicast_children[perm[5]];
+            out_port_in[6]<=(perm[6]==7)?0:multicast_children[perm[6]];
+        end
+        else begin
+            out_port_in[0]<=(routing_table_entry_MR[27:24]==0)?singlecast_children:0;
+            out_port_in[1]<=(routing_table_entry_MR[27:24]==1)?singlecast_children:0;
+            out_port_in[2]<=(routing_table_entry_MR[27:24]==2)?singlecast_children:0;
+            out_port_in[3]<=(routing_table_entry_MR[27:24]==3)?singlecast_children:0;
+            out_port_in[4]<=(routing_table_entry_MR[27:24]==4)?singlecast_children:0;
+            out_port_in[5]<=(routing_table_entry_MR[27:24]==5)?singlecast_children:0;
+            out_port_in[6]<=(routing_table_entry_MR[27:24]==6)?singlecast_children:0;
+        end
+    end
     assign multicast_children[0]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth],{4'b0},{7'b0,1'b1},weight_split[0],16'd0,input_fifo_out[PayloadLen-1:0]};// local pckt has the lowest priority and the table entry is a dont care value
     assign multicast_children[1]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth],multicast_table_entry[19:16],routing_table_entry[7:0],weight_split[1],multicast_table_entry[15:0],input_fifo_out[PayloadLen-1:0]};
     assign multicast_children[2]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth],multicast_table_entry[39:36],routing_table_entry[7:0],weight_split[2],multicast_table_entry[35:20],input_fifo_out[PayloadLen-1:0]};
     assign multicast_children[3]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth],multicast_table_entry[59:56],routing_table_entry[7:0],weight_split[3],multicast_table_entry[55:40],input_fifo_out[PayloadLen-1:0]};
     assign multicast_children[4]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth],multicast_table_entry[79:76],routing_table_entry[7:0],weight_split[4],multicast_table_entry[75:60],input_fifo_out[PayloadLen-1:0]};
     assign multicast_children[5]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth],multicast_table_entry[99:96],routing_table_entry[7:0],weight_split[5],multicast_table_entry[95:80],input_fifo_out[PayloadLen-1:0]};
+
+    always@(*) begin
+        if(multicast_table_entry[19:16]==4'd1) begin
+            perm_multicast[1]=1;
+        end
+        else if(multicast_table_entry[39:36]==4'd1) begin
+            perm_multicast[1]=2;
+        end
+        else if(multicast_table_entry[59:56]==4'd1) begin
+            perm_multicast[1]=3;
+        end
+        else if(multicast_table_entry[79:76]==4'd1) begin
+            perm_multicast[1]=4;
+        end
+        else if(multicast_table_entry[99:96]==4'd1) begin
+            perm_multicast[1]=5;
+        end
+        else begin
+            perm_multicast[1]=7;
+        end
+    end
+
+    always@(*) begin
+        if(multicast_table_entry[19:16]==4'd2) begin
+            perm_multicast[2]=1;
+        end
+        else if(multicast_table_entry[39:36]==4'd2) begin
+            perm_multicast[2]=2;
+        end
+        else if(multicast_table_entry[59:56]==4'd2) begin
+            perm_multicast[2]=3;
+        end
+        else if(multicast_table_entry[79:76]==4'd2) begin
+            perm_multicast[2]=4;
+        end
+        else if(multicast_table_entry[99:96]==4'd2) begin
+            perm_multicast[2]=5;
+        end
+        else begin
+            perm_multicast[2]=7;
+        end
+    end
+ 
+    always@(*) begin
+        if(multicast_table_entry[19:16]==4'd3) begin
+            perm_multicast[3]=1;
+        end
+        else if(multicast_table_entry[39:36]==4'd3) begin
+            perm_multicast[3]=2;
+        end
+        else if(multicast_table_entry[59:56]==4'd3) begin
+            perm_multicast[3]=3;
+        end
+        else if(multicast_table_entry[79:76]==4'd3) begin
+            perm_multicast[3]=4;
+        end
+        else if(multicast_table_entry[99:96]==4'd3) begin
+            perm_multicast[3]=5;
+        end
+        else begin
+            perm_multicast[3]=7;
+        end
+    end
+ 
+    always@(*) begin
+        if(multicast_table_entry[19:16]==4'd4) begin
+            perm_multicast[4]=1;
+        end
+        else if(multicast_table_entry[39:36]==4'd4) begin
+            perm_multicast[4]=2;
+        end
+        else if(multicast_table_entry[59:56]==4'd4) begin
+            perm_multicast[4]=3;
+        end
+        else if(multicast_table_entry[79:76]==4'd4) begin
+            perm_multicast[4]=4;
+        end
+        else if(multicast_table_entry[99:96]==4'd4) begin
+            perm_multicast[4]=5;
+        end
+        else begin
+            perm_multicast[4]=7;
+        end
+    end
+
+    always@(*) begin
+        if(multicast_table_entry[19:16]==4'd5) begin
+            perm_multicast[5]=1;
+        end
+        else if(multicast_table_entry[39:36]==4'd5) begin
+            perm_multicast[5]=2;
+        end
+        else if(multicast_table_entry[59:56]==4'd5) begin
+            perm_multicast[5]=3;
+        end
+        else if(multicast_table_entry[79:76]==4'd5) begin
+            perm_multicast[5]=4;
+        end
+        else if(multicast_table_entry[99:96]==4'd5) begin
+            perm_multicast[5]=5;
+        end
+        else begin
+            perm_multicast[5]=7;
+        end
+    end
+
+    always@(*) begin
+        if(multicast_table_entry[19:16]==4'd6) begin
+            perm_multicast[6]=1;
+        end
+        else if(multicast_table_entry[39:36]==4'd6) begin
+            perm_multicast[6]=2;
+        end
+        else if(multicast_table_entry[59:56]==4'd6) begin
+            perm_multicast[6]=3;
+        end
+        else if(multicast_table_entry[79:76]==4'd6) begin
+            perm_multicast[6]=4;
+        end
+        else if(multicast_table_entry[99:96]==4'd6) begin
+            perm_multicast[6]=5;
+        end
+        else begin
+            perm_multicast[6]=7;
+        end
+    end
+
+
+
+
+
+
+
+
+
+
+
+
+
     
+
+
     always@(*) begin
         if(multicast_table_entry[102:100]==1) begin//the counter of valid packets can only be 1,2,3,4,5
             if(SrcID_wire!=4'd0) begin
@@ -309,6 +496,9 @@ in_port
         end
     end
 
+    always@(posedge clk) begin
+        if(multicast_table_entry[19:16]==0
+
     
 
     always@(posedge clk) begin
@@ -316,7 +506,9 @@ in_port
             
             
         end
-        else if(multicast
+        else if(multicast[19:16]==7 && multicast[39:36]) begin
+        
+        end
     end        
 
 
