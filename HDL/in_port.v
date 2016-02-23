@@ -1,4 +1,4 @@
-//Purpose: crossbar-based switch that is composed of 7 routers
+//Purpose: in_port module of switch that is composed of 7 routers
 //Author: Jiayi Sheng
 //Organization: CAAD lab @ Boston University
 //Start date: Feb 10th 2015
@@ -85,7 +85,9 @@ in_port
 
 //interfaces between muxes and in_port
     output reg [Datawidth-1:0] out_port_in[7];
-    input out_avail[7];
+    input out_avail[7]; // the consume signal of seven output ports, which are also the non-empty signal of fifos
+    output stall; //pipeline stall signal
+    
 )
 
     //pipeline has three stages:
@@ -95,7 +97,7 @@ in_port
     //fourth stage: muxes input stage (MI) this is the stage before the muxes
 
     //pipeline control signals
-    wire stall;
+    //wire stall;
     wire input_fifo_consume;
     
 
@@ -147,12 +149,16 @@ in_port
     wire [DataWidth-1:0] singcast_children;    
 
 
-    
+
+    assign stall=(out_port_in[0][DataWidth-1] && ~out_avail[0]) || (out_port_in[1][DataWidth-1] && ~out_avail[1]) || (out_port_in[2][DataWidth-1] && ~out_avail[2]) || (out_port_in[3][DataWidth-1] && ~out_avail[3]) ||  (out_port_in[4][DataWidth-1] && ~out_avail[4]) || (out_port_in[5][DataWidth-1] && ~out_avail[5]) || (out_port_in[6][DataWidth-1] && ~out_avail[6]);
+
+
+    assign input_fifo_consume=~stall;
     //pipeline stage1 IC
     buffer#(
         .buffer_depth(InterNodeFIFODepth),
         .buffer_width(DataWidth)
-    )(
+    )input_buffer(
         .clk(clk),
         .rst(rst),
         .in(in),
@@ -168,36 +174,43 @@ in_port
 
     //pipeline stage2 RR
     always@(posedge clk) begin
-        routing_table_entry<=routing_table[routing_table_index];
+        if(~stall)
+            routing_table_entry<=routing_table[routing_table_index];
     end
 
     always@(posedge clk) begin
-        input_fifo_out_RR<=input_fifo_out_IC;
+        if(~stall)
+            input_fifo_out_RR<=input_fifo_out_IC;
     end
 
     //pipeline stage 3 MR
     always@(posedge clk) begin
-        input_fifo_out_MR<=input_fifo_out_RR;
+        if(~stall)
+            input_fifo_out_MR<=input_fifo_out_RR;
     end
     assign packet_type=routing_table_entry[31:28];
     assign is_multicast=(packet_type==4'd9);
     assign mutlicast_table_index=(is_multicast)?routing_table_entry[23:8]:0;
 
     always@(posedge clk) begin
-        if(is_multicast) begin
-            multicast_table_entry<=multicast_table[multicast_table_index];
-        end
-        else begin
-            multicast_table_entry<=0;
+        if(~stall) begin
+            if(is_multicast) begin
+                multicast_table_entry<=multicast_table[multicast_table_index];
+            end
+            else begin
+                multicast_table_entry<=0;
+            end
         end
     end
 
     always@(posedge clk) begin
-        is_multicast_MR<=is_multicast;
+        if(~stall)
+            is_multicast_MR<=is_multicast;
     end
     
     always@(posedge clk) begin
-        routing_table_entry_MR<=routing_table_entry;
+        if(~stall)
+            routing_table_entry_MR<=routing_table_entry;
     end
 
 
@@ -207,6 +220,7 @@ in_port
     //
     //
     //
+    
     always@(*) begin
         if(is_multicast_MR) begin
             singlecast_children=0;
@@ -223,23 +237,25 @@ in_port
     end
 
     always@(posedge clk) begin
-        if(is_multicast_MR) begin
-            out_port_in[0]<=multicast_children[0];
-            out_port_in[1]<=(perm[1]==7)?0:multicast_children[perm[1]];
-            out_port_in[2]<=(perm[2]==7)?0:multicast_children[perm[2]];
-            out_port_in[3]<=(perm[3]==7)?0:multicast_children[perm[3]];
-            out_port_in[4]<=(perm[4]==7)?0:multicast_children[perm[4]];
-            out_port_in[5]<=(perm[5]==7)?0:multicast_children[perm[5]];
-            out_port_in[6]<=(perm[6]==7)?0:multicast_children[perm[6]];
-        end
-        else begin
-            out_port_in[0]<=(routing_table_entry_MR[27:24]==0)?singlecast_children:0;
-            out_port_in[1]<=(routing_table_entry_MR[27:24]==1)?singlecast_children:0;
-            out_port_in[2]<=(routing_table_entry_MR[27:24]==2)?singlecast_children:0;
-            out_port_in[3]<=(routing_table_entry_MR[27:24]==3)?singlecast_children:0;
-            out_port_in[4]<=(routing_table_entry_MR[27:24]==4)?singlecast_children:0;
-            out_port_in[5]<=(routing_table_entry_MR[27:24]==5)?singlecast_children:0;
-            out_port_in[6]<=(routing_table_entry_MR[27:24]==6)?singlecast_children:0;
+        if(~stall)
+            if(is_multicast_MR) begin
+                out_port_in[0]<=multicast_children[0];
+                out_port_in[1]<=(perm[1]==7)?0:multicast_children[perm[1]];
+                out_port_in[2]<=(perm[2]==7)?0:multicast_children[perm[2]];
+                out_port_in[3]<=(perm[3]==7)?0:multicast_children[perm[3]];
+                out_port_in[4]<=(perm[4]==7)?0:multicast_children[perm[4]];
+                out_port_in[5]<=(perm[5]==7)?0:multicast_children[perm[5]];
+                out_port_in[6]<=(perm[6]==7)?0:multicast_children[perm[6]];
+            end
+            else begin
+                out_port_in[0]<=(routing_table_entry_MR[27:24]==0)?singlecast_children:0;
+                out_port_in[1]<=(routing_table_entry_MR[27:24]==1)?singlecast_children:0;
+                out_port_in[2]<=(routing_table_entry_MR[27:24]==2)?singlecast_children:0;
+                out_port_in[3]<=(routing_table_entry_MR[27:24]==3)?singlecast_children:0;
+                out_port_in[4]<=(routing_table_entry_MR[27:24]==4)?singlecast_children:0;
+                out_port_in[5]<=(routing_table_entry_MR[27:24]==5)?singlecast_children:0;
+                out_port_in[6]<=(routing_table_entry_MR[27:24]==6)?singlecast_children:0;
+            end
         end
     end
     assign multicast_children[0]={input_fifo_out[DataWidth-1:ExitPos+ExitWidth],{4'b0},{7'b0,1'b1},weight_split[0],16'd0,input_fifo_out[PayloadLen-1:0]};// local pckt has the lowest priority and the table entry is a dont care value
@@ -495,21 +511,6 @@ in_port
             weight_split[5]=0;
         end
     end
-
-    always@(posedge clk) begin
-        if(multicast_table_entry[19:16]==0
-
-    
-
-    always@(posedge clk) begin
-        if(multicast_table_entry[19:16] && multicast_table_entry[39:36] && multicast_table_entry[59:56] &&  multicast_table_entry[79:76] && multicast_table_entry[99:96]) begin
-            
-            
-        end
-        else if(multicast[19:16]==7 && multicast[39:36]) begin
-        
-        end
-    end        
 
 
 endmodule

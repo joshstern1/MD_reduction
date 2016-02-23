@@ -31,7 +31,7 @@
       The first bit of the packet type field is valid bit
       1000 is single cast packet
       1001 is the mutlicast packet
-      1010 is the reduction packet
+      1010 is the reduction packe
         
     * /
 //multicast table entry format
