@@ -46,7 +46,7 @@ module mux
     input [DataWidth-1:0] in[7],
     input in_pipeline_stall[7],
     output in_avail[7],
-    output [DataWidth-1:0] out
+    output reg [DataWidth-1:0] out
 )
 
     wire FIFO_empty[7];
@@ -73,20 +73,25 @@ module mux
     wire [2:0] sel_index0123456;
 
     reg [DataWidth-1:0] sel_data;//the outputs from the buffers that has the highest priority
+    reg [DataWidth-1:0] sel_data_RR;
 
     reg pipeline_stall;
 
     reg[ReductionTableWidth-1:0] reduction_table[ReductionTablesize-1:0];
 
     wire is_reduction;
+    wire reduction_ready;
+
+    wire [DataWidth-1:0] reduction_out;
 
     reg [ReductionTableWidth-1:0] reduction_table_entry;
+    wire [ReductionTableWidth-1:0] reduction_table_entry_next;
 
 
     //this pipeline has severa stages
     //1st stage: pick the highest priority data from seven FIFOs (FR) (fifo read) 
     //2nd stage: read the reduction table (if the data is the reduction data)  (RR) (reduction read)
-    //3rd stage: either write back to the reduction table or send to the output (
+    //3rd stage: either write back to the reduction table or send to the output (WB)
     
 
     parameter InterSwitchBufferDepth=4;
@@ -367,6 +372,11 @@ module mux
     end
 
 //second stage read the reduction table entry if the packets is a reduction packet
+    always@(posedge clk) begin
+        sel_data_RR<=sel_data;
+    end
+
+    
     assign is_reduction=sel_data[ReductionBitPos];
     
 
@@ -375,6 +385,37 @@ module mux
 
     always@(posedge clk) begin
         if(is_reduction) begin
+            reduction_table_entry<=reduction_table[sel_data[IndexWidth+IndexPos-1:IndexPos]];
+        end
+    end
+
+//third stage:
+//
+    
+
+    assign is_reduction_WB=sel_data_RR[ReductionBitPos];
+    assign reduction_ready= sel_data_RR[ReductionBitPos] && (reduction_table_entry[ReductionTableWidth-1:ReductionTableWidth-3]==reduction_table_entry[ReductionTableWidth-4:ReductionTableWidth-6]+1);
+    assign reduction_out={sel_data_RR[DataWidth-1:152],reduction_table_entry_next[135:128],reduction_table_entry_next[151:136],reduction_table_entry_next[127:0]};
+     assign reduction_table_entry_next={reduction_table_entry[161:159],next_counter,reduction_table_entry[155:136],(reduction_table_entry[135:128]+reduction_eject[WeightPos+WeightWidth-1:WeightPos]),(reduction_table_entry[PayloadLen-1:0]+reduction_eject[PayloadLen-1:0])};
+
+
+    always@(posedge clk) begin
+        if(~is_reduction_WB) begin
+            out<=sel_data_RR;
+        end
+        else if(reduction_ready) begin
+            out<=reduction_out;
+        end
+        else begin
+            out<=0;
+        end
+    end
+
+    always@(posedge clk) begin
+        if(is_reduction_WB) begin
+            reduction_table[sel_data_RR[IndexWidth+IndexPos-1:IndexPos]]<=reduction_table_entry_next;
+        end
+    end
             
 
 
