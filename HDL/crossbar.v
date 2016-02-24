@@ -2,7 +2,7 @@
 //Author: Jiayi Sheng
 //Organization: CAAD lab @ Boston University
 //Start date: Feb 10th 2015
-//
+//Dependency: in-port.v mux.v 
 //the 256-bit data format will be like this
 //Outside the router 
 /*
@@ -54,6 +54,11 @@
 
 crossbar
 #(
+    parameter DataSize=8'd172,
+    parameter X=8'd0,
+    parameter Y=8'd0,
+    parameter Z=8'd0,
+    parameter srcID=4'd0,
     parameter ReductionBitPos=254,
     parameter PayloadLen=128,
     parameter DataWidth=256,
@@ -123,26 +128,554 @@ crossbar
     output [DataWidth-1:0] eject_local,
     output eject_send_local,
     output InjectSlotAvail_local,
-
-    output [7:0] xpos_ClockwiseUtil, 
-    output [7:0] xpos_CounterClockwiseUtil, 
-    output [7:0] xpos_InjectUtil,
-    output [7:0] xneg_ClockwiseUtil, 
-    output [7:0] xneg_CounterClockwiseUtil, 
-    output [7:0] xneg_InjectUtil,
-    output [7:0] ypos_ClockwiseUtil, 
-    output [7:0] ypos_CounterClockwiseUtil, 
-    output [7:0] ypos_InjectUtil,
-    output [7:0] yneg_ClockwiseUtil, 
-    output [7:0] yneg_CounterClockwiseUtil, 
-    output [7:0] yneg_InjectUtil,
-    output [7:0] zpos_ClockwiseUtil, 
-    output [7:0] zpos_CounterClockwiseUtil, 
-    output [7:0] zpos_InjectUtil,
-    output [7:0] zneg_ClockwiseUtil, 
-    output [7:0] zneg_CounterClockwiseUtil, 
-    output [7:0] zneg_InjectUtil
 );
 
+
+    wire local_input_fifo_full;
+    wire yneg_input_fifo_full;
+    wire ypos_input_fifo_full;
+    wire xpos_input_fifo_full;
+    wire xneg_input_fifo_full;
+    wire zpos_input_fifo_full;
+    wire zneg_input_fifo_full;
+    wire ypos_input_fifo_full;
+
+
+    wire [DataWidth-1:0] local_out_port_in_local; //from local in port to local mux
+    wire [DataWidth-1:0] local_out_port_in_xpos; //from local in port to xpos mux
+    wire [DataWidth-1:0] local_out_port_in_xneg; //from local in port to xneg mux
+    wire [DataWidth-1:0] local_out_port_in_ypos; //from local in port to ypos mux
+    wire [DataWidth-1:0] local_out_port_in_yneg; //from local in port to yneg mux
+    wire [DataWidth-1:0] local_out_port_in_zpos; //from local in port to zpos mux
+    wire [DataWidth-1:0] local_out_port_in_zneg; //from local in port to zneg mux
+
+    wire [DataWidth-1:0] xpos_out_port_in_local; //from xpos in port to local mux
+    wire [DataWidth-1:0] xpos_out_port_in_xpos; //from xpos in port to xpos mux
+    wire [DataWidth-1:0] xpos_out_port_in_xneg; //from xpos in port to xneg mux
+    wire [DataWidth-1:0] xpos_out_port_in_ypos; //from xpos in port to ypos mux
+    wire [DataWidth-1:0] xpos_out_port_in_yneg; //from xpos in port to yneg mux
+    wire [DataWidth-1:0] xpos_out_port_in_zpos; //from xpos in port to zpos mux
+    wire [DataWidth-1:0] xpos_out_port_in_zneg; //from xpos in port to zneg mux
+
+    wire [DataWidth-1:0] xneg_out_port_in_local;//from xneg in port to local mux
+    wire [DataWidth-1:0] xneg_out_port_in_xpos; //from xneg in port to xpos mux
+    wire [DataWidth-1:0] xneg_out_port_in_xneg; //from xneg in port to xneg mux
+    wire [DataWidth-1:0] xneg_out_port_in_ypos; //from xneg in port to ypos mux
+    wire [DataWidth-1:0] xneg_out_port_in_yneg; //from xneg in port to yneg mux
+    wire [DataWidth-1:0] xneg_out_port_in_zpos; //from xneg in port to zpos mux
+    wire [DataWidth-1:0] xneg_out_port_in_zneg; //from xneg in port to zneg mux
+
+    wire [DataWidth-1:0] ypos_out_port_in_local; //from ypos in port to local mux
+    wire [DataWidth-1:0] ypos_out_port_in_xpos; //from ypos in port to xpos mux
+    wire [DataWidth-1:0] ypos_out_port_in_xneg; //from ypos in port to xneg mux
+    wire [DataWidth-1:0] ypos_out_port_in_ypos; //from ypos in port to ypos mux
+    wire [DataWidth-1:0] ypos_out_port_in_yneg; //from ypos in port to yneg mux
+    wire [DataWidth-1:0] ypos_out_port_in_zpos; //from ypos in port to zpos mux
+    wire [DataWidth-1:0] ypos_out_port_in_zneg; //from ypos in port to zneg mux
+
+    wire [DataWidth-1:0] yneg_out_port_in_local;//from yneg in port to local mux
+    wire [DataWidth-1:0] yneg_out_port_in_xpos; //from yneg in port to xpos mux
+    wire [DataWidth-1:0] yneg_out_port_in_xneg; //from yneg in port to xneg mux
+    wire [DataWidth-1:0] yneg_out_port_in_ypos; //from yneg in port to ypos mux
+    wire [DataWidth-1:0] yneg_out_port_in_yneg; //from yneg in port to yneg mux
+    wire [DataWidth-1:0] yneg_out_port_in_zpos; //from yneg in port to zpos mux
+    wire [DataWidth-1:0] yneg_out_port_in_zneg; //from yneg in port to zneg mux
+
+    wire [DataWidth-1:0] zpos_out_port_in_local; //from zpos in port to local mux
+    wire [DataWidth-1:0] zpos_out_port_in_xpos; //from zpos in port to xpos mux
+    wire [DataWidth-1:0] zpos_out_port_in_xneg; //from zpos in port to xneg mux
+    wire [DataWidth-1:0] zpos_out_port_in_ypos; //from zpos in port to ypos mux
+    wire [DataWidth-1:0] zpos_out_port_in_yneg; //from zpos in port to yneg mux
+    wire [DataWidth-1:0] zpos_out_port_in_zpos; //from zpos in port to zpos mux
+    wire [DataWidth-1:0] zpos_out_port_in_zneg; //from zpos in port to zneg mux
+
+    wire [DataWidth-1:0] zneg_out_port_in_local;//from zneg in port to local mux
+    wire [DataWidth-1:0] zneg_out_port_in_xpos; //from zneg in port to xpos mux
+    wire [DataWidth-1:0] zneg_out_port_in_xneg; //from zneg in port to xneg mux
+    wire [DataWidth-1:0] zneg_out_port_in_ypos; //from zneg in port to ypos mux
+    wire [DataWidth-1:0] zneg_out_port_in_yneg; //from zneg in port to yneg mux
+    wire [DataWidth-1:0] zneg_out_port_in_zpos; //from zneg in port to zpos mux
+    wire [DataWidth-1:0] zneg_out_port_in_zneg; //from zneg in port to zneg mux
+
+    
+    wire local_out_avail_local;
+    wire local_out_avail_xpos;
+    wire local_out_avail_xneg;
+    wire local_out_avail_ypos;
+    wire local_out_avail_yneg;
+    wire local_out_avail_zpos;
+    wire local_out_avail_zneg;
+    
+    wire xpos_out_avail_local;
+    wire xpos_out_avail_xpos;
+    wire xpos_out_avail_xneg;
+    wire xpos_out_avail_ypos;
+    wire xpos_out_avail_yneg;
+    wire xpos_out_avail_zpos;
+    wire xpos_out_avail_zneg;
+
+    wire xneg_out_avail_local;
+    wire xneg_out_avail_xpos;
+    wire xneg_out_avail_xneg;
+    wire xneg_out_avail_ypos;
+    wire xneg_out_avail_yneg;
+    wire xneg_out_avail_zpos;
+    wire xneg_out_avail_zneg;
+  
+    wire ypos_out_avail_local;
+    wire ypos_out_avail_xpos;
+    wire ypos_out_avail_xneg;
+    wire ypos_out_avail_ypos;
+    wire ypos_out_avail_yneg;
+    wire ypos_out_avail_zpos;
+    wire ypos_out_avail_zneg;
+
+    wire yneg_out_avail_local;
+    wire yneg_out_avail_xpos;
+    wire yneg_out_avail_xneg;
+    wire yneg_out_avail_ypos;
+    wire yneg_out_avail_yneg;
+    wire yneg_out_avail_zpos;
+    wire yneg_out_avail_zneg;
+
+    wire zpos_out_avail_local;
+    wire zpos_out_avail_xpos;
+    wire zpos_out_avail_xneg;
+    wire zpos_out_avail_ypos;
+    wire zpos_out_avail_yneg;
+    wire zpos_out_avail_zpos;
+    wire zpos_out_avail_zneg;
+
+    wire zneg_out_avail_local;
+    wire zneg_out_avail_xpos;
+    wire zneg_out_avail_xneg;
+    wire zneg_out_avail_ypos;
+    wire zneg_out_avail_yneg;
+    wire zneg_out_avail_zpos;
+    wire zneg_out_avail_zneg;
+
+    wire local_in_port_stall;
+    wire xpos_in_port_stall;
+    wire xneg_in_port_stall;
+    wire ypos_in_port_stall;
+    wire yneg_in_port_stall;
+    wire zpos_in_port_stall;
+    wire zneg_in_port_stall;
+
+
+
+
+
+
+
+    in_port#(
+        .DataSize(DataSize),
+        .X(X),
+        .Y(Y),
+        .Z(Z),
+        .srcID(0),
+        .ReductionBitPos(ReductionBitPos),
+        .PayloadLen(PayloadLen),
+        .DataWidth(DataWidth),
+        .WeightPos(WeightPos),
+        .WeightWidth(WeightWidth),
+        .IndexPos(IndexPos),
+        .IndexWidth(IndexWidth),
+        .PriorityPos(PriorityPos),
+        .PriorityWidth(PriorityWidth),
+        .ExitPos(ExitPos),
+        .ExitWidth(ExitWidth),
+        .InterNodeFIFODepth(InterNodeFIFODepth),
+        .IntraNodeFIFODepth(IntraNodeFIFODepth),
+        .RoutingTableWidth(RoutingTableWidth),
+        .RoutingTablesize(RoutingTablesize),
+        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTablesize(MulticastTablesize),
+        .ReductionTableWidth(ReductionTableWidth),
+        .ReductionTablesize(ReductionTablesize),
+        .PcktTypeLen(PcktTypeLen)
+    )
+    in_port_local(
+        .clk(clk),
+        .rst(rst),
+        .in(inject_local),
+        .data_in_avail(inject_receive_local),
+        .input_fifo_full(local_input_fifo_full),
+        .out_port_in_local(local_out_port_in_local),
+        .out_port_in_xpos(local_out_port_in_xpos),
+        .out_port_in_xneg(local_out_port_in_xneg),
+        .out_port_in_ypos(local_out_port_in_ypos),
+        .out_port_in_yneg(local_out_port_in_yneg),
+        .out_port_in_zpos(local_out_port_in_zpos),
+        .out_port_in_zneg(local_out_port_in_zneg),
+        .out_avail_local(local_out_avail_local),
+        .out_avail_xpos(local_out_avail_xpos),
+        .out_avail_xneg(local_out_avail_xneg),
+        .out_avail_ypos(local_out_avail_ypos),
+        .out_avail_yneg(local_out_avail_yneg),
+        .out_avail_zpos(local_out_avail_zpos),
+        .out_avail_zneg(local_out_avail_zneg),
+        .stall(local_in_port_stall)
+
+        
+    );
+
+
+
+    in_port#(
+        .DataSize(DataSize),
+        .X(X),
+        .Y(Y),
+        .Z(Z),
+        .srcID(1),
+        .ReductionBitPos(ReductionBitPos),
+        .PayloadLen(PayloadLen),
+        .DataWidth(DataWidth),
+        .WeightPos(WeightPos),
+        .WeightWidth(WeightWidth),
+        .IndexPos(IndexPos),
+        .IndexWidth(IndexWidth),
+        .PriorityPos(PriorityPos),
+        .PriorityWidth(PriorityWidth),
+        .ExitPos(ExitPos),
+        .ExitWidth(ExitWidth),
+        .InterNodeFIFODepth(InterNodeFIFODepth),
+        .IntraNodeFIFODepth(IntraNodeFIFODepth),
+        .RoutingTableWidth(RoutingTableWidth),
+        .RoutingTablesize(RoutingTablesize),
+        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTablesize(MulticastTablesize),
+        .ReductionTableWidth(ReductionTableWidth),
+        .ReductionTablesize(ReductionTablesize),
+        .PcktTypeLen(PcktTypeLen)
+    )
+    in_port_yneg(
+        .clk(clk),
+        .rst(rst),
+        .in(inject_yneg),
+        .data_in_avail(inject_receive_yneg),
+        .input_fifo_full(yneg_input_fifo_full),
+        .out_port_in_local(yneg_out_port_in_local),
+        .out_port_in_xpos(yneg_out_port_in_xpos),
+        .out_port_in_xneg(yneg_out_port_in_xneg),
+        .out_port_in_ypos(yneg_out_port_in_ypos),
+        .out_port_in_yneg(yneg_out_port_in_yneg),
+        .out_port_in_zpos(yneg_out_port_in_zpos),
+        .out_port_in_zneg(yneg_out_port_in_zneg),
+        .out_avail_local(yneg_out_avail_local),
+        .out_avail_xpos(yneg_out_avail_xpos),
+        .out_avail_xneg(yneg_out_avail_xneg),
+        .out_avail_ypos(yneg_out_avail_ypos),
+        .out_avail_yneg(yneg_out_avail_yneg),
+        .out_avail_zpos(yneg_out_avail_zpos),
+        .out_avail_zneg(yneg_out_avail_zneg),
+        .stall(yneg_in_port_stall)
+
+        
+    );
+
+    in_port#(
+        .DataSize(DataSize),
+        .X(X),
+        .Y(Y),
+        .Z(Z),
+        .srcID(2),
+        .ReductionBitPos(ReductionBitPos),
+        .PayloadLen(PayloadLen),
+        .DataWidth(DataWidth),
+        .WeightPos(WeightPos),
+        .WeightWidth(WeightWidth),
+        .IndexPos(IndexPos),
+        .IndexWidth(IndexWidth),
+        .PriorityPos(PriorityPos),
+        .PriorityWidth(PriorityWidth),
+        .ExitPos(ExitPos),
+        .ExitWidth(ExitWidth),
+        .InterNodeFIFODepth(InterNodeFIFODepth),
+        .IntraNodeFIFODepth(IntraNodeFIFODepth),
+        .RoutingTableWidth(RoutingTableWidth),
+        .RoutingTablesize(RoutingTablesize),
+        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTablesize(MulticastTablesize),
+        .ReductionTableWidth(ReductionTableWidth),
+        .ReductionTablesize(ReductionTablesize),
+        .PcktTypeLen(PcktTypeLen)
+    )
+    in_port_ypos(
+        .clk(clk),
+        .rst(rst),
+        .in(inject_ypos),
+        .data_in_avail(inject_receive_ypos),
+        .input_fifo_full(ypos_input_fifo_full),
+        .out_port_in_local(ypos_out_port_in_local),
+        .out_port_in_xpos(ypos_out_port_in_xpos),
+        .out_port_in_xneg(ypos_out_port_in_xneg),
+        .out_port_in_ypos(ypos_out_port_in_ypos),
+        .out_port_in_yneg(ypos_out_port_in_yneg),
+        .out_port_in_zpos(ypos_out_port_in_zpos),
+        .out_port_in_zneg(ypos_out_port_in_zneg),
+        .out_avail_local(ypos_out_avail_local),
+        .out_avail_xpos(ypos_out_avail_xpos),
+        .out_avail_xneg(ypos_out_avail_xneg),
+        .out_avail_ypos(ypos_out_avail_ypos),
+        .out_avail_yneg(ypos_out_avail_yneg),
+        .out_avail_zpos(ypos_out_avail_zpos),
+        .out_avail_zneg(ypos_out_avail_zneg),
+        .stall(ypos_in_port_stall)        
+    );
+
+    in_port#(
+        .DataSize(DataSize),
+        .X(X),
+        .Y(Y),
+        .Z(Z),
+        .srcID(3),
+        .ReductionBitPos(ReductionBitPos),
+        .PayloadLen(PayloadLen),
+        .DataWidth(DataWidth),
+        .WeightPos(WeightPos),
+        .WeightWidth(WeightWidth),
+        .IndexPos(IndexPos),
+        .IndexWidth(IndexWidth),
+        .PriorityPos(PriorityPos),
+        .PriorityWidth(PriorityWidth),
+        .ExitPos(ExitPos),
+        .ExitWidth(ExitWidth),
+        .InterNodeFIFODepth(InterNodeFIFODepth),
+        .IntraNodeFIFODepth(IntraNodeFIFODepth),
+        .RoutingTableWidth(RoutingTableWidth),
+        .RoutingTablesize(RoutingTablesize),
+        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTablesize(MulticastTablesize),
+        .ReductionTableWidth(ReductionTableWidth),
+        .ReductionTablesize(ReductionTablesize),
+        .PcktTypeLen(PcktTypeLen)
+    )
+    in_port_xpos(
+        .clk(clk),
+        .rst(rst),
+        .in(inject_xpos),
+        .data_in_avail(inject_receive_xpos),
+        .input_fifo_full(xpos_input_fifo_full),
+        .out_port_in_local(xpos_out_port_in_local),
+        .out_port_in_xpos(xpos_out_port_in_xpos),
+        .out_port_in_xneg(xpos_out_port_in_xneg),
+        .out_port_in_ypos(xpos_out_port_in_ypos),
+        .out_port_in_yneg(xpos_out_port_in_yneg),
+        .out_port_in_zpos(xpos_out_port_in_zpos),
+        .out_port_in_zneg(xpos_out_port_in_zneg),
+        .out_avail_local(xpos_out_avail_local),
+        .out_avail_xpos(xpos_out_avail_xpos),
+        .out_avail_xneg(xpos_out_avail_xneg),
+        .out_avail_ypos(xpos_out_avail_ypos),
+        .out_avail_yneg(xpos_out_avail_yneg),
+        .out_avail_zpos(xpos_out_avail_zpos),
+        .out_avail_zneg(xpos_out_avail_zneg),
+        .stall(xpos_in_port_stall)        
+    );
+
+    in_port#(
+        .DataSize(DataSize),
+        .X(X),
+        .Y(Y),
+        .Z(Z),
+        .srcID(4),
+        .ReductionBitPos(ReductionBitPos),
+        .PayloadLen(PayloadLen),
+        .DataWidth(DataWidth),
+        .WeightPos(WeightPos),
+        .WeightWidth(WeightWidth),
+        .IndexPos(IndexPos),
+        .IndexWidth(IndexWidth),
+        .PriorityPos(PriorityPos),
+        .PriorityWidth(PriorityWidth),
+        .ExitPos(ExitPos),
+        .ExitWidth(ExitWidth),
+        .InterNodeFIFODepth(InterNodeFIFODepth),
+        .IntraNodeFIFODepth(IntraNodeFIFODepth),
+        .RoutingTableWidth(RoutingTableWidth),
+        .RoutingTablesize(RoutingTablesize),
+        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTablesize(MulticastTablesize),
+        .ReductionTableWidth(ReductionTableWidth),
+        .ReductionTablesize(ReductionTablesize),
+        .PcktTypeLen(PcktTypeLen)
+    )
+    in_port_xneg(
+        .clk(clk),
+        .rst(rst),
+        .in(inject_xneg),
+        .data_in_avail(inject_receive_xneg),
+        .input_fifo_full(xneg_input_fifo_full),
+        .out_port_in_local(xneg_out_port_in_local),
+        .out_port_in_xpos(xneg_out_port_in_xpos),
+        .out_port_in_xneg(xneg_out_port_in_xneg),
+        .out_port_in_ypos(xneg_out_port_in_ypos),
+        .out_port_in_yneg(xneg_out_port_in_yneg),
+        .out_port_in_zpos(xneg_out_port_in_zpos),
+        .out_port_in_zneg(xneg_out_port_in_zneg),
+        .out_avail_local(xneg_out_avail_local),
+        .out_avail_xpos(xneg_out_avail_xpos),
+        .out_avail_xneg(xneg_out_avail_xneg),
+        .out_avail_ypos(xneg_out_avail_ypos),
+        .out_avail_yneg(xneg_out_avail_yneg),
+        .out_avail_zpos(xneg_out_avail_zpos),
+        .out_avail_zneg(xneg_out_avail_zneg),
+        .stall(xneg_in_port_stall)
+
+        
+    );
+
+    in_port#(
+        .DataSize(DataSize),
+        .X(X),
+        .Y(Y),
+        .Z(Z),
+        .srcID(5),
+        .ReductionBitPos(ReductionBitPos),
+        .PayloadLen(PayloadLen),
+        .DataWidth(DataWidth),
+        .WeightPos(WeightPos),
+        .WeightWidth(WeightWidth),
+        .IndexPos(IndexPos),
+        .IndexWidth(IndexWidth),
+        .PriorityPos(PriorityPos),
+        .PriorityWidth(PriorityWidth),
+        .ExitPos(ExitPos),
+        .ExitWidth(ExitWidth),
+        .InterNodeFIFODepth(InterNodeFIFODepth),
+        .IntraNodeFIFODepth(IntraNodeFIFODepth),
+        .RoutingTableWidth(RoutingTableWidth),
+        .RoutingTablesize(RoutingTablesize),
+        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTablesize(MulticastTablesize),
+        .ReductionTableWidth(ReductionTableWidth),
+        .ReductionTablesize(ReductionTablesize),
+        .PcktTypeLen(PcktTypeLen)
+    )
+    in_port_zpos(
+        .clk(clk),
+        .rst(rst),
+        .in(inject_zpos),
+        .data_in_avail(inject_receive_zpos),
+        .input_fifo_full(zpos_input_fifo_full),
+        .out_port_in_local(zpos_out_port_in_local),
+        .out_port_in_xpos(zpos_out_port_in_xpos),
+        .out_port_in_xneg(zpos_out_port_in_xneg),
+        .out_port_in_ypos(zpos_out_port_in_ypos),
+        .out_port_in_yneg(zpos_out_port_in_yneg),
+        .out_port_in_zpos(zpos_out_port_in_zpos),
+        .out_port_in_zneg(zpos_out_port_in_zneg),
+        .out_avail_local(zpos_out_avail_local),
+        .out_avail_xpos(zpos_out_avail_xpos),
+        .out_avail_xneg(zpos_out_avail_xneg),
+        .out_avail_ypos(zpos_out_avail_ypos),
+        .out_avail_yneg(zpos_out_avail_yneg),
+        .out_avail_zpos(zpos_out_avail_zpos),
+        .out_avail_zneg(zpos_out_avail_zneg),
+        .stall(zpos_in_port_stall)        
+    );
+
+    in_port#(
+        .DataSize(DataSize),
+        .X(X),
+        .Y(Y),
+        .Z(Z),
+        .srcID(4),
+        .ReductionBitPos(ReductionBitPos),
+        .PayloadLen(PayloadLen),
+        .DataWidth(DataWidth),
+        .WeightPos(WeightPos),
+        .WeightWidth(WeightWidth),
+        .IndexPos(IndexPos),
+        .IndexWidth(IndexWidth),
+        .PriorityPos(PriorityPos),
+        .PriorityWidth(PriorityWidth),
+        .ExitPos(ExitPos),
+        .ExitWidth(ExitWidth),
+        .InterNodeFIFODepth(InterNodeFIFODepth),
+        .IntraNodeFIFODepth(IntraNodeFIFODepth),
+        .RoutingTableWidth(RoutingTableWidth),
+        .RoutingTablesize(RoutingTablesize),
+        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTablesize(MulticastTablesize),
+        .ReductionTableWidth(ReductionTableWidth),
+        .ReductionTablesize(ReductionTablesize),
+        .PcktTypeLen(PcktTypeLen)
+    )
+    in_port_zneg(
+        .clk(clk),
+        .rst(rst),
+        .in(inject_zneg),
+        .data_in_avail(inject_receive_zneg),
+        .input_fifo_full(zneg_input_fifo_full),
+        .out_port_in_local(zneg_out_port_in_local),
+        .out_port_in_xpos(zneg_out_port_in_xpos),
+        .out_port_in_xneg(zneg_out_port_in_xneg),
+        .out_port_in_ypos(zneg_out_port_in_ypos),
+        .out_port_in_yneg(zneg_out_port_in_yneg),
+        .out_port_in_zpos(zneg_out_port_in_zpos),
+        .out_port_in_zneg(zneg_out_port_in_zneg),
+        .out_avail_local(zneg_out_avail_local),
+        .out_avail_xpos(zneg_out_avail_xpos),
+        .out_avail_xneg(zneg_out_avail_xneg),
+        .out_avail_ypos(zneg_out_avail_ypos),
+        .out_avail_yneg(zneg_out_avail_yneg),
+        .out_avail_zpos(zneg_out_avail_zpos),
+        .out_avail_zneg(zneg_out_avail_zneg),
+        .stall(zneg_in_port_stall)
+    );
+
+
+    mux#(
+        .DataSize(DataSize),
+        .X(X),
+        .Y(Y),
+        .Z(Z),
+        .srcID(0),
+        .ReductionBitPos(ReductionBitPos),
+        .PayloadLen(PayloadLen),
+        .DataWidth(DataWidth),
+        .WeightPos(WeightPos),
+        .WeightWidth(WeightWidth),
+        .IndexPos(IndexPos),
+        .IndexWidth(IndexWidth),
+        .PriorityPos(PriorityPos),
+        .PriorityWidth(PriorityWidth),
+        .ExitPos(ExitPos),
+        .ExitWidth(ExitWidth),
+        .InterNodeFIFODepth(InterNodeFIFODepth),
+        .IntraNodeFIFODepth(IntraNodeFIFODepth),
+        .RoutingTableWidth(RoutingTableWidth),
+        .RoutingTablesize(RoutingTablesize),
+        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTablesize(MulticastTablesize),
+        .ReductionTableWidth(ReductionTableWidth),
+        .ReductionTablesize(ReductionTablesize),
+        .PcktTypeLen(PcktTypeLen)
+    )
+    mux_local(
+        .clk(clk),
+        .rst(rst),
+        .in_local(),
+        .in_yneg(),
+        .in_ypos(),
+        .in_xpos(),
+        .in_xneg(),
+        .in_zpos(),
+        .in_zneg(),
+        .in_pipeline_stall_local(),
+        .in_pipeline_stall_yneg(),
+        .in_pipeline_stall_ypos(),
+        .in_pipeline_stall_xpos(),
+        .in_pipeline_stall_xneg(),
+        .in_pipeline_stall_
+        
+    );
+
+
+
+
+endmodule
     
 

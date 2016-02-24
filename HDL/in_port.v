@@ -84,11 +84,27 @@ in_port
     output input_fifo_full,
 
 //interfaces between muxes and in_port
-    output reg [Datawidth-1:0] out_port_in[7];
-    input out_avail[7]; // the consume signal of seven output ports, which are also the non-empty signal of fifos
-    output stall; //pipeline stall signal
+    output [DataWidth-1:0] out_port_in_local,
+    output [DataWidth-1:0] out_port_in_xpos,
+    output [DataWidth-1:0] out_port_in_xneg,
+    output [DataWidth-1:0] out_port_in_ypos,
+    output [DataWidth-1:0] out_port_in_yneg,
+    output [DataWidth-1:0] out_port_in_zpos,
+    output [DataWidth-1:0] out_port_in_zneg,
+    input out_avail_local,
+    input out_avail_xpos,
+    input out_avail_xneg,
+    input out_avail_ypos,
+    input out_avail_yneg,
+    input out_avail_zpos,
+    input out_avail_zneg,// the consume signal of seven output ports, which are also the non-empty signal of fifos
+    output stall //pipeline stall signal
     
 )
+
+
+    wire out_avail[7];
+    reg [DataWidth-1:0] out_port_in[7];
 
     //pipeline has three stages:
     //first stage: input buffer consume stage (IC)
@@ -148,6 +164,22 @@ in_port
 
     wire [DataWidth-1:0] singcast_children;    
 
+
+    assign out_port_in_local=out_port_in[0];
+    assign out_port_in_xpos=out_port_in[3];
+    assign out_port_in_xneg=out_port_in[4];
+    assign out_port_in_ypos=out_port_in[2];
+    assign out_port_in_yneg=out_port_in[1];
+    assign out_port_in_zpos=out_port_in[5];
+    assign out_port_in_zneg=out_port_in[6];
+
+    assign out_avail[0]=out_avail_local;
+    assign out_avail[1]=out_avail_yneg;
+    assign out_avail[2]=out_avail_ypos;
+    assign out_avail[3]=out_avail_xpos;
+    assign out_avail[4]=out_avail_xneg;
+    assign out_avail[5]=out_avail_zpos;
+    assign out_avail[6]=out_avail_zneg;
 
 
     assign stall=(out_port_in[0][DataWidth-1] && ~out_avail[0]) || (out_port_in[1][DataWidth-1] && ~out_avail[1]) || (out_port_in[2][DataWidth-1] && ~out_avail[2]) || (out_port_in[3][DataWidth-1] && ~out_avail[3]) ||  (out_port_in[4][DataWidth-1] && ~out_avail[4]) || (out_port_in[5][DataWidth-1] && ~out_avail[5]) || (out_port_in[6][DataWidth-1] && ~out_avail[6]);

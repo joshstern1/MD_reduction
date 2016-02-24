@@ -43,11 +43,33 @@ module mux
 (
     input clk,
     input rst,
-    input [DataWidth-1:0] in[7],
-    input in_pipeline_stall[7],
-    output in_avail[7],
+    input [DataWidth-1:0] in_local,
+    input [DataWidth-1:0] in_yneg,
+    input [DataWidth-1:0] in_ypos,
+    input [DataWidth-1:0] in_xpos,
+    input [DataWidth-1:0] in_xneg,
+    input [DataWidth-1:0] in_zpos,
+    input [DataWidth-1:0] in_zneg,
+    input in_pipeline_stall_local,
+    input in_pipeline_stall_yneg,
+    input in_pipeline_stall_ypos,
+    input in_pipeline_stall_xpos,
+    input in_pipeline_stall_xneg,
+    input in_pipeline_stall_zpos,
+    input in_pipeline_stall_zneg,
+    output in_avail_local,
+    output in_avail_yneg,
+    output in_avail_ypos,
+    output in_avail_xpos,
+    output in_avail_xneg,
+    output in_avail_zpos,
+    output in_avail_zneg,
     output reg [DataWidth-1:0] out
 )
+
+    wire in[7];
+    wire in_pipeline_stall[7];
+    wire in_avail[7];
 
     wire FIFO_empty[7];
     wire FIFO_full[7];
