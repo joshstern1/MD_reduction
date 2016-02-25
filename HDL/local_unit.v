@@ -36,7 +36,7 @@
         
     */
 
-`define REDUCTION
+`define MULTICAST
 
 module local_unit
 #(

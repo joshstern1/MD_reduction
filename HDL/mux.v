@@ -65,34 +65,34 @@ module mux
     output in_avail_zpos,
     output in_avail_zneg,
     output reg [DataWidth-1:0] out
-)
+);
 
-    wire in[7];
-    wire in_pipeline_stall[7];
-    wire in_avail[7];
+    wire [DataWidth-1:0] in[6:0];
+    wire in_pipeline_stall[6:0];
+    wire in_avail[6:0];
 
-    wire FIFO_empty[7];
-    wire FIFO_full[7];
+    wire FIFO_empty[6:0];
+    wire FIFO_full[6:0];
 
-    wire FIFO_consume[7];
+    reg FIFO_consume[6:0];
 
-    wire [DataWidth-1:0] FIFO_out[7];
+    wire [DataWidth-1:0] FIFO_out[6:0];
 
-    wire [PriorityWidth-1:0] priority[7];
+    wire [PriorityWidth-1:0] priority[6:0];
 
 //    wire [2:0] sel_index;
-    wire [PriorityWidth-1:0] priority01; //the higher priority between the 0th port and 1st port
-    wire [2:0] sel_index01;
-    wire [PriorityWidth-1:0] priority23; //the higher priority between the 2nd and 3rd port
-    wire [2:0] sel_index23;
-    wire [PriorityWidth-1:0] priority45; //the higher priority between the 4th and 5th port
-    wire [2:0] sel_index45
-    wire [PriorityWidth-1:0] priority0123; //the highest priority among the 0th port, 1st port, 2nd port and 3rd port
-    wire [2:0] sel_index0123;
-    wire [PriorityWidth-1:0] Priorty456; //the higher priority among 4th port, 5th port and 6th port
-    wire [2:0] sel_index456;
-    wire [PriorityWidth-1:0] Priority0123456; //the highest priority among 0,1,2,3,4,5,6 ports
-    wire [2:0] sel_index0123456;
+    reg [PriorityWidth-1:0] priority01; //the higher priority between the 0th port and 1st port
+    reg [2:0] sel_index01;
+    reg [PriorityWidth-1:0] priority23; //the higher priority between the 2nd and 3rd port
+    reg [2:0] sel_index23;
+    reg [PriorityWidth-1:0] priority45; //the higher priority between the 4th and 5th port
+    reg [2:0] sel_index45;
+    reg [PriorityWidth-1:0] priority0123; //the highest priority among the 0th port, 1st port, 2nd port and 3rd port
+    reg [2:0] sel_index0123;
+    reg [PriorityWidth-1:0] priority456; //the higher priority among 4th port, 5th port and 6th port
+    reg [2:0] sel_index456;
+    reg [PriorityWidth-1:0] priority0123456; //the highest priority among 0,1,2,3,4,5,6 ports
+    reg [2:0] sel_index0123456;
 
     reg [DataWidth-1:0] sel_data;//the outputs from the buffers that has the highest priority
     reg [DataWidth-1:0] sel_data_RR;
@@ -108,6 +108,8 @@ module mux
 
     reg [ReductionTableWidth-1:0] reduction_table_entry;
     wire [ReductionTableWidth-1:0] reduction_table_entry_next;
+
+    wire [2:0] next_counter;
 
 
     //this pipeline has severa stages
@@ -390,7 +392,7 @@ module mux
 
 
     always@(posedge clk) begin
-        sel_data<=FIFO_out[sel_index01234567];
+        sel_data<=FIFO_out[sel_index0123456];
     end
 
 //second stage read the reduction table entry if the packets is a reduction packet
@@ -415,10 +417,11 @@ module mux
 //
     
 
+    assign next_counter=reduction_table_entry[158:156]+1;
     assign is_reduction_WB=sel_data_RR[ReductionBitPos];
     assign reduction_ready= sel_data_RR[ReductionBitPos] && (reduction_table_entry[ReductionTableWidth-1:ReductionTableWidth-3]==reduction_table_entry[ReductionTableWidth-4:ReductionTableWidth-6]+1);
     assign reduction_out={sel_data_RR[DataWidth-1:152],reduction_table_entry_next[135:128],reduction_table_entry_next[151:136],reduction_table_entry_next[127:0]};
-     assign reduction_table_entry_next={reduction_table_entry[161:159],next_counter,reduction_table_entry[155:136],(reduction_table_entry[135:128]+reduction_eject[WeightPos+WeightWidth-1:WeightPos]),(reduction_table_entry[PayloadLen-1:0]+reduction_eject[PayloadLen-1:0])};
+     assign reduction_table_entry_next={reduction_table_entry[161:159],next_counter,reduction_table_entry[155:136],(reduction_table_entry[135:128]+sel_data_RR[WeightPos+WeightWidth-1:WeightPos]),(reduction_table_entry[PayloadLen-1:0]+sel_data_RR[PayloadLen-1:0])};
 
 
     always@(posedge clk) begin

@@ -24,14 +24,14 @@ def parameter_gen():
     parameter PriorityWidth=8;
     parameter ExitPos=160;
     parameter ExitWidth=4;
-    parameter InterNodeFIFODepth=1280;
+    parameter InterNodeFIFODepth=256;
     parameter IntraNodeFIFODepth=1;
     parameter RoutingTableWidth=32;
-    parameter RoutingTablesize=256;
+    parameter RoutingTablesize=16;
     parameter MulticastTableWidth=103;
-    parameter MulticastTablesize=256;
+    parameter MulticastTablesize=16;
     parameter ReductionTableWidth=162;
-    parameter ReductionTablesize=256;
+    parameter ReductionTablesize=16;
     parameter PcktTypeLen=4;
     parameter LinkDelay=20;\n
 \n '''
@@ -80,29 +80,29 @@ def initial_gen(xsize,ysize,zsize):
         for j in range(0,ysize):
             for k in range(0,zsize):
                 tag="_"+str(i)+"_"+str(j)+"_"+str(k)
-                tmp="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/routing_table"+tag+"_LOCAL.txt\",net0.n"+tag+".local_unit_inst.routing_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/routing_table"+tag+"_LOCAL.txt\",net0.n"+tag+".switch_inst.LOCAL.routing_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/routing_table"+tag+"_XPOS.txt\",net0.n"+tag+".switch_inst.XPOS.routing_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/routing_table"+tag+"_XNEG.txt\",net0.n"+tag+".switch_inst.XNEG.routing_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/routing_table"+tag+"_YPOS.txt\",net0.n"+tag+".switch_inst.YPOS.routing_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/routing_table"+tag+"_YNEG.txt\",net0.n"+tag+".switch_inst.YNEG.routing_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/routing_table"+tag+"_ZPOS.txt\",net0.n"+tag+".switch_inst.ZPOS.routing_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/routing_table"+tag+"_ZNEG.txt\",net0.n"+tag+".switch_inst.ZNEG.routing_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/multicast_table"+tag+"_LOCAL.txt\",net0.n"+tag+".switch_inst.LOCAL.multicast_unit_inst.multicast_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/multicast_table"+tag+"_XPOS.txt\",net0.n"+tag+".switch_inst.XPOS.multicast_unit_inst.multicast_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/multicast_table"+tag+"_XNEG.txt\",net0.n"+tag+".switch_inst.XNEG.multicast_unit_inst.multicast_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/multicast_table"+tag+"_YPOS.txt\",net0.n"+tag+".switch_inst.YPOS.multicast_unit_inst.multicast_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/multicast_table"+tag+"_YNEG.txt\",net0.n"+tag+".switch_inst.YNEG.multicast_unit_inst.multicast_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/multicast_table"+tag+"_ZPOS.txt\",net0.n"+tag+".switch_inst.ZPOS.multicast_unit_inst.multicast_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/multicast_table"+tag+"_ZNEG.txt\",net0.n"+tag+".switch_inst.ZNEG.multicast_unit_inst.multicast_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/reduction_table"+tag+"_LOCAL.txt\",net0.n"+tag+".switch_inst.LOCAL.reduction_unit_inst.reduction_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/reduction_table"+tag+"_XPOS.txt\",net0.n"+tag+".switch_inst.XPOS.reduction_unit_inst.reduction_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/reduction_table"+tag+"_XNEG.txt\",net0.n"+tag+".switch_inst.XNEG.reduction_unit_inst.reduction_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/reduction_table"+tag+"_YPOS.txt\",net0.n"+tag+".switch_inst.YPOS.reduction_unit_inst.reduction_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/reduction_table"+tag+"_YNEG.txt\",net0.n"+tag+".switch_inst.YNEG.reduction_unit_inst.reduction_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/reduction_table"+tag+"_ZPOS.txt\",net0.n"+tag+".switch_inst.ZPOS.reduction_unit_inst.reduction_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/reduction_table"+tag+"_ZNEG.txt\",net0.n"+tag+".switch_inst.ZNEG.reduction_unit_inst.reduction_table);\n"
-                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction/input_data/data_to_send"+tag+".txt\",net0.n"+tag+".local_unit_inst.data);\n"
+                tmp="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/routing_table"+tag+"_LOCAL.txt\",net0.n"+tag+".local_unit_inst.routing_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/routing_table"+tag+"_LOCAL.txt\",net0.n"+tag+".switch_inst.LOCAL.routing_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/routing_table"+tag+"_XPOS.txt\",net0.n"+tag+".switch_inst.XPOS.routing_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/routing_table"+tag+"_XNEG.txt\",net0.n"+tag+".switch_inst.XNEG.routing_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/routing_table"+tag+"_YPOS.txt\",net0.n"+tag+".switch_inst.YPOS.routing_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/routing_table"+tag+"_YNEG.txt\",net0.n"+tag+".switch_inst.YNEG.routing_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/routing_table"+tag+"_ZPOS.txt\",net0.n"+tag+".switch_inst.ZPOS.routing_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/routing_table"+tag+"_ZNEG.txt\",net0.n"+tag+".switch_inst.ZNEG.routing_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/multicast_table"+tag+"_LOCAL.txt\",net0.n"+tag+".switch_inst.LOCAL.multicast_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/multicast_table"+tag+"_XPOS.txt\",net0.n"+tag+".switch_inst.XPOS.multicast_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/multicast_table"+tag+"_XNEG.txt\",net0.n"+tag+".switch_inst.XNEG.multicast_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/multicast_table"+tag+"_YPOS.txt\",net0.n"+tag+".switch_inst.YPOS.multicast_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/multicast_table"+tag+"_YNEG.txt\",net0.n"+tag+".switch_inst.YNEG.multicast_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/multicast_table"+tag+"_ZPOS.txt\",net0.n"+tag+".switch_inst.ZPOS.multicast_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/multicast_table"+tag+"_ZNEG.txt\",net0.n"+tag+".switch_inst.ZNEG.multicast_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/reduction_table"+tag+"_LOCAL.txt\",net0.n"+tag+".switch_inst.mux_local.reduction_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/reduction_table"+tag+"_XPOS.txt\",net0.n"+tag+".switch_inst.mux_xpos.reduction_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/reduction_table"+tag+"_XNEG.txt\",net0.n"+tag+".switch_inst.mux_xneg.reduction_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/reduction_table"+tag+"_YPOS.txt\",net0.n"+tag+".switch_inst.mux_ypos.reduction_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/reduction_table"+tag+"_YNEG.txt\",net0.n"+tag+".switch_inst.mux_yneg.reduction_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/reduction_table"+tag+"_ZPOS.txt\",net0.n"+tag+".switch_inst.mux_zpos.reduction_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/reduction_table"+tag+"_ZNEG.txt\",net0.n"+tag+".switch_inst.mux_zneg.reduction_table);\n"
+                tmp+="\tinitial $readmemh(\"C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/input_data/data_to_send"+tag+".txt\",net0.n"+tag+".local_unit_inst.data);\n"
 
 
                 initial+=tmp

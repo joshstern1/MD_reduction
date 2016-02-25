@@ -19,18 +19,20 @@ module buffer
     output reg [buffer_width-1:0] out
 );
   	
+    integer i;
+
     wire[buffer_depth-1:0] head_next;
 	wire[buffer_depth-1:0] tail_next;
 	
     reg[buffer_depth-1:0] head;
 	reg[buffer_depth-1:0] tail;
 
-	reg[buffer_width-1:0] fifo[FIFO_depth-1:0];  
+	reg[buffer_width-1:0] fifo[buffer_depth-1:0];  
 
     assign empty=(head==tail);
-	assign full=(tail==FIFO_depth-1)?(head==0):(head==tail+1);
-	assign head_next=(head==FIFO_depth-1)?0:head+1;
-	assign tail_next=(tail==FIFO_depth-1)?0:tail+1;
+	assign full=(tail==buffer_depth-1)?(head==0):(head==tail+1);
+	assign head_next=(head==buffer_depth-1)?0:head+1;
+	assign tail_next=(tail==buffer_depth-1)?0:tail+1;
 
     always@(posedge clk) begin
         if(consume) begin
@@ -42,7 +44,12 @@ module buffer
     end
 
     always@(posedge clk) begin
-        if(produce && ~full) begin
+        if(rst) begin
+            for(i=0;i<buffer_depth;i=i+1) begin
+                fifo[i]<=0;
+            end
+        end
+        else if(produce && ~full) begin
             fifo[tail]<=in;
         end
     end

@@ -135,7 +135,11 @@ module node
         .EjectSlotAvail_local(EjectSlotAvail_local)
     );
     
-    switch#(
+    crossbar#(
+        .DataSize(DataSize),
+        .X(X),
+        .Y(Y),
+        .Z(Z),
         .ReductionBitPos(ReductionBitPos),
         .PayloadLen(PayloadLen),
         .DataWidth(DataWidth),
@@ -204,26 +208,7 @@ module node
         .InjectSlotAvail_zneg(InjectSlotAvail_zneg),
         .eject_local(eject_local),
         .eject_send_local(eject_send_local),
-        .InjectSlotAvail_local(InjectSlotAvail_local),
-
-        .xpos_ClockwiseUtil(xpos_ClockwiseUtil), 
-        .xpos_CounterClockwiseUtil(xpos_CounterClockwiseUtil), 
-        .xpos_InjectUtil(xpos_InjectUtil),
-        .xneg_ClockwiseUtil(xneg_ClockwiseUtil), 
-        .xneg_CounterClockwiseUtil(xneg_CounterClockwiseUtil), 
-        .xneg_InjectUtil(xneg_InjectUtil),
-        .ypos_ClockwiseUtil(ypos_ClockwiseUtil), 
-        .ypos_CounterClockwiseUtil(ypos_CounterClockwiseUtil), 
-        .ypos_InjectUtil(ypos_InjectUtil),
-        .yneg_ClockwiseUtil(yneg_ClockwiseUtil), 
-        .yneg_CounterClockwiseUtil(yneg_CounterClockwiseUtil), 
-        .yneg_InjectUtil(yneg_InjectUtil),
-        .zpos_ClockwiseUtil(zpos_ClockwiseUtil), 
-        .zpos_CounterClockwiseUtil(zpos_CounterClockwiseUtil), 
-        .zpos_InjectUtil(zpos_InjectUtil),
-        .zneg_ClockwiseUtil(zneg_ClockwiseUtil), 
-        .zneg_CounterClockwiseUtil(zneg_CounterClockwiseUtil), 
-        .zneg_InjectUtil(zneg_InjectUtil)
+        .InjectSlotAvail_local(InjectSlotAvail_local)
     );
         
 //xpos link

@@ -25,9 +25,9 @@
 
 using namespace std;
 
-#define X 6
-#define Y 6
-#define Z 6
+#define X 4
+#define Y 4
+#define Z 4
 
 #define SRC_X 0
 #define SRC_Y 0

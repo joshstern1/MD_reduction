@@ -52,13 +52,13 @@
   |3 bits              | 3 bits                          |4 bits|16 bits    | 8 bits            | 128 bits           | 162 bits in total 
 * */
 
-crossbar
+module crossbar
 #(
     parameter DataSize=8'd172,
     parameter X=8'd0,
     parameter Y=8'd0,
     parameter Z=8'd0,
-    parameter srcID=4'd0,
+ //   parameter srcID=4'd0,
     parameter ReductionBitPos=254,
     parameter PayloadLen=128,
     parameter DataWidth=256,
@@ -127,7 +127,7 @@ crossbar
     output InjectSlotAvail_zneg,
     output [DataWidth-1:0] eject_local,
     output eject_send_local,
-    output InjectSlotAvail_local,
+    output InjectSlotAvail_local
 );
 
 
@@ -138,7 +138,6 @@ crossbar
     wire xneg_input_fifo_full;
     wire zpos_input_fifo_full;
     wire zneg_input_fifo_full;
-    wire ypos_input_fifo_full;
 
 
     wire [DataWidth-1:0] local_out_port_in_local; //from local in port to local mux
@@ -289,13 +288,13 @@ crossbar
         .IntraNodeFIFODepth(IntraNodeFIFODepth),
         .RoutingTableWidth(RoutingTableWidth),
         .RoutingTablesize(RoutingTablesize),
-        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTableWidth(MulticastTableWidth),
         .MulticastTablesize(MulticastTablesize),
         .ReductionTableWidth(ReductionTableWidth),
         .ReductionTablesize(ReductionTablesize),
         .PcktTypeLen(PcktTypeLen)
     )
-    in_port_local(
+    LOCAL(
         .clk(clk),
         .rst(rst),
         .in(inject_local),
@@ -343,13 +342,13 @@ crossbar
         .IntraNodeFIFODepth(IntraNodeFIFODepth),
         .RoutingTableWidth(RoutingTableWidth),
         .RoutingTablesize(RoutingTablesize),
-        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTableWidth(MulticastTableWidth),
         .MulticastTablesize(MulticastTablesize),
         .ReductionTableWidth(ReductionTableWidth),
         .ReductionTablesize(ReductionTablesize),
         .PcktTypeLen(PcktTypeLen)
     )
-    in_port_yneg(
+    YNEG(
         .clk(clk),
         .rst(rst),
         .in(inject_yneg),
@@ -395,13 +394,13 @@ crossbar
         .IntraNodeFIFODepth(IntraNodeFIFODepth),
         .RoutingTableWidth(RoutingTableWidth),
         .RoutingTablesize(RoutingTablesize),
-        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTableWidth(MulticastTableWidth),
         .MulticastTablesize(MulticastTablesize),
         .ReductionTableWidth(ReductionTableWidth),
         .ReductionTablesize(ReductionTablesize),
         .PcktTypeLen(PcktTypeLen)
     )
-    in_port_ypos(
+    YPOS(
         .clk(clk),
         .rst(rst),
         .in(inject_ypos),
@@ -445,13 +444,13 @@ crossbar
         .IntraNodeFIFODepth(IntraNodeFIFODepth),
         .RoutingTableWidth(RoutingTableWidth),
         .RoutingTablesize(RoutingTablesize),
-        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTableWidth(MulticastTableWidth),
         .MulticastTablesize(MulticastTablesize),
         .ReductionTableWidth(ReductionTableWidth),
         .ReductionTablesize(ReductionTablesize),
         .PcktTypeLen(PcktTypeLen)
     )
-    in_port_xpos(
+    XPOS(
         .clk(clk),
         .rst(rst),
         .in(inject_xpos),
@@ -495,13 +494,13 @@ crossbar
         .IntraNodeFIFODepth(IntraNodeFIFODepth),
         .RoutingTableWidth(RoutingTableWidth),
         .RoutingTablesize(RoutingTablesize),
-        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTableWidth(MulticastTableWidth),
         .MulticastTablesize(MulticastTablesize),
         .ReductionTableWidth(ReductionTableWidth),
         .ReductionTablesize(ReductionTablesize),
         .PcktTypeLen(PcktTypeLen)
     )
-    in_port_xneg(
+    XNEG(
         .clk(clk),
         .rst(rst),
         .in(inject_xneg),
@@ -547,13 +546,13 @@ crossbar
         .IntraNodeFIFODepth(IntraNodeFIFODepth),
         .RoutingTableWidth(RoutingTableWidth),
         .RoutingTablesize(RoutingTablesize),
-        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTableWidth(MulticastTableWidth),
         .MulticastTablesize(MulticastTablesize),
         .ReductionTableWidth(ReductionTableWidth),
         .ReductionTablesize(ReductionTablesize),
         .PcktTypeLen(PcktTypeLen)
     )
-    in_port_zpos(
+    ZPOS(
         .clk(clk),
         .rst(rst),
         .in(inject_zpos),
@@ -597,13 +596,13 @@ crossbar
         .IntraNodeFIFODepth(IntraNodeFIFODepth),
         .RoutingTableWidth(RoutingTableWidth),
         .RoutingTablesize(RoutingTablesize),
-        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTableWidth(MulticastTableWidth),
         .MulticastTablesize(MulticastTablesize),
         .ReductionTableWidth(ReductionTableWidth),
         .ReductionTablesize(ReductionTablesize),
         .PcktTypeLen(PcktTypeLen)
     )
-    in_port_zneg(
+    ZNEG(
         .clk(clk),
         .rst(rst),
         .in(inject_zneg),
@@ -648,7 +647,7 @@ crossbar
         .IntraNodeFIFODepth(IntraNodeFIFODepth),
         .RoutingTableWidth(RoutingTableWidth),
         .RoutingTablesize(RoutingTablesize),
-        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTableWidth(MulticastTableWidth),
         .MulticastTablesize(MulticastTablesize),
         .ReductionTableWidth(ReductionTableWidth),
         .ReductionTablesize(ReductionTablesize),
@@ -703,7 +702,7 @@ crossbar
         .IntraNodeFIFODepth(IntraNodeFIFODepth),
         .RoutingTableWidth(RoutingTableWidth),
         .RoutingTablesize(RoutingTablesize),
-        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTableWidth(MulticastTableWidth),
         .MulticastTablesize(MulticastTablesize),
         .ReductionTableWidth(ReductionTableWidth),
         .ReductionTablesize(ReductionTablesize),
@@ -758,7 +757,7 @@ crossbar
         .IntraNodeFIFODepth(IntraNodeFIFODepth),
         .RoutingTableWidth(RoutingTableWidth),
         .RoutingTablesize(RoutingTablesize),
-        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTableWidth(MulticastTableWidth),
         .MulticastTablesize(MulticastTablesize),
         .ReductionTableWidth(ReductionTableWidth),
         .ReductionTablesize(ReductionTablesize),
@@ -813,7 +812,7 @@ crossbar
         .IntraNodeFIFODepth(IntraNodeFIFODepth),
         .RoutingTableWidth(RoutingTableWidth),
         .RoutingTablesize(RoutingTablesize),
-        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTableWidth(MulticastTableWidth),
         .MulticastTablesize(MulticastTablesize),
         .ReductionTableWidth(ReductionTableWidth),
         .ReductionTablesize(ReductionTablesize),
@@ -868,7 +867,7 @@ crossbar
         .IntraNodeFIFODepth(IntraNodeFIFODepth),
         .RoutingTableWidth(RoutingTableWidth),
         .RoutingTablesize(RoutingTablesize),
-        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTableWidth(MulticastTableWidth),
         .MulticastTablesize(MulticastTablesize),
         .ReductionTableWidth(ReductionTableWidth),
         .ReductionTablesize(ReductionTablesize),
@@ -922,7 +921,7 @@ crossbar
         .IntraNodeFIFODepth(IntraNodeFIFODepth),
         .RoutingTableWidth(RoutingTableWidth),
         .RoutingTablesize(RoutingTablesize),
-        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTableWidth(MulticastTableWidth),
         .MulticastTablesize(MulticastTablesize),
         .ReductionTableWidth(ReductionTableWidth),
         .ReductionTablesize(ReductionTablesize),
@@ -977,7 +976,7 @@ crossbar
         .IntraNodeFIFODepth(IntraNodeFIFODepth),
         .RoutingTableWidth(RoutingTableWidth),
         .RoutingTablesize(RoutingTablesize),
-        .MulticastTableWidth(NulticastTableWidth),
+        .MulticastTableWidth(MulticastTableWidth),
         .MulticastTablesize(MulticastTablesize),
         .ReductionTableWidth(ReductionTableWidth),
         .ReductionTablesize(ReductionTablesize),

@@ -34,7 +34,7 @@
 #define MULTICASTPCKT 9
 #define REDUCTIONPCKT 10
 
-#define MODE 2
+#define MODE 1
 
 
 int mode = MODE; //1 is the multicast mode, 2 is the reduction mode, 3 is the forward singlecast mode, 4 is the reverse singlecast mode.
@@ -1076,7 +1076,7 @@ void table_gen(node** tree_array){
 }
 
 void print_xyz(){
-	string path = "C:/Users/Jiayi/Documents/GitHub/MD_reduction/input_data/";
+	string path = "C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/input_data/";
 	string data_to_send_common = "data_to_send_";
 	string suffix = ".txt";
 	string filename;
@@ -1100,7 +1100,7 @@ void print_xyz(){
 }
 
 void print_tables(){
-	string path = "C:/Users/Jiayi/Documents/GitHub/MD_reduction/tables/";
+	string path = "C:/Users/Jiayi/Documents/GitHub/MD_reduction_data/tables/";
 	string routing_table_file_common = "routing_table_";
 	string multicast_table_file_common = "multicast_table_";
 	string reduction_table_file_common = "reduction_table_";
@@ -1155,7 +1155,7 @@ void print_tables(){
 		}
 		
 	}
-	cout << "Largest table size is %d" << largest_table_size;
+	cout << "Largest table size is " << largest_table_size;
 }
 
 int main(int argc, char* argv[]){
