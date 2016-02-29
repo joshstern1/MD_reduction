@@ -677,6 +677,7 @@ module crossbar
         .in_avail_xneg(xneg_out_avail_local),
         .in_avail_zpos(zpos_out_avail_local),
         .in_avail_zneg(zneg_out_avail_local),
+        .send(eject_send_local),
         .out(eject_local)
         
     );
@@ -732,6 +733,7 @@ module crossbar
         .in_avail_xneg(xneg_out_avail_yneg),
         .in_avail_zpos(zpos_out_avail_yneg),
         .in_avail_zneg(zneg_out_avail_yneg),
+        .send(eject_send_yneg),
         .out(eject_yneg)
         
     );
@@ -787,6 +789,7 @@ module crossbar
         .in_avail_xneg(xneg_out_avail_ypos),
         .in_avail_zpos(zpos_out_avail_ypos),
         .in_avail_zneg(zneg_out_avail_ypos),
+        .send(eject_send_ypos),
         .out(eject_ypos)
         
     );
@@ -842,6 +845,7 @@ module crossbar
         .in_avail_xneg(xneg_out_avail_xpos),
         .in_avail_zpos(zpos_out_avail_xpos),
         .in_avail_zneg(zneg_out_avail_xpos),
+        .send(eject_send_xpos),
         .out(eject_xpos)
         
     );
@@ -897,6 +901,7 @@ module crossbar
         .in_avail_xneg(xneg_out_avail_xneg),
         .in_avail_zpos(zpos_out_avail_xneg),
         .in_avail_zneg(zneg_out_avail_xneg),
+        .send(eject_send_xneg),
         .out(eject_xneg)
         
     );
@@ -951,6 +956,7 @@ module crossbar
         .in_avail_xneg(xneg_out_avail_zpos),
         .in_avail_zpos(zpos_out_avail_zpos),
         .in_avail_zneg(zneg_out_avail_zpos),
+        .send(eject_send_zpos),
         .out(eject_zpos)
         
     );
@@ -1006,6 +1012,7 @@ module crossbar
         .in_avail_xneg(xneg_out_avail_zneg),
         .in_avail_zpos(zpos_out_avail_zneg),
         .in_avail_zneg(zneg_out_avail_zneg),
+        .send(eject_send_zneg),
         .out(eject_zneg)
         
     );

@@ -57,6 +57,7 @@ module mux
     input in_pipeline_stall_xneg,
     input in_pipeline_stall_zpos,
     input in_pipeline_stall_zneg,
+    output send,
     output in_avail_local,
     output in_avail_yneg,
     output in_avail_ypos,
@@ -443,6 +444,8 @@ module mux
             out<=0;
         end
     end
+
+    assign send=out[DataWidth-1];
 
     always@(posedge clk) begin
         if(is_reduction_WB) begin
