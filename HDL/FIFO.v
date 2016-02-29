@@ -73,7 +73,7 @@ module FIFO
 					begin
 					fifo[head]<=0;
 					head<=head_next;
-				end;w
+				end
 				end
 			else //neither full nor empty
 				begin

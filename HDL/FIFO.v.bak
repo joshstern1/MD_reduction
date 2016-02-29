@@ -15,10 +15,10 @@ module FIFO
     input [FIFO_width-1:0] in,
     input consume,//read enabling to out port from FIFO
     input produce,//write enabling to in port to FIFO 
-    output [FIFO_depth-1:0] out,
+    output [FIFO_width-1:0] out,
     output full,
-    output empty,
-    output [FIFO_depth-1:0] util
+    output empty
+//    output reg [FIFO_depth-1:0] util
 );
 	wire[FIFO_depth-1:0] head_next;
 	wire[FIFO_depth-1:0] tail_next;
@@ -38,13 +38,13 @@ module FIFO
 	
 	assign out=fifo[head];
 
-    always@(*)
+/*    always@(*)
     begin
         if(tail>=head)
             util=tail-head;
         else
             util=tail-head+FIFO_depth;
-    end
+    end*/
 
 	always@(posedge clk)
 		begin
@@ -73,7 +73,7 @@ module FIFO
 					begin
 					fifo[head]<=0;
 					head<=head_next;
-				end
+				end;w
 				end
 			else //neither full nor empty
 				begin

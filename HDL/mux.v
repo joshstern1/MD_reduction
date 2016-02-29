@@ -120,6 +120,14 @@ module mux
 
     parameter InterSwitchBufferDepth=4;
 
+    assign in_avail_local=in_avail[0];
+    assign in_avail_yneg=in_avail[1];
+    assign in_avail_ypos=in_avail[2];
+    assign in_avail_xpos=in_avail[3];
+    assign in_avail_xneg=in_avail[4];
+    assign in_avail_zpos=in_avail[5];
+    assign in_avail_zneg=in_avail[6];
+
     assign in_avail[0]=~FIFO_full[0];
     assign in_avail[1]=~FIFO_full[1];
     assign in_avail[2]=~FIFO_full[2];

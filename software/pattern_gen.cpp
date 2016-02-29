@@ -39,7 +39,7 @@ using namespace std;
 
 #if GenPattern
 
-#define R_2_C 1
+#define R_2_C 3
 
 #endif
 
