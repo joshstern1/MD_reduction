@@ -21,7 +21,7 @@ using namespace std;
 #define LINEMAX 100
 
 #define PARTICLE_PER_BOX 172
-#define MODE 3 // 1 is multicast mode, 2 is reduction mode, 3 is the singlecast multicastmode, 4 is the singlecast reduction mode
+#define MODE 1 // 1 is multicast mode, 2 is reduction mode, 3 is the singlecast multicastmode, 4 is the singlecast reduction mode
 #define MAX_NUM_CHILDREN 5
 
 #define LOCAL 0

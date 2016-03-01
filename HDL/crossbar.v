@@ -265,7 +265,13 @@ module crossbar
 
 
 
-
+    assign InjectSlotAvail_xpos=~xpos_input_fifo_full;
+    assign InjectSlotAvail_xneg=~xneg_input_fifo_full;
+    assign InjectSlotAvail_ypos=~ypos_input_fifo_full;
+    assign InjectSlotAvail_yneg=~yneg_input_fifo_full;
+    assign InjectSlotAvail_zpos=~zpos_input_fifo_full;
+    assign InjectSlotAvail_zneg=~zneg_input_fifo_full;
+    assign InjectSlotAvail_local=~local_input_fifo_full;
 
     in_port#(
         .DataSize(DataSize),

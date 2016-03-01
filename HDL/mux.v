@@ -121,6 +121,24 @@ module mux
 
     parameter InterSwitchBufferDepth=4;
 
+    
+
+    assign in_pipeline_stall[0]=in_pipeline_stall_local;
+    assign in_pipeline_stall[1]=in_pipeline_stall_yneg;
+    assign in_pipeline_stall[2]=in_pipeline_stall_ypos;
+    assign in_pipeline_stall[3]=in_pipeline_stall_xpos;
+    assign in_pipeline_stall[4]=in_pipeline_stall_xneg;
+    assign in_pipeline_stall[5]=in_pipeline_stall_zpos;
+    assign in_pipeline_stall[6]=in_pipeline_stall_zneg;
+
+    assign in[0]=in_local;
+    assign in[1]=in_yneg;
+    assign in[2]=in_ypos;
+    assign in[3]=in_xpos;
+    assign in[4]=in_xneg;
+    assign in[5]=in_zpos;
+    assign in[6]=in_zneg;
+
     assign in_avail_local=in_avail[0];
     assign in_avail_yneg=in_avail[1];
     assign in_avail_ypos=in_avail[2];

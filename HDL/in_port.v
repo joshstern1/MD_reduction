@@ -230,7 +230,7 @@ module in_port
     end
     assign packet_type=routing_table_entry[31:28];
     assign is_multicast=(packet_type==4'd9);
-    assign mutlicast_table_index=(is_multicast)?routing_table_entry[23:8]:0;
+    assign multicast_table_index=(is_multicast)?routing_table_entry[23:8]:16'd0;
 
     always@(posedge clk) begin
         if(~stall) begin
@@ -279,7 +279,7 @@ module in_port
     always@(posedge clk) begin
         if(~stall) begin
             if(is_multicast_MR) begin
-                out_port_in[0]<=multicast_children[0];
+                out_port_in[0]<=(SrcID_wire==0)?0:multicast_children[0];//if this is local port, there is no need to send the local packet
                 out_port_in[1]<=(perm_multicast[1]==7)?0:multicast_children[perm_multicast[1]];
                 out_port_in[2]<=(perm_multicast[2]==7)?0:multicast_children[perm_multicast[2]];
                 out_port_in[3]<=(perm_multicast[3]==7)?0:multicast_children[perm_multicast[3]];
@@ -305,6 +305,9 @@ module in_port
     assign multicast_children[4]={input_fifo_out_MR[DataWidth-1:ExitPos+ExitWidth],multicast_table_entry[79:76],routing_table_entry[7:0],weight_split[4],multicast_table_entry[75:60],input_fifo_out_MR[PayloadLen-1:0]};
     assign multicast_children[5]={input_fifo_out_MR[DataWidth-1:ExitPos+ExitWidth],multicast_table_entry[99:96],routing_table_entry[7:0],weight_split[5],multicast_table_entry[95:80],input_fifo_out_MR[PayloadLen-1:0]};
 
+    always@(*) begin
+        perm_multicast[0]=0;
+    end
     always@(*) begin
         if(multicast_table_entry[19:16]==4'd1) begin
             perm_multicast[1]=1;
