@@ -65,13 +65,14 @@ module mux_local
     output in_avail_xneg,
     output in_avail_zpos,
     output in_avail_zneg,
-    output reg [DataWidth-1:0] out_local;
-    output reg [DataWidth-1:0] out_yneg;
-    output reg [DataWidth-1:0] out_ypos;
-    output reg [DataWidth-1:0] out_xpos;
-    output reg [DataWidth-1:0] out_xneg;
-    output reg [DataWidth-1:0] out_zpos;
-    output reg [DataWidth-1:0] out_zneg;
+    output reg [DataWidth-1:0] out_local,// the o
+    output reg [DataWidth-1:0] out_yneg,
+    output reg [DataWidth-1:0] out_ypos,
+    output reg [DataWidth-1:0] out_xpos,
+    output reg [DataWidth-1:0] out_xneg,
+    output reg [DataWidth-1:0] out_zpos,
+    output reg [DataWidth-1:0] out_zneg,
+    output reg [DataWidth-1:0] reduction_out
 );
 
     wire [DataWidth-1:0] in[6:0];
@@ -86,6 +87,10 @@ module mux_local
     wire [DataWidth-1:0] FIFO_out[6:0];
 
     wire [PriorityWidth-1:0] priority[6:0];
+
+    wire [2:0] reduction_grant_index;
+
+    wire [2:0] reduction_grant_index_next;
 
 //    wire [2:0] sel_index;
     reg [PriorityWidth-1:0] priority01; //the higher priority between the 0th port and 1st port
@@ -274,7 +279,10 @@ module mux_local
     );
 
     always@(*) begin
-        if(~FIFO_empty[0]) begin
+        if(~FIFO_empty[0] && FIFO_out[0][ReductionBitPos]) begin
+            FIFO_consume[0]=1;
+        end
+        else if(FIFO_out[0][ReductionBitPos] && reduction_grant_index==0) begin
             FIFO_consume[0]=1;
         end
         else begin
@@ -282,7 +290,10 @@ module mux_local
         end
     end
     always@(*) begin
-        if(~FIFO_empty[1]) begin
+        if(~FIFO_empty[1] && FIFO_out[1][ReductionBitPos]) begin
+            FIFO_consume[1]=1;
+        end
+        else if(FIFO_out[1][ReductionBitPos] && reduction_grant_index==1) begin
             FIFO_consume[1]=1;
         end
         else begin
@@ -290,7 +301,10 @@ module mux_local
         end
     end
     always@(*) begin
-        if(~FIFO_empty[2]) begin
+        if(~FIFO_empty[2] && FIFO_out[2][ReductionBitPos]) begin
+            FIFO_consume[2]=1;
+        end
+        else if(FIFO_out[2][ReductionBitPos] && reduction_grant_index==2) begin
             FIFO_consume[2]=1;
         end
         else begin
@@ -298,7 +312,10 @@ module mux_local
         end
     end
     always@(*) begin
-        if(~FIFO_empty[3]) begin
+        if(~FIFO_empty[3] && FIFO_out[3][ReductionBitPos]) begin
+            FIFO_consume[3]=1;
+        end
+        else if(FIFO_out[3][ReductionBitPos] && reduction_grant_index==3) begin
             FIFO_consume[3]=1;
         end
         else begin
@@ -306,7 +323,10 @@ module mux_local
         end
     end
     always@(*) begin
-        if(~FIFO_empty[4]) begin
+        if(~FIFO_empty[4] && FIFO_out[4][ReductionBitPos]) begin
+            FIFO_consume[4]=1;
+        end
+        else if(FIFO_out[4][ReductionBitPos] && reduction_grant_index==4) begin
             FIFO_consume[4]=1;
         end
         else begin
@@ -314,7 +334,10 @@ module mux_local
         end
     end
     always@(*) begin
-        if(~FIFO_empty[5]) begin
+        if(~FIFO_empty[5] && FIFO_out[5][ReductionBitPos]) begin
+            FIFO_consume[5]=1;
+        end
+        else if(FIFO_out[5][ReductionBitPos] && reduction_grant_index==5) begin
             FIFO_consume[5]=1;
         end
         else begin
@@ -322,20 +345,144 @@ module mux_local
         end
     end
     always@(*) begin
-        if(~FIFO_empty[6]) begin
+        if(~FIFO_empty[6] && FIFO_out[6][ReductionBitPos]) begin
+            FIFO_consume[6]=1;
+        end
+        else if(FIFO_out[6][ReductionBitPos] && reduction_grant_index==6) begin
             FIFO_consume[6]=1;
         end
         else begin
             FIFO_consume[6]=0;
         end
     end
+    
+    always@(posedge clk) begin
+        reduction_grant_index<=reduction_grant_index_next;    
+    end
+
+    always(*) begin
+        if(FIFO_out[0][ReductionBitPos]) begin
+            if(reduction_grant_index~=0) begin
+                reduction_grant_index_next=0;
+            end
+            else begin
+                reduction_grant_index_next=7;
+            end
+        end
+        else if(FIFO_out[1][ReductionBitPos]) begin
+            if(reduction_grant_index~=1) begin
+                reduction_grant_index_next=1;
+            end
+            else begin
+                reduction_grant_index_next=7;
+            end
+        end
+        else if(FIFO_out[2][ReductionBitPos]) begin
+            if(reduction_grant_index~=2) begin
+                reduction_grant_index_next=2;
+            end
+            else begin
+                reduction_grant_index_next=7;
+            end
+        end
+        else if(FIFO_out[3][ReductionBitPos]) begin
+            if(reduction_grant_index~=3) begin
+                reduction_grant_index_next=3;
+            end
+            else begin
+                reduction_grant_index_next=7;
+            end
+        end
+        else if(FIFO_out[4][ReductionBitPos]) begin
+            if(reduction_grant_index~=4) begin
+                reduction_grant_index_next=4;
+            end
+            else begin
+                reduction_grant_index_next=7;
+            end
+        end
+        else if(FIFO_out[5][ReductionBitPos]) begin
+            if(reduction_grant_index~=5) begin
+                reduction_grant_index_next=5;
+            end
+            else begin
+                reduction_grant_index_next=7;
+            end
+        end
+        else if(FIFO_out[6][ReductionBitPos]) begin
+            if(reduction_grant_index~=6) begin
+                reduction_grant_index_next=6;
+            end
+            else begin
+                reduction_grant_index_next=7;
+            end
+        end
+        else begin
+            reduction_grant_index_next=7;
+        end
+    end
+//second stage is usually doing two things, First is output those FIFO_outs that are not reduction packets, second is pick one FIFO_outs that is reduction packet
+//
+//
+    always@(posedge clk) begin
+        if(~FIFO_out[0][ReductionBitPos]) 
+            out_local<=FIFO_out[0];
+        else
+            out_local<=0;
+    end
+    always@(posedge clk) begin
+        if(~FIFO_out[1][ReductionBitPos]) 
+            out_yneg<=FIFO_out[1];
+        else
+            out_yneg<=0;
+    end
+    always@(posedge clk) begin
+        if(~FIFO_out[2][ReductionBitPos]) 
+            out_ypos<=FIFO_out[2];
+        else
+            out_ypos<=0;
+    end
+    always@(posedge clk) begin
+        if(~FIFO_out[3][ReductionBitPos]) 
+            out_xpos<=FIFO_out[3];
+        else
+            out_xpos<=0;
+    end
+    always@(posedge clk) begin
+        if(~FIFO_out[4][ReductionBitPos]) 
+            out_xneg<=FIFO_out[4];
+        else
+            out_xneg<=0;
+    end
+    always@(posedge clk) begin
+        if(~FIFO_out[5][ReductionBitPos]) 
+            out_zpos<=FIFO_out[5];
+        else
+            out_zpos<=0;
+    end
+    always@(posedge clk) begin
+        if(~FIFO_out[6][ReductionBitPos]) 
+            out_zneg<=FIFO_out[6];
+        else
+            out_zneg<=0;
+    end
+
+    always@(posedge clk) begin
+        if(reduction_grant_index!=7) begin
+            reduction_out<=FIFO_out[reduction_grant_index];
+        end
+        else begin
+            reduction_out<=0;
+    
 
 
 
 
 
 
+  
 
+       
 
 //second stage puts reduction table into a buffer which will read the reduction table entry if the packets is a reduction packet
     always@(posedge clk) begin
@@ -350,6 +497,8 @@ module mux_local
 
     
     assign is_reduction=sel_data[ReductionBitPos];
+
+
 
     
     
