@@ -72,7 +72,7 @@ module mux_local
     output reg [DataWidth-1:0] out_xneg,
     output reg [DataWidth-1:0] out_zpos,
     output reg [DataWidth-1:0] out_zneg,
-    output reg [DataWidth-1:0] reduction_out
+    output reg [DataWidth-1:0] out_reduction
 );
 
     wire [DataWidth-1:0] in[6:0];
@@ -116,7 +116,12 @@ module mux_local
     wire is_reduction;
     wire reduction_ready;
 
-    wire [DataWidth-1:0] reduction_out;
+    wire [DataWidth-1:0] reduction_tmp;
+    wire [DataWidth-1:0] reduction_tmp_tmp;
+
+    wire [DataWidth-1:0] reduction_out_reg_wire;
+
+    reg [DataWidth-1:0] reduction_out_reg;
 
     reg [ReductionTableWidth-1:0] reduction_table_entry;
     wire [ReductionTableWidth-1:0] reduction_table_entry_next;
@@ -468,79 +473,48 @@ module mux_local
     end
 
     always@(posedge clk) begin
-        if(reduction_grant_index!=7) begin
+        if(reduction_grant_index<7) begin
             reduction_out<=FIFO_out[reduction_grant_index];
         end
         else begin
             reduction_out<=0;
-    
-
-
-
-
-
-
-  
-
-       
-
-//second stage puts reduction table into a buffer which will read the reduction table entry if the packets is a reduction packet
-    always@(posedge clk) begin
-        sel_data_RR[0]<=FIFO_out[0];
-        sel_data_RR[1]<=FIFO_out[1];
-        sel_data_RR[2]<=FIFO_out[2];
-        sel_data_RR[3]<=FIFO_out[3];
-        sel_data_RR[4]<=FIFO_out[4];
-        sel_data_RR[5]<=FIFO_out[5];
-        sel_data_RR[6]<=FIFO_out[6];
-    end
-
-    
-    assign is_reduction=sel_data[ReductionBitPos];
-
-
-
-    
-    
-
-    
-
-
-    always@(posedge clk) begin
-        if(is_reduction) begin
-            reduction_table_entry<=reduction_table[sel_data[IndexWidth+IndexPos-1:IndexPos]];
         end
     end
 
-//third stage:
-//
+//third stage read the reduction table
     
+    
+    always@(posedge clk) begin
+        if(reduction_out[DataWidth-1]) begin
+            reduction_table_entry<=reduction_table[reduction_out[IndexWidth+IndexPos-1:IndexPos]];
+        end
+    end  
+
+    always@(posedge clk) begin
+        reduction_out_reg<=reduction_out;
+    end
+
+//fourth stage     
 
     assign next_counter=reduction_table_entry[158:156]+1;
-    assign is_reduction_WB=sel_data_RR[ReductionBitPos];
-    assign reduction_ready= sel_data_RR[ReductionBitPos] && (reduction_table_entry[ReductionTableWidth-1:ReductionTableWidth-3]==reduction_table_entry[ReductionTableWidth-4:ReductionTableWidth-6]+1);
-    assign reduction_out={sel_data_RR[DataWidth-1:152],reduction_table_entry_next[135:128],reduction_table_entry_next[151:136],reduction_table_entry_next[127:0]};
-     assign reduction_table_entry_next={reduction_table_entry[161:159],next_counter,reduction_table_entry[155:136],(reduction_table_entry[135:128]+sel_data_RR[WeightPos+WeightWidth-1:WeightPos]),(reduction_table_entry[PayloadLen-1:0]+sel_data_RR[PayloadLen-1:0])};
+//    assign is_reduction_WB=sel_data_RR[ReductionBitPos];
+    assign reduction_ready= (reduction_table_entry[ReductionTableWidth-1:ReductionTableWidth-3]==reduction_table_entry[ReductionTableWidth-4:ReductionTableWidth-6]+1);
+    assign reduction_out_reg_wire={reduction_out_reg[DataWidth-1:152],reduction_table_entry_next[135:128],reduction_table_entry_next[151:136],reduction_table_entry_next[127:0]};
+     assign reduction_table_entry_next={reduction_table_entry[161:159],next_counter,reduction_table_entry[155:136],(reduction_table_entry[135:128]+reduction_out_reg[WeightPos+WeightWidth-1:WeightPos]),(reduction_table_entry[PayloadLen-1:0]+reduction_out_reg[PayloadLen-1:0])};
 
 
     always@(posedge clk) begin
-        if(~is_reduction_WB) begin
-            out<=sel_data_RR;
-        end
-        else if(reduction_ready) begin
-            out<=reduction_out;
+        if(reduction_ready) begin
+            out_reduction<=reduction_out_reg_wire;
         end
         else begin
-            out<=0;
+            out_reduction<=0;
         end
     end
-
-    assign send=out[DataWidth-1];
-
     always@(posedge clk) begin
-        if(is_reduction_WB) begin
-            reduction_table[sel_data_RR[IndexWidth+IndexPos-1:IndexPos]]<=reduction_table_entry_next;
-        end
+    
+        reduction_table[sel_data_RR[IndexWidth+IndexPos-1:IndexPos]]<=reduction_table_entry_next;
+
     end
             
 
