@@ -532,7 +532,7 @@ module mux_local
     assign ypos_send=out_ypos[DataWidth-1];
     assign xpos_send=out_xpos[DataWidth-1];
     assign xneg_send=out_xneg[DataWidth-1];
-    assign zpos_send=out_zpos[DataWidth-1];
+    assign zpos_send=out_zpos[Datawidth-1];
     assign zneg_send=out_zneg[DataWidth-1];
     
 
