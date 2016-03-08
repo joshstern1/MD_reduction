@@ -98,6 +98,23 @@ module node
     wire [DataWidth-1:0] inject_local,eject_local;
     wire inject_receive_local,eject_send_local;
     wire InjectSlotAvail_local,EjectSlotAvail_local; 
+
+    wire [DataWidth-1:0] eject_yneg_to_local;
+    wire [DataWidth-1:0] eject_ypos_to_local;
+    wire [DataWidth-1:0] eject_xpos_to_local;
+    wire [DataWidth-1:0] eject_xneg_to_local;
+    wire [DataWidth-1:0] eject_zpos_to_local;
+    wire [DataWidth-1:0] eject_zneg_to_local;
+
+    wire [DataWidth-1:0] eject_local_reduction;
+
+    wire eject_send_yneg_to_local;
+    wire eject_send_ypos_to_local;
+    wire eject_send_xpos_to_local;
+    wire eject_send_xneg_to_local;
+    wire eject_send_zpos_to_local;
+    wire eject_send_zneg_to_local;
+
 //local unit
     local_unit#(
         .DataSize(DataSize),
@@ -129,13 +146,26 @@ module node
         .rst(rst),
         .eject_local(eject_local),
         .eject_send_local(eject_send_local),
+        .eject_yneg(eject_yneg_to_local),
+        .eject_ypos(eject_ypos_to_local),
+        .eject_xpos(eject_xpos_to_local),
+        .eject_xneg(eject_xneg_to_local),
+        .eject_zpos(eject_zpos_to_local),
+        .eject_zneg(eject_zneg_to_local),
+        .eject_send_yneg(eject_send_ypos_to_local),
+        .eject_send_ypos(eject_send_yneg_to_local),
+        .eject_send_xpos(eject_send_xpos_to_local),
+        .eject_send_xneg(eject_send_xneg_to_local),
+        .eject_send_zpos(eject_send_zpos_to_local),
+        .eject_send_zneg(eject_send_zneg_to_local),
+        .eject_reduction(eject_local_reduction),
         .InjectSlotAvail_local(InjectSlotAvail_local),
         .inject_local(inject_local),
         .inject_receive_local(inject_receive_local),
         .EjectSlotAvail_local(EjectSlotAvail_local)
     );
     
-    crossbar#(
+    crossbar_ext#(
         .DataSize(DataSize),
         .X(X),
         .Y(Y),
@@ -206,8 +236,21 @@ module node
 	    .eject_zneg(eject_zneg), 
         .eject_send_zneg(eject_send_zneg), 
         .InjectSlotAvail_zneg(InjectSlotAvail_zneg),
-        .eject_local(eject_local),
-        .eject_send_local(eject_send_local),
+        .eject_local_to_local(eject_local),
+        .eject_send_local_to_local(eject_send_local),
+        .eject_yneg_to_local(eject_yneg_to_local),
+        .eject_send_yneg_to_local(eject_send_yneg_to_local),
+        .eject_ypos_to_local(eject_ypos_to_local),
+        .eject_send_ypos_to_local(eject_send_ypos_to_local),
+        .eject_xpos_to_local(eject_xpos_to_local),
+        .eject_send_xpos_to_local(eject_send_xpos_to_local),
+        .eject_xneg_to_local(eject_xneg_to_local),
+        .eject_send_xneg_to_local(eject_send_xneg_to_local),
+        .eject_zpos_to_local(eject_zpos_to_local),
+        .eject_send_zpos_to_local(eject_send_zpos_to_local),
+        .eject_zneg_to_local(eject_zneg_to_local),
+        .eject_send_zneg_to_local(eject_send_zneg_to_local),
+        .eject_local_reduction(eject_local_reduction),
         .InjectSlotAvail_local(InjectSlotAvail_local)
     );
         

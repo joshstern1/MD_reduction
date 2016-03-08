@@ -85,7 +85,7 @@ module local_unit
     input [DataWidth-1:0] eject_yneg,
     input eject_send_yneg,
     input [DataWidth-1:0] eject_ypos,
-    input eject_send_yneg,
+    input eject_send_ypos,
     input [DataWidth-1:0] eject_xpos,
     input eject_send_xpos,
     input [DataWidth-1:0] eject_xneg,
@@ -94,6 +94,7 @@ module local_unit
     input eject_send_zpos,
     input [DataWidth-1:0] eject_zneg,
     input eject_send_zneg,
+    input [DataWidth-1:0] eject_reduction,
 
     input InjectSlotAvail_local,
 

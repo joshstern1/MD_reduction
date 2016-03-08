@@ -57,7 +57,13 @@ module mux_local
     input in_pipeline_stall_xneg,
     input in_pipeline_stall_zpos,
     input in_pipeline_stall_zneg,
-    output send,
+    output local_send,
+    output yneg_send,
+    output ypos_send,
+    output xpos_send,
+    output xneg_send,
+    output zpos_send,
+    output zneg_send,
     output in_avail_local,
     output in_avail_yneg,
     output in_avail_ypos,
@@ -88,9 +94,9 @@ module mux_local
 
     wire [PriorityWidth-1:0] priority[6:0];
 
-    wire [2:0] reduction_grant_index;
+    reg [2:0] reduction_grant_index;
 
-    wire [2:0] reduction_grant_index_next;
+    reg [2:0] reduction_grant_index_next;
 
 //    wire [2:0] sel_index;
     reg [PriorityWidth-1:0] priority01; //the higher priority between the 0th port and 1st port
@@ -107,7 +113,7 @@ module mux_local
     reg [2:0] sel_index0123456;
 
     reg [DataWidth-1:0] sel_data;//the outputs from the buffers that has the highest priority
-    reg [DataWidth-1:0] sel_data_RR[7];
+    reg [DataWidth-1:0] sel_data_RR[6:0];
 
     reg pipeline_stall;
 
@@ -120,6 +126,8 @@ module mux_local
     wire [DataWidth-1:0] reduction_tmp_tmp;
 
     wire [DataWidth-1:0] reduction_out_reg_wire;
+
+    reg [DataWidth-1:0] reduction_out;
 
     reg [DataWidth-1:0] reduction_out_reg;
 
@@ -365,9 +373,9 @@ module mux_local
         reduction_grant_index<=reduction_grant_index_next;    
     end
 
-    always(*) begin
+    always@(*) begin
         if(FIFO_out[0][ReductionBitPos]) begin
-            if(reduction_grant_index~=0) begin
+            if(reduction_grant_index!=0) begin
                 reduction_grant_index_next=0;
             end
             else begin
@@ -375,7 +383,7 @@ module mux_local
             end
         end
         else if(FIFO_out[1][ReductionBitPos]) begin
-            if(reduction_grant_index~=1) begin
+            if(reduction_grant_index!=1) begin
                 reduction_grant_index_next=1;
             end
             else begin
@@ -383,7 +391,7 @@ module mux_local
             end
         end
         else if(FIFO_out[2][ReductionBitPos]) begin
-            if(reduction_grant_index~=2) begin
+            if(reduction_grant_index!=2) begin
                 reduction_grant_index_next=2;
             end
             else begin
@@ -391,7 +399,7 @@ module mux_local
             end
         end
         else if(FIFO_out[3][ReductionBitPos]) begin
-            if(reduction_grant_index~=3) begin
+            if(reduction_grant_index!=3) begin
                 reduction_grant_index_next=3;
             end
             else begin
@@ -399,7 +407,7 @@ module mux_local
             end
         end
         else if(FIFO_out[4][ReductionBitPos]) begin
-            if(reduction_grant_index~=4) begin
+            if(reduction_grant_index!=4) begin
                 reduction_grant_index_next=4;
             end
             else begin
@@ -407,7 +415,7 @@ module mux_local
             end
         end
         else if(FIFO_out[5][ReductionBitPos]) begin
-            if(reduction_grant_index~=5) begin
+            if(reduction_grant_index!=5) begin
                 reduction_grant_index_next=5;
             end
             else begin
@@ -415,7 +423,7 @@ module mux_local
             end
         end
         else if(FIFO_out[6][ReductionBitPos]) begin
-            if(reduction_grant_index~=6) begin
+            if(reduction_grant_index!=6) begin
                 reduction_grant_index_next=6;
             end
             else begin
@@ -500,7 +508,7 @@ module mux_local
 //    assign is_reduction_WB=sel_data_RR[ReductionBitPos];
     assign reduction_ready= (reduction_table_entry[ReductionTableWidth-1:ReductionTableWidth-3]==reduction_table_entry[ReductionTableWidth-4:ReductionTableWidth-6]+1);
     assign reduction_out_reg_wire={reduction_out_reg[DataWidth-1:152],reduction_table_entry_next[135:128],reduction_table_entry_next[151:136],reduction_table_entry_next[127:0]};
-     assign reduction_table_entry_next={reduction_table_entry[161:159],next_counter,reduction_table_entry[155:136],(reduction_table_entry[135:128]+reduction_out_reg[WeightPos+WeightWidth-1:WeightPos]),(reduction_table_entry[PayloadLen-1:0]+reduction_out_reg[PayloadLen-1:0])};
+    assign reduction_table_entry_next={reduction_table_entry[161:159],next_counter,reduction_table_entry[155:136],(reduction_table_entry[135:128]+reduction_out_reg[WeightPos+WeightWidth-1:WeightPos]),(reduction_table_entry[PayloadLen-1:0]+reduction_out_reg[PayloadLen-1:0])};
 
 
     always@(posedge clk) begin
@@ -511,14 +519,21 @@ module mux_local
             out_reduction<=0;
         end
     end
-    always@(posedge clk) begin
-    
-        reduction_table[sel_data_RR[IndexWidth+IndexPos-1:IndexPos]]<=reduction_table_entry_next;
 
+    always@(posedge clk) begin  
+        reduction_table[reduction_out_reg[IndexWidth+IndexPos-1:IndexPos]]<=reduction_table_entry_next;
     end
             
 
 
+
+    assign local_send=out_local[DataWidth-1];
+    assign yneg_send=out_yneg[DataWidth-1];
+    assign ypos_send=out_ypos[DataWidth-1];
+    assign xpos_send=out_xpos[DataWidth-1];
+    assign xneg_send=out_xneg[DataWidth-1];
+    assign zpos_send=out_zpos[DataWidth-1];
+    assign zneg_send=out_zneg[DataWidth-1];
     
 
 

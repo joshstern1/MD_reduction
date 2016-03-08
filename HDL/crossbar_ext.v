@@ -126,8 +126,21 @@ module crossbar_ext
 	output [DataWidth-1:0] eject_zneg, 
     output eject_send_zneg, 
     output InjectSlotAvail_zneg,
-    output [DataWidth-1:0] eject_local,
-    output eject_send_local,
+    output [DataWidth-1:0] eject_local_to_local,
+    output eject_send_local_to_local,
+    output [DataWidth-1:0] eject_yneg_to_local,
+    output eject_send_yneg_to_local,
+    output [DataWidth-1:0] eject_ypos_to_local,
+    output eject_send_ypos_to_local,
+    output [DataWidth-1:0] eject_xpos_to_local,
+    output eject_send_xpos_to_local,
+    output [DataWidth-1:0] eject_xneg_to_local,
+    output eject_send_xneg_to_local,
+    output [DataWidth-1:0] eject_zpos_to_local,
+    output eject_send_zpos_to_local,
+    output [DataWidth-1:0] eject_zneg_to_local,
+    output eject_send_zneg_to_local,
+    output [DataWidth-1:0] eject_local_reduction,
     output InjectSlotAvail_local
 );
 
@@ -633,7 +646,7 @@ module crossbar_ext
     );
 
 
-    mux#(
+    mux_local#(
         .DataSize(DataSize),
         .X(X),
         .Y(Y),
@@ -684,9 +697,21 @@ module crossbar_ext
         .in_avail_xneg(xneg_out_avail_local),
         .in_avail_zpos(zpos_out_avail_local),
         .in_avail_zneg(zneg_out_avail_local),
-        .send(eject_send_local),
-        .out(eject_local)
-        
+        .local_send(eject_send_local_to_local),
+        .yneg_send(eject_send_yneg_to_local),
+        .ypos_send(eject_send_ypos_to_local),
+        .xpos_send(eject_send_xpos_to_local),
+        .xneg_send(eject_send_xneg_to_local),
+        .zpos_send(eject_send_zpos_to_local),
+        .zneg_send(eject_send_zneg_to_local),
+        .out_local(eject_local_to_local),
+        .out_yneg(eject_yneg_to_local),
+        .out_ypos(eject_ypos_to_local),
+        .out_xpos(eject_xpos_to_local),
+        .out_xneg(eject_xneg_to_local),
+        .out_zpos(eject_zpos_to_local),
+        .out_zneg(eject_zneg_to_local),
+        .out_reduction(eject_local_reduction)
     );
 
     mux#(
