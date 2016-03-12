@@ -36,7 +36,7 @@
         
     */
 
-`define MULTICAST
+`define REDUCTION
 
 module local_unit
 #(
@@ -124,6 +124,7 @@ module local_unit
     reg [DataWidth-1:0] eject_xneg_reg;
     reg [DataWidth-1:0] eject_zpos_reg;
     reg [DataWidth-1:0] eject_zneg_reg;
+    reg [DataWidth-1:0] eject_reduction_reg;
 
     always@(posedge clk) begin
         if(rst)
@@ -313,20 +314,20 @@ module local_unit
         end
     end
     always@(posedge clk) begin
-        eject_local_reg<=eject_local;
+        eject_reduction_reg<=eject_reduction;
     end
             
             
     assign EjectSlotAvail_local=1;
     always@(posedge clk) begin
-        if(eject_send_local && EjectSlotAvail_local) begin
+        if(EjectSlotAvail_local && eject_reduction[DataWidth-1]) begin
             fd=$fopen("dump.txt","a");
             $strobe("Displaying in %m\t");
             $strobe("reduction packet\t");
-            $strobe("packet arrives from (%d,%d,%d) whose id is %d at cycle #%d\n",eject_local_reg[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_local_reg[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_local_reg[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],eject_local_reg[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $strobe("packet arrives from (%d,%d,%d) whose id is %d at cycle #%d\n",eject_reduction_reg[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_reduction_reg[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_reduction_reg[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],eject_reduction_reg[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
             $fdisplay(fd,"Arriving\t");
             //format [src.x] [src.y] [src.z] [dst.x] [dst.y] [dst.z] [id] [time] [packet type]
-            $fdisplay(fd,"%d %d %d %d %d %d %d %d 10",eject_local[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_local[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_local[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],X,Y,Z,eject_local[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $fdisplay(fd,"%d %d %d %d %d %d %d %d 10",eject_reduction[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_reduction[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_reduction[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],X,Y,Z,eject_reduction[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
             $fclose(fd);
         end
     end
@@ -359,7 +360,7 @@ module local_unit
                 else
                     $display("file open failed\n");
                 $strobe("Displaying in %m\t");
-                $strobe("reduction packet\t");
+                $strobe("singlecast packet\t");
                 $strobe("data from (%d, %d, %d) whose id #%d is injected into the network at cycle %d",XCoord,YCoord,ZCoord,data_ptr,cycle_counter);
                 //format [src.x] [src.y] [src.z] [id] [time] [packet type]
                 $fdisplay(fd,"Departuring: \n %d %d %d %d %d 10",XCoord,YCoord,ZCoord,data_ptr,cycle_counter);
@@ -388,14 +389,117 @@ module local_unit
         if(eject_send_local && EjectSlotAvail_local) begin
             fd=$fopen("dump.txt","a");
             $strobe("Displaying in %m\t");
-            $strobe("singcast packet\t");
+            $strobe("singlecast packet\t");
             $strobe("packet arrives from (%d,%d,%d) whose id is %d at cycle #%d\n",eject_local_reg[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_local_reg[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_local_reg[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],eject_local_reg[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
             $fdisplay(fd,"Arriving\t");
             //format [src.x] [src.y] [src.z] [dst.x] [dst.y] [dst.z] [id] [time] [packet type]
-            $fdisplay(fd,"%d %d %d %d %d %d %d %d 8",eject_local[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_local[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_local[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],X,Y,Z,eject_local[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $fdisplay(fd,"%d %d %d %d %d %d %d %d 9",eject_local[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_local[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_local[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],X,Y,Z,eject_local[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
             $fclose(fd);
         end
     end
+
+    always@(posedge clk) begin
+        eject_yneg_reg<=eject_yneg;
+    end
+    assign EjectSlotAvail_yneg=1;
+    always@(posedge clk) begin
+        if(eject_send_yneg && EjectSlotAvail_yneg) begin
+            fd=$fopen("dump.txt","a");
+            $strobe("Displaying in %m\t");
+            $strobe("singlecast packet\t");
+            $strobe("packet arrives from (%d,%d,%d) whose id is %d at cycle #%d\n",eject_yneg_reg[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_yneg_reg[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_yneg_reg[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],eject_yneg_reg[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $fdisplay(fd,"Arriving\t");
+            //format [src.x] [src.y] [src.z] [dst.x] [dst.y] [dst.z] [id] [time] [packet type]
+            $fdisplay(fd,"%d %d %d %d %d %d %d %d 9",eject_yneg[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_yneg[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_yneg[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],X,Y,Z,eject_yneg[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $fclose(fd);
+        end
+    end
+ 
+    always@(posedge clk) begin
+        eject_ypos_reg<=eject_ypos;
+    end
+    assign EjectSlotAvail_ypos=1;
+    always@(posedge clk) begin
+        if(eject_send_ypos && EjectSlotAvail_ypos) begin
+            fd=$fopen("dump.txt","a");
+            $strobe("Displaying in %m\t");
+            $strobe("singlecast packet\t");
+            $strobe("packet arrives from (%d,%d,%d) whose id is %d at cycle #%d\n",eject_ypos_reg[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_ypos_reg[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_ypos_reg[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],eject_ypos_reg[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $fdisplay(fd,"Arriving\t");
+            //format [src.x] [src.y] [src.z] [dst.x] [dst.y] [dst.z] [id] [time] [packet type]
+            $fdisplay(fd,"%d %d %d %d %d %d %d %d 9",eject_ypos[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_ypos[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_ypos[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],X,Y,Z,eject_ypos[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $fclose(fd);
+        end
+    end
+ 
+    always@(posedge clk) begin
+        eject_xpos_reg<=eject_xpos;
+    end
+    assign EjectSlotAvail_xpos=1;
+    always@(posedge clk) begin
+        if(eject_send_xpos && EjectSlotAvail_xpos) begin
+            fd=$fopen("dump.txt","a");
+            $strobe("Displaying in %m\t");
+            $strobe("singlecast packet\t");
+            $strobe("packet arrives from (%d,%d,%d) whose id is %d at cycle #%d\n",eject_xpos_reg[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_xpos_reg[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_xpos_reg[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],eject_xpos_reg[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $fdisplay(fd,"Arriving\t");
+            //format [src.x] [src.y] [src.z] [dst.x] [dst.y] [dst.z] [id] [time] [packet type]
+            $fdisplay(fd,"%d %d %d %d %d %d %d %d 9",eject_xpos[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_xpos[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_xpos[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],X,Y,Z,eject_xpos[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $fclose(fd);
+        end
+    end
+ 
+    always@(posedge clk) begin
+        eject_xneg_reg<=eject_xneg;
+    end
+    assign EjectSlotAvail_xneg=1;
+    always@(posedge clk) begin
+        if(eject_send_xneg && EjectSlotAvail_xneg) begin
+            fd=$fopen("dump.txt","a");
+            $strobe("Displaying in %m\t");
+            $strobe("singlecast packet\t");
+            $strobe("packet arrives from (%d,%d,%d) whose id is %d at cycle #%d\n",eject_xneg_reg[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_xneg_reg[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_xneg_reg[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],eject_xneg_reg[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $fdisplay(fd,"Arriving\t");
+            //format [src.x] [src.y] [src.z] [dst.x] [dst.y] [dst.z] [id] [time] [packet type]
+            $fdisplay(fd,"%d %d %d %d %d %d %d %d 9",eject_xneg[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_xneg[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_xneg[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],X,Y,Z,eject_xneg[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $fclose(fd);
+        end
+    end
+ 
+    always@(posedge clk) begin
+        eject_zpos_reg<=eject_zpos;
+    end
+    assign EjectSlotAvail_zpos=1;
+    always@(posedge clk) begin
+        if(eject_send_zpos && EjectSlotAvail_zpos) begin
+            fd=$fopen("dump.txt","a");
+            $strobe("Displaying in %m\t");
+            $strobe("singlecast packet\t");
+            $strobe("packet arrives from (%d,%d,%d) whose id is %d at cycle #%d\n",eject_zpos_reg[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_zpos_reg[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_zpos_reg[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],eject_zpos_reg[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $fdisplay(fd,"Arriving\t");
+            //format [src.x] [src.y] [src.z] [dst.x] [dst.y] [dst.z] [id] [time] [packet type]
+            $fdisplay(fd,"%d %d %d %d %d %d %d %d 9",eject_zpos[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_zpos[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_zpos[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],X,Y,Z,eject_zpos[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $fclose(fd);
+        end
+    end
+ 
+    always@(posedge clk) begin
+        eject_zneg_reg<=eject_zneg;
+    end
+    assign EjectSlotAvail_zneg=1;
+    always@(posedge clk) begin
+        if(eject_send_zneg && EjectSlotAvail_zneg) begin
+            fd=$fopen("dump.txt","a");
+            $strobe("Displaying in %m\t");
+            $strobe("singlecast packet\t");
+            $strobe("packet arrives from (%d,%d,%d) whose id is %d at cycle #%d\n",eject_zneg_reg[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_zneg_reg[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_zneg_reg[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],eject_yneg_reg[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $fdisplay(fd,"Arriving\t");
+            //format [src.x] [src.y] [src.z] [dst.x] [dst.y] [dst.z] [id] [time] [packet type]
+            $fdisplay(fd,"%d %d %d %d %d %d %d %d 9",eject_zneg[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_zneg[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_zneg[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],X,Y,Z,eject_zneg[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $fclose(fd);
+        end
+    end
+
 
 
     

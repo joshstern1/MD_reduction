@@ -34,7 +34,7 @@
 #define MULTICASTPCKT 9
 #define REDUCTIONPCKT 10
 
-#define MODE 1
+#define MODE 2
 
 
 int mode = MODE; //1 is the multicast mode, 2 is the reduction mode, 3 is the forward singlecast mode, 4 is the reverse singlecast mode.
@@ -47,8 +47,8 @@ int X=4; // number of nodes on X dimension
 int Y=4; // number of nodes on Y dimension
 int Z=4; // number of nodes on Z dimension
 double r2c=1;// the ratio between the cutoff radius and box size
-int particle_per_box=172;
-int particle_per_cell = 172;
+int particle_per_box=2;
+int particle_per_cell = 2;
 float r = 12;
 float xsize = 108;
 float ysize = 108;
@@ -877,7 +877,7 @@ void BFS_write_table_reduction(node* root, payload xyz,int dst_id){//dst id is t
 						ReductionTableEntry.downstream_expect_num = node_link_list_iterator->NODE->num_children + 1;//children plus itself
 						ReductionTableEntry.upstream_dst = cmp_nodes_relative_pos(node_link_list_iterator->NODE->parent, node_link_list_iterator->NODE);
 						ReductionTableEntry.upstream_table_index = global_routing_table_array[node_link_list_iterator->NODE->parent->x*Y*Z + node_link_list_iterator->NODE->parent->y*Z + node_link_list_iterator->NODE->parent->z].table_ptr[ReductionTableEntry.upstream_dst];
-						sprintf(ReductionTableEntryLite.table_entry, "%1x%08x%08x%08x%08x%08x", ((unsigned)(ReductionTableEntry.downstream_expect_num & 0x6) >> 1), (ReductionTableEntry.downstream_expect_num & 0x1 << 31) + (ReductionTableEntry.upstream_dst << 24) + (ReductionTableEntry.upstream_table_index << 8), 0, 0, 0, 0);
+						sprintf(ReductionTableEntryLite.table_entry, "%03x%08x%08x%08x%08x%08x", ((unsigned)(ReductionTableEntry.downstream_expect_num & 0x6) >> 1), ((ReductionTableEntry.downstream_expect_num & 0x1) << 31) + (ReductionTableEntry.upstream_dst << 24) + (ReductionTableEntry.upstream_table_index << 8), 0, 0, 0, 0);
 						//then write the entry to the reduction table
 						current_port = cmp_nodes_relative_pos(node_link_list_iterator->NODE, node_link_list_iterator->NODE->parent);
 
@@ -886,7 +886,7 @@ void BFS_write_table_reduction(node* root, payload xyz,int dst_id){//dst id is t
 						ReductionTableEntry.downstream_expect_num = node_link_list_iterator->NODE->num_children;
 						ReductionTableEntry.upstream_dst = LOCAL;
 						ReductionTableEntry.upstream_table_index = 0;//dont care
-						sprintf(ReductionTableEntryLite.table_entry, "%1x%08x%08x%08x%08x%08x", ((unsigned)(ReductionTableEntry.downstream_expect_num & 0x6) >> 1), (ReductionTableEntry.downstream_expect_num & 0x1 << 31) + (ReductionTableEntry.upstream_dst << 24) + (ReductionTableEntry.upstream_table_index << 8), 0, 0, 0, 0);
+						sprintf(ReductionTableEntryLite.table_entry, "%03x%08x%08x%08x%08x%08x", ((unsigned)(ReductionTableEntry.downstream_expect_num & 0x6) >> 1), ((ReductionTableEntry.downstream_expect_num & 0x1) << 31) + (ReductionTableEntry.upstream_dst << 24) + (ReductionTableEntry.upstream_table_index << 8), 0, 0, 0, 0);
 						current_port = LOCAL;
 					}
 					reduction_table_entry_index = global_reduction_table_array[node_link_list_iterator->NODE->x*Y*Z + node_link_list_iterator->NODE->y*Z + node_link_list_iterator->NODE->z].table_ptr[current_port]++;

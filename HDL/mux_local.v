@@ -8,8 +8,8 @@
 /*
 * at most five fan-in for 3D-torus network.
 for each fanin, format is as below:
-|3-bit expect counter|3-bit arrival bookkeeping counter|dst   |table index| weight accumulator| payload accumulator|
-|3 bits              | 3 bits                          |4 bits|16 bits    | 8 bits            | 128 bits           | 162 bits in total
+|data id|3-bit expect counter|3-bit arrival bookkeeping counter|dst   |table index| weight accumulator| payload accumulator|
+|8 bits |3 bits              | 3 bits                          |4 bits|16 bits    | 8 bits            | 128 bits           | 170 bits in total
 * */
 
 module mux_local
@@ -36,7 +36,7 @@ module mux_local
     parameter RoutingTablesize=256,
     parameter MulticastTableWidth=103,
     parameter MulticastTablesize=256,
-    parameter ReductionTableWidth=162,
+    parameter ReductionTableWidth=170,
     parameter ReductionTablesize=256,
     parameter PcktTypeLen=4
 )
@@ -496,6 +496,9 @@ module mux_local
         if(reduction_out[DataWidth-1]) begin
             reduction_table_entry<=reduction_table[reduction_out[IndexWidth+IndexPos-1:IndexPos]];
         end
+        else begin
+            reduction_table_entry<=0;
+        end
     end  
 
     always@(posedge clk) begin
@@ -507,8 +510,8 @@ module mux_local
     assign next_counter=reduction_table_entry[158:156]+1;
 //    assign is_reduction_WB=sel_data_RR[ReductionBitPos];
     assign reduction_ready= (reduction_table_entry[ReductionTableWidth-1:ReductionTableWidth-3]==reduction_table_entry[ReductionTableWidth-4:ReductionTableWidth-6]+1);
-    assign reduction_out_reg_wire={reduction_out_reg[DataWidth-1:152],reduction_table_entry_next[135:128],reduction_table_entry_next[151:136],reduction_table_entry_next[127:0]};
-    assign reduction_table_entry_next={reduction_table_entry[161:159],next_counter,reduction_table_entry[155:136],(reduction_table_entry[135:128]+reduction_out_reg[WeightPos+WeightWidth-1:WeightPos]),(reduction_table_entry[PayloadLen-1:0]+reduction_out_reg[PayloadLen-1:0])};
+    assign reduction_out_reg_wire={reduction_out_reg[DataWidth-1:230],reduction_table_entry[169:162],reduction_out_reg[221:152],reduction_table_entry_next[135:128],reduction_table_entry_next[151:136],reduction_table_entry_next[127:0]};
+    assign reduction_table_entry_next={reduction_out_reg[SrcPacketIDPos+7:SrcPacketIDPos],reduction_table_entry[161:159],next_counter,reduction_table_entry[155:136],(reduction_table_entry[135:128]+reduction_out_reg[WeightPos+WeightWidth-1:WeightPos]),(reduction_table_entry[PayloadLen-1:0]+reduction_out_reg[PayloadLen-1:0])};
 
 
     always@(posedge clk) begin
@@ -521,7 +524,8 @@ module mux_local
     end
 
     always@(posedge clk) begin  
-        reduction_table[reduction_out_reg[IndexWidth+IndexPos-1:IndexPos]]<=reduction_table_entry_next;
+        if(reduction_out_reg[DataWidth-1])
+            reduction_table[reduction_out_reg[IndexWidth+IndexPos-1:IndexPos]]<=reduction_table_entry_next;
     end
             
 
