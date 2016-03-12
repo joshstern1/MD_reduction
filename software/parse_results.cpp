@@ -61,7 +61,14 @@ struct singlecast_packet_timing{
 	int valid;
 };
 
+struct reduction_packet_timing{
+	int depart_time[X*Y*Z];
+	int arrival_time;
+	int valid;
+};
+
 struct packet_timing** multicast_timing;
+struct reduction_packet_timing** reduction_timing;
 
 struct singlecast_packet_timing** singlecast_timing;
 
@@ -125,6 +132,60 @@ void read_dump_singlecast(char* filename){
 
 	}
 	input_file.close();
+}
+
+void read_dump_reduction(char* filename){
+	ifstream input_file;
+	int line_counter = 0;
+	input_file.open(filename);
+	char *tokens;// the number is going to be read from the dump.txt
+	int src_x;
+	int src_y;
+	int src_z;
+	int dst_x;
+	int dst_y;
+	int dst_z;
+	int id;
+	int depart_time;
+	int arrival_time;
+	char line[LINEMAX];
+	while (!input_file.eof()){
+		input_file.getline(line, LINEMAX);
+		line_counter++;
+		if (line[0] == 'D'){
+			continue;
+
+		}
+		else if (line[0] == 'A'){
+			input_file.getline(line, LINEMAX);
+			line_counter++;
+			tokens = strtok(line, " ");
+			src_x = atoi(tokens);
+			tokens = strtok(NULL, " ");
+			src_y = atoi(tokens);
+			tokens = strtok(NULL, " ");
+			src_z = atoi(tokens);
+			tokens = strtok(NULL, " ");
+			dst_x = atoi(tokens);
+			tokens = strtok(NULL, " ");
+			dst_y = atoi(tokens);
+			tokens = strtok(NULL, " ");
+			dst_z = atoi(tokens);
+			tokens = strtok(NULL, " ");
+			id = atoi(tokens);
+
+			tokens = strtok(NULL, " ");
+			arrival_time = atoi(tokens);
+			reduction_timing[src_x*Y*Z + src_y*Z + src_z][id].arrival_time = arrival_time;
+			reduction_timing[src_x*Y*Z + src_y*Z + src_z][id].valid = true;
+
+
+		}
+
+
+	}
+	input_file.close();
+
 }
 
 
@@ -199,6 +260,22 @@ void read_dump_multicast(char* filename){
 	input_file.close();
 }
 
+void verify_reduction(){
+	for (int i_x = 0; i_x < X; i_x++){
+		for (int i_y = 0; i_y < Y; i_y++){
+			for (int i_z = 0; i_z < Z; i_z++){
+				int i = i_x*X*Y + i_y*Y + i_z;
+				for (int j = 0; j < PARTICLE_PER_BOX; j++){
+					if (reduction_timing[i][j].arrival_time == 0){
+						cout << "error at" << i_x << " " << i_y << " " << i_z << " id is " << j << endl;
+					}
+				}
+			}
+		}
+
+	}
+}
+
 void verify_multicast(){
 	int bitmap[X*Y*Z];
 	int ref_counter = 0;
@@ -266,6 +343,28 @@ int main(){
 		read_dump_multicast(filename);
 		verify_multicast();
 		
+	}
+	else if (mode == 2){
+		if (!(reduction_timing = (reduction_packet_timing**)malloc(X*Y*Z*sizeof(reduction_packet_timing*)))){
+			cout << "No mem for reduction_timing" << endl;
+			exit(-1);
+		}
+		for (int i = 0; i < X*Y*Z; i++){
+			if (!(reduction_timing[i] = (reduction_packet_timing*)malloc(PARTICLE_PER_BOX*sizeof(reduction_packet_timing)))){
+				cout << "No mem for reduction_timing" << i << endl;
+				exit(-1);
+			}
+		}
+		//init multicast_timing
+		for (int i = 0; i < X*Y*Z; i++){
+			for (int j = 0; j < PARTICLE_PER_BOX; j++){
+				//multicast_timing[i][j].arrival_time = 0;
+				reduction_timing[i][j].arrival_time = 0;
+				reduction_timing[i][j].valid = false;
+			}
+		}
+		read_dump_reduction(filename);
+		verify_reduction();
 	}
 	else if (mode == 3 || mode == 4){
 		if (!(singlecast_timing = (singlecast_packet_timing**)malloc(X*Y*Z*sizeof(singlecast_packet_timing*)))){
