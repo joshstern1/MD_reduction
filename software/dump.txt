@@ -1,3331 +1,3331 @@
 Departuring: 
-   0   0   0     0          0 10
+   0   0   0   0          0 10
 Departuring: 
-   0   0   1     0          0 10
+   0   0   1   0          0 10
 Departuring: 
-   0   0   2     0          0 10
+   0   0   2   0          0 10
 Departuring: 
-   0   0   3     0          0 10
+   0   0   3   0          0 10
 Departuring: 
-   0   1   0     0          0 10
+   0   1   0   0          0 10
 Departuring: 
-   0   1   1     0          0 10
+   0   1   1   0          0 10
 Departuring: 
-   0   1   2     0          0 10
+   0   1   2   0          0 10
 Departuring: 
-   0   1   3     0          0 10
+   0   1   3   0          0 10
 Departuring: 
-   0   2   0     0          0 10
+   0   2   0   0          0 10
 Departuring: 
-   0   2   1     0          0 10
+   0   2   1   0          0 10
 Departuring: 
-   0   2   2     0          0 10
+   0   2   2   0          0 10
 Departuring: 
-   0   2   3     0          0 10
+   0   2   3   0          0 10
 Departuring: 
-   0   3   0     0          0 10
+   0   3   0   0          0 10
 Departuring: 
-   0   3   1     0          0 10
+   0   3   1   0          0 10
 Departuring: 
-   0   3   2     0          0 10
+   0   3   2   0          0 10
 Departuring: 
-   0   3   3     0          0 10
+   0   3   3   0          0 10
 Departuring: 
-   1   0   0     0          0 10
+   1   0   0   0          0 10
 Departuring: 
-   1   0   1     0          0 10
+   1   0   1   0          0 10
 Departuring: 
-   1   0   2     0          0 10
+   1   0   2   0          0 10
 Departuring: 
-   1   0   3     0          0 10
+   1   0   3   0          0 10
 Departuring: 
-   1   1   0     0          0 10
+   1   1   0   0          0 10
 Departuring: 
-   1   1   1     0          0 10
+   1   1   1   0          0 10
 Departuring: 
-   1   1   2     0          0 10
+   1   1   2   0          0 10
 Departuring: 
-   1   1   3     0          0 10
+   1   1   3   0          0 10
 Departuring: 
-   1   2   0     0          0 10
+   1   2   0   0          0 10
 Departuring: 
-   1   2   1     0          0 10
+   1   2   1   0          0 10
 Departuring: 
-   1   2   2     0          0 10
+   1   2   2   0          0 10
 Departuring: 
-   1   2   3     0          0 10
+   1   2   3   0          0 10
 Departuring: 
-   1   3   0     0          0 10
+   1   3   0   0          0 10
 Departuring: 
-   1   3   1     0          0 10
+   1   3   1   0          0 10
 Departuring: 
-   1   3   2     0          0 10
+   1   3   2   0          0 10
 Departuring: 
-   1   3   3     0          0 10
+   1   3   3   0          0 10
 Departuring: 
-   2   0   0     0          0 10
+   2   0   0   0          0 10
 Departuring: 
-   2   0   1     0          0 10
+   2   0   1   0          0 10
 Departuring: 
-   2   0   2     0          0 10
+   2   0   2   0          0 10
 Departuring: 
-   2   0   3     0          0 10
+   2   0   3   0          0 10
 Departuring: 
-   2   1   0     0          0 10
+   2   1   0   0          0 10
 Departuring: 
-   2   1   1     0          0 10
+   2   1   1   0          0 10
 Departuring: 
-   2   1   2     0          0 10
+   2   1   2   0          0 10
 Departuring: 
-   2   1   3     0          0 10
+   2   1   3   0          0 10
 Departuring: 
-   2   2   0     0          0 10
+   2   2   0   0          0 10
 Departuring: 
-   2   2   1     0          0 10
+   2   2   1   0          0 10
 Departuring: 
-   2   2   2     0          0 10
+   2   2   2   0          0 10
 Departuring: 
-   2   2   3     0          0 10
+   2   2   3   0          0 10
 Departuring: 
-   2   3   0     0          0 10
+   2   3   0   0          0 10
 Departuring: 
-   2   3   1     0          0 10
+   2   3   1   0          0 10
 Departuring: 
-   2   3   2     0          0 10
+   2   3   2   0          0 10
 Departuring: 
-   2   3   3     0          0 10
+   2   3   3   0          0 10
 Departuring: 
-   3   0   0     0          0 10
+   3   0   0   0          0 10
 Departuring: 
-   3   0   1     0          0 10
+   3   0   1   0          0 10
 Departuring: 
-   3   0   2     0          0 10
+   3   0   2   0          0 10
 Departuring: 
-   3   0   3     0          0 10
+   3   0   3   0          0 10
 Departuring: 
-   3   1   0     0          0 10
+   3   1   0   0          0 10
 Departuring: 
-   3   1   1     0          0 10
+   3   1   1   0          0 10
 Departuring: 
-   3   1   2     0          0 10
+   3   1   2   0          0 10
 Departuring: 
-   3   1   3     0          0 10
+   3   1   3   0          0 10
 Departuring: 
-   3   2   0     0          0 10
+   3   2   0   0          0 10
 Departuring: 
-   3   2   1     0          0 10
+   3   2   1   0          0 10
 Departuring: 
-   3   2   2     0          0 10
+   3   2   2   0          0 10
 Departuring: 
-   3   2   3     0          0 10
+   3   2   3   0          0 10
 Departuring: 
-   3   3   0     0          0 10
+   3   3   0   0          0 10
 Departuring: 
-   3   3   1     0          0 10
+   3   3   1   0          0 10
 Departuring: 
-   3   3   2     0          0 10
+   3   3   2   0          0 10
 Departuring: 
-   3   3   3     0          0 10
+   3   3   3   0          0 10
 Departuring: 
-   0   0   0     0          1 10
+   0   0   0   0          1 10
 Departuring: 
-   0   0   1     0          1 10
+   0   0   1   0          1 10
 Departuring: 
-   0   0   2     0          1 10
+   0   0   2   0          1 10
 Departuring: 
-   0   0   3     0          1 10
+   0   0   3   0          1 10
 Departuring: 
-   0   1   0     0          1 10
+   0   1   0   0          1 10
 Departuring: 
-   0   1   1     0          1 10
+   0   1   1   0          1 10
 Departuring: 
-   0   1   2     0          1 10
+   0   1   2   0          1 10
 Departuring: 
-   0   1   3     0          1 10
+   0   1   3   0          1 10
 Departuring: 
-   0   2   0     0          1 10
+   0   2   0   0          1 10
 Departuring: 
-   0   2   1     0          1 10
+   0   2   1   0          1 10
 Departuring: 
-   0   2   2     0          1 10
+   0   2   2   0          1 10
 Departuring: 
-   0   2   3     0          1 10
+   0   2   3   0          1 10
 Departuring: 
-   0   3   0     0          1 10
+   0   3   0   0          1 10
 Departuring: 
-   0   3   1     0          1 10
+   0   3   1   0          1 10
 Departuring: 
-   0   3   2     0          1 10
+   0   3   2   0          1 10
 Departuring: 
-   0   3   3     0          1 10
+   0   3   3   0          1 10
 Departuring: 
-   1   0   0     0          1 10
+   1   0   0   0          1 10
 Departuring: 
-   1   0   1     0          1 10
+   1   0   1   0          1 10
 Departuring: 
-   1   0   2     0          1 10
+   1   0   2   0          1 10
 Departuring: 
-   1   0   3     0          1 10
+   1   0   3   0          1 10
 Departuring: 
-   1   1   0     0          1 10
+   1   1   0   1          1 10
 Departuring: 
-   1   1   1     0          1 10
+   1   1   1   1          1 10
 Departuring: 
-   1   1   2     0          1 10
+   1   1   2   1          1 10
 Departuring: 
-   1   1   3     0          1 10
+   1   1   3   1          1 10
 Departuring: 
-   1   2   0     0          1 10
+   1   2   0   1          1 10
 Departuring: 
-   1   2   1     0          1 10
+   1   2   1   1          1 10
 Departuring: 
-   1   2   2     0          1 10
+   1   2   2   1          1 10
 Departuring: 
-   1   2   3     0          1 10
+   1   2   3   1          1 10
 Departuring: 
-   1   3   0     0          1 10
+   1   3   0   1          1 10
 Departuring: 
-   1   3   1     0          1 10
+   1   3   1   1          1 10
 Departuring: 
-   1   3   2     0          1 10
+   1   3   2   1          1 10
 Departuring: 
-   1   3   3     0          1 10
+   1   3   3   1          1 10
 Departuring: 
-   2   0   0     0          1 10
+   2   0   0   0          1 10
 Departuring: 
-   2   0   1     0          1 10
+   2   0   1   0          1 10
 Departuring: 
-   2   0   2     0          1 10
+   2   0   2   0          1 10
 Departuring: 
-   2   0   3     0          1 10
+   2   0   3   0          1 10
 Departuring: 
-   2   1   0     0          1 10
+   2   1   0   1          1 10
 Departuring: 
-   2   1   1     0          1 10
+   2   1   1   1          1 10
 Departuring: 
-   2   1   2     0          1 10
+   2   1   2   1          1 10
 Departuring: 
-   2   1   3     0          1 10
+   2   1   3   1          1 10
 Departuring: 
-   2   2   0     0          1 10
+   2   2   0   1          1 10
 Departuring: 
-   2   2   1     0          1 10
+   2   2   1   1          1 10
 Departuring: 
-   2   2   2     0          1 10
+   2   2   2   1          1 10
 Departuring: 
-   2   2   3     0          1 10
+   2   2   3   1          1 10
 Departuring: 
-   2   3   0     0          1 10
+   2   3   0   1          1 10
 Departuring: 
-   2   3   1     0          1 10
+   2   3   1   1          1 10
 Departuring: 
-   2   3   2     0          1 10
+   2   3   2   1          1 10
 Departuring: 
-   2   3   3     0          1 10
+   2   3   3   1          1 10
 Departuring: 
-   3   0   0     0          1 10
+   3   0   0   0          1 10
 Departuring: 
-   3   0   1     0          1 10
+   3   0   1   0          1 10
 Departuring: 
-   3   0   2     0          1 10
+   3   0   2   0          1 10
 Departuring: 
-   3   0   3     0          1 10
+   3   0   3   0          1 10
 Departuring: 
-   3   1   0     0          1 10
+   3   1   0   1          1 10
 Departuring: 
-   3   1   1     0          1 10
+   3   1   1   1          1 10
 Departuring: 
-   3   1   2     0          1 10
+   3   1   2   1          1 10
 Departuring: 
-   3   1   3     0          1 10
+   3   1   3   1          1 10
 Departuring: 
-   3   2   0     0          1 10
+   3   2   0   1          1 10
 Departuring: 
-   3   2   1     0          1 10
+   3   2   1   1          1 10
 Departuring: 
-   3   2   2     0          1 10
+   3   2   2   1          1 10
 Departuring: 
-   3   2   3     0          1 10
+   3   2   3   1          1 10
 Departuring: 
-   3   3   0     0          1 10
+   3   3   0   1          1 10
 Departuring: 
-   3   3   1     0          1 10
+   3   3   1   1          1 10
 Departuring: 
-   3   3   2     0          1 10
+   3   3   2   1          1 10
 Departuring: 
-   3   3   3     0          1 10
+   3   3   3   1          1 10
 Departuring: 
-   0   0   0     0          2 10
+   0   0   0   0          2 10
 Departuring: 
-   0   0   1     0          2 10
+   0   0   1   0          2 10
 Departuring: 
-   0   0   2     0          2 10
+   0   0   2   0          2 10
 Departuring: 
-   0   0   3     0          2 10
+   0   0   3   0          2 10
 Departuring: 
-   0   1   0     0          2 10
+   0   1   0   0          2 10
 Departuring: 
-   0   1   1     0          2 10
+   0   1   1   0          2 10
 Departuring: 
-   0   1   2     0          2 10
+   0   1   2   0          2 10
 Departuring: 
-   0   1   3     0          2 10
+   0   1   3   0          2 10
 Departuring: 
-   0   2   0     0          2 10
+   0   2   0   0          2 10
 Departuring: 
-   0   2   1     0          2 10
+   0   2   1   0          2 10
 Departuring: 
-   0   2   2     0          2 10
+   0   2   2   0          2 10
 Departuring: 
-   0   2   3     0          2 10
+   0   2   3   0          2 10
 Departuring: 
-   0   3   0     0          2 10
+   0   3   0   0          2 10
 Departuring: 
-   0   3   1     0          2 10
+   0   3   1   0          2 10
 Departuring: 
-   0   3   2     0          2 10
+   0   3   2   0          2 10
 Departuring: 
-   0   3   3     0          2 10
+   0   3   3   0          2 10
 Departuring: 
-   1   0   0     0          2 10
+   1   0   0   0          2 10
 Departuring: 
-   1   0   1     0          2 10
+   1   0   1   0          2 10
 Departuring: 
-   1   0   2     0          2 10
+   1   0   2   0          2 10
 Departuring: 
-   1   0   3     0          2 10
+   1   0   3   0          2 10
 Departuring: 
-   1   1   0     0          2 10
+   1   1   0   0          2 10
 Departuring: 
-   1   1   1     0          2 10
+   1   1   1   0          2 10
 Departuring: 
-   1   1   2     0          2 10
+   1   1   2   0          2 10
 Departuring: 
-   1   1   3     0          2 10
+   1   1   3   0          2 10
 Departuring: 
-   1   2   0     0          2 10
+   1   2   0   0          2 10
 Departuring: 
-   1   2   1     0          2 10
+   1   2   1   0          2 10
 Departuring: 
-   1   2   2     0          2 10
+   1   2   2   0          2 10
 Departuring: 
-   1   2   3     0          2 10
+   1   2   3   0          2 10
 Departuring: 
-   1   3   0     0          2 10
+   1   3   0   0          2 10
 Departuring: 
-   1   3   1     0          2 10
+   1   3   1   0          2 10
 Departuring: 
-   1   3   2     0          2 10
+   1   3   2   0          2 10
 Departuring: 
-   1   3   3     0          2 10
+   1   3   3   0          2 10
 Departuring: 
-   2   0   0     0          2 10
+   2   0   0   0          2 10
 Departuring: 
-   2   0   1     0          2 10
+   2   0   1   0          2 10
 Departuring: 
-   2   0   2     0          2 10
+   2   0   2   0          2 10
 Departuring: 
-   2   0   3     0          2 10
+   2   0   3   0          2 10
 Departuring: 
-   2   1   0     0          2 10
+   2   1   0   0          2 10
 Departuring: 
-   2   1   1     0          2 10
+   2   1   1   0          2 10
 Departuring: 
-   2   1   2     0          2 10
+   2   1   2   0          2 10
 Departuring: 
-   2   1   3     0          2 10
+   2   1   3   0          2 10
 Departuring: 
-   2   2   0     0          2 10
+   2   2   0   0          2 10
 Departuring: 
-   2   2   1     0          2 10
+   2   2   1   0          2 10
 Departuring: 
-   2   2   2     0          2 10
+   2   2   2   0          2 10
 Departuring: 
-   2   2   3     0          2 10
+   2   2   3   0          2 10
 Departuring: 
-   2   3   0     0          2 10
+   2   3   0   0          2 10
 Departuring: 
-   2   3   1     0          2 10
+   2   3   1   0          2 10
 Departuring: 
-   2   3   2     0          2 10
+   2   3   2   0          2 10
 Departuring: 
-   2   3   3     0          2 10
+   2   3   3   0          2 10
 Departuring: 
-   3   0   0     0          2 10
+   3   0   0   0          2 10
 Departuring: 
-   3   0   1     0          2 10
+   3   0   1   0          2 10
 Departuring: 
-   3   0   2     0          2 10
+   3   0   2   0          2 10
 Departuring: 
-   3   0   3     0          2 10
+   3   0   3   0          2 10
 Departuring: 
-   3   1   0     0          2 10
+   3   1   0   0          2 10
 Departuring: 
-   3   1   1     0          2 10
+   3   1   1   0          2 10
 Departuring: 
-   3   1   2     0          2 10
+   3   1   2   0          2 10
 Departuring: 
-   3   1   3     0          2 10
+   3   1   3   0          2 10
 Departuring: 
-   3   2   0     0          2 10
+   3   2   0   0          2 10
 Departuring: 
-   3   2   1     0          2 10
+   3   2   1   0          2 10
 Departuring: 
-   3   2   2     0          2 10
+   3   2   2   0          2 10
 Departuring: 
-   3   2   3     0          2 10
+   3   2   3   0          2 10
 Departuring: 
-   3   3   0     0          2 10
+   3   3   0   0          2 10
 Departuring: 
-   3   3   1     0          2 10
+   3   3   1   0          2 10
 Departuring: 
-   3   3   2     0          2 10
+   3   3   2   0          2 10
 Departuring: 
-   3   3   3     0          2 10
+   3   3   3   0          2 10
 Departuring: 
-   0   0   0     0          3 10
+   0   0   0   0          3 10
 Departuring: 
-   0   0   1     0          3 10
+   0   0   1   0          3 10
 Departuring: 
-   0   0   2     0          3 10
+   0   0   2   0          3 10
 Departuring: 
-   0   0   3     0          3 10
+   0   0   3   0          3 10
 Departuring: 
-   0   1   0     0          3 10
+   0   1   0   0          3 10
 Departuring: 
-   0   1   1     0          3 10
+   0   1   1   0          3 10
 Departuring: 
-   0   1   2     0          3 10
+   0   1   2   0          3 10
 Departuring: 
-   0   1   3     0          3 10
+   0   1   3   0          3 10
 Departuring: 
-   0   2   0     0          3 10
+   0   2   0   0          3 10
 Departuring: 
-   0   2   1     0          3 10
+   0   2   1   0          3 10
 Departuring: 
-   0   2   2     0          3 10
+   0   2   2   0          3 10
 Departuring: 
-   0   2   3     0          3 10
+   0   2   3   0          3 10
 Departuring: 
-   0   3   0     0          3 10
+   0   3   0   0          3 10
 Departuring: 
-   0   3   1     0          3 10
+   0   3   1   0          3 10
 Departuring: 
-   0   3   2     0          3 10
+   0   3   2   0          3 10
 Departuring: 
-   0   3   3     0          3 10
+   0   3   3   0          3 10
 Departuring: 
-   1   0   0     0          3 10
+   1   0   0   1          3 10
 Departuring: 
-   1   0   1     0          3 10
+   1   0   1   1          3 10
 Departuring: 
-   1   0   2     0          3 10
+   1   0   2   1          3 10
 Departuring: 
-   1   0   3     0          3 10
+   1   0   3   1          3 10
 Departuring: 
-   1   1   0     0          3 10
+   1   1   0   0          3 10
 Departuring: 
-   1   1   1     0          3 10
+   1   1   1   0          3 10
 Departuring: 
-   1   1   2     0          3 10
+   1   1   2   0          3 10
 Departuring: 
-   1   1   3     0          3 10
+   1   1   3   0          3 10
 Departuring: 
-   1   2   0     0          3 10
+   1   2   0   0          3 10
 Departuring: 
-   1   2   1     0          3 10
+   1   2   1   0          3 10
 Departuring: 
-   1   2   2     0          3 10
+   1   2   2   0          3 10
 Departuring: 
-   1   2   3     0          3 10
+   1   2   3   0          3 10
 Departuring: 
-   1   3   0     0          3 10
+   1   3   0   1          3 10
 Departuring: 
-   1   3   1     0          3 10
+   1   3   1   1          3 10
 Departuring: 
-   1   3   2     0          3 10
+   1   3   2   1          3 10
 Departuring: 
-   1   3   3     0          3 10
+   1   3   3   1          3 10
 Departuring: 
-   2   0   0     0          3 10
+   2   0   0   1          3 10
 Departuring: 
-   2   0   1     0          3 10
+   2   0   1   1          3 10
 Departuring: 
-   2   0   2     0          3 10
+   2   0   2   1          3 10
 Departuring: 
-   2   0   3     0          3 10
+   2   0   3   1          3 10
 Departuring: 
-   2   1   0     0          3 10
+   2   1   0   0          3 10
 Departuring: 
-   2   1   1     0          3 10
+   2   1   1   0          3 10
 Departuring: 
-   2   1   2     0          3 10
+   2   1   2   0          3 10
 Departuring: 
-   2   1   3     0          3 10
+   2   1   3   0          3 10
 Departuring: 
-   2   2   0     0          3 10
+   2   2   0   0          3 10
 Departuring: 
-   2   2   1     0          3 10
+   2   2   1   0          3 10
 Departuring: 
-   2   2   2     0          3 10
+   2   2   2   0          3 10
 Departuring: 
-   2   2   3     0          3 10
+   2   2   3   0          3 10
 Departuring: 
-   2   3   0     0          3 10
+   2   3   0   1          3 10
 Departuring: 
-   2   3   1     0          3 10
+   2   3   1   1          3 10
 Departuring: 
-   2   3   2     0          3 10
+   2   3   2   1          3 10
 Departuring: 
-   2   3   3     0          3 10
+   2   3   3   1          3 10
 Departuring: 
-   3   0   0     0          3 10
+   3   0   0   0          3 10
 Departuring: 
-   3   0   1     0          3 10
+   3   0   1   0          3 10
 Departuring: 
-   3   0   2     0          3 10
+   3   0   2   0          3 10
 Departuring: 
-   3   0   3     0          3 10
+   3   0   3   0          3 10
 Departuring: 
-   3   1   0     0          3 10
+   3   1   0   1          3 10
 Departuring: 
-   3   1   1     0          3 10
+   3   1   1   1          3 10
 Departuring: 
-   3   1   2     0          3 10
+   3   1   2   1          3 10
 Departuring: 
-   3   1   3     0          3 10
+   3   1   3   1          3 10
 Departuring: 
-   3   2   0     0          3 10
+   3   2   0   1          3 10
 Departuring: 
-   3   2   1     0          3 10
+   3   2   1   1          3 10
 Departuring: 
-   3   2   2     0          3 10
+   3   2   2   1          3 10
 Departuring: 
-   3   2   3     0          3 10
+   3   2   3   1          3 10
 Departuring: 
-   3   3   0     0          3 10
+   3   3   0   1          3 10
 Departuring: 
-   3   3   1     0          3 10
+   3   3   1   1          3 10
 Departuring: 
-   3   3   2     0          3 10
+   3   3   2   1          3 10
 Departuring: 
-   3   3   3     0          3 10
+   3   3   3   1          3 10
 Departuring: 
-   0   0   0     0          4 10
+   0   0   0   0          4 10
 Departuring: 
-   0   0   1     0          4 10
+   0   0   1   0          4 10
 Departuring: 
-   0   0   2     0          4 10
+   0   0   2   0          4 10
 Departuring: 
-   0   0   3     0          4 10
+   0   0   3   0          4 10
 Departuring: 
-   0   1   0     0          4 10
+   0   1   0   0          4 10
 Departuring: 
-   0   1   1     0          4 10
+   0   1   1   0          4 10
 Departuring: 
-   0   1   2     0          4 10
+   0   1   2   0          4 10
 Departuring: 
-   0   1   3     0          4 10
+   0   1   3   0          4 10
 Departuring: 
-   0   2   0     0          4 10
+   0   2   0   0          4 10
 Departuring: 
-   0   2   1     0          4 10
+   0   2   1   0          4 10
 Departuring: 
-   0   2   2     0          4 10
+   0   2   2   0          4 10
 Departuring: 
-   0   2   3     0          4 10
+   0   2   3   0          4 10
 Departuring: 
-   0   3   0     0          4 10
+   0   3   0   0          4 10
 Departuring: 
-   0   3   1     0          4 10
+   0   3   1   0          4 10
 Departuring: 
-   0   3   2     0          4 10
+   0   3   2   0          4 10
 Departuring: 
-   0   3   3     0          4 10
+   0   3   3   0          4 10
 Departuring: 
-   1   0   0     0          4 10
+   1   0   0   0          4 10
 Departuring: 
-   1   0   1     0          4 10
+   1   0   1   0          4 10
 Departuring: 
-   1   0   2     0          4 10
+   1   0   2   0          4 10
 Departuring: 
-   1   0   3     0          4 10
+   1   0   3   0          4 10
 Departuring: 
-   1   1   0     0          4 10
+   1   1   0   0          4 10
 Departuring: 
-   1   1   1     0          4 10
+   1   1   1   0          4 10
 Departuring: 
-   1   1   2     0          4 10
+   1   1   2   0          4 10
 Departuring: 
-   1   1   3     0          4 10
+   1   1   3   0          4 10
 Departuring: 
-   1   2   0     0          4 10
+   1   2   0   0          4 10
 Departuring: 
-   1   2   1     0          4 10
+   1   2   1   0          4 10
 Departuring: 
-   1   2   2     0          4 10
+   1   2   2   0          4 10
 Departuring: 
-   1   2   3     0          4 10
+   1   2   3   0          4 10
 Departuring: 
-   1   3   0     0          4 10
+   1   3   0   0          4 10
 Departuring: 
-   1   3   1     0          4 10
+   1   3   1   0          4 10
 Departuring: 
-   1   3   2     0          4 10
+   1   3   2   0          4 10
 Departuring: 
-   1   3   3     0          4 10
+   1   3   3   0          4 10
 Departuring: 
-   2   0   0     0          4 10
+   2   0   0   0          4 10
 Departuring: 
-   2   0   1     0          4 10
+   2   0   1   0          4 10
 Departuring: 
-   2   0   2     0          4 10
+   2   0   2   0          4 10
 Departuring: 
-   2   0   3     0          4 10
+   2   0   3   0          4 10
 Departuring: 
-   2   1   0     0          4 10
+   2   1   0   0          4 10
 Departuring: 
-   2   1   1     0          4 10
+   2   1   1   0          4 10
 Departuring: 
-   2   1   2     0          4 10
+   2   1   2   0          4 10
 Departuring: 
-   2   1   3     0          4 10
+   2   1   3   0          4 10
 Departuring: 
-   2   2   0     0          4 10
+   2   2   0   0          4 10
 Departuring: 
-   2   2   1     0          4 10
+   2   2   1   0          4 10
 Departuring: 
-   2   2   2     0          4 10
+   2   2   2   0          4 10
 Departuring: 
-   2   2   3     0          4 10
+   2   2   3   0          4 10
 Departuring: 
-   2   3   0     0          4 10
+   2   3   0   0          4 10
 Departuring: 
-   2   3   1     0          4 10
+   2   3   1   0          4 10
 Departuring: 
-   2   3   2     0          4 10
+   2   3   2   0          4 10
 Departuring: 
-   2   3   3     0          4 10
+   2   3   3   0          4 10
 Departuring: 
-   3   0   0     0          4 10
+   3   0   0   0          4 10
 Departuring: 
-   3   0   1     0          4 10
+   3   0   1   0          4 10
 Departuring: 
-   3   0   2     0          4 10
+   3   0   2   0          4 10
 Departuring: 
-   3   0   3     0          4 10
+   3   0   3   0          4 10
 Departuring: 
-   3   1   0     0          4 10
+   3   1   0   0          4 10
 Departuring: 
-   3   1   1     0          4 10
+   3   1   1   0          4 10
 Departuring: 
-   3   1   2     0          4 10
+   3   1   2   0          4 10
 Departuring: 
-   3   1   3     0          4 10
+   3   1   3   0          4 10
 Departuring: 
-   3   2   0     0          4 10
+   3   2   0   0          4 10
 Departuring: 
-   3   2   1     0          4 10
+   3   2   1   0          4 10
 Departuring: 
-   3   2   2     0          4 10
+   3   2   2   0          4 10
 Departuring: 
-   3   2   3     0          4 10
+   3   2   3   0          4 10
 Departuring: 
-   3   3   0     0          4 10
+   3   3   0   0          4 10
 Departuring: 
-   3   3   1     0          4 10
+   3   3   1   0          4 10
 Departuring: 
-   3   3   2     0          4 10
+   3   3   2   0          4 10
 Departuring: 
-   3   3   3     0          4 10
+   3   3   3   0          4 10
 Departuring: 
-   0   0   0     0          5 10
+   0   0   0   0          5 10
 Departuring: 
-   0   0   1     0          5 10
+   0   0   1   0          5 10
 Departuring: 
-   0   0   2     0          5 10
+   0   0   2   0          5 10
 Departuring: 
-   0   0   3     0          5 10
+   0   0   3   0          5 10
 Departuring: 
-   0   1   0     0          5 10
+   0   1   0   0          5 10
 Departuring: 
-   0   1   1     0          5 10
+   0   1   1   0          5 10
 Departuring: 
-   0   1   2     0          5 10
+   0   1   2   0          5 10
 Departuring: 
-   0   1   3     0          5 10
+   0   1   3   0          5 10
 Departuring: 
-   0   2   0     0          5 10
+   0   2   0   0          5 10
 Departuring: 
-   0   2   1     0          5 10
+   0   2   1   0          5 10
 Departuring: 
-   0   2   2     0          5 10
+   0   2   2   0          5 10
 Departuring: 
-   0   2   3     0          5 10
+   0   2   3   0          5 10
 Departuring: 
-   0   3   0     0          5 10
+   0   3   0   0          5 10
 Departuring: 
-   0   3   1     0          5 10
+   0   3   1   0          5 10
 Departuring: 
-   0   3   2     0          5 10
+   0   3   2   0          5 10
 Departuring: 
-   0   3   3     0          5 10
+   0   3   3   0          5 10
 Departuring: 
-   1   0   0     0          5 10
+   1   0   0   1          5 10
 Departuring: 
-   1   0   1     0          5 10
+   1   0   1   1          5 10
 Departuring: 
-   1   0   2     0          5 10
+   1   0   2   1          5 10
 Departuring: 
-   1   0   3     0          5 10
+   1   0   3   1          5 10
 Departuring: 
-   1   1   0     0          5 10
+   1   1   0   1          5 10
 Departuring: 
-   1   1   1     0          5 10
+   1   1   1   1          5 10
 Departuring: 
-   1   1   2     0          5 10
+   1   1   2   1          5 10
 Departuring: 
-   1   1   3     0          5 10
+   1   1   3   1          5 10
 Departuring: 
-   1   2   0     0          5 10
+   1   2   0   1          5 10
 Departuring: 
-   1   2   1     0          5 10
+   1   2   1   1          5 10
 Departuring: 
-   1   2   2     0          5 10
+   1   2   2   1          5 10
 Departuring: 
-   1   2   3     0          5 10
+   1   2   3   1          5 10
 Departuring: 
-   1   3   0     0          5 10
+   1   3   0   0          5 10
 Departuring: 
-   1   3   1     0          5 10
+   1   3   1   0          5 10
 Departuring: 
-   1   3   2     0          5 10
+   1   3   2   0          5 10
 Departuring: 
-   1   3   3     0          5 10
+   1   3   3   0          5 10
 Departuring: 
-   2   0   0     0          5 10
+   2   0   0   1          5 10
 Departuring: 
-   2   0   1     0          5 10
+   2   0   1   1          5 10
 Departuring: 
-   2   0   2     0          5 10
+   2   0   2   1          5 10
 Departuring: 
-   2   0   3     0          5 10
+   2   0   3   1          5 10
 Departuring: 
-   2   1   0     0          5 10
+   2   1   0   1          5 10
 Departuring: 
-   2   1   1     0          5 10
+   2   1   1   1          5 10
 Departuring: 
-   2   1   2     0          5 10
+   2   1   2   1          5 10
 Departuring: 
-   2   1   3     0          5 10
+   2   1   3   1          5 10
 Departuring: 
-   2   2   0     0          5 10
+   2   2   0   1          5 10
 Departuring: 
-   2   2   1     0          5 10
+   2   2   1   1          5 10
 Departuring: 
-   2   2   2     0          5 10
+   2   2   2   1          5 10
 Departuring: 
-   2   2   3     0          5 10
+   2   2   3   1          5 10
 Departuring: 
-   2   3   0     0          5 10
+   2   3   0   0          5 10
 Departuring: 
-   2   3   1     0          5 10
+   2   3   1   0          5 10
 Departuring: 
-   2   3   2     0          5 10
+   2   3   2   0          5 10
 Departuring: 
-   2   3   3     0          5 10
+   2   3   3   0          5 10
 Departuring: 
-   3   0   0     0          5 10
+   3   0   0   1          5 10
 Departuring: 
-   3   0   1     0          5 10
+   3   0   1   1          5 10
 Departuring: 
-   3   0   2     0          5 10
+   3   0   2   1          5 10
 Departuring: 
-   3   0   3     0          5 10
+   3   0   3   1          5 10
 Departuring: 
-   3   1   0     0          5 10
+   3   1   0   0          5 10
 Departuring: 
-   3   1   1     0          5 10
+   3   1   1   0          5 10
 Departuring: 
-   3   1   2     0          5 10
+   3   1   2   0          5 10
 Departuring: 
-   3   1   3     0          5 10
+   3   1   3   0          5 10
 Departuring: 
-   3   2   0     0          5 10
+   3   2   0   0          5 10
 Departuring: 
-   3   2   1     0          5 10
+   3   2   1   0          5 10
 Departuring: 
-   3   2   2     0          5 10
+   3   2   2   0          5 10
 Departuring: 
-   3   2   3     0          5 10
+   3   2   3   0          5 10
 Departuring: 
-   3   3   0     0          5 10
+   3   3   0   1          5 10
 Departuring: 
-   3   3   1     0          5 10
+   3   3   1   1          5 10
 Departuring: 
-   3   3   2     0          5 10
+   3   3   2   1          5 10
 Departuring: 
-   3   3   3     0          5 10
+   3   3   3   1          5 10
 Departuring: 
-   0   0   0     0          6 10
+   0   0   0   0          6 10
 Departuring: 
-   0   0   1     0          6 10
+   0   0   1   0          6 10
 Departuring: 
-   0   0   2     0          6 10
+   0   0   2   0          6 10
 Departuring: 
-   0   0   3     0          6 10
+   0   0   3   0          6 10
 Departuring: 
-   0   1   0     0          6 10
+   0   1   0   0          6 10
 Departuring: 
-   0   1   1     0          6 10
+   0   1   1   0          6 10
 Departuring: 
-   0   1   2     0          6 10
+   0   1   2   0          6 10
 Departuring: 
-   0   1   3     0          6 10
+   0   1   3   0          6 10
 Departuring: 
-   0   2   0     0          6 10
+   0   2   0   0          6 10
 Departuring: 
-   0   2   1     0          6 10
+   0   2   1   0          6 10
 Departuring: 
-   0   2   2     0          6 10
+   0   2   2   0          6 10
 Departuring: 
-   0   2   3     0          6 10
+   0   2   3   0          6 10
 Departuring: 
-   0   3   0     0          6 10
+   0   3   0   0          6 10
 Departuring: 
-   0   3   1     0          6 10
+   0   3   1   0          6 10
 Departuring: 
-   0   3   2     0          6 10
+   0   3   2   0          6 10
 Departuring: 
-   0   3   3     0          6 10
+   0   3   3   0          6 10
 Departuring: 
-   1   0   0     0          6 10
+   1   0   0   0          6 10
 Departuring: 
-   1   0   1     0          6 10
+   1   0   1   0          6 10
 Departuring: 
-   1   0   2     0          6 10
+   1   0   2   0          6 10
 Departuring: 
-   1   0   3     0          6 10
+   1   0   3   0          6 10
 Departuring: 
-   1   1   0     0          6 10
+   1   1   0   0          6 10
 Departuring: 
-   1   1   1     0          6 10
+   1   1   1   0          6 10
 Departuring: 
-   1   1   2     0          6 10
+   1   1   2   0          6 10
 Departuring: 
-   1   1   3     0          6 10
+   1   1   3   0          6 10
 Departuring: 
-   1   2   0     0          6 10
+   1   2   0   0          6 10
 Departuring: 
-   1   2   1     0          6 10
+   1   2   1   0          6 10
 Departuring: 
-   1   2   2     0          6 10
+   1   2   2   0          6 10
 Departuring: 
-   1   2   3     0          6 10
+   1   2   3   0          6 10
 Departuring: 
-   1   3   0     0          6 10
+   1   3   0   0          6 10
 Departuring: 
-   1   3   1     0          6 10
+   1   3   1   0          6 10
 Departuring: 
-   1   3   2     0          6 10
+   1   3   2   0          6 10
 Departuring: 
-   1   3   3     0          6 10
+   1   3   3   0          6 10
 Departuring: 
-   2   0   0     0          6 10
+   2   0   0   0          6 10
 Departuring: 
-   2   0   1     0          6 10
+   2   0   1   0          6 10
 Departuring: 
-   2   0   2     0          6 10
+   2   0   2   0          6 10
 Departuring: 
-   2   0   3     0          6 10
+   2   0   3   0          6 10
 Departuring: 
-   2   1   0     0          6 10
+   2   1   0   0          6 10
 Departuring: 
-   2   1   1     0          6 10
+   2   1   1   0          6 10
 Departuring: 
-   2   1   2     0          6 10
+   2   1   2   0          6 10
 Departuring: 
-   2   1   3     0          6 10
+   2   1   3   0          6 10
 Departuring: 
-   2   2   0     0          6 10
+   2   2   0   0          6 10
 Departuring: 
-   2   2   1     0          6 10
+   2   2   1   0          6 10
 Departuring: 
-   2   2   2     0          6 10
+   2   2   2   0          6 10
 Departuring: 
-   2   2   3     0          6 10
+   2   2   3   0          6 10
 Departuring: 
-   2   3   0     0          6 10
+   2   3   0   0          6 10
 Departuring: 
-   2   3   1     0          6 10
+   2   3   1   0          6 10
 Departuring: 
-   2   3   2     0          6 10
+   2   3   2   0          6 10
 Departuring: 
-   2   3   3     0          6 10
+   2   3   3   0          6 10
 Departuring: 
-   3   0   0     0          6 10
+   3   0   0   0          6 10
 Departuring: 
-   3   0   1     0          6 10
+   3   0   1   0          6 10
 Departuring: 
-   3   0   2     0          6 10
+   3   0   2   0          6 10
 Departuring: 
-   3   0   3     0          6 10
+   3   0   3   0          6 10
 Departuring: 
-   3   1   0     0          6 10
+   3   1   0   0          6 10
 Departuring: 
-   3   1   1     0          6 10
+   3   1   1   0          6 10
 Departuring: 
-   3   1   2     0          6 10
+   3   1   2   0          6 10
 Departuring: 
-   3   1   3     0          6 10
+   3   1   3   0          6 10
 Departuring: 
-   3   2   0     0          6 10
+   3   2   0   0          6 10
 Departuring: 
-   3   2   1     0          6 10
+   3   2   1   0          6 10
 Departuring: 
-   3   2   2     0          6 10
+   3   2   2   0          6 10
 Departuring: 
-   3   2   3     0          6 10
+   3   2   3   0          6 10
 Departuring: 
-   3   3   0     0          6 10
+   3   3   0   0          6 10
 Departuring: 
-   3   3   1     0          6 10
+   3   3   1   0          6 10
 Departuring: 
-   3   3   2     0          6 10
+   3   3   2   0          6 10
 Departuring: 
-   3   3   3     0          6 10
+   3   3   3   0          6 10
 Departuring: 
-   0   0   0     0          7 10
+   0   0   0   0          7 10
 Departuring: 
-   0   0   1     0          7 10
+   0   0   1   0          7 10
 Departuring: 
-   0   0   2     0          7 10
+   0   0   2   0          7 10
 Departuring: 
-   0   0   3     0          7 10
+   0   0   3   0          7 10
 Departuring: 
-   0   1   0     0          7 10
+   0   1   0   0          7 10
 Departuring: 
-   0   1   1     0          7 10
+   0   1   1   0          7 10
 Departuring: 
-   0   1   2     0          7 10
+   0   1   2   0          7 10
 Departuring: 
-   0   1   3     0          7 10
+   0   1   3   0          7 10
 Departuring: 
-   0   2   0     0          7 10
+   0   2   0   0          7 10
 Departuring: 
-   0   2   1     0          7 10
+   0   2   1   0          7 10
 Departuring: 
-   0   2   2     0          7 10
+   0   2   2   0          7 10
 Departuring: 
-   0   2   3     0          7 10
+   0   2   3   0          7 10
 Departuring: 
-   0   3   0     0          7 10
+   0   3   0   0          7 10
 Departuring: 
-   0   3   1     0          7 10
+   0   3   1   0          7 10
 Departuring: 
-   0   3   2     0          7 10
+   0   3   2   0          7 10
 Departuring: 
-   0   3   3     0          7 10
+   0   3   3   0          7 10
 Departuring: 
-   1   0   0     0          7 10
+   1   0   0   0          7 10
 Departuring: 
-   1   0   1     0          7 10
+   1   0   1   0          7 10
 Departuring: 
-   1   0   2     0          7 10
+   1   0   2   0          7 10
 Departuring: 
-   1   0   3     0          7 10
+   1   0   3   0          7 10
 Departuring: 
-   1   1   0     0          7 10
+   1   1   0   0          7 10
 Departuring: 
-   1   1   1     0          7 10
+   1   1   1   0          7 10
 Departuring: 
-   1   1   2     0          7 10
+   1   1   2   0          7 10
 Departuring: 
-   1   1   3     0          7 10
+   1   1   3   0          7 10
 Departuring: 
-   1   2   0     0          7 10
+   1   2   0   0          7 10
 Departuring: 
-   1   2   1     0          7 10
+   1   2   1   0          7 10
 Departuring: 
-   1   2   2     0          7 10
+   1   2   2   0          7 10
 Departuring: 
-   1   2   3     0          7 10
+   1   2   3   0          7 10
 Departuring: 
-   1   3   0     0          7 10
+   1   3   0   0          7 10
 Departuring: 
-   1   3   1     0          7 10
+   1   3   1   0          7 10
 Departuring: 
-   1   3   2     0          7 10
+   1   3   2   0          7 10
 Departuring: 
-   1   3   3     0          7 10
+   1   3   3   0          7 10
 Departuring: 
-   2   0   0     0          7 10
+   2   0   0   0          7 10
 Departuring: 
-   2   0   1     0          7 10
+   2   0   1   0          7 10
 Departuring: 
-   2   0   2     0          7 10
+   2   0   2   0          7 10
 Departuring: 
-   2   0   3     0          7 10
+   2   0   3   0          7 10
 Departuring: 
-   2   1   0     0          7 10
+   2   1   0   0          7 10
 Departuring: 
-   2   1   1     0          7 10
+   2   1   1   0          7 10
 Departuring: 
-   2   1   2     0          7 10
+   2   1   2   0          7 10
 Departuring: 
-   2   1   3     0          7 10
+   2   1   3   0          7 10
 Departuring: 
-   2   2   0     0          7 10
+   2   2   0   0          7 10
 Departuring: 
-   2   2   1     0          7 10
+   2   2   1   0          7 10
 Departuring: 
-   2   2   2     0          7 10
+   2   2   2   0          7 10
 Departuring: 
-   2   2   3     0          7 10
+   2   2   3   0          7 10
 Departuring: 
-   2   3   0     0          7 10
+   2   3   0   0          7 10
 Departuring: 
-   2   3   1     0          7 10
+   2   3   1   0          7 10
 Departuring: 
-   2   3   2     0          7 10
+   2   3   2   0          7 10
 Departuring: 
-   2   3   3     0          7 10
+   2   3   3   0          7 10
 Departuring: 
-   3   0   0     0          7 10
+   3   0   0   1          7 10
 Departuring: 
-   3   0   1     0          7 10
+   3   0   1   1          7 10
 Departuring: 
-   3   0   2     0          7 10
+   3   0   2   1          7 10
 Departuring: 
-   3   0   3     0          7 10
+   3   0   3   1          7 10
 Departuring: 
-   3   1   0     0          7 10
+   3   1   0   0          7 10
 Departuring: 
-   3   1   1     0          7 10
+   3   1   1   0          7 10
 Departuring: 
-   3   1   2     0          7 10
+   3   1   2   0          7 10
 Departuring: 
-   3   1   3     0          7 10
+   3   1   3   0          7 10
 Departuring: 
-   3   2   0     0          7 10
+   3   2   0   0          7 10
 Departuring: 
-   3   2   1     0          7 10
+   3   2   1   0          7 10
 Departuring: 
-   3   2   2     0          7 10
+   3   2   2   0          7 10
 Departuring: 
-   3   2   3     0          7 10
+   3   2   3   0          7 10
 Departuring: 
-   3   3   0     0          7 10
+   3   3   0   1          7 10
 Departuring: 
-   3   3   1     0          7 10
+   3   3   1   1          7 10
 Departuring: 
-   3   3   2     0          7 10
+   3   3   2   1          7 10
 Departuring: 
-   3   3   3     0          7 10
+   3   3   3   1          7 10
 Departuring: 
-   0   0   0     0          8 10
+   0   0   0   0          8 10
 Departuring: 
-   0   0   1     0          8 10
+   0   0   1   0          8 10
 Departuring: 
-   0   0   2     0          8 10
+   0   0   2   0          8 10
 Departuring: 
-   0   0   3     0          8 10
+   0   0   3   0          8 10
 Departuring: 
-   0   1   0     0          8 10
+   0   1   0   0          8 10
 Departuring: 
-   0   1   1     0          8 10
+   0   1   1   0          8 10
 Departuring: 
-   0   1   2     0          8 10
+   0   1   2   0          8 10
 Departuring: 
-   0   1   3     0          8 10
+   0   1   3   0          8 10
 Departuring: 
-   0   2   0     0          8 10
+   0   2   0   0          8 10
 Departuring: 
-   0   2   1     0          8 10
+   0   2   1   0          8 10
 Departuring: 
-   0   2   2     0          8 10
+   0   2   2   0          8 10
 Departuring: 
-   0   2   3     0          8 10
+   0   2   3   0          8 10
 Departuring: 
-   0   3   0     0          8 10
+   0   3   0   0          8 10
 Departuring: 
-   0   3   1     0          8 10
+   0   3   1   0          8 10
 Departuring: 
-   0   3   2     0          8 10
+   0   3   2   0          8 10
 Departuring: 
-   0   3   3     0          8 10
+   0   3   3   0          8 10
 Departuring: 
-   1   0   0     0          8 10
+   1   0   0   0          8 10
 Departuring: 
-   1   0   1     0          8 10
+   1   0   1   0          8 10
 Departuring: 
-   1   0   2     0          8 10
+   1   0   2   0          8 10
 Departuring: 
-   1   0   3     0          8 10
+   1   0   3   0          8 10
 Departuring: 
-   1   1   0     0          8 10
+   1   1   0   0          8 10
 Departuring: 
-   1   1   1     0          8 10
+   1   1   1   0          8 10
 Departuring: 
-   1   1   2     0          8 10
+   1   1   2   0          8 10
 Departuring: 
-   1   1   3     0          8 10
+   1   1   3   0          8 10
 Departuring: 
-   1   2   0     0          8 10
+   1   2   0   0          8 10
 Departuring: 
-   1   2   1     0          8 10
+   1   2   1   0          8 10
 Departuring: 
-   1   2   2     0          8 10
+   1   2   2   0          8 10
 Departuring: 
-   1   2   3     0          8 10
+   1   2   3   0          8 10
 Departuring: 
-   1   3   0     0          8 10
+   1   3   0   0          8 10
 Departuring: 
-   1   3   1     0          8 10
+   1   3   1   0          8 10
 Departuring: 
-   1   3   2     0          8 10
+   1   3   2   0          8 10
 Departuring: 
-   1   3   3     0          8 10
+   1   3   3   0          8 10
 Departuring: 
-   2   0   0     0          8 10
+   2   0   0   0          8 10
 Departuring: 
-   2   0   1     0          8 10
+   2   0   1   0          8 10
 Departuring: 
-   2   0   2     0          8 10
+   2   0   2   0          8 10
 Departuring: 
-   2   0   3     0          8 10
+   2   0   3   0          8 10
 Departuring: 
-   2   1   0     0          8 10
+   2   1   0   0          8 10
 Departuring: 
-   2   1   1     0          8 10
+   2   1   1   0          8 10
 Departuring: 
-   2   1   2     0          8 10
+   2   1   2   0          8 10
 Departuring: 
-   2   1   3     0          8 10
+   2   1   3   0          8 10
 Departuring: 
-   2   2   0     0          8 10
+   2   2   0   0          8 10
 Departuring: 
-   2   2   1     0          8 10
+   2   2   1   0          8 10
 Departuring: 
-   2   2   2     0          8 10
+   2   2   2   0          8 10
 Departuring: 
-   2   2   3     0          8 10
+   2   2   3   0          8 10
 Departuring: 
-   2   3   0     0          8 10
+   2   3   0   0          8 10
 Departuring: 
-   2   3   1     0          8 10
+   2   3   1   0          8 10
 Departuring: 
-   2   3   2     0          8 10
+   2   3   2   0          8 10
 Departuring: 
-   2   3   3     0          8 10
+   2   3   3   0          8 10
 Departuring: 
-   3   0   0     0          8 10
+   3   0   0   0          8 10
 Departuring: 
-   3   0   1     0          8 10
+   3   0   1   0          8 10
 Departuring: 
-   3   0   2     0          8 10
+   3   0   2   0          8 10
 Departuring: 
-   3   0   3     0          8 10
+   3   0   3   0          8 10
 Departuring: 
-   3   1   0     0          8 10
+   3   1   0   0          8 10
 Departuring: 
-   3   1   1     0          8 10
+   3   1   1   0          8 10
 Departuring: 
-   3   1   2     0          8 10
+   3   1   2   0          8 10
 Departuring: 
-   3   1   3     0          8 10
+   3   1   3   0          8 10
 Departuring: 
-   3   2   0     0          8 10
+   3   2   0   0          8 10
 Departuring: 
-   3   2   1     0          8 10
+   3   2   1   0          8 10
 Departuring: 
-   3   2   2     0          8 10
+   3   2   2   0          8 10
 Departuring: 
-   3   2   3     0          8 10
+   3   2   3   0          8 10
 Departuring: 
-   3   3   0     0          8 10
+   3   3   0   0          8 10
 Departuring: 
-   3   3   1     0          8 10
+   3   3   1   0          8 10
 Departuring: 
-   3   3   2     0          8 10
+   3   3   2   0          8 10
 Departuring: 
-   3   3   3     0          8 10
+   3   3   3   0          8 10
 Departuring: 
-   0   0   0     0          9 10
+   0   0   0   0          9 10
 Departuring: 
-   0   0   1     0          9 10
+   0   0   1   0          9 10
 Departuring: 
-   0   0   2     0          9 10
+   0   0   2   0          9 10
 Departuring: 
-   0   0   3     0          9 10
+   0   0   3   0          9 10
 Departuring: 
-   0   1   0     0          9 10
+   0   1   0   1          9 10
 Departuring: 
-   0   1   1     0          9 10
+   0   1   1   1          9 10
 Departuring: 
-   0   1   2     0          9 10
+   0   1   2   1          9 10
 Departuring: 
-   0   1   3     0          9 10
+   0   1   3   1          9 10
 Departuring: 
-   0   2   0     0          9 10
+   0   2   0   1          9 10
 Departuring: 
-   0   2   1     0          9 10
+   0   2   1   1          9 10
 Departuring: 
-   0   2   2     0          9 10
+   0   2   2   1          9 10
 Departuring: 
-   0   2   3     0          9 10
+   0   2   3   1          9 10
 Departuring: 
-   0   3   0     0          9 10
+   0   3   0   1          9 10
 Departuring: 
-   0   3   1     0          9 10
+   0   3   1   1          9 10
 Departuring: 
-   0   3   2     0          9 10
+   0   3   2   1          9 10
 Departuring: 
-   0   3   3     0          9 10
+   0   3   3   1          9 10
 Departuring: 
-   1   0   0     0          9 10
+   1   0   0   0          9 10
 Departuring: 
-   1   0   1     0          9 10
+   1   0   1   0          9 10
 Departuring: 
-   1   0   2     0          9 10
+   1   0   2   0          9 10
 Departuring: 
-   1   0   3     0          9 10
+   1   0   3   0          9 10
 Departuring: 
-   1   1   0     0          9 10
+   1   1   0   0          9 10
 Departuring: 
-   1   1   1     0          9 10
+   1   1   1   0          9 10
 Departuring: 
-   1   1   2     0          9 10
+   1   1   2   0          9 10
 Departuring: 
-   1   1   3     0          9 10
+   1   1   3   0          9 10
 Departuring: 
-   1   2   0     0          9 10
+   1   2   0   0          9 10
 Departuring: 
-   1   2   1     0          9 10
+   1   2   1   0          9 10
 Departuring: 
-   1   2   2     0          9 10
+   1   2   2   0          9 10
 Departuring: 
-   1   2   3     0          9 10
+   1   2   3   0          9 10
 Departuring: 
-   1   3   0     0          9 10
+   1   3   0   0          9 10
 Departuring: 
-   1   3   1     0          9 10
+   1   3   1   0          9 10
 Departuring: 
-   1   3   2     0          9 10
+   1   3   2   0          9 10
 Departuring: 
-   1   3   3     0          9 10
+   1   3   3   0          9 10
 Departuring: 
-   2   0   0     0          9 10
+   2   0   0   0          9 10
 Departuring: 
-   2   0   1     0          9 10
+   2   0   1   0          9 10
 Departuring: 
-   2   0   2     0          9 10
+   2   0   2   0          9 10
 Departuring: 
-   2   0   3     0          9 10
+   2   0   3   0          9 10
 Departuring: 
-   2   1   0     0          9 10
+   2   1   0   0          9 10
 Departuring: 
-   2   1   1     0          9 10
+   2   1   1   0          9 10
 Departuring: 
-   2   1   2     0          9 10
+   2   1   2   0          9 10
 Departuring: 
-   2   1   3     0          9 10
+   2   1   3   0          9 10
 Departuring: 
-   2   2   0     0          9 10
+   2   2   0   0          9 10
 Departuring: 
-   2   2   1     0          9 10
+   2   2   1   0          9 10
 Departuring: 
-   2   2   2     0          9 10
+   2   2   2   0          9 10
 Departuring: 
-   2   2   3     0          9 10
+   2   2   3   0          9 10
 Departuring: 
-   2   3   0     0          9 10
+   2   3   0   0          9 10
 Departuring: 
-   2   3   1     0          9 10
+   2   3   1   0          9 10
 Departuring: 
-   2   3   2     0          9 10
+   2   3   2   0          9 10
 Departuring: 
-   2   3   3     0          9 10
+   2   3   3   0          9 10
 Departuring: 
-   3   0   0     0          9 10
+   3   0   0   1          9 10
 Departuring: 
-   3   0   1     0          9 10
+   3   0   1   1          9 10
 Departuring: 
-   3   0   2     0          9 10
+   3   0   2   1          9 10
 Departuring: 
-   3   0   3     0          9 10
+   3   0   3   1          9 10
 Departuring: 
-   3   1   0     0          9 10
+   3   1   0   1          9 10
 Departuring: 
-   3   1   1     0          9 10
+   3   1   1   1          9 10
 Departuring: 
-   3   1   2     0          9 10
+   3   1   2   1          9 10
 Departuring: 
-   3   1   3     0          9 10
+   3   1   3   1          9 10
 Departuring: 
-   3   2   0     0          9 10
+   3   2   0   1          9 10
 Departuring: 
-   3   2   1     0          9 10
+   3   2   1   1          9 10
 Departuring: 
-   3   2   2     0          9 10
+   3   2   2   1          9 10
 Departuring: 
-   3   2   3     0          9 10
+   3   2   3   1          9 10
 Departuring: 
-   3   3   0     0          9 10
+   3   3   0   0          9 10
 Departuring: 
-   3   3   1     0          9 10
+   3   3   1   0          9 10
 Departuring: 
-   3   3   2     0          9 10
+   3   3   2   0          9 10
 Departuring: 
-   3   3   3     0          9 10
+   3   3   3   0          9 10
 Departuring: 
-   0   0   0     0         10 10
+   0   0   0   0         10 10
 Departuring: 
-   0   0   1     0         10 10
+   0   0   1   0         10 10
 Departuring: 
-   0   0   2     0         10 10
+   0   0   2   0         10 10
 Departuring: 
-   0   0   3     0         10 10
+   0   0   3   0         10 10
 Departuring: 
-   0   1   0     0         10 10
+   0   1   0   0         10 10
 Departuring: 
-   0   1   1     0         10 10
+   0   1   1   0         10 10
 Departuring: 
-   0   1   2     0         10 10
+   0   1   2   0         10 10
 Departuring: 
-   0   1   3     0         10 10
+   0   1   3   0         10 10
 Departuring: 
-   0   2   0     0         10 10
+   0   2   0   0         10 10
 Departuring: 
-   0   2   1     0         10 10
+   0   2   1   0         10 10
 Departuring: 
-   0   2   2     0         10 10
+   0   2   2   0         10 10
 Departuring: 
-   0   2   3     0         10 10
+   0   2   3   0         10 10
 Departuring: 
-   0   3   0     0         10 10
+   0   3   0   0         10 10
 Departuring: 
-   0   3   1     0         10 10
+   0   3   1   0         10 10
 Departuring: 
-   0   3   2     0         10 10
+   0   3   2   0         10 10
 Departuring: 
-   0   3   3     0         10 10
+   0   3   3   0         10 10
 Departuring: 
-   1   0   0     0         10 10
+   1   0   0   0         10 10
 Departuring: 
-   1   0   1     0         10 10
+   1   0   1   0         10 10
 Departuring: 
-   1   0   2     0         10 10
+   1   0   2   0         10 10
 Departuring: 
-   1   0   3     0         10 10
+   1   0   3   0         10 10
 Departuring: 
-   1   1   0     0         10 10
+   1   1   0   0         10 10
 Departuring: 
-   1   1   1     0         10 10
+   1   1   1   0         10 10
 Departuring: 
-   1   1   2     0         10 10
+   1   1   2   0         10 10
 Departuring: 
-   1   1   3     0         10 10
+   1   1   3   0         10 10
 Departuring: 
-   1   2   0     0         10 10
+   1   2   0   0         10 10
 Departuring: 
-   1   2   1     0         10 10
+   1   2   1   0         10 10
 Departuring: 
-   1   2   2     0         10 10
+   1   2   2   0         10 10
 Departuring: 
-   1   2   3     0         10 10
+   1   2   3   0         10 10
 Departuring: 
-   1   3   0     0         10 10
+   1   3   0   0         10 10
 Departuring: 
-   1   3   1     0         10 10
+   1   3   1   0         10 10
 Departuring: 
-   1   3   2     0         10 10
+   1   3   2   0         10 10
 Departuring: 
-   1   3   3     0         10 10
+   1   3   3   0         10 10
 Departuring: 
-   2   0   0     0         10 10
+   2   0   0   0         10 10
 Departuring: 
-   2   0   1     0         10 10
+   2   0   1   0         10 10
 Departuring: 
-   2   0   2     0         10 10
+   2   0   2   0         10 10
 Departuring: 
-   2   0   3     0         10 10
+   2   0   3   0         10 10
 Departuring: 
-   2   1   0     0         10 10
+   2   1   0   0         10 10
 Departuring: 
-   2   1   1     0         10 10
+   2   1   1   0         10 10
 Departuring: 
-   2   1   2     0         10 10
+   2   1   2   0         10 10
 Departuring: 
-   2   1   3     0         10 10
+   2   1   3   0         10 10
 Departuring: 
-   2   2   0     0         10 10
+   2   2   0   0         10 10
 Departuring: 
-   2   2   1     0         10 10
+   2   2   1   0         10 10
 Departuring: 
-   2   2   2     0         10 10
+   2   2   2   0         10 10
 Departuring: 
-   2   2   3     0         10 10
+   2   2   3   0         10 10
 Departuring: 
-   2   3   0     0         10 10
+   2   3   0   0         10 10
 Departuring: 
-   2   3   1     0         10 10
+   2   3   1   0         10 10
 Departuring: 
-   2   3   2     0         10 10
+   2   3   2   0         10 10
 Departuring: 
-   2   3   3     0         10 10
+   2   3   3   0         10 10
 Departuring: 
-   3   0   0     0         10 10
+   3   0   0   0         10 10
 Departuring: 
-   3   0   1     0         10 10
+   3   0   1   0         10 10
 Departuring: 
-   3   0   2     0         10 10
+   3   0   2   0         10 10
 Departuring: 
-   3   0   3     0         10 10
+   3   0   3   0         10 10
 Departuring: 
-   3   1   0     0         10 10
+   3   1   0   0         10 10
 Departuring: 
-   3   1   1     0         10 10
+   3   1   1   0         10 10
 Departuring: 
-   3   1   2     0         10 10
+   3   1   2   0         10 10
 Departuring: 
-   3   1   3     0         10 10
+   3   1   3   0         10 10
 Departuring: 
-   3   2   0     0         10 10
+   3   2   0   0         10 10
 Departuring: 
-   3   2   1     0         10 10
+   3   2   1   0         10 10
 Departuring: 
-   3   2   2     0         10 10
+   3   2   2   0         10 10
 Departuring: 
-   3   2   3     0         10 10
+   3   2   3   0         10 10
 Departuring: 
-   3   3   0     0         10 10
+   3   3   0   0         10 10
 Departuring: 
-   3   3   1     0         10 10
+   3   3   1   0         10 10
 Departuring: 
-   3   3   2     0         10 10
+   3   3   2   0         10 10
 Departuring: 
-   3   3   3     0         10 10
+   3   3   3   0         10 10
 Departuring: 
-   0   0   0     0         11 10
+   0   0   0   0         11 10
 Departuring: 
-   0   0   1     0         11 10
+   0   0   1   0         11 10
 Departuring: 
-   0   0   2     0         11 10
+   0   0   2   0         11 10
 Departuring: 
-   0   0   3     0         11 10
+   0   0   3   0         11 10
 Departuring: 
-   0   1   0     0         11 10
+   0   1   0   1         11 10
 Departuring: 
-   0   1   1     0         11 10
+   0   1   1   1         11 10
 Departuring: 
-   0   1   2     0         11 10
+   0   1   2   1         11 10
 Departuring: 
-   0   1   3     0         11 10
+   0   1   3   1         11 10
 Departuring: 
-   0   2   0     0         11 10
+   0   2   0   1         11 10
 Departuring: 
-   0   2   1     0         11 10
+   0   2   1   1         11 10
 Departuring: 
-   0   2   2     0         11 10
+   0   2   2   1         11 10
 Departuring: 
-   0   2   3     0         11 10
+   0   2   3   1         11 10
 Departuring: 
-   0   3   0     0         11 10
+   0   3   0   1         11 10
 Departuring: 
-   0   3   1     0         11 10
+   0   3   1   1         11 10
 Departuring: 
-   0   3   2     0         11 10
+   0   3   2   1         11 10
 Departuring: 
-   0   3   3     0         11 10
+   0   3   3   1         11 10
 Departuring: 
-   1   0   0     0         11 10
+   1   0   0   0         11 10
 Departuring: 
-   1   0   1     0         11 10
+   1   0   1   0         11 10
 Departuring: 
-   1   0   2     0         11 10
+   1   0   2   0         11 10
 Departuring: 
-   1   0   3     0         11 10
+   1   0   3   0         11 10
 Departuring: 
-   1   1   0     0         11 10
+   1   1   0   0         11 10
 Departuring: 
-   1   1   1     0         11 10
+   1   1   1   0         11 10
 Departuring: 
-   1   1   2     0         11 10
+   1   1   2   0         11 10
 Departuring: 
-   1   1   3     0         11 10
+   1   1   3   0         11 10
 Departuring: 
-   1   2   0     0         11 10
+   1   2   0   0         11 10
 Departuring: 
-   1   2   1     0         11 10
+   1   2   1   0         11 10
 Departuring: 
-   1   2   2     0         11 10
+   1   2   2   0         11 10
 Departuring: 
-   1   2   3     0         11 10
+   1   2   3   0         11 10
 Departuring: 
-   1   3   0     0         11 10
+   1   3   0   0         11 10
 Departuring: 
-   1   3   1     0         11 10
+   1   3   1   0         11 10
 Departuring: 
-   1   3   2     0         11 10
+   1   3   2   0         11 10
 Departuring: 
-   1   3   3     0         11 10
+   1   3   3   0         11 10
 Departuring: 
-   2   0   0     0         11 10
+   2   0   0   0         11 10
 Departuring: 
-   2   0   1     0         11 10
+   2   0   1   0         11 10
 Departuring: 
-   2   0   2     0         11 10
+   2   0   2   0         11 10
 Departuring: 
-   2   0   3     0         11 10
+   2   0   3   0         11 10
 Departuring: 
-   2   1   0     0         11 10
+   2   1   0   0         11 10
 Departuring: 
-   2   1   1     0         11 10
+   2   1   1   0         11 10
 Departuring: 
-   2   1   2     0         11 10
+   2   1   2   0         11 10
 Departuring: 
-   2   1   3     0         11 10
+   2   1   3   0         11 10
 Departuring: 
-   2   2   0     0         11 10
+   2   2   0   0         11 10
 Departuring: 
-   2   2   1     0         11 10
+   2   2   1   0         11 10
 Departuring: 
-   2   2   2     0         11 10
+   2   2   2   0         11 10
 Departuring: 
-   2   2   3     0         11 10
+   2   2   3   0         11 10
 Departuring: 
-   2   3   0     0         11 10
+   2   3   0   0         11 10
 Departuring: 
-   2   3   1     0         11 10
+   2   3   1   0         11 10
 Departuring: 
-   2   3   2     0         11 10
+   2   3   2   0         11 10
 Departuring: 
-   2   3   3     0         11 10
+   2   3   3   0         11 10
 Departuring: 
-   3   0   0     0         11 10
+   3   0   0   1         11 10
 Departuring: 
-   3   0   1     0         11 10
+   3   0   1   1         11 10
 Departuring: 
-   3   0   2     0         11 10
+   3   0   2   1         11 10
 Departuring: 
-   3   0   3     0         11 10
+   3   0   3   1         11 10
 Departuring: 
-   3   1   0     0         11 10
+   3   1   0   1         11 10
 Departuring: 
-   3   1   1     0         11 10
+   3   1   1   1         11 10
 Departuring: 
-   3   1   2     0         11 10
+   3   1   2   1         11 10
 Departuring: 
-   3   1   3     0         11 10
+   3   1   3   1         11 10
 Departuring: 
-   3   2   0     0         11 10
+   3   2   0   1         11 10
 Departuring: 
-   3   2   1     0         11 10
+   3   2   1   1         11 10
 Departuring: 
-   3   2   2     0         11 10
+   3   2   2   1         11 10
 Departuring: 
-   3   2   3     0         11 10
+   3   2   3   1         11 10
 Departuring: 
-   3   3   0     0         11 10
+   3   3   0   0         11 10
 Departuring: 
-   3   3   1     0         11 10
+   3   3   1   0         11 10
 Departuring: 
-   3   3   2     0         11 10
+   3   3   2   0         11 10
 Departuring: 
-   3   3   3     0         11 10
+   3   3   3   0         11 10
 Departuring: 
-   0   0   0     0         12 10
+   0   0   0   0         12 10
 Departuring: 
-   0   0   1     0         12 10
+   0   0   1   0         12 10
 Departuring: 
-   0   0   2     0         12 10
+   0   0   2   0         12 10
 Departuring: 
-   0   0   3     0         12 10
+   0   0   3   0         12 10
 Departuring: 
-   0   1   0     0         12 10
+   0   1   0   0         12 10
 Departuring: 
-   0   1   1     0         12 10
+   0   1   1   0         12 10
 Departuring: 
-   0   1   2     0         12 10
+   0   1   2   0         12 10
 Departuring: 
-   0   1   3     0         12 10
+   0   1   3   0         12 10
 Departuring: 
-   0   2   0     0         12 10
+   0   2   0   0         12 10
 Departuring: 
-   0   2   1     0         12 10
+   0   2   1   0         12 10
 Departuring: 
-   0   2   2     0         12 10
+   0   2   2   0         12 10
 Departuring: 
-   0   2   3     0         12 10
+   0   2   3   0         12 10
 Departuring: 
-   0   3   0     0         12 10
+   0   3   0   0         12 10
 Departuring: 
-   0   3   1     0         12 10
+   0   3   1   0         12 10
 Departuring: 
-   0   3   2     0         12 10
+   0   3   2   0         12 10
 Departuring: 
-   0   3   3     0         12 10
+   0   3   3   0         12 10
 Departuring: 
-   1   0   0     0         12 10
+   1   0   0   0         12 10
 Departuring: 
-   1   0   1     0         12 10
+   1   0   1   0         12 10
 Departuring: 
-   1   0   2     0         12 10
+   1   0   2   0         12 10
 Departuring: 
-   1   0   3     0         12 10
+   1   0   3   0         12 10
 Departuring: 
-   1   1   0     0         12 10
+   1   1   0   0         12 10
 Departuring: 
-   1   1   1     0         12 10
+   1   1   1   0         12 10
 Departuring: 
-   1   1   2     0         12 10
+   1   1   2   0         12 10
 Departuring: 
-   1   1   3     0         12 10
+   1   1   3   0         12 10
 Departuring: 
-   1   2   0     0         12 10
+   1   2   0   0         12 10
 Departuring: 
-   1   2   1     0         12 10
+   1   2   1   0         12 10
 Departuring: 
-   1   2   2     0         12 10
+   1   2   2   0         12 10
 Departuring: 
-   1   2   3     0         12 10
+   1   2   3   0         12 10
 Departuring: 
-   1   3   0     0         12 10
+   1   3   0   0         12 10
 Departuring: 
-   1   3   1     0         12 10
+   1   3   1   0         12 10
 Departuring: 
-   1   3   2     0         12 10
+   1   3   2   0         12 10
 Departuring: 
-   1   3   3     0         12 10
+   1   3   3   0         12 10
 Departuring: 
-   2   0   0     0         12 10
+   2   0   0   0         12 10
 Departuring: 
-   2   0   1     0         12 10
+   2   0   1   0         12 10
 Departuring: 
-   2   0   2     0         12 10
+   2   0   2   0         12 10
 Departuring: 
-   2   0   3     0         12 10
+   2   0   3   0         12 10
 Departuring: 
-   2   1   0     0         12 10
+   2   1   0   0         12 10
 Departuring: 
-   2   1   1     0         12 10
+   2   1   1   0         12 10
 Departuring: 
-   2   1   2     0         12 10
+   2   1   2   0         12 10
 Departuring: 
-   2   1   3     0         12 10
+   2   1   3   0         12 10
 Departuring: 
-   2   2   0     0         12 10
+   2   2   0   0         12 10
 Departuring: 
-   2   2   1     0         12 10
+   2   2   1   0         12 10
 Departuring: 
-   2   2   2     0         12 10
+   2   2   2   0         12 10
 Departuring: 
-   2   2   3     0         12 10
+   2   2   3   0         12 10
 Departuring: 
-   2   3   0     0         12 10
+   2   3   0   0         12 10
 Departuring: 
-   2   3   1     0         12 10
+   2   3   1   0         12 10
 Departuring: 
-   2   3   2     0         12 10
+   2   3   2   0         12 10
 Departuring: 
-   2   3   3     0         12 10
+   2   3   3   0         12 10
 Departuring: 
-   3   0   0     0         12 10
+   3   0   0   0         12 10
 Departuring: 
-   3   0   1     0         12 10
+   3   0   1   0         12 10
 Departuring: 
-   3   0   2     0         12 10
+   3   0   2   0         12 10
 Departuring: 
-   3   0   3     0         12 10
+   3   0   3   0         12 10
 Departuring: 
-   3   1   0     0         12 10
+   3   1   0   0         12 10
 Departuring: 
-   3   1   1     0         12 10
+   3   1   1   0         12 10
 Departuring: 
-   3   1   2     0         12 10
+   3   1   2   0         12 10
 Departuring: 
-   3   1   3     0         12 10
+   3   1   3   0         12 10
 Departuring: 
-   3   2   0     0         12 10
+   3   2   0   0         12 10
 Departuring: 
-   3   2   1     0         12 10
+   3   2   1   0         12 10
 Departuring: 
-   3   2   2     0         12 10
+   3   2   2   0         12 10
 Departuring: 
-   3   2   3     0         12 10
+   3   2   3   0         12 10
 Departuring: 
-   3   3   0     0         12 10
+   3   3   0   0         12 10
 Departuring: 
-   3   3   1     0         12 10
+   3   3   1   0         12 10
 Departuring: 
-   3   3   2     0         12 10
+   3   3   2   0         12 10
 Departuring: 
-   3   3   3     0         12 10
+   3   3   3   0         12 10
 Departuring: 
-   0   0   0     0         13 10
+   0   0   0   1         13 10
 Departuring: 
-   0   0   1     0         13 10
+   0   0   1   1         13 10
 Departuring: 
-   0   0   2     0         13 10
+   0   0   2   1         13 10
 Departuring: 
-   0   0   3     0         13 10
+   0   0   3   1         13 10
 Departuring: 
-   0   1   0     0         13 10
+   0   1   0   0         13 10
 Departuring: 
-   0   1   1     0         13 10
+   0   1   1   0         13 10
 Departuring: 
-   0   1   2     0         13 10
+   0   1   2   0         13 10
 Departuring: 
-   0   1   3     0         13 10
+   0   1   3   0         13 10
 Departuring: 
-   0   2   0     0         13 10
+   0   2   0   0         13 10
 Departuring: 
-   0   2   1     0         13 10
+   0   2   1   0         13 10
 Departuring: 
-   0   2   2     0         13 10
+   0   2   2   0         13 10
 Departuring: 
-   0   2   3     0         13 10
+   0   2   3   0         13 10
 Departuring: 
-   0   3   0     0         13 10
+   0   3   0   1         13 10
 Departuring: 
-   0   3   1     0         13 10
+   0   3   1   1         13 10
 Departuring: 
-   0   3   2     0         13 10
+   0   3   2   1         13 10
 Departuring: 
-   0   3   3     0         13 10
+   0   3   3   1         13 10
 Departuring: 
-   1   0   0     0         13 10
+   1   0   0   0         13 10
 Departuring: 
-   1   0   1     0         13 10
+   1   0   1   0         13 10
 Departuring: 
-   1   0   2     0         13 10
+   1   0   2   0         13 10
 Departuring: 
-   1   0   3     0         13 10
+   1   0   3   0         13 10
 Departuring: 
-   1   1   0     0         13 10
+   1   1   0   0         13 10
 Departuring: 
-   1   1   1     0         13 10
+   1   1   1   0         13 10
 Departuring: 
-   1   1   2     0         13 10
+   1   1   2   0         13 10
 Departuring: 
-   1   1   3     0         13 10
+   1   1   3   0         13 10
 Departuring: 
-   1   2   0     0         13 10
+   1   2   0   0         13 10
 Departuring: 
-   1   2   1     0         13 10
+   1   2   1   0         13 10
 Departuring: 
-   1   2   2     0         13 10
+   1   2   2   0         13 10
 Departuring: 
-   1   2   3     0         13 10
+   1   2   3   0         13 10
 Departuring: 
-   1   3   0     0         13 10
+   1   3   0   0         13 10
 Departuring: 
-   1   3   1     0         13 10
+   1   3   1   0         13 10
 Departuring: 
-   1   3   2     0         13 10
+   1   3   2   0         13 10
 Departuring: 
-   1   3   3     0         13 10
+   1   3   3   0         13 10
 Departuring: 
-   2   0   0     0         13 10
+   2   0   0   0         13 10
 Departuring: 
-   2   0   1     0         13 10
+   2   0   1   0         13 10
 Departuring: 
-   2   0   2     0         13 10
+   2   0   2   0         13 10
 Departuring: 
-   2   0   3     0         13 10
+   2   0   3   0         13 10
 Departuring: 
-   2   1   0     0         13 10
+   2   1   0   0         13 10
 Departuring: 
-   2   1   1     0         13 10
+   2   1   1   0         13 10
 Departuring: 
-   2   1   2     0         13 10
+   2   1   2   0         13 10
 Departuring: 
-   2   1   3     0         13 10
+   2   1   3   0         13 10
 Departuring: 
-   2   2   0     0         13 10
+   2   2   0   0         13 10
 Departuring: 
-   2   2   1     0         13 10
+   2   2   1   0         13 10
 Departuring: 
-   2   2   2     0         13 10
+   2   2   2   0         13 10
 Departuring: 
-   2   2   3     0         13 10
+   2   2   3   0         13 10
 Departuring: 
-   2   3   0     0         13 10
+   2   3   0   0         13 10
 Departuring: 
-   2   3   1     0         13 10
+   2   3   1   0         13 10
 Departuring: 
-   2   3   2     0         13 10
+   2   3   2   0         13 10
 Departuring: 
-   2   3   3     0         13 10
+   2   3   3   0         13 10
 Departuring: 
-   3   0   0     0         13 10
+   3   0   0   0         13 10
 Departuring: 
-   3   0   1     0         13 10
+   3   0   1   0         13 10
 Departuring: 
-   3   0   2     0         13 10
+   3   0   2   0         13 10
 Departuring: 
-   3   0   3     0         13 10
+   3   0   3   0         13 10
 Departuring: 
-   3   1   0     0         13 10
+   3   1   0   1         13 10
 Departuring: 
-   3   1   1     0         13 10
+   3   1   1   1         13 10
 Departuring: 
-   3   1   2     0         13 10
+   3   1   2   1         13 10
 Departuring: 
-   3   1   3     0         13 10
+   3   1   3   1         13 10
 Departuring: 
-   3   2   0     0         13 10
+   3   2   0   1         13 10
 Departuring: 
-   3   2   1     0         13 10
+   3   2   1   1         13 10
 Departuring: 
-   3   2   2     0         13 10
+   3   2   2   1         13 10
 Departuring: 
-   3   2   3     0         13 10
+   3   2   3   1         13 10
 Departuring: 
-   3   3   0     0         13 10
+   3   3   0   1         13 10
 Departuring: 
-   3   3   1     0         13 10
+   3   3   1   1         13 10
 Departuring: 
-   3   3   2     0         13 10
+   3   3   2   1         13 10
 Departuring: 
-   3   3   3     0         13 10
+   3   3   3   1         13 10
 Departuring: 
-   0   0   0     0         14 10
+   0   0   0   0         14 10
 Departuring: 
-   0   0   1     0         14 10
+   0   0   1   0         14 10
 Departuring: 
-   0   0   2     0         14 10
+   0   0   2   0         14 10
 Departuring: 
-   0   0   3     0         14 10
+   0   0   3   0         14 10
 Departuring: 
-   0   1   0     0         14 10
+   0   1   0   0         14 10
 Departuring: 
-   0   1   1     0         14 10
+   0   1   1   0         14 10
 Departuring: 
-   0   1   2     0         14 10
+   0   1   2   0         14 10
 Departuring: 
-   0   1   3     0         14 10
+   0   1   3   0         14 10
 Departuring: 
-   0   2   0     0         14 10
+   0   2   0   0         14 10
 Departuring: 
-   0   2   1     0         14 10
+   0   2   1   0         14 10
 Departuring: 
-   0   2   2     0         14 10
+   0   2   2   0         14 10
 Departuring: 
-   0   2   3     0         14 10
+   0   2   3   0         14 10
 Departuring: 
-   0   3   0     0         14 10
+   0   3   0   0         14 10
 Departuring: 
-   0   3   1     0         14 10
+   0   3   1   0         14 10
 Departuring: 
-   0   3   2     0         14 10
+   0   3   2   0         14 10
 Departuring: 
-   0   3   3     0         14 10
+   0   3   3   0         14 10
 Departuring: 
-   1   0   0     0         14 10
+   1   0   0   0         14 10
 Departuring: 
-   1   0   1     0         14 10
+   1   0   1   0         14 10
 Departuring: 
-   1   0   2     0         14 10
+   1   0   2   0         14 10
 Departuring: 
-   1   0   3     0         14 10
+   1   0   3   0         14 10
 Departuring: 
-   1   1   0     0         14 10
+   1   1   0   0         14 10
 Departuring: 
-   1   1   1     0         14 10
+   1   1   1   0         14 10
 Departuring: 
-   1   1   2     0         14 10
+   1   1   2   0         14 10
 Departuring: 
-   1   1   3     0         14 10
+   1   1   3   0         14 10
 Departuring: 
-   1   2   0     0         14 10
+   1   2   0   0         14 10
 Departuring: 
-   1   2   1     0         14 10
+   1   2   1   0         14 10
 Departuring: 
-   1   2   2     0         14 10
+   1   2   2   0         14 10
 Departuring: 
-   1   2   3     0         14 10
+   1   2   3   0         14 10
 Departuring: 
-   1   3   0     0         14 10
+   1   3   0   0         14 10
 Departuring: 
-   1   3   1     0         14 10
+   1   3   1   0         14 10
 Departuring: 
-   1   3   2     0         14 10
+   1   3   2   0         14 10
 Departuring: 
-   1   3   3     0         14 10
+   1   3   3   0         14 10
 Departuring: 
-   2   0   0     0         14 10
+   2   0   0   0         14 10
 Departuring: 
-   2   0   1     0         14 10
+   2   0   1   0         14 10
 Departuring: 
-   2   0   2     0         14 10
+   2   0   2   0         14 10
 Departuring: 
-   2   0   3     0         14 10
+   2   0   3   0         14 10
 Departuring: 
-   2   1   0     0         14 10
+   2   1   0   0         14 10
 Departuring: 
-   2   1   1     0         14 10
+   2   1   1   0         14 10
 Departuring: 
-   2   1   2     0         14 10
+   2   1   2   0         14 10
 Departuring: 
-   2   1   3     0         14 10
+   2   1   3   0         14 10
 Departuring: 
-   2   2   0     0         14 10
+   2   2   0   0         14 10
 Departuring: 
-   2   2   1     0         14 10
+   2   2   1   0         14 10
 Departuring: 
-   2   2   2     0         14 10
+   2   2   2   0         14 10
 Departuring: 
-   2   2   3     0         14 10
+   2   2   3   0         14 10
 Departuring: 
-   2   3   0     0         14 10
+   2   3   0   0         14 10
 Departuring: 
-   2   3   1     0         14 10
+   2   3   1   0         14 10
 Departuring: 
-   2   3   2     0         14 10
+   2   3   2   0         14 10
 Departuring: 
-   2   3   3     0         14 10
+   2   3   3   0         14 10
 Departuring: 
-   3   0   0     0         14 10
+   3   0   0   0         14 10
 Departuring: 
-   3   0   1     0         14 10
+   3   0   1   0         14 10
 Departuring: 
-   3   0   2     0         14 10
+   3   0   2   0         14 10
 Departuring: 
-   3   0   3     0         14 10
+   3   0   3   0         14 10
 Departuring: 
-   3   1   0     0         14 10
+   3   1   0   0         14 10
 Departuring: 
-   3   1   1     0         14 10
+   3   1   1   0         14 10
 Departuring: 
-   3   1   2     0         14 10
+   3   1   2   0         14 10
 Departuring: 
-   3   1   3     0         14 10
+   3   1   3   0         14 10
 Departuring: 
-   3   2   0     0         14 10
+   3   2   0   0         14 10
 Departuring: 
-   3   2   1     0         14 10
+   3   2   1   0         14 10
 Departuring: 
-   3   2   2     0         14 10
+   3   2   2   0         14 10
 Departuring: 
-   3   2   3     0         14 10
+   3   2   3   0         14 10
 Departuring: 
-   3   3   0     0         14 10
+   3   3   0   0         14 10
 Departuring: 
-   3   3   1     0         14 10
+   3   3   1   0         14 10
 Departuring: 
-   3   3   2     0         14 10
+   3   3   2   0         14 10
 Departuring: 
-   3   3   3     0         14 10
+   3   3   3   0         14 10
 Departuring: 
-   0   0   0     0         15 10
+   0   0   0   1         15 10
 Departuring: 
-   0   0   1     0         15 10
+   0   0   1   1         15 10
 Departuring: 
-   0   0   2     0         15 10
+   0   0   2   1         15 10
 Departuring: 
-   0   0   3     0         15 10
+   0   0   3   1         15 10
 Departuring: 
-   0   1   0     0         15 10
+   0   1   0   0         15 10
 Departuring: 
-   0   1   1     0         15 10
+   0   1   1   0         15 10
 Departuring: 
-   0   1   2     0         15 10
+   0   1   2   0         15 10
 Departuring: 
-   0   1   3     0         15 10
+   0   1   3   0         15 10
 Departuring: 
-   0   2   0     0         15 10
+   0   2   0   0         15 10
 Departuring: 
-   0   2   1     0         15 10
+   0   2   1   0         15 10
 Departuring: 
-   0   2   2     0         15 10
+   0   2   2   0         15 10
 Departuring: 
-   0   2   3     0         15 10
+   0   2   3   0         15 10
 Departuring: 
-   0   3   0     0         15 10
+   0   3   0   1         15 10
 Departuring: 
-   0   3   1     0         15 10
+   0   3   1   1         15 10
 Departuring: 
-   0   3   2     0         15 10
+   0   3   2   1         15 10
 Departuring: 
-   0   3   3     0         15 10
+   0   3   3   1         15 10
 Departuring: 
-   1   0   0     0         15 10
+   1   0   0   0         15 10
 Departuring: 
-   1   0   1     0         15 10
+   1   0   1   0         15 10
 Departuring: 
-   1   0   2     0         15 10
+   1   0   2   0         15 10
 Departuring: 
-   1   0   3     0         15 10
+   1   0   3   0         15 10
 Departuring: 
-   1   1   0     0         15 10
+   1   1   0   1         15 10
 Departuring: 
-   1   1   1     0         15 10
+   1   1   1   1         15 10
 Departuring: 
-   1   1   2     0         15 10
+   1   1   2   1         15 10
 Departuring: 
-   1   1   3     0         15 10
+   1   1   3   1         15 10
 Departuring: 
-   1   2   0     0         15 10
+   1   2   0   1         15 10
 Departuring: 
-   1   2   1     0         15 10
+   1   2   1   1         15 10
 Departuring: 
-   1   2   2     0         15 10
+   1   2   2   1         15 10
 Departuring: 
-   1   2   3     0         15 10
+   1   2   3   1         15 10
 Departuring: 
-   1   3   0     0         15 10
+   1   3   0   1         15 10
 Departuring: 
-   1   3   1     0         15 10
+   1   3   1   1         15 10
 Departuring: 
-   1   3   2     0         15 10
+   1   3   2   1         15 10
 Departuring: 
-   1   3   3     0         15 10
+   1   3   3   1         15 10
 Departuring: 
-   2   0   0     0         15 10
+   2   0   0   0         15 10
 Departuring: 
-   2   0   1     0         15 10
+   2   0   1   0         15 10
 Departuring: 
-   2   0   2     0         15 10
+   2   0   2   0         15 10
 Departuring: 
-   2   0   3     0         15 10
+   2   0   3   0         15 10
 Departuring: 
-   2   1   0     0         15 10
+   2   1   0   1         15 10
 Departuring: 
-   2   1   1     0         15 10
+   2   1   1   1         15 10
 Departuring: 
-   2   1   2     0         15 10
+   2   1   2   1         15 10
 Departuring: 
-   2   1   3     0         15 10
+   2   1   3   1         15 10
 Departuring: 
-   2   2   0     0         15 10
+   2   2   0   1         15 10
 Departuring: 
-   2   2   1     0         15 10
+   2   2   1   1         15 10
 Departuring: 
-   2   2   2     0         15 10
+   2   2   2   1         15 10
 Departuring: 
-   2   2   3     0         15 10
+   2   2   3   1         15 10
 Departuring: 
-   2   3   0     0         15 10
+   2   3   0   1         15 10
 Departuring: 
-   2   3   1     0         15 10
+   2   3   1   1         15 10
 Departuring: 
-   2   3   2     0         15 10
+   2   3   2   1         15 10
 Departuring: 
-   2   3   3     0         15 10
+   2   3   3   1         15 10
 Departuring: 
-   3   0   0     0         15 10
+   3   0   0   1         15 10
 Departuring: 
-   3   0   1     0         15 10
+   3   0   1   1         15 10
 Departuring: 
-   3   0   2     0         15 10
+   3   0   2   1         15 10
 Departuring: 
-   3   0   3     0         15 10
+   3   0   3   1         15 10
 Departuring: 
-   3   1   0     0         15 10
+   3   1   0   0         15 10
 Departuring: 
-   3   1   1     0         15 10
+   3   1   1   0         15 10
 Departuring: 
-   3   1   2     0         15 10
+   3   1   2   0         15 10
 Departuring: 
-   3   1   3     0         15 10
+   3   1   3   0         15 10
 Departuring: 
-   3   2   0     0         15 10
+   3   2   0   0         15 10
 Departuring: 
-   3   2   1     0         15 10
+   3   2   1   0         15 10
 Departuring: 
-   3   2   2     0         15 10
+   3   2   2   0         15 10
 Departuring: 
-   3   2   3     0         15 10
+   3   2   3   0         15 10
 Departuring: 
-   3   3   0     0         15 10
+   3   3   0   1         15 10
 Departuring: 
-   3   3   1     0         15 10
+   3   3   1   1         15 10
 Departuring: 
-   3   3   2     0         15 10
+   3   3   2   1         15 10
 Departuring: 
-   3   3   3     0         15 10
+   3   3   3   1         15 10
 Departuring: 
-   0   0   0     0         16 10
+   0   0   0   0         16 10
 Departuring: 
-   0   0   1     0         16 10
+   0   0   1   0         16 10
 Departuring: 
-   0   0   2     0         16 10
+   0   0   2   0         16 10
 Departuring: 
-   0   0   3     0         16 10
+   0   0   3   0         16 10
 Departuring: 
-   0   1   0     0         16 10
+   0   1   0   0         16 10
 Departuring: 
-   0   1   1     0         16 10
+   0   1   1   0         16 10
 Departuring: 
-   0   1   2     0         16 10
+   0   1   2   0         16 10
 Departuring: 
-   0   1   3     0         16 10
+   0   1   3   0         16 10
 Departuring: 
-   0   2   0     0         16 10
+   0   2   0   0         16 10
 Departuring: 
-   0   2   1     0         16 10
+   0   2   1   0         16 10
 Departuring: 
-   0   2   2     0         16 10
+   0   2   2   0         16 10
 Departuring: 
-   0   2   3     0         16 10
+   0   2   3   0         16 10
 Departuring: 
-   0   3   0     0         16 10
+   0   3   0   0         16 10
 Departuring: 
-   0   3   1     0         16 10
+   0   3   1   0         16 10
 Departuring: 
-   0   3   2     0         16 10
+   0   3   2   0         16 10
 Departuring: 
-   0   3   3     0         16 10
+   0   3   3   0         16 10
 Departuring: 
-   1   0   0     0         16 10
+   1   0   0   0         16 10
 Departuring: 
-   1   0   1     0         16 10
+   1   0   1   0         16 10
 Departuring: 
-   1   0   2     0         16 10
+   1   0   2   0         16 10
 Departuring: 
-   1   0   3     0         16 10
+   1   0   3   0         16 10
 Departuring: 
-   1   1   0     0         16 10
+   1   1   0   0         16 10
 Departuring: 
-   1   1   1     0         16 10
+   1   1   1   0         16 10
 Departuring: 
-   1   1   2     0         16 10
+   1   1   2   0         16 10
 Departuring: 
-   1   1   3     0         16 10
+   1   1   3   0         16 10
 Departuring: 
-   1   2   0     0         16 10
+   1   2   0   0         16 10
 Departuring: 
-   1   2   1     0         16 10
+   1   2   1   0         16 10
 Departuring: 
-   1   2   2     0         16 10
+   1   2   2   0         16 10
 Departuring: 
-   1   2   3     0         16 10
+   1   2   3   0         16 10
 Departuring: 
-   1   3   0     0         16 10
+   1   3   0   0         16 10
 Departuring: 
-   1   3   1     0         16 10
+   1   3   1   0         16 10
 Departuring: 
-   1   3   2     0         16 10
+   1   3   2   0         16 10
 Departuring: 
-   1   3   3     0         16 10
+   1   3   3   0         16 10
 Departuring: 
-   2   0   0     0         16 10
+   2   0   0   0         16 10
 Departuring: 
-   2   0   1     0         16 10
+   2   0   1   0         16 10
 Departuring: 
-   2   0   2     0         16 10
+   2   0   2   0         16 10
 Departuring: 
-   2   0   3     0         16 10
+   2   0   3   0         16 10
 Departuring: 
-   2   1   0     0         16 10
+   2   1   0   0         16 10
 Departuring: 
-   2   1   1     0         16 10
+   2   1   1   0         16 10
 Departuring: 
-   2   1   2     0         16 10
+   2   1   2   0         16 10
 Departuring: 
-   2   1   3     0         16 10
+   2   1   3   0         16 10
 Departuring: 
-   2   2   0     0         16 10
+   2   2   0   0         16 10
 Departuring: 
-   2   2   1     0         16 10
+   2   2   1   0         16 10
 Departuring: 
-   2   2   2     0         16 10
+   2   2   2   0         16 10
 Departuring: 
-   2   2   3     0         16 10
+   2   2   3   0         16 10
 Departuring: 
-   2   3   0     0         16 10
+   2   3   0   0         16 10
 Departuring: 
-   2   3   1     0         16 10
+   2   3   1   0         16 10
 Departuring: 
-   2   3   2     0         16 10
+   2   3   2   0         16 10
 Departuring: 
-   2   3   3     0         16 10
+   2   3   3   0         16 10
 Departuring: 
-   3   0   0     0         16 10
+   3   0   0   0         16 10
 Departuring: 
-   3   0   1     0         16 10
+   3   0   1   0         16 10
 Departuring: 
-   3   0   2     0         16 10
+   3   0   2   0         16 10
 Departuring: 
-   3   0   3     0         16 10
+   3   0   3   0         16 10
 Departuring: 
-   3   1   0     0         16 10
+   3   1   0   0         16 10
 Departuring: 
-   3   1   1     0         16 10
+   3   1   1   0         16 10
 Departuring: 
-   3   1   2     0         16 10
+   3   1   2   0         16 10
 Departuring: 
-   3   1   3     0         16 10
+   3   1   3   0         16 10
 Departuring: 
-   3   2   0     0         16 10
+   3   2   0   0         16 10
 Departuring: 
-   3   2   1     0         16 10
+   3   2   1   0         16 10
 Departuring: 
-   3   2   2     0         16 10
+   3   2   2   0         16 10
 Departuring: 
-   3   2   3     0         16 10
+   3   2   3   0         16 10
 Departuring: 
-   3   3   0     0         16 10
+   3   3   0   0         16 10
 Departuring: 
-   3   3   1     0         16 10
+   3   3   1   0         16 10
 Departuring: 
-   3   3   2     0         16 10
+   3   3   2   0         16 10
 Departuring: 
-   3   3   3     0         16 10
+   3   3   3   0         16 10
 Departuring: 
-   0   0   0     0         17 10
+   0   0   0   1         17 10
 Departuring: 
-   0   0   1     0         17 10
+   0   0   1   1         17 10
 Departuring: 
-   0   0   2     0         17 10
+   0   0   2   1         17 10
 Departuring: 
-   0   0   3     0         17 10
+   0   0   3   1         17 10
 Departuring: 
-   0   1   0     0         17 10
+   0   1   0   1         17 10
 Departuring: 
-   0   1   1     0         17 10
+   0   1   1   1         17 10
 Departuring: 
-   0   1   2     0         17 10
+   0   1   2   1         17 10
 Departuring: 
-   0   1   3     0         17 10
+   0   1   3   1         17 10
 Departuring: 
-   0   2   0     0         17 10
+   0   2   0   1         17 10
 Departuring: 
-   0   2   1     0         17 10
+   0   2   1   1         17 10
 Departuring: 
-   0   2   2     0         17 10
+   0   2   2   1         17 10
 Departuring: 
-   0   2   3     0         17 10
+   0   2   3   1         17 10
 Departuring: 
-   0   3   0     0         17 10
+   0   3   0   0         17 10
 Departuring: 
-   0   3   1     0         17 10
+   0   3   1   0         17 10
 Departuring: 
-   0   3   2     0         17 10
+   0   3   2   0         17 10
 Departuring: 
-   0   3   3     0         17 10
+   0   3   3   0         17 10
 Departuring: 
-   1   0   0     0         17 10
+   1   0   0   0         17 10
 Departuring: 
-   1   0   1     0         17 10
+   1   0   1   0         17 10
 Departuring: 
-   1   0   2     0         17 10
+   1   0   2   0         17 10
 Departuring: 
-   1   0   3     0         17 10
+   1   0   3   0         17 10
 Departuring: 
-   1   1   0     0         17 10
+   1   1   0   1         17 10
 Departuring: 
-   1   1   1     0         17 10
+   1   1   1   1         17 10
 Departuring: 
-   1   1   2     0         17 10
+   1   1   2   1         17 10
 Departuring: 
-   1   1   3     0         17 10
+   1   1   3   1         17 10
 Departuring: 
-   1   2   0     0         17 10
+   1   2   0   1         17 10
 Departuring: 
-   1   2   1     0         17 10
+   1   2   1   1         17 10
 Departuring: 
-   1   2   2     0         17 10
+   1   2   2   1         17 10
 Departuring: 
-   1   2   3     0         17 10
+   1   2   3   1         17 10
 Departuring: 
-   1   3   0     0         17 10
+   1   3   0   1         17 10
 Departuring: 
-   1   3   1     0         17 10
+   1   3   1   1         17 10
 Departuring: 
-   1   3   2     0         17 10
+   1   3   2   1         17 10
 Departuring: 
-   1   3   3     0         17 10
+   1   3   3   1         17 10
 Departuring: 
-   2   0   0     0         17 10
+   2   0   0   0         17 10
 Departuring: 
-   2   0   1     0         17 10
+   2   0   1   0         17 10
 Departuring: 
-   2   0   2     0         17 10
+   2   0   2   0         17 10
 Departuring: 
-   2   0   3     0         17 10
+   2   0   3   0         17 10
 Departuring: 
-   2   1   0     0         17 10
+   2   1   0   1         17 10
 Departuring: 
-   2   1   1     0         17 10
+   2   1   1   1         17 10
 Departuring: 
-   2   1   2     0         17 10
+   2   1   2   1         17 10
 Departuring: 
-   2   1   3     0         17 10
+   2   1   3   1         17 10
 Departuring: 
-   2   2   0     0         17 10
+   2   2   0   1         17 10
 Departuring: 
-   2   2   1     0         17 10
+   2   2   1   1         17 10
 Departuring: 
-   2   2   2     0         17 10
+   2   2   2   1         17 10
 Departuring: 
-   2   2   3     0         17 10
+   2   2   3   1         17 10
 Departuring: 
-   2   3   0     0         17 10
+   2   3   0   1         17 10
 Departuring: 
-   2   3   1     0         17 10
+   2   3   1   1         17 10
 Departuring: 
-   2   3   2     0         17 10
+   2   3   2   1         17 10
 Departuring: 
-   2   3   3     0         17 10
+   2   3   3   1         17 10
 Departuring: 
-   3   0   0     0         17 10
+   3   0   0   1         17 10
 Departuring: 
-   3   0   1     0         17 10
+   3   0   1   1         17 10
 Departuring: 
-   3   0   2     0         17 10
+   3   0   2   1         17 10
 Departuring: 
-   3   0   3     0         17 10
+   3   0   3   1         17 10
 Departuring: 
-   3   1   0     0         17 10
+   3   1   0   1         17 10
 Departuring: 
-   3   1   1     0         17 10
+   3   1   1   1         17 10
 Departuring: 
-   3   1   2     0         17 10
+   3   1   2   1         17 10
 Departuring: 
-   3   1   3     0         17 10
+   3   1   3   1         17 10
 Departuring: 
-   3   2   0     0         17 10
+   3   2   0   1         17 10
 Departuring: 
-   3   2   1     0         17 10
+   3   2   1   1         17 10
 Departuring: 
-   3   2   2     0         17 10
+   3   2   2   1         17 10
 Departuring: 
-   3   2   3     0         17 10
+   3   2   3   1         17 10
 Departuring: 
-   3   3   0     0         17 10
+   3   3   0   0         17 10
 Departuring: 
-   3   3   1     0         17 10
+   3   3   1   0         17 10
 Departuring: 
-   3   3   2     0         17 10
+   3   3   2   0         17 10
 Departuring: 
-   3   3   3     0         17 10
+   3   3   3   0         17 10
 Departuring: 
-   0   0   0     0         18 10
+   0   0   0   0         18 10
 Departuring: 
-   0   0   1     0         18 10
+   0   0   1   0         18 10
 Departuring: 
-   0   0   2     0         18 10
+   0   0   2   0         18 10
 Departuring: 
-   0   0   3     0         18 10
+   0   0   3   0         18 10
 Departuring: 
-   0   1   0     0         18 10
+   0   1   0   0         18 10
 Departuring: 
-   0   1   1     0         18 10
+   0   1   1   0         18 10
 Departuring: 
-   0   1   2     0         18 10
+   0   1   2   0         18 10
 Departuring: 
-   0   1   3     0         18 10
+   0   1   3   0         18 10
 Departuring: 
-   0   2   0     0         18 10
+   0   2   0   0         18 10
 Departuring: 
-   0   2   1     0         18 10
+   0   2   1   0         18 10
 Departuring: 
-   0   2   2     0         18 10
+   0   2   2   0         18 10
 Departuring: 
-   0   2   3     0         18 10
+   0   2   3   0         18 10
 Departuring: 
-   0   3   0     0         18 10
+   0   3   0   0         18 10
 Departuring: 
-   0   3   1     0         18 10
+   0   3   1   0         18 10
 Departuring: 
-   0   3   2     0         18 10
+   0   3   2   0         18 10
 Departuring: 
-   0   3   3     0         18 10
+   0   3   3   0         18 10
 Departuring: 
-   1   0   0     0         18 10
+   1   0   0   0         18 10
 Departuring: 
-   1   0   1     0         18 10
+   1   0   1   0         18 10
 Departuring: 
-   1   0   2     0         18 10
+   1   0   2   0         18 10
 Departuring: 
-   1   0   3     0         18 10
+   1   0   3   0         18 10
 Departuring: 
-   1   1   0     0         18 10
+   1   1   0   0         18 10
 Departuring: 
-   1   1   1     0         18 10
+   1   1   1   0         18 10
 Departuring: 
-   1   1   2     0         18 10
+   1   1   2   0         18 10
 Departuring: 
-   1   1   3     0         18 10
+   1   1   3   0         18 10
 Departuring: 
-   1   2   0     0         18 10
+   1   2   0   0         18 10
 Departuring: 
-   1   2   1     0         18 10
+   1   2   1   0         18 10
 Departuring: 
-   1   2   2     0         18 10
+   1   2   2   0         18 10
 Departuring: 
-   1   2   3     0         18 10
+   1   2   3   0         18 10
 Departuring: 
-   1   3   0     0         18 10
+   1   3   0   0         18 10
 Departuring: 
-   1   3   1     0         18 10
+   1   3   1   0         18 10
 Departuring: 
-   1   3   2     0         18 10
+   1   3   2   0         18 10
 Departuring: 
-   1   3   3     0         18 10
+   1   3   3   0         18 10
 Departuring: 
-   2   0   0     0         18 10
+   2   0   0   0         18 10
 Departuring: 
-   2   0   1     0         18 10
+   2   0   1   0         18 10
 Departuring: 
-   2   0   2     0         18 10
+   2   0   2   0         18 10
 Departuring: 
-   2   0   3     0         18 10
+   2   0   3   0         18 10
 Departuring: 
-   2   1   0     0         18 10
+   2   1   0   0         18 10
 Departuring: 
-   2   1   1     0         18 10
+   2   1   1   0         18 10
 Departuring: 
-   2   1   2     0         18 10
+   2   1   2   0         18 10
 Departuring: 
-   2   1   3     0         18 10
+   2   1   3   0         18 10
 Departuring: 
-   2   2   0     0         18 10
+   2   2   0   0         18 10
 Departuring: 
-   2   2   1     0         18 10
+   2   2   1   0         18 10
 Departuring: 
-   2   2   2     0         18 10
+   2   2   2   0         18 10
 Departuring: 
-   2   2   3     0         18 10
+   2   2   3   0         18 10
 Departuring: 
-   2   3   0     0         18 10
+   2   3   0   0         18 10
 Departuring: 
-   2   3   1     0         18 10
+   2   3   1   0         18 10
 Departuring: 
-   2   3   2     0         18 10
+   2   3   2   0         18 10
 Departuring: 
-   2   3   3     0         18 10
+   2   3   3   0         18 10
 Departuring: 
-   3   0   0     0         18 10
+   3   0   0   0         18 10
 Departuring: 
-   3   0   1     0         18 10
+   3   0   1   0         18 10
 Departuring: 
-   3   0   2     0         18 10
+   3   0   2   0         18 10
 Departuring: 
-   3   0   3     0         18 10
+   3   0   3   0         18 10
 Departuring: 
-   3   1   0     0         18 10
+   3   1   0   0         18 10
 Departuring: 
-   3   1   1     0         18 10
+   3   1   1   0         18 10
 Departuring: 
-   3   1   2     0         18 10
+   3   1   2   0         18 10
 Departuring: 
-   3   1   3     0         18 10
+   3   1   3   0         18 10
 Departuring: 
-   3   2   0     0         18 10
+   3   2   0   0         18 10
 Departuring: 
-   3   2   1     0         18 10
+   3   2   1   0         18 10
 Departuring: 
-   3   2   2     0         18 10
+   3   2   2   0         18 10
 Departuring: 
-   3   2   3     0         18 10
+   3   2   3   0         18 10
 Departuring: 
-   3   3   0     0         18 10
+   3   3   0   0         18 10
 Departuring: 
-   3   3   1     0         18 10
+   3   3   1   0         18 10
 Departuring: 
-   3   3   2     0         18 10
+   3   3   2   0         18 10
 Departuring: 
-   3   3   3     0         18 10
+   3   3   3   0         18 10
 Departuring: 
-   0   0   0     0         19 10
+   0   0   0   1         19 10
 Departuring: 
-   0   0   1     0         19 10
+   0   0   1   1         19 10
 Departuring: 
-   0   0   2     0         19 10
+   0   0   2   1         19 10
 Departuring: 
-   0   0   3     0         19 10
+   0   0   3   1         19 10
 Departuring: 
-   0   1   0     0         19 10
+   0   1   0   1         19 10
 Departuring: 
-   0   1   1     0         19 10
+   0   1   1   1         19 10
 Departuring: 
-   0   1   2     0         19 10
+   0   1   2   1         19 10
 Departuring: 
-   0   1   3     0         19 10
+   0   1   3   1         19 10
 Departuring: 
-   0   2   0     0         19 10
+   0   2   0   1         19 10
 Departuring: 
-   0   2   1     0         19 10
+   0   2   1   1         19 10
 Departuring: 
-   0   2   2     0         19 10
+   0   2   2   1         19 10
 Departuring: 
-   0   2   3     0         19 10
+   0   2   3   1         19 10
 Departuring: 
-   0   3   0     0         19 10
+   0   3   0   0         19 10
 Departuring: 
-   0   3   1     0         19 10
+   0   3   1   0         19 10
 Departuring: 
-   0   3   2     0         19 10
+   0   3   2   0         19 10
 Departuring: 
-   0   3   3     0         19 10
+   0   3   3   0         19 10
 Departuring: 
-   1   0   0     0         19 10
+   1   0   0   1         19 10
 Departuring: 
-   1   0   1     0         19 10
+   1   0   1   1         19 10
 Departuring: 
-   1   0   2     0         19 10
+   1   0   2   1         19 10
 Departuring: 
-   1   0   3     0         19 10
+   1   0   3   1         19 10
 Departuring: 
-   1   1   0     0         19 10
+   1   1   0   0         19 10
 Departuring: 
-   1   1   1     0         19 10
+   1   1   1   0         19 10
 Departuring: 
-   1   1   2     0         19 10
+   1   1   2   0         19 10
 Departuring: 
-   1   1   3     0         19 10
+   1   1   3   0         19 10
 Departuring: 
-   1   2   0     0         19 10
+   1   2   0   0         19 10
 Departuring: 
-   1   2   1     0         19 10
+   1   2   1   0         19 10
 Departuring: 
-   1   2   2     0         19 10
+   1   2   2   0         19 10
 Departuring: 
-   1   2   3     0         19 10
+   1   2   3   0         19 10
 Departuring: 
-   1   3   0     0         19 10
+   1   3   0   1         19 10
 Departuring: 
-   1   3   1     0         19 10
+   1   3   1   1         19 10
 Departuring: 
-   1   3   2     0         19 10
+   1   3   2   1         19 10
 Departuring: 
-   1   3   3     0         19 10
+   1   3   3   1         19 10
 Departuring: 
-   2   0   0     0         19 10
+   2   0   0   1         19 10
 Departuring: 
-   2   0   1     0         19 10
+   2   0   1   1         19 10
 Departuring: 
-   2   0   2     0         19 10
+   2   0   2   1         19 10
 Departuring: 
-   2   0   3     0         19 10
+   2   0   3   1         19 10
 Departuring: 
-   2   1   0     0         19 10
+   2   1   0   0         19 10
 Departuring: 
-   2   1   1     0         19 10
+   2   1   1   0         19 10
 Departuring: 
-   2   1   2     0         19 10
+   2   1   2   0         19 10
 Departuring: 
-   2   1   3     0         19 10
+   2   1   3   0         19 10
 Departuring: 
-   2   2   0     0         19 10
+   2   2   0   0         19 10
 Departuring: 
-   2   2   1     0         19 10
+   2   2   1   0         19 10
 Departuring: 
-   2   2   2     0         19 10
+   2   2   2   0         19 10
 Departuring: 
-   2   2   3     0         19 10
+   2   2   3   0         19 10
 Departuring: 
-   2   3   0     0         19 10
+   2   3   0   1         19 10
 Departuring: 
-   2   3   1     0         19 10
+   2   3   1   1         19 10
 Departuring: 
-   2   3   2     0         19 10
+   2   3   2   1         19 10
 Departuring: 
-   2   3   3     0         19 10
+   2   3   3   1         19 10
 Departuring: 
-   3   0   0     0         19 10
+   3   0   0   0         19 10
 Departuring: 
-   3   0   1     0         19 10
+   3   0   1   0         19 10
 Departuring: 
-   3   0   2     0         19 10
+   3   0   2   0         19 10
 Departuring: 
-   3   0   3     0         19 10
+   3   0   3   0         19 10
 Departuring: 
-   3   1   0     0         19 10
+   3   1   0   0         19 10
 Departuring: 
-   3   1   1     0         19 10
+   3   1   1   0         19 10
 Departuring: 
-   3   1   2     0         19 10
+   3   1   2   0         19 10
 Departuring: 
-   3   1   3     0         19 10
+   3   1   3   0         19 10
 Departuring: 
-   3   2   0     0         19 10
+   3   2   0   0         19 10
 Departuring: 
-   3   2   1     0         19 10
+   3   2   1   0         19 10
 Departuring: 
-   3   2   2     0         19 10
+   3   2   2   0         19 10
 Departuring: 
-   3   2   3     0         19 10
+   3   2   3   0         19 10
 Departuring: 
-   3   3   0     0         19 10
+   3   3   0   0         19 10
 Departuring: 
-   3   3   1     0         19 10
+   3   3   1   0         19 10
 Departuring: 
-   3   3   2     0         19 10
+   3   3   2   0         19 10
 Departuring: 
-   3   3   3     0         19 10
+   3   3   3   0         19 10
 Departuring: 
-   0   0   0     0         20 10
+   0   0   0   0         20 10
 Departuring: 
-   0   0   1     0         20 10
+   0   0   1   0         20 10
 Departuring: 
-   0   0   2     0         20 10
+   0   0   2   0         20 10
 Departuring: 
-   0   0   3     0         20 10
+   0   0   3   0         20 10
 Departuring: 
-   0   1   0     0         20 10
+   0   1   0   0         20 10
 Departuring: 
-   0   1   1     0         20 10
+   0   1   1   0         20 10
 Departuring: 
-   0   1   2     0         20 10
+   0   1   2   0         20 10
 Departuring: 
-   0   1   3     0         20 10
+   0   1   3   0         20 10
 Departuring: 
-   0   2   0     0         20 10
+   0   2   0   0         20 10
 Departuring: 
-   0   2   1     0         20 10
+   0   2   1   0         20 10
 Departuring: 
-   0   2   2     0         20 10
+   0   2   2   0         20 10
 Departuring: 
-   0   2   3     0         20 10
+   0   2   3   0         20 10
 Departuring: 
-   0   3   0     0         20 10
+   0   3   0   0         20 10
 Departuring: 
-   0   3   1     0         20 10
+   0   3   1   0         20 10
 Departuring: 
-   0   3   2     0         20 10
+   0   3   2   0         20 10
 Departuring: 
-   0   3   3     0         20 10
+   0   3   3   0         20 10
 Departuring: 
-   1   0   0     0         20 10
+   1   0   0   0         20 10
 Departuring: 
-   1   0   1     0         20 10
+   1   0   1   0         20 10
 Departuring: 
-   1   0   2     0         20 10
+   1   0   2   0         20 10
 Departuring: 
-   1   0   3     0         20 10
+   1   0   3   0         20 10
 Departuring: 
-   1   1   0     0         20 10
+   1   1   0   0         20 10
 Departuring: 
-   1   1   1     0         20 10
+   1   1   1   0         20 10
 Departuring: 
-   1   1   2     0         20 10
+   1   1   2   0         20 10
 Departuring: 
-   1   1   3     0         20 10
+   1   1   3   0         20 10
 Departuring: 
-   1   2   0     0         20 10
+   1   2   0   0         20 10
 Departuring: 
-   1   2   1     0         20 10
+   1   2   1   0         20 10
 Departuring: 
-   1   2   2     0         20 10
+   1   2   2   0         20 10
 Departuring: 
-   1   2   3     0         20 10
+   1   2   3   0         20 10
 Departuring: 
-   1   3   0     0         20 10
+   1   3   0   0         20 10
 Departuring: 
-   1   3   1     0         20 10
+   1   3   1   0         20 10
 Departuring: 
-   1   3   2     0         20 10
+   1   3   2   0         20 10
 Departuring: 
-   1   3   3     0         20 10
+   1   3   3   0         20 10
 Departuring: 
-   2   0   0     0         20 10
+   2   0   0   0         20 10
 Departuring: 
-   2   0   1     0         20 10
+   2   0   1   0         20 10
 Departuring: 
-   2   0   2     0         20 10
+   2   0   2   0         20 10
 Departuring: 
-   2   0   3     0         20 10
+   2   0   3   0         20 10
 Departuring: 
-   2   1   0     0         20 10
+   2   1   0   0         20 10
 Departuring: 
-   2   1   1     0         20 10
+   2   1   1   0         20 10
 Departuring: 
-   2   1   2     0         20 10
+   2   1   2   0         20 10
 Departuring: 
-   2   1   3     0         20 10
+   2   1   3   0         20 10
 Departuring: 
-   2   2   0     0         20 10
+   2   2   0   0         20 10
 Departuring: 
-   2   2   1     0         20 10
+   2   2   1   0         20 10
 Departuring: 
-   2   2   2     0         20 10
+   2   2   2   0         20 10
 Departuring: 
-   2   2   3     0         20 10
+   2   2   3   0         20 10
 Departuring: 
-   2   3   0     0         20 10
+   2   3   0   0         20 10
 Departuring: 
-   2   3   1     0         20 10
+   2   3   1   0         20 10
 Departuring: 
-   2   3   2     0         20 10
+   2   3   2   0         20 10
 Departuring: 
-   2   3   3     0         20 10
+   2   3   3   0         20 10
 Departuring: 
-   3   0   0     0         20 10
+   3   0   0   0         20 10
 Departuring: 
-   3   0   1     0         20 10
+   3   0   1   0         20 10
 Departuring: 
-   3   0   2     0         20 10
+   3   0   2   0         20 10
 Departuring: 
-   3   0   3     0         20 10
+   3   0   3   0         20 10
 Departuring: 
-   3   1   0     0         20 10
+   3   1   0   0         20 10
 Departuring: 
-   3   1   1     0         20 10
+   3   1   1   0         20 10
 Departuring: 
-   3   1   2     0         20 10
+   3   1   2   0         20 10
 Departuring: 
-   3   1   3     0         20 10
+   3   1   3   0         20 10
 Departuring: 
-   3   2   0     0         20 10
+   3   2   0   0         20 10
 Departuring: 
-   3   2   1     0         20 10
+   3   2   1   0         20 10
 Departuring: 
-   3   2   2     0         20 10
+   3   2   2   0         20 10
 Departuring: 
-   3   2   3     0         20 10
+   3   2   3   0         20 10
 Departuring: 
-   3   3   0     0         20 10
+   3   3   0   0         20 10
 Departuring: 
-   3   3   1     0         20 10
+   3   3   1   0         20 10
 Departuring: 
-   3   3   2     0         20 10
+   3   3   2   0         20 10
 Departuring: 
-   3   3   3     0         20 10
+   3   3   3   0         20 10
 Departuring: 
-   0   0   0     0         21 10
+   0   0   0   0         21 10
 Departuring: 
-   0   0   1     0         21 10
+   0   0   1   0         21 10
 Departuring: 
-   0   0   2     0         21 10
+   0   0   2   0         21 10
 Departuring: 
-   0   0   3     0         21 10
+   0   0   3   0         21 10
 Departuring: 
-   0   1   0     0         21 10
+   0   1   0   1         21 10
 Departuring: 
-   0   1   1     0         21 10
+   0   1   1   1         21 10
 Departuring: 
-   0   1   2     0         21 10
+   0   1   2   1         21 10
 Departuring: 
-   0   1   3     0         21 10
+   0   1   3   1         21 10
 Departuring: 
-   0   2   0     0         21 10
+   0   2   0   1         21 10
 Departuring: 
-   0   2   1     0         21 10
+   0   2   1   1         21 10
 Departuring: 
-   0   2   2     0         21 10
+   0   2   2   1         21 10
 Departuring: 
-   0   2   3     0         21 10
+   0   2   3   1         21 10
 Departuring: 
-   0   3   0     0         21 10
+   0   3   0   1         21 10
 Departuring: 
-   0   3   1     0         21 10
+   0   3   1   1         21 10
 Departuring: 
-   0   3   2     0         21 10
+   0   3   2   1         21 10
 Departuring: 
-   0   3   3     0         21 10
+   0   3   3   1         21 10
 Departuring: 
-   1   0   0     0         21 10
+   1   0   0   1         21 10
 Departuring: 
-   1   0   1     0         21 10
+   1   0   1   1         21 10
 Departuring: 
-   1   0   2     0         21 10
+   1   0   2   1         21 10
 Departuring: 
-   1   0   3     0         21 10
+   1   0   3   1         21 10
 Departuring: 
-   1   1   0     0         21 10
+   1   1   0   0         21 10
 Departuring: 
-   1   1   1     0         21 10
+   1   1   1   0         21 10
 Departuring: 
-   1   1   2     0         21 10
+   1   1   2   0         21 10
 Departuring: 
-   1   1   3     0         21 10
+   1   1   3   0         21 10
 Departuring: 
-   1   2   0     0         21 10
+   1   2   0   0         21 10
 Departuring: 
-   1   2   1     0         21 10
+   1   2   1   0         21 10
 Departuring: 
-   1   2   2     0         21 10
+   1   2   2   0         21 10
 Departuring: 
-   1   2   3     0         21 10
+   1   2   3   0         21 10
 Departuring: 
-   1   3   0     0         21 10
+   1   3   0   1         21 10
 Departuring: 
-   1   3   1     0         21 10
+   1   3   1   1         21 10
 Departuring: 
-   1   3   2     0         21 10
+   1   3   2   1         21 10
 Departuring: 
-   1   3   3     0         21 10
+   1   3   3   1         21 10
 Departuring: 
-   2   0   0     0         21 10
+   2   0   0   1         21 10
 Departuring: 
-   2   0   1     0         21 10
+   2   0   1   1         21 10
 Departuring: 
-   2   0   2     0         21 10
+   2   0   2   1         21 10
 Departuring: 
-   2   0   3     0         21 10
+   2   0   3   1         21 10
 Departuring: 
-   2   1   0     0         21 10
+   2   1   0   0         21 10
 Departuring: 
-   2   1   1     0         21 10
+   2   1   1   0         21 10
 Departuring: 
-   2   1   2     0         21 10
+   2   1   2   0         21 10
 Departuring: 
-   2   1   3     0         21 10
+   2   1   3   0         21 10
 Departuring: 
-   2   2   0     0         21 10
+   2   2   0   0         21 10
 Departuring: 
-   2   2   1     0         21 10
+   2   2   1   0         21 10
 Departuring: 
-   2   2   2     0         21 10
+   2   2   2   0         21 10
 Departuring: 
-   2   2   3     0         21 10
+   2   2   3   0         21 10
 Departuring: 
-   2   3   0     0         21 10
+   2   3   0   1         21 10
 Departuring: 
-   2   3   1     0         21 10
+   2   3   1   1         21 10
 Departuring: 
-   2   3   2     0         21 10
+   2   3   2   1         21 10
 Departuring: 
-   2   3   3     0         21 10
+   2   3   3   1         21 10
 Departuring: 
-   3   0   0     0         21 10
+   3   0   0   0         21 10
 Departuring: 
-   3   0   1     0         21 10
+   3   0   1   0         21 10
 Departuring: 
-   3   0   2     0         21 10
+   3   0   2   0         21 10
 Departuring: 
-   3   0   3     0         21 10
+   3   0   3   0         21 10
 Departuring: 
-   3   1   0     0         21 10
+   3   1   0   0         21 10
 Departuring: 
-   3   1   1     0         21 10
+   3   1   1   0         21 10
 Departuring: 
-   3   1   2     0         21 10
+   3   1   2   0         21 10
 Departuring: 
-   3   1   3     0         21 10
+   3   1   3   0         21 10
 Departuring: 
-   3   2   0     0         21 10
+   3   2   0   0         21 10
 Departuring: 
-   3   2   1     0         21 10
+   3   2   1   0         21 10
 Departuring: 
-   3   2   2     0         21 10
+   3   2   2   0         21 10
 Departuring: 
-   3   2   3     0         21 10
+   3   2   3   0         21 10
 Departuring: 
-   3   3   0     0         21 10
+   3   3   0   0         21 10
 Departuring: 
-   3   3   1     0         21 10
+   3   3   1   0         21 10
 Departuring: 
-   3   3   2     0         21 10
+   3   3   2   0         21 10
 Departuring: 
-   3   3   3     0         21 10
+   3   3   3   0         21 10
 Departuring: 
-   0   0   0     0         22 10
+   0   0   0   0         22 10
 Departuring: 
-   0   0   1     0         22 10
+   0   0   1   0         22 10
 Departuring: 
-   0   0   2     0         22 10
+   0   0   2   0         22 10
 Departuring: 
-   0   0   3     0         22 10
+   0   0   3   0         22 10
 Departuring: 
-   0   1   0     0         22 10
+   0   1   0   0         22 10
 Departuring: 
-   0   1   1     0         22 10
+   0   1   1   0         22 10
 Departuring: 
-   0   1   2     0         22 10
+   0   1   2   0         22 10
 Departuring: 
-   0   1   3     0         22 10
+   0   1   3   0         22 10
 Departuring: 
-   0   2   0     0         22 10
+   0   2   0   0         22 10
 Departuring: 
-   0   2   1     0         22 10
+   0   2   1   0         22 10
 Departuring: 
-   0   2   2     0         22 10
+   0   2   2   0         22 10
 Departuring: 
-   0   2   3     0         22 10
+   0   2   3   0         22 10
 Departuring: 
-   0   3   0     0         22 10
+   0   3   0   0         22 10
 Departuring: 
-   0   3   1     0         22 10
+   0   3   1   0         22 10
 Departuring: 
-   0   3   2     0         22 10
+   0   3   2   0         22 10
 Departuring: 
-   0   3   3     0         22 10
+   0   3   3   0         22 10
 Departuring: 
-   1   0   0     0         22 10
+   1   0   0   0         22 10
 Departuring: 
-   1   0   1     0         22 10
+   1   0   1   0         22 10
 Departuring: 
-   1   0   2     0         22 10
+   1   0   2   0         22 10
 Departuring: 
-   1   0   3     0         22 10
+   1   0   3   0         22 10
 Departuring: 
-   1   1   0     0         22 10
+   1   1   0   0         22 10
 Departuring: 
-   1   1   1     0         22 10
+   1   1   1   0         22 10
 Departuring: 
-   1   1   2     0         22 10
+   1   1   2   0         22 10
 Departuring: 
-   1   1   3     0         22 10
+   1   1   3   0         22 10
 Departuring: 
-   1   2   0     0         22 10
+   1   2   0   0         22 10
 Departuring: 
-   1   2   1     0         22 10
+   1   2   1   0         22 10
 Departuring: 
-   1   2   2     0         22 10
+   1   2   2   0         22 10
 Departuring: 
-   1   2   3     0         22 10
+   1   2   3   0         22 10
 Departuring: 
-   1   3   0     0         22 10
+   1   3   0   0         22 10
 Departuring: 
-   1   3   1     0         22 10
+   1   3   1   0         22 10
 Departuring: 
-   1   3   2     0         22 10
+   1   3   2   0         22 10
 Departuring: 
-   1   3   3     0         22 10
+   1   3   3   0         22 10
 Departuring: 
-   2   0   0     0         22 10
+   2   0   0   0         22 10
 Departuring: 
-   2   0   1     0         22 10
+   2   0   1   0         22 10
 Departuring: 
-   2   0   2     0         22 10
+   2   0   2   0         22 10
 Departuring: 
-   2   0   3     0         22 10
+   2   0   3   0         22 10
 Departuring: 
-   2   1   0     0         22 10
+   2   1   0   0         22 10
 Departuring: 
-   2   1   1     0         22 10
+   2   1   1   0         22 10
 Departuring: 
-   2   1   2     0         22 10
+   2   1   2   0         22 10
 Departuring: 
-   2   1   3     0         22 10
+   2   1   3   0         22 10
 Departuring: 
-   2   2   0     0         22 10
+   2   2   0   0         22 10
 Departuring: 
-   2   2   1     0         22 10
+   2   2   1   0         22 10
 Departuring: 
-   2   2   2     0         22 10
+   2   2   2   0         22 10
 Departuring: 
-   2   2   3     0         22 10
+   2   2   3   0         22 10
 Departuring: 
-   2   3   0     0         22 10
+   2   3   0   0         22 10
 Departuring: 
-   2   3   1     0         22 10
+   2   3   1   0         22 10
 Departuring: 
-   2   3   2     0         22 10
+   2   3   2   0         22 10
 Departuring: 
-   2   3   3     0         22 10
+   2   3   3   0         22 10
 Departuring: 
-   3   0   0     0         22 10
+   3   0   0   0         22 10
 Departuring: 
-   3   0   1     0         22 10
+   3   0   1   0         22 10
 Departuring: 
-   3   0   2     0         22 10
+   3   0   2   0         22 10
 Departuring: 
-   3   0   3     0         22 10
+   3   0   3   0         22 10
 Departuring: 
-   3   1   0     0         22 10
+   3   1   0   0         22 10
 Departuring: 
-   3   1   1     0         22 10
+   3   1   1   0         22 10
 Departuring: 
-   3   1   2     0         22 10
+   3   1   2   0         22 10
 Departuring: 
-   3   1   3     0         22 10
+   3   1   3   0         22 10
 Departuring: 
-   3   2   0     0         22 10
+   3   2   0   0         22 10
 Departuring: 
-   3   2   1     0         22 10
+   3   2   1   0         22 10
 Departuring: 
-   3   2   2     0         22 10
+   3   2   2   0         22 10
 Departuring: 
-   3   2   3     0         22 10
+   3   2   3   0         22 10
 Departuring: 
-   3   3   0     0         22 10
+   3   3   0   0         22 10
 Departuring: 
-   3   3   1     0         22 10
+   3   3   1   0         22 10
 Departuring: 
-   3   3   2     0         22 10
+   3   3   2   0         22 10
 Departuring: 
-   3   3   3     0         22 10
+   3   3   3   0         22 10
 Departuring: 
-   0   0   0     0         23 10
+   0   0   0   1         23 10
 Departuring: 
-   0   0   1     0         23 10
+   0   0   1   1         23 10
 Departuring: 
-   0   0   2     0         23 10
+   0   0   2   1         23 10
 Departuring: 
-   0   0   3     0         23 10
+   0   0   3   1         23 10
 Departuring: 
-   0   1   0     0         23 10
+   0   1   0   0         23 10
 Departuring: 
-   0   1   1     0         23 10
+   0   1   1   0         23 10
 Departuring: 
-   0   1   2     0         23 10
+   0   1   2   0         23 10
 Departuring: 
-   0   1   3     0         23 10
+   0   1   3   0         23 10
 Departuring: 
-   0   2   0     0         23 10
+   0   2   0   0         23 10
 Departuring: 
-   0   2   1     0         23 10
+   0   2   1   0         23 10
 Departuring: 
-   0   2   2     0         23 10
+   0   2   2   0         23 10
 Departuring: 
-   0   2   3     0         23 10
+   0   2   3   0         23 10
 Departuring: 
-   0   3   0     0         23 10
+   0   3   0   1         23 10
 Departuring: 
-   0   3   1     0         23 10
+   0   3   1   1         23 10
 Departuring: 
-   0   3   2     0         23 10
+   0   3   2   1         23 10
 Departuring: 
-   0   3   3     0         23 10
+   0   3   3   1         23 10
 Departuring: 
-   1   0   0     0         23 10
+   1   0   0   1         23 10
 Departuring: 
-   1   0   1     0         23 10
+   1   0   1   1         23 10
 Departuring: 
-   1   0   2     0         23 10
+   1   0   2   1         23 10
 Departuring: 
-   1   0   3     0         23 10
+   1   0   3   1         23 10
 Departuring: 
-   1   1   0     0         23 10
+   1   1   0   1         23 10
 Departuring: 
-   1   1   1     0         23 10
+   1   1   1   1         23 10
 Departuring: 
-   1   1   2     0         23 10
+   1   1   2   1         23 10
 Departuring: 
-   1   1   3     0         23 10
+   1   1   3   1         23 10
 Departuring: 
-   1   2   0     0         23 10
+   1   2   0   1         23 10
 Departuring: 
-   1   2   1     0         23 10
+   1   2   1   1         23 10
 Departuring: 
-   1   2   2     0         23 10
+   1   2   2   1         23 10
 Departuring: 
-   1   2   3     0         23 10
+   1   2   3   1         23 10
 Departuring: 
-   1   3   0     0         23 10
+   1   3   0   0         23 10
 Departuring: 
-   1   3   1     0         23 10
+   1   3   1   0         23 10
 Departuring: 
-   1   3   2     0         23 10
+   1   3   2   0         23 10
 Departuring: 
-   1   3   3     0         23 10
+   1   3   3   0         23 10
 Departuring: 
-   2   0   0     0         23 10
+   2   0   0   1         23 10
 Departuring: 
-   2   0   1     0         23 10
+   2   0   1   1         23 10
 Departuring: 
-   2   0   2     0         23 10
+   2   0   2   1         23 10
 Departuring: 
-   2   0   3     0         23 10
+   2   0   3   1         23 10
 Departuring: 
-   2   1   0     0         23 10
+   2   1   0   1         23 10
 Departuring: 
-   2   1   1     0         23 10
+   2   1   1   1         23 10
 Departuring: 
-   2   1   2     0         23 10
+   2   1   2   1         23 10
 Departuring: 
-   2   1   3     0         23 10
+   2   1   3   1         23 10
 Departuring: 
-   2   2   0     0         23 10
+   2   2   0   1         23 10
 Departuring: 
-   2   2   1     0         23 10
+   2   2   1   1         23 10
 Departuring: 
-   2   2   2     0         23 10
+   2   2   2   1         23 10
 Departuring: 
-   2   2   3     0         23 10
+   2   2   3   1         23 10
 Departuring: 
-   2   3   0     0         23 10
+   2   3   0   0         23 10
 Departuring: 
-   2   3   1     0         23 10
+   2   3   1   0         23 10
 Departuring: 
-   2   3   2     0         23 10
+   2   3   2   0         23 10
 Departuring: 
-   2   3   3     0         23 10
+   2   3   3   0         23 10
 Departuring: 
-   3   0   0     0         23 10
+   3   0   0   0         23 10
 Departuring: 
-   3   0   1     0         23 10
+   3   0   1   0         23 10
 Departuring: 
-   3   0   2     0         23 10
+   3   0   2   0         23 10
 Departuring: 
-   3   0   3     0         23 10
+   3   0   3   0         23 10
 Departuring: 
-   3   1   0     0         23 10
+   3   1   0   0         23 10
 Departuring: 
-   3   1   1     0         23 10
+   3   1   1   0         23 10
 Departuring: 
-   3   1   2     0         23 10
+   3   1   2   0         23 10
 Departuring: 
-   3   1   3     0         23 10
+   3   1   3   0         23 10
 Departuring: 
-   3   2   0     0         23 10
+   3   2   0   0         23 10
 Departuring: 
-   3   2   1     0         23 10
+   3   2   1   0         23 10
 Departuring: 
-   3   2   2     0         23 10
+   3   2   2   0         23 10
 Departuring: 
-   3   2   3     0         23 10
+   3   2   3   0         23 10
 Departuring: 
-   3   3   0     0         23 10
+   3   3   0   0         23 10
 Departuring: 
-   3   3   1     0         23 10
+   3   3   1   0         23 10
 Departuring: 
-   3   3   2     0         23 10
+   3   3   2   0         23 10
 Departuring: 
-   3   3   3     0         23 10
+   3   3   3   0         23 10
 Departuring: 
-   0   0   0     0         24 10
+   0   0   0   0         24 10
 Departuring: 
-   0   0   1     0         24 10
+   0   0   1   0         24 10
 Departuring: 
-   0   0   2     0         24 10
+   0   0   2   0         24 10
 Departuring: 
-   0   0   3     0         24 10
+   0   0   3   0         24 10
 Departuring: 
-   0   1   0     0         24 10
+   0   1   0   0         24 10
 Departuring: 
-   0   1   1     0         24 10
+   0   1   1   0         24 10
 Departuring: 
-   0   1   2     0         24 10
+   0   1   2   0         24 10
 Departuring: 
-   0   1   3     0         24 10
+   0   1   3   0         24 10
 Departuring: 
-   0   2   0     0         24 10
+   0   2   0   0         24 10
 Departuring: 
-   0   2   1     0         24 10
+   0   2   1   0         24 10
 Departuring: 
-   0   2   2     0         24 10
+   0   2   2   0         24 10
 Departuring: 
-   0   2   3     0         24 10
+   0   2   3   0         24 10
 Departuring: 
-   0   3   0     0         24 10
+   0   3   0   0         24 10
 Departuring: 
-   0   3   1     0         24 10
+   0   3   1   0         24 10
 Departuring: 
-   0   3   2     0         24 10
+   0   3   2   0         24 10
 Departuring: 
-   0   3   3     0         24 10
+   0   3   3   0         24 10
 Departuring: 
-   1   0   0     0         24 10
+   1   0   0   0         24 10
 Departuring: 
-   1   0   1     0         24 10
+   1   0   1   0         24 10
 Departuring: 
-   1   0   2     0         24 10
+   1   0   2   0         24 10
 Departuring: 
-   1   0   3     0         24 10
+   1   0   3   0         24 10
 Departuring: 
-   1   1   0     0         24 10
+   1   1   0   0         24 10
 Departuring: 
-   1   1   1     0         24 10
+   1   1   1   0         24 10
 Departuring: 
-   1   1   2     0         24 10
+   1   1   2   0         24 10
 Departuring: 
-   1   1   3     0         24 10
+   1   1   3   0         24 10
 Departuring: 
-   1   2   0     0         24 10
+   1   2   0   0         24 10
 Departuring: 
-   1   2   1     0         24 10
+   1   2   1   0         24 10
 Departuring: 
-   1   2   2     0         24 10
+   1   2   2   0         24 10
 Departuring: 
-   1   2   3     0         24 10
+   1   2   3   0         24 10
 Departuring: 
-   1   3   0     0         24 10
+   1   3   0   0         24 10
 Departuring: 
-   1   3   1     0         24 10
+   1   3   1   0         24 10
 Departuring: 
-   1   3   2     0         24 10
+   1   3   2   0         24 10
 Departuring: 
-   1   3   3     0         24 10
+   1   3   3   0         24 10
 Departuring: 
-   2   0   0     0         24 10
+   2   0   0   0         24 10
 Departuring: 
-   2   0   1     0         24 10
+   2   0   1   0         24 10
 Departuring: 
-   2   0   2     0         24 10
+   2   0   2   0         24 10
 Departuring: 
-   2   0   3     0         24 10
+   2   0   3   0         24 10
 Departuring: 
-   2   1   0     0         24 10
+   2   1   0   0         24 10
 Departuring: 
-   2   1   1     0         24 10
+   2   1   1   0         24 10
 Departuring: 
-   2   1   2     0         24 10
+   2   1   2   0         24 10
 Departuring: 
-   2   1   3     0         24 10
+   2   1   3   0         24 10
 Departuring: 
-   2   2   0     0         24 10
+   2   2   0   0         24 10
 Departuring: 
-   2   2   1     0         24 10
+   2   2   1   0         24 10
 Departuring: 
-   2   2   2     0         24 10
+   2   2   2   0         24 10
 Departuring: 
-   2   2   3     0         24 10
+   2   2   3   0         24 10
 Departuring: 
-   2   3   0     0         24 10
+   2   3   0   0         24 10
 Departuring: 
-   2   3   1     0         24 10
+   2   3   1   0         24 10
 Departuring: 
-   2   3   2     0         24 10
+   2   3   2   0         24 10
 Departuring: 
-   2   3   3     0         24 10
+   2   3   3   0         24 10
 Departuring: 
-   3   0   0     0         24 10
+   3   0   0   0         24 10
 Departuring: 
-   3   0   1     0         24 10
+   3   0   1   0         24 10
 Departuring: 
-   3   0   2     0         24 10
+   3   0   2   0         24 10
 Departuring: 
-   3   0   3     0         24 10
+   3   0   3   0         24 10
 Departuring: 
-   3   1   0     0         24 10
+   3   1   0   0         24 10
 Departuring: 
-   3   1   1     0         24 10
+   3   1   1   0         24 10
 Departuring: 
-   3   1   2     0         24 10
+   3   1   2   0         24 10
 Departuring: 
-   3   1   3     0         24 10
+   3   1   3   0         24 10
 Departuring: 
-   3   2   0     0         24 10
+   3   2   0   0         24 10
 Departuring: 
-   3   2   1     0         24 10
+   3   2   1   0         24 10
 Departuring: 
-   3   2   2     0         24 10
+   3   2   2   0         24 10
 Departuring: 
-   3   2   3     0         24 10
+   3   2   3   0         24 10
 Departuring: 
-   3   3   0     0         24 10
+   3   3   0   0         24 10
 Departuring: 
-   3   3   1     0         24 10
+   3   3   1   0         24 10
 Departuring: 
-   3   3   2     0         24 10
+   3   3   2   0         24 10
 Departuring: 
-   3   3   3     0         24 10
+   3   3   3   0         24 10
 Departuring: 
-   0   0   0     0         25 10
+   0   0   0   1         25 10
 Departuring: 
-   0   0   1     0         25 10
+   0   0   1   1         25 10
 Departuring: 
-   0   0   2     0         25 10
+   0   0   2   1         25 10
 Departuring: 
-   0   0   3     0         25 10
+   0   0   3   1         25 10
 Departuring: 
-   0   1   0     0         25 10
+   0   1   0   1         25 10
 Departuring: 
-   0   1   1     0         25 10
+   0   1   1   1         25 10
 Departuring: 
-   0   1   2     0         25 10
+   0   1   2   1         25 10
 Departuring: 
-   0   1   3     0         25 10
+   0   1   3   1         25 10
 Departuring: 
-   0   2   0     0         25 10
+   0   2   0   1         25 10
 Departuring: 
-   0   2   1     0         25 10
+   0   2   1   1         25 10
 Departuring: 
-   0   2   2     0         25 10
+   0   2   2   1         25 10
 Departuring: 
-   0   2   3     0         25 10
+   0   2   3   1         25 10
 Departuring: 
-   0   3   0     0         25 10
+   0   3   0   0         25 10
 Departuring: 
-   0   3   1     0         25 10
+   0   3   1   0         25 10
 Departuring: 
-   0   3   2     0         25 10
+   0   3   2   0         25 10
 Departuring: 
-   0   3   3     0         25 10
+   0   3   3   0         25 10
 Departuring: 
-   1   0   0     0         25 10
+   1   0   0   1         25 10
 Departuring: 
-   1   0   1     0         25 10
+   1   0   1   1         25 10
 Departuring: 
-   1   0   2     0         25 10
+   1   0   2   1         25 10
 Departuring: 
-   1   0   3     0         25 10
+   1   0   3   1         25 10
 Departuring: 
-   1   1   0     0         25 10
+   1   1   0   1         25 10
 Departuring: 
-   1   1   1     0         25 10
+   1   1   1   1         25 10
 Departuring: 
-   1   1   2     0         25 10
+   1   1   2   1         25 10
 Departuring: 
-   1   1   3     0         25 10
+   1   1   3   1         25 10
 Departuring: 
-   1   2   0     0         25 10
+   1   2   0   1         25 10
 Departuring: 
-   1   2   1     0         25 10
+   1   2   1   1         25 10
 Departuring: 
-   1   2   2     0         25 10
+   1   2   2   1         25 10
 Departuring: 
-   1   2   3     0         25 10
+   1   2   3   1         25 10
 Departuring: 
-   1   3   0     0         25 10
+   1   3   0   0         25 10
 Departuring: 
-   1   3   1     0         25 10
+   1   3   1   0         25 10
 Departuring: 
-   1   3   2     0         25 10
+   1   3   2   0         25 10
 Departuring: 
-   1   3   3     0         25 10
+   1   3   3   0         25 10
 Departuring: 
-   2   0   0     0         25 10
+   2   0   0   1         25 10
 Departuring: 
-   2   0   1     0         25 10
+   2   0   1   1         25 10
 Departuring: 
-   2   0   2     0         25 10
+   2   0   2   1         25 10
 Departuring: 
-   2   0   3     0         25 10
+   2   0   3   1         25 10
 Departuring: 
-   2   1   0     0         25 10
+   2   1   0   1         25 10
 Departuring: 
-   2   1   1     0         25 10
+   2   1   1   1         25 10
 Departuring: 
-   2   1   2     0         25 10
+   2   1   2   1         25 10
 Departuring: 
-   2   1   3     0         25 10
+   2   1   3   1         25 10
 Departuring: 
-   2   2   0     0         25 10
+   2   2   0   1         25 10
 Departuring: 
-   2   2   1     0         25 10
+   2   2   1   1         25 10
 Departuring: 
-   2   2   2     0         25 10
+   2   2   2   1         25 10
 Departuring: 
-   2   2   3     0         25 10
+   2   2   3   1         25 10
 Departuring: 
-   2   3   0     0         25 10
+   2   3   0   0         25 10
 Departuring: 
-   2   3   1     0         25 10
+   2   3   1   0         25 10
 Departuring: 
-   2   3   2     0         25 10
+   2   3   2   0         25 10
 Departuring: 
-   2   3   3     0         25 10
+   2   3   3   0         25 10
 Departuring: 
-   3   0   0     0         25 10
+   3   0   0   0         25 10
 Departuring: 
-   3   0   1     0         25 10
+   3   0   1   0         25 10
 Departuring: 
-   3   0   2     0         25 10
+   3   0   2   0         25 10
 Departuring: 
-   3   0   3     0         25 10
+   3   0   3   0         25 10
 Departuring: 
-   3   1   0     0         25 10
+   3   1   0   0         25 10
 Departuring: 
-   3   1   1     0         25 10
+   3   1   1   0         25 10
 Departuring: 
-   3   1   2     0         25 10
+   3   1   2   0         25 10
 Departuring: 
-   3   1   3     0         25 10
+   3   1   3   0         25 10
 Departuring: 
-   3   2   0     0         25 10
+   3   2   0   0         25 10
 Departuring: 
-   3   2   1     0         25 10
+   3   2   1   0         25 10
 Departuring: 
-   3   2   2     0         25 10
+   3   2   2   0         25 10
 Departuring: 
-   3   2   3     0         25 10
+   3   2   3   0         25 10
 Departuring: 
-   3   3   0     0         25 10
+   3   3   0   0         25 10
 Departuring: 
-   3   3   1     0         25 10
+   3   3   1   0         25 10
 Departuring: 
-   3   3   2     0         25 10
+   3   3   2   0         25 10
 Departuring: 
-   3   3   3     0         25 10
+   3   3   3   0         25 10
 Arriving	
   1   3   1           0           0           0   0        103 10
 Arriving	
@@ -3333,15 +3333,15 @@ Arriving
 Arriving	
   3   3   3           0           0           2   0        103 10
 Arriving	
-  0   3   0           0           0           3   2        103 10
+  0   3   0           0           0           3   0        103 10
 Arriving	
-  1   0   1           0           1           0   4        103 10
+  1   0   1           0           1           0   0        103 10
 Arriving	
-  2   0   2           0           1           1   4        103 10
+  2   0   2           0           1           1   0        103 10
 Arriving	
-  3   0   3           0           1           2   4        103 10
+  3   0   3           0           1           2   0        103 10
 Arriving	
-  0   0   0           0           1           3   6        103 10
+  0   0   0           0           1           3   0        103 10
 Arriving	
   1   3   1           0           0           0   1        105 10
 Arriving	
@@ -3349,80 +3349,80 @@ Arriving
 Arriving	
   3   3   3           0           0           2   1        105 10
 Arriving	
-  0   3   0           0           0           3   3        105 10
+  0   3   0           0           0           3   1        105 10
 Arriving	
-  1   0   1           0           1           0   5        105 10
+  1   0   1           0           1           0   1        105 10
 Arriving	
-  2   0   2           0           1           1   5        105 10
+  2   0   2           0           1           1   1        105 10
 Arriving	
-  3   0   3           0           1           2   5        105 10
+  3   0   3           0           1           2   1        105 10
 Arriving	
-  0   0   0           0           1           3   7        105 10
+  0   0   0           0           1           3   1        105 10
 Arriving	
-  1   1   1           0           2           0   8        105 10
+  1   1   1           0           2           0   0        105 10
 Arriving	
-  2   1   2           0           2           1   8        105 10
+  2   1   2           0           2           1   0        105 10
 Arriving	
-  3   1   3           0           2           2   8        105 10
+  3   1   3           0           2           2   0        105 10
 Arriving	
-  1   1   1           0           2           0   9        107 10
+  1   1   1           0           2           0   1        107 10
 Arriving	
-  2   1   2           0           2           1   9        107 10
+  2   1   2           0           2           1   1        107 10
 Arriving	
-  3   1   3           0           2           2   9        107 10
+  3   1   3           0           2           2   1        107 10
 Arriving	
-  0   1   0           0           2           3  10        107 10
+  0   1   0           0           2           3   0        107 10
 Arriving	
-  1   2   1           0           3           0   8        107 10
+  1   2   1           0           3           0   0        107 10
 Arriving	
-  2   2   2           0           3           1   8        107 10
+  2   2   2           0           3           1   0        107 10
 Arriving	
-  3   2   3           0           3           2   8        107 10
+  3   2   3           0           3           2   0        107 10
 Arriving	
-  1   3   1           1           0           0   8        107 10
+  1   3   1           1           0           0   0        107 10
 Arriving	
-  2   3   2           1           0           1   8        107 10
+  2   3   2           1           0           1   0        107 10
 Arriving	
-  3   3   3           1           0           2   8        107 10
+  3   3   3           1           0           2   0        107 10
 Arriving	
-  0   1   0           0           2           3  11        109 10
+  0   1   0           0           2           3   1        109 10
 Arriving	
-  1   2   1           0           3           0   9        109 10
+  1   2   1           0           3           0   1        109 10
 Arriving	
-  2   2   2           0           3           1   9        109 10
+  2   2   2           0           3           1   1        109 10
 Arriving	
-  3   2   3           0           3           2   9        109 10
+  3   2   3           0           3           2   1        109 10
 Arriving	
-  0   2   0           0           3           3  10        109 10
+  0   2   0           0           3           3   0        109 10
 Arriving	
-  1   3   1           1           0           0   9        109 10
+  1   3   1           1           0           0   1        109 10
 Arriving	
-  2   3   2           1           0           1   9        109 10
+  2   3   2           1           0           1   1        109 10
 Arriving	
-  3   3   3           1           0           2   9        109 10
+  3   3   3           1           0           2   1        109 10
 Arriving	
-  0   3   0           1           0           3  10        109 10
+  0   3   0           1           0           3   0        109 10
 Arriving	
-  1   0   1           1           1           0  12        109 10
+  1   0   1           1           1           0   0        109 10
 Arriving	
-  2   0   2           1           1           1  12        109 10
+  2   0   2           1           1           1   0        109 10
 Arriving	
-  3   0   3           1           1           2  12        109 10
+  3   0   3           1           1           2   0        109 10
 Arriving	
-  0   2   0           0           3           3  11        111 10
+  0   2   0           0           3           3   1        111 10
 Arriving	
-  0   3   0           1           0           3  11        111 10
+  0   3   0           1           0           3   1        111 10
 Arriving	
-  1   0   1           1           1           0  13        111 10
+  1   0   1           1           1           0   1        111 10
 Arriving	
-  2   0   2           1           1           1  13        111 10
+  2   0   2           1           1           1   1        111 10
 Arriving	
-  3   0   3           1           1           2  13        111 10
+  3   0   3           1           1           2   1        111 10
 Arriving	
-  0   0   0           1           1           3  14        111 10
+  0   0   0           1           1           3   0        111 10
 Arriving	
-  0   0   0           1           1           3  15        113 10
+  0   0   0           1           1           3   1        113 10
 Arriving	
-  1   3   1           2           0           0  14        115 10
+  1   3   1           2           0           0   0        115 10
 Arriving	
-  1   3   1           2           0           0  15        117 10
+  1   3   1           2           0           0   1        117 10

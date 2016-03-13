@@ -30,7 +30,7 @@ def parameter_gen():
     parameter RoutingTablesize=16;
     parameter MulticastTableWidth=103;
     parameter MulticastTablesize=16;
-    parameter ReductionTableWidth=162;
+    parameter ReductionTableWidth=170;
     parameter ReductionTablesize=16;
     parameter PcktTypeLen=4;
     parameter LinkDelay=20;\n

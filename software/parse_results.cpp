@@ -20,7 +20,7 @@ using namespace std;
 
 #define LINEMAX 100
 
-#define PARTICLE_PER_BOX 172
+#define PARTICLE_PER_BOX 2
 #define MODE 2 // 1 is multicast mode, 2 is reduction mode, 3 is the singlecast multicastmode, 4 is the singlecast reduction mode
 #define MAX_NUM_CHILDREN 5
 
@@ -138,6 +138,10 @@ void read_dump_reduction(char* filename){
 	ifstream input_file;
 	int line_counter = 0;
 	input_file.open(filename);
+	if (input_file.fail()){
+		cout << "open file failed" << filename << endl;
+		return;
+	}
 	char *tokens;// the number is going to be read from the dump.txt
 	int src_x;
 	int src_y;
@@ -176,8 +180,8 @@ void read_dump_reduction(char* filename){
 
 			tokens = strtok(NULL, " ");
 			arrival_time = atoi(tokens);
-			reduction_timing[src_x*Y*Z + src_y*Z + src_z][id].arrival_time = arrival_time;
-			reduction_timing[src_x*Y*Z + src_y*Z + src_z][id].valid = true;
+			reduction_timing[dst_x*Y*Z + dst_y*Z + dst_z][id].arrival_time = arrival_time;
+			reduction_timing[dst_x*Y*Z + dst_y*Z + dst_z][id].valid = true;
 
 
 		}
@@ -266,7 +270,7 @@ void verify_reduction(){
 			for (int i_z = 0; i_z < Z; i_z++){
 				int i = i_x*X*Y + i_y*Y + i_z;
 				for (int j = 0; j < PARTICLE_PER_BOX; j++){
-					if (reduction_timing[i][j].arrival_time == 0){
+					if (reduction_timing[i][j].valid == false){
 						cout << "error at" << i_x << " " << i_y << " " << i_z << " id is " << j << endl;
 					}
 				}

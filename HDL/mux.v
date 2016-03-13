@@ -67,6 +67,8 @@ module mux
     output in_avail_zneg,
     output reg [DataWidth-1:0] out
 );
+    parameter SrcPacketIDPos=222;
+    parameter DstPacketIDPos=186;
 
     wire [DataWidth-1:0] in[6:0];
     wire in_pipeline_stall[6:0];
@@ -446,9 +448,9 @@ module mux
 
     assign next_counter=reduction_table_entry[158:156]+1;
     assign is_reduction_WB=sel_data_RR[ReductionBitPos];
-    assign reduction_ready= sel_data_RR[ReductionBitPos] && (reduction_table_entry[ReductionTableWidth-1:ReductionTableWidth-3]==reduction_table_entry[ReductionTableWidth-4:ReductionTableWidth-6]+1);
+    assign reduction_ready= sel_data_RR[ReductionBitPos] && (reduction_table_entry[ReductionTableWidth-9:ReductionTableWidth-11]==reduction_table_entry[ReductionTableWidth-12:ReductionTableWidth-14]+1);
     assign reduction_out={sel_data_RR[DataWidth-1:152],reduction_table_entry_next[135:128],reduction_table_entry_next[151:136],reduction_table_entry_next[127:0]};
-     assign reduction_table_entry_next={reduction_table_entry[161:159],next_counter,reduction_table_entry[155:136],(reduction_table_entry[135:128]+sel_data_RR[WeightPos+WeightWidth-1:WeightPos]),(reduction_table_entry[PayloadLen-1:0]+sel_data_RR[PayloadLen-1:0])};
+     assign reduction_table_entry_next={reduction_out[DstPacketIDPos+7:DstPacketIDPos],reduction_table_entry[161:159],next_counter,reduction_table_entry[155:136],(reduction_table_entry[135:128]+sel_data_RR[WeightPos+WeightWidth-1:WeightPos]),(reduction_table_entry[PayloadLen-1:0]+sel_data_RR[PayloadLen-1:0])};
 
 
     always@(posedge clk) begin

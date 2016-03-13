@@ -307,9 +307,9 @@ module local_unit
                 $display("file open failed\n");
             $strobe("Displaying in %m\t");
             $strobe("reduction packet\t");
-            $strobe("data from (%d, %d, %d) whose id #%d is injected into the network at cycle %d",XCoord,YCoord,ZCoord,data_ptr,cycle_counter);
-            //format [src.x] [src.y] [src.z] [id] [time] [packet type]
-            $fdisplay(fd,"Departuring: \n %d %d %d %d %d 10",XCoord,YCoord,ZCoord,packet_counter,cycle_counter);
+            $strobe("data from (%d, %d, %d) whose id #%d is injected into the network at cycle %d",XCoord,YCoord,ZCoord,inject_local[DstPacketIDPos+7:DstPacketIDPos],cycle_counter);
+            //format [src.x] [src.y] [src.z] [dst id] [time] [packet type]
+            $fdisplay(fd,"Departuring: \n %d %d %d %d %d 10",XCoord,YCoord,ZCoord,inject_local[DstPacketIDPos+7:DstPacketIDPos],cycle_counter);
             $fclose(fd);
         end
     end
@@ -324,10 +324,10 @@ module local_unit
             fd=$fopen("dump.txt","a");
             $strobe("Displaying in %m\t");
             $strobe("reduction packet\t");
-            $strobe("packet arrives from (%d,%d,%d) whose id is %d at cycle #%d\n",eject_reduction_reg[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_reduction_reg[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_reduction_reg[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],eject_reduction_reg[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            $strobe("packet arrives from (%d,%d,%d) whose id is %d at cycle #%d\n",eject_reduction_reg[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_reduction_reg[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_reduction_reg[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],eject_reduction_reg[DstPacketIDPos+7:DstPacketIDPos],cycle_counter);
             $fdisplay(fd,"Arriving\t");
-            //format [src.x] [src.y] [src.z] [dst.x] [dst.y] [dst.z] [id] [time] [packet type]
-            $fdisplay(fd,"%d %d %d %d %d %d %d %d 10",eject_reduction[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_reduction[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_reduction[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],X,Y,Z,eject_reduction[SrcPacketIDPos+7:SrcPacketIDPos],cycle_counter);
+            //format [src.x] [src.y] [src.z] [dst.x] [dst.y] [dst.z] [dst id] [time] [packet type]
+            $fdisplay(fd,"%d %d %d %d %d %d %d %d 10",eject_reduction[SrcXCoordPos+CoordWidth-1:SrcXCoordPos],eject_reduction[SrcYCoordPos+CoordWidth-1:SrcYCoordPos],eject_reduction[SrcZCoordPos+CoordWidth-1:SrcZCoordPos],X,Y,Z,eject_reduction[DstPacketIDPos+7:DstPacketIDPos],cycle_counter);
             $fclose(fd);
         end
     end

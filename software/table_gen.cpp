@@ -145,7 +145,7 @@ struct reduction_table_entry{
 };
 
 struct reduction_table_entry_lite{
-	char table_entry[42];
+	char table_entry[44];
 };
 
 struct reduction_table{
@@ -817,7 +817,7 @@ void BFS_write_table_reduction(node* root, payload xyz,int dst_id){//dst id is t
 					sprintf(data_to_send[leaf_id][data_to_send_ptr[leaf_id]].hex_val, "%08x%08x%08x%08x%08x%08x%08x%08x",\
 						(1 << 31) + (node_link_list_iterator->NODE->z << 22) + (node_link_list_iterator->NODE->y << 14) + (node_link_list_iterator->NODE->z << 6) + ((routing_table_entry_index & 0xfc) >> 2),\
 						((routing_table_entry_index & 0x3) << 30) + (0xa << 26) + ((root->z) << 18) + ((root->y) << 10) + ((root->z) << 2) + ((unsigned)dst_id >> 6),\
-						((dst_id & 0xfc) << 26),\
+						((dst_id & 0x3f) << 26),\
 						(1 << 16) + (routing_table_entry_index & 0xffff),\
 						xyz.type, xyz.z, xyz.y, xyz.x);
 					data_to_send_ptr[leaf_id]++;
