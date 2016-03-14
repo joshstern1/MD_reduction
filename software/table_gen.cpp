@@ -17,7 +17,7 @@
 #define LINEMAX 100
 #define MAX_NUM_CHILDREN 5
 #define INIT_WEIGHT 512
-#define ROUTING_TABLE_SIZE  2176
+#define ROUTING_TABLE_SIZE  2300
 #define MULTICAST_TABLE_SIZE 256
 #define REDUCTION_TABLE_SIZE 512
 #define MAX_TREE_DEPTH 8
@@ -47,8 +47,8 @@ int X=4; // number of nodes on X dimension
 int Y=4; // number of nodes on Y dimension
 int Z=4; // number of nodes on Z dimension
 double r2c=1;// the ratio between the cutoff radius and box size
-int particle_per_box=2;
-int particle_per_cell = 2;
+int particle_per_box=172;
+int particle_per_cell = 172;
 float r = 12;
 float xsize = 108;
 float ysize = 108;
@@ -103,23 +103,23 @@ struct routing_table* global_routing_table_array;
 
 //multicast table entry format
 /*
-* at most 5 fan-out for 3D-torus network.
+* at most 6 fan-out for 3D-torus network.
 for each fanout, format is as below:
 |dst   |table index|
 |4 bits|16 bits    |
-* |counter of valid packets|1st packet| 2nd packet| 3rd packet| 4th packet| 5th packet| 103 bits in total
-* | 3 bits                 |20 bits   | 20 bits   | 20 bits   | 20 bits   | 20 bits   |
-the counter are between 1 and 5
+* |counter of valid packets|5th packet|4th packet| 3th packet| 2nd packet| 1st packet| 0th packet| 123 bits in total
+* | 3 bits                 |20 bits   |20 bits   | 20 bits   | 20 bits   | 20 bits   | 20 bits   |
+the counter are between 1 and 6
 * */
 struct multicast_table_entry{
 	int downstream_num;
-	int downstream_dst[5];
-	int downstream_table_index[5];
+	int downstream_dst[6];
+	int downstream_table_index[6];
 //	char table_entry[27];
 };
 
 struct multicast_table_entry_lite{
-	char table_entry[27];
+	char table_entry[32];
 };
 
 struct multicast_table{
@@ -734,7 +734,7 @@ void BFS_write_table_multicast(node* root, payload xyz){//write the table based 
 				global_routing_table_array[tmp->x*Y*Z + tmp->y*Z + tmp->z].table[current_port][routing_table_entry_index] = RoutingTableEntryLite;
 				//then the multicast table
 				MulticastTableEntry.downstream_num = tmp->num_children;
-				for (int i = 0; i < 5; i++){
+				for (int i = 0; i < MAX_NUM_CHILDREN; i++){
 					if (i < tmp->num_children){
 						MulticastTableEntry.downstream_dst[i] = cmp_nodes_relative_pos(tmp, tmp->children[i]);
 						tmp->children[i]->incoming_port_num = reverse_port(RoutingTableEntry.dst);
@@ -746,8 +746,8 @@ void BFS_write_table_multicast(node* root, payload xyz){//write the table based 
 					}
 				}
 
-				sprintf(MulticastTableEntryLite.table_entry, "%2x%08x%08x%08x",
-					(int)(((MulticastTableEntry.downstream_num & 0x7) << 4) + MulticastTableEntry.downstream_dst[4]),
+				sprintf(MulticastTableEntryLite.table_entry, "%07x%08x%08x%08x",
+					(int)(((MulticastTableEntry.downstream_num & 0x7) << 24) + ((MulticastTableEntry.downstream_dst[5] & 0xf)<<20)+ ((MulticastTableEntry.downstream_table_index[5] & 0xffff) << 4) + MulticastTableEntry.downstream_dst[4]),
 					(int)(((MulticastTableEntry.downstream_table_index[4] & 0xffff) << 16) + ((MulticastTableEntry.downstream_dst[3] & 0xf) << 12) + ((MulticastTableEntry.downstream_table_index[3] & 0xfff0)>>4)),
 					(int)(((MulticastTableEntry.downstream_table_index[3] & 0xf) << 28) + ((MulticastTableEntry.downstream_dst[2] & 0xf) << 24) + ((MulticastTableEntry.downstream_table_index[2] & 0xffff) << 8) + ((MulticastTableEntry.downstream_dst[1] & 0xf) << 4) + ((unsigned)(MulticastTableEntry.downstream_table_index[1]) >> 12)),
 					(int)((MulticastTableEntry.downstream_table_index[1] & 0xfff) << 20) + ((MulticastTableEntry.downstream_dst[0] & 0xf) << 16) + MulticastTableEntry.downstream_table_index[0]);
@@ -1026,7 +1026,65 @@ void DFS_write_table(node* Node, node* root, link_list_node* path, int mode){
 void table_gen(node** tree_array){
 	node* cur_tree;
 	payload* cur_xyzlist;
-	
+	if (mode == 1){
+		for (int i = 0; i < X*Y*Z; i++){
+			cur_tree = tree_array[i];
+			cur_xyzlist = xyz_list[i];
+			BFS_write_table_multicast(cur_tree, cur_xyzlist[0]);
+		}
+	}
+	else if (mode == 2){
+		for (int j = 0; j < particle_per_box; j++){
+			for (int i = 0; i < X*Y*Z; i++){
+				cur_tree = tree_array[i];
+				cur_xyzlist = xyz_list[i];
+				BFS_write_table_reduction(cur_tree, cur_xyzlist[j], j);
+			}
+		}
+	}
+	else if (mode == 3){
+		for (int i = 0; i < X*Y*Z; i++){
+			cur_tree = tree_array[i];
+			cur_xyzlist = xyz_list[i];
+			DFS_write_table(cur_tree, cur_tree, NULL, mode);
+			for (int j = 0; j < particle_per_box; j++){
+				int root_id = cur_tree->x*Y*Z + cur_tree->y*Z + cur_tree->z;
+				if (xyz_list[root_id][j].valid){
+					sprintf(data_to_send[root_id][data_to_send_ptr[root_id]].hex_val, "%08x%08x%08x%08x%08x%08x%08x%08x",
+						(1 << 31) + (cur_tree->z << 22) + (cur_tree->y << 14) + (cur_tree->x << 6) + ((j & 0xfc) >> 2),
+						((j & 0x3) << 30) + (8 << 26),//dst x y z are dont care values
+						0,
+						(1 << 23) + (global_routing_table_array[cur_tree->x*Y*Z + cur_tree->y*Z + cur_tree->z].table_ptr[LOCAL] & 0xffff),//logweight is 128 at the root 1<<(7+8)  the table ptr is dont care value here
+						xyz_list[root_id][j].type, xyz_list[root_id][j].z, xyz_list[root_id][j].y, xyz_list[root_id][j].x);
+					data_to_send_ptr[root_id]++;
+
+				}
+			}
+		}
+	}
+	else if (mode == 4){
+		for (int i = 0; i < X*Y*Z; i++){
+			cur_tree = tree_array[i];
+			cur_xyzlist = xyz_list[i];
+			DFS_write_table(cur_tree, cur_tree, NULL, mode);
+			for (int j = 0; j < particle_per_box; j++){
+				int root_id = cur_tree->x*Y*Z + cur_tree->y*Z + cur_tree->z;
+				if (xyz_list[root_id][j].valid){
+					sprintf(data_to_send[root_id][data_to_send_ptr[root_id]].hex_val, "%08x%08x%08x%08x%08x%08x%08x%08x",
+						(1 << 31) + (cur_tree->z << 22) + (cur_tree->y << 14) + (cur_tree->x << 6) + ((j & 0xfc) >> 2),
+						((j & 0x3) << 30) + (8 << 26),//dst x y z are dont care values
+						0,
+						(1 << 23) + (global_routing_table_array[cur_tree->x*Y*Z + cur_tree->y*Z + cur_tree->z].table_ptr[LOCAL] & 0xffff),//logweight is 128 at the root 1<<(7+8)  the table ptr is dont care value here
+						xyz_list[root_id][j].type, xyz_list[root_id][j].z, xyz_list[root_id][j].y, xyz_list[root_id][j].x);
+					data_to_send_ptr[root_id]++;
+
+				}
+			}
+		}
+	}
+
+
+	/*
 	for (int i = 0; i < X*Y*Z; i++){
 		cur_tree = tree_array[i];
 		cur_xyzlist = xyz_list[i];
@@ -1072,7 +1130,7 @@ void table_gen(node** tree_array){
 			}
 		}
 
-	}
+	}*/
 }
 
 void print_xyz(){
@@ -1081,12 +1139,19 @@ void print_xyz(){
 	string suffix = ".txt";
 	string filename;
 	ofstream fout;
+	int imax;
 	for (int x = 0; x < X; x++){
 		for (int y = 0; y < Y; y++){
 			for (int z = 0; z < Z; z++){
 				filename = path + data_to_send_common + to_string(x) + "_" + to_string(y) + "_" + to_string(z) + suffix;
 				fout.open(filename);
-				for (int i = 0; i< 256 ; i++){
+				if (mode == 2){
+					imax = ROUTING_TABLE_SIZE;
+				}
+				else{
+					imax = particle_per_box;
+				}
+				for (int i = 0; i< imax ; i++){
 					if (i < data_to_send_ptr[x*Y*Z + y*Z + z])
 						fout << data_to_send[x*Y*Z + y*Z + z][i].hex_val << endl;
 					else

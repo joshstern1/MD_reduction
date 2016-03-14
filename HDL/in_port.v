@@ -36,13 +36,13 @@
     * /
 //multicast table entry format
 /*
-* at most 5 fan-out for 3D-torus network.
+* at most 6 fan-out for 3D-torus network.
   for each fanout, format is as below:
   |dst   |table index|
   |4 bits|16 bits    | 
-* |counter of valid packets|1st packet| 2nd packet| 3rd packet| 4th packet| 5th packet| 103 bits in total
-* | 3 bits                 |20 bits   | 20 bits   | 20 bits   | 20 bits   | 20 bits   | 
-  the counter are between 1 and 5
+* |counter of valid packets|6th packet| 5th packet| 4th packet| 3th packet| 2nd packet| 1st packet| 123 bits in total
+* | 3 bits                 |20 bits   | 20 bits   | 20 bits   | 20 bits   | 20 bits   | 20 bits   | 
+  the counter are between 1 and 6
 * */
 
 module in_port
@@ -163,8 +163,8 @@ module in_port
     reg [MulticastTableWidth-1:0] multicast_table_entry;
     wire [IndexWidth-1:0] multicast_table_index;
 
-    wire [DataWidth-1:0] multicast_children[5:0];
-    reg [WeightWidth-1:0] weight_split[5:0];
+    wire [DataWidth-1:0] multicast_children[6:0];
+    reg [WeightWidth-1:0] weight_split[6:0];
 
     reg [2:0] perm_multicast[6:0]; //the permutation pattern from the multicast children to the output ports out[i]<=multicast_children[perm[i]]; if perm[i]=8 means the out[i] should get a zero value.
 
@@ -304,7 +304,7 @@ module in_port
     assign multicast_children[3]={input_fifo_out_MR[DataWidth-1:ExitPos+ExitWidth],multicast_table_entry[59:56],routing_table_entry[7:0],weight_split[3],multicast_table_entry[55:40],input_fifo_out_MR[PayloadLen-1:0]};
     assign multicast_children[4]={input_fifo_out_MR[DataWidth-1:ExitPos+ExitWidth],multicast_table_entry[79:76],routing_table_entry[7:0],weight_split[4],multicast_table_entry[75:60],input_fifo_out_MR[PayloadLen-1:0]};
     assign multicast_children[5]={input_fifo_out_MR[DataWidth-1:ExitPos+ExitWidth],multicast_table_entry[99:96],routing_table_entry[7:0],weight_split[5],multicast_table_entry[95:80],input_fifo_out_MR[PayloadLen-1:0]};
-
+    assign multicast_children[6]={input_fifo_out_MR[DataWidth-1:ExitPos+ExitWidth],multicast_table_entry[119:116],routing_table_entry[7:0],weight_split[6],multicast_table_entry[115:100],input_fifo_out_MR[PayloadLen-1:0]};
     always@(*) begin
         perm_multicast[0]=0;
     end
@@ -323,6 +323,9 @@ module in_port
         end
         else if(multicast_table_entry[99:96]==4'd1) begin
             perm_multicast[1]=5;
+        end
+        else if(multicast_table_entry[115:100]==4'd1) begin
+            perm_multicast[1]=6;
         end
         else begin
             perm_multicast[1]=7;
@@ -345,6 +348,9 @@ module in_port
         else if(multicast_table_entry[99:96]==4'd2) begin
             perm_multicast[2]=5;
         end
+        else if(multicast_table_entry[115:100]==4'd2) begin
+            perm_multicast[2]=6;
+        end
         else begin
             perm_multicast[2]=7;
         end
@@ -365,6 +371,9 @@ module in_port
         end
         else if(multicast_table_entry[99:96]==4'd3) begin
             perm_multicast[3]=5;
+        end
+        else if(multicast_table_entry[115:100]==4'd3) begin
+            perm_multicast[3]=6;
         end
         else begin
             perm_multicast[3]=7;
@@ -387,6 +396,9 @@ module in_port
         else if(multicast_table_entry[99:96]==4'd4) begin
             perm_multicast[4]=5;
         end
+        else if(multicast_table_entry[115:100]==4'd4) begin
+            perm_multicast[4]=6;
+        end
         else begin
             perm_multicast[4]=7;
         end
@@ -407,6 +419,9 @@ module in_port
         end
         else if(multicast_table_entry[99:96]==4'd5) begin
             perm_multicast[5]=5;
+        end
+        else if(multicast_table_entry[115:100]==4'd5) begin
+            perm_multicast[5]=6;
         end
         else begin
             perm_multicast[5]=7;
@@ -429,6 +444,9 @@ module in_port
         else if(multicast_table_entry[99:96]==4'd6) begin
             perm_multicast[6]=5;
         end
+        else if(multicast_table_entry[115:100]==4'd6) begin
+            perm_multicast[6]=6;
+        end
         else begin
             perm_multicast[6]=7;
         end
@@ -450,7 +468,7 @@ module in_port
 
 
     always@(*) begin
-        if(multicast_table_entry[102:100]==1) begin//the counter of valid packets can only be 1,2,3,4,5
+        if(multicast_table_entry[122:120]==1) begin//the counter of valid packets can only be 1,2,3,4,5
             if(SrcID_wire!=4'd0) begin
                 weight_split[0]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>1;//1/2
                 weight_split[1]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>1;//1/2
@@ -458,6 +476,7 @@ module in_port
                 weight_split[3]=0;
                 weight_split[4]=0;
                 weight_split[5]=0;
+                weight_split[6]=0;
             end
             else begin
                 weight_split[0]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos];//1/2
@@ -466,10 +485,11 @@ module in_port
                 weight_split[3]=0;
                 weight_split[4]=0;
                 weight_split[5]=0;
+                weight_split[6]=0;
             end
 
         end
-        else if(multicast_table_entry[102:100]==2) begin//the counter of valid packets can only be 1,2,3,4,5
+        else if(multicast_table_entry[122:120]==2) begin//the counter of valid packets can only be 1,2,3,4,5
             if(SrcID_wire!=4'd0) begin
                 weight_split[0]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
                 weight_split[1]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
@@ -477,6 +497,7 @@ module in_port
                 weight_split[3]=0;
                 weight_split[4]=0;
                 weight_split[5]=0;
+                weight_split[6]=0;
             end
             else begin
                 weight_split[0]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>1;//1/2
@@ -485,9 +506,10 @@ module in_port
                 weight_split[3]=0;
                 weight_split[4]=0;
                 weight_split[5]=0;
+                weight_split[6]=0;
             end
         end
-        else if(multicast_table_entry[102:100]==3) begin
+        else if(multicast_table_entry[122:120]==3) begin
             if(SrcID_wire!=4'd0) begin
                 weight_split[0]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
                 weight_split[1]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
@@ -495,6 +517,7 @@ module in_port
                 weight_split[3]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
                 weight_split[4]=0;
                 weight_split[5]=0;
+                weight_split[6]=0;
             end
             else begin
                 weight_split[0]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
@@ -503,10 +526,11 @@ module in_port
                 weight_split[3]=0;
                 weight_split[4]=0;
                 weight_split[5]=0;
+                weight_split[6]=0;
             end
 
         end
-        else if(multicast_table_entry[102:100]==4) begin
+        else if(multicast_table_entry[122:120]==4) begin
             if(SrcID_wire!=4'd0) begin
                 weight_split[0]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
                 weight_split[1]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
@@ -514,6 +538,7 @@ module in_port
                 weight_split[3]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
                 weight_split[4]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
                 weight_split[5]=0;
+                weight_split[6]=0;
             end
             else begin
                 weight_split[0]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
@@ -522,10 +547,11 @@ module in_port
                 weight_split[3]=0;
                 weight_split[4]=0;
                 weight_split[5]=0;
+                weight_split[6]=0;
             end
 
         end
-        else if(multicast_table_entry[102:100]==5) begin
+        else if(multicast_table_entry[122:120]==5) begin
             if(SrcID_wire!=4'd0) begin
                 weight_split[0]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
                 weight_split[1]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
@@ -533,6 +559,7 @@ module in_port
                 weight_split[3]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
                 weight_split[4]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
                 weight_split[5]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
+                weight_split[6]=0;
             end
             else begin
                 weight_split[0]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
@@ -541,10 +568,32 @@ module in_port
                 weight_split[3]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
                 weight_split[4]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
                 weight_split[5]=0;
+                weight_split[6]=0;
             end
 
 
         end
+        else if(multicast_table_entry[122:120]==6) begin
+            if(SrcID_wire!=4'd0) begin
+                weight_split[0]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
+                weight_split[1]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
+                weight_split[2]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
+                weight_split[3]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
+                weight_split[4]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
+                weight_split[5]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
+                weight_split[6]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
+            end
+            else begin
+                weight_split[0]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
+                weight_split[1]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
+                weight_split[2]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
+                weight_split[3]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>3;//1/8
+                weight_split[4]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
+                weight_split[5]=input_fifo_out_MR[WeightPos+WeightWidth-1:WeightPos]>>2;//1/4
+                weight_split[6]=0;//1/4
+            end
+        end
+
         else begin
             weight_split[0]=0;
             weight_split[1]=0;
@@ -552,9 +601,9 @@ module in_port
             weight_split[3]=0;
             weight_split[4]=0;
             weight_split[5]=0;
+            weight_split[6]=0;
         end
     end
-
 
 endmodule
 

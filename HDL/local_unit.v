@@ -290,7 +290,7 @@ module local_unit
     //each packet has its own routing table entry
     reg [DataWidth-1:0] data[DataSize-1:0];
     //all the data share the same path, so each data will use the same table entry
-    reg [7:0] data_ptr;
+    reg [15:0] data_ptr;
     wire [15:0] table_ptr;
     assign inject_local=(data_ptr>=DataSize)?0:data[data_ptr];
     assign inject_receive_local=inject_local[DataWidth-1];
