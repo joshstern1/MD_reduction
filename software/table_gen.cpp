@@ -1034,10 +1034,11 @@ void table_gen(node** tree_array){
 		}
 	}
 	else if (mode == 2){
-		for (int j = 0; j < particle_per_box; j++){
+		
 			for (int i = 0; i < X*Y*Z; i++){
 				cur_tree = tree_array[i];
 				cur_xyzlist = xyz_list[i];
+				for (int j = 0; j < particle_per_box; j++){
 				BFS_write_table_reduction(cur_tree, cur_xyzlist[j], j);
 			}
 		}

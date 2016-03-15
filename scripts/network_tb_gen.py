@@ -24,14 +24,14 @@ def parameter_gen():
     parameter PriorityWidth=8;
     parameter ExitPos=160;
     parameter ExitWidth=4;
-    parameter InterNodeFIFODepth=256;
+    parameter InterNodeFIFODepth=768;
     parameter IntraNodeFIFODepth=1;
     parameter RoutingTableWidth=32;
     parameter RoutingTablesize=2300;
     parameter MulticastTableWidth=123;
     parameter MulticastTablesize=32;
     parameter ReductionTableWidth=170;
-    parameter ReductionTablesize=256;
+    parameter ReductionTablesize=512;
     parameter PcktTypeLen=4;
     parameter LinkDelay=20;\n
 \n '''
