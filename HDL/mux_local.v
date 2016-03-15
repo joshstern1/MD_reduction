@@ -513,7 +513,7 @@ module mux_local
     assign next_counter=reduction_table_entry[158:156]+1;
 //    assign is_reduction_WB=sel_data_RR[ReductionBitPos];
     assign reduction_ready= (reduction_table_entry[ReductionTableWidth-9:ReductionTableWidth-11]==reduction_table_entry[ReductionTableWidth-12:ReductionTableWidth-14]+1);
-    assign reduction_out_reg_wire={reduction_out_reg[DataWidth-1:230],reduction_table_entry[169:162],reduction_out_reg[221:152],reduction_table_entry_next[135:128],reduction_table_entry_next[151:136],reduction_table_entry_next[127:0]};
+    assign reduction_out_reg_wire={reduction_out_reg[DataWidth-1:194],reduction_table_entry[169:162],reduction_out_reg[185:152],reduction_table_entry_next[135:128],reduction_table_entry_next[151:136],reduction_table_entry_next[127:0]};
     assign reduction_table_entry_next={reduction_out_reg[DstPacketIDPos+7:DstPacketIDPos],reduction_table_entry[161:159],next_counter,reduction_table_entry[155:136],(reduction_table_entry[135:128]+reduction_out_reg[WeightPos+WeightWidth-1:WeightPos]),(reduction_table_entry[PayloadLen-1:0]+reduction_out_reg[PayloadLen-1:0])};
 
 

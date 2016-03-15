@@ -24,7 +24,7 @@ def parameter_gen():
     parameter PriorityWidth=8;
     parameter ExitPos=160;
     parameter ExitWidth=4;
-    parameter InterNodeFIFODepth=768;
+    parameter InterNodeFIFODepth=1024;
     parameter IntraNodeFIFODepth=1;
     parameter RoutingTableWidth=32;
     parameter RoutingTablesize=2300;

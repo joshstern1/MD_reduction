@@ -47,8 +47,8 @@ int X=4; // number of nodes on X dimension
 int Y=4; // number of nodes on Y dimension
 int Z=4; // number of nodes on Z dimension
 double r2c=1;// the ratio between the cutoff radius and box size
-int particle_per_box=172;
-int particle_per_cell = 172;
+int particle_per_box=1;
+int particle_per_cell = 1;
 float r = 12;
 float xsize = 108;
 float ysize = 108;
@@ -841,7 +841,7 @@ void BFS_write_table_reduction(node* root, payload xyz,int dst_id){//dst id is t
 						sprintf(data_to_send[id][data_to_send_ptr[id]].hex_val, "%08x%08x%08x%08x%08x%08x%08x%08x", \
 							(3 << 30) + (node_link_list_iterator->NODE->z << 22) + (node_link_list_iterator->NODE->y << 14) + (node_link_list_iterator->NODE->z << 6) + ((routing_table_entry_index & 0xfc) >> 2), \
 							((routing_table_entry_index & 0x3) << 30) + (0xa << 26) + ((root->z) << 18) + ((root->y) << 10) + ((root->z) << 2) + ((unsigned)dst_id >> 6), \
-							((dst_id & 0xfc) << 26), \
+							((dst_id & 0x3f) << 26), \
 							(1 << 16) + (routing_table_entry_index & 0xffff), \
 							xyz.type, xyz.z, xyz.y, xyz.x);
 						data_to_send_ptr[id]++;

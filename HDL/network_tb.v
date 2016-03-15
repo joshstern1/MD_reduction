@@ -10,7 +10,7 @@ module network_tb;
     parameter PriorityWidth=8;
     parameter ExitPos=160;
     parameter ExitWidth=4;
-    parameter InterNodeFIFODepth=512;
+    parameter InterNodeFIFODepth=1024;
     parameter IntraNodeFIFODepth=1;
     parameter RoutingTableWidth=32;
     parameter RoutingTablesize=2300;
