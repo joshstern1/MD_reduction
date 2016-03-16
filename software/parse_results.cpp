@@ -20,7 +20,7 @@ using namespace std;
 
 #define LINEMAX 100
 
-#define PARTICLE_PER_BOX 5
+#define PARTICLE_PER_BOX 1
 #define MODE 2 // 1 is multicast mode, 2 is reduction mode, 3 is the singlecast multicastmode, 4 is the singlecast reduction mode
 #define MAX_NUM_CHILDREN 6
 
@@ -40,8 +40,8 @@ int export_num;
 
 
 double r2c = 1;// the ratio between the cutoff radius and box size
-int particle_per_box = 172;
-int particle_per_cell = 172;
+int particle_per_box = 1;
+int particle_per_cell = 1;
 float r = 12;
 float xsize = 108;
 float ysize = 108;

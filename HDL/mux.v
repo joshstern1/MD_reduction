@@ -105,6 +105,7 @@ module mux
     reg[ReductionTableWidth-1:0] reduction_table[ReductionTablesize-1:0];
 
     wire is_reduction;
+    wire is_reduction_WB;
     wire reduction_ready;
 
     wire [DataWidth-1:0] reduction_out;
@@ -438,7 +439,13 @@ module mux
 
     always@(posedge clk) begin
         if(is_reduction) begin
-            reduction_table_entry<=reduction_table[sel_data[IndexWidth+IndexPos-1:IndexPos]];
+            //if the table entry about to be read is the same with the table entry about to be written, directly get the new one
+            if(is_reduction_WB && sel_data[IndexWidth+IndexPos-1:IndexPos]==sel_data_RR[IndexWidth+IndexPos-1:IndexPos]) begin
+                reduction_table_entry<=reduction_table_entry_next;
+            end
+            else begin
+                reduction_table_entry<=reduction_table[sel_data[IndexWidth+IndexPos-1:IndexPos]];
+            end
         end
     end
 
