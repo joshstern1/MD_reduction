@@ -99,7 +99,7 @@ module mux_local
 
     reg [2:0] reduction_grant_index;
 
-    reg [2:0] reduction_grant_index_next;
+    wire [2:0] reduction_grant_index_next;
 
 //    wire [2:0] sel_index;
     reg [PriorityWidth-1:0] priority01; //the higher priority between the 0th port and 1st port
@@ -373,10 +373,21 @@ module mux_local
     end
     
     always@(posedge clk) begin
-        reduction_grant_index<=reduction_grant_index_next;    
+        if(rst)
+            reduction_grant_index<=7;
+        else 
+            reduction_grant_index<=reduction_grant_index_next;    
     end
 
-    always@(*) begin
+
+    find_next_reduction
+    find_next_reduction_inst(
+        .seven_fifo_avail_bit({FIFO_out[6][DataWidth-1]&&FIFO_out[6][ReductionBitPos],FIFO_out[5][DataWidth-1]&&FIFO_out[5][ReductionBitPos],FIFO_out[4][DataWidth-1]&&FIFO_out[4][ReductionBitPos],FIFO_out[3][DataWidth-1]&&FIFO_out[3][ReductionBitPos],FIFO_out[2][DataWidth-1]&&FIFO_out[2][ReductionBitPos],FIFO_out[1][DataWidth-1]&&FIFO_out[1][ReductionBitPos],FIFO_out[0][DataWidth-1]&&FIFO_out[0][ReductionBitPos]}),
+        .cur_idx(reduction_grant_index),
+        .next_idx(reduction_grant_index_next)
+    );
+
+ /*   always@(*) begin
         if(FIFO_out[0][ReductionBitPos]) begin
             if(reduction_grant_index!=0) begin
                 reduction_grant_index_next=0;
@@ -436,7 +447,7 @@ module mux_local
         else begin
             reduction_grant_index_next=7;
         end
-    end
+    end*/
 //second stage is usually doing two things, First is output those FIFO_outs that are not reduction packets, second is pick one FIFO_outs that is reduction packet
 //
 //
@@ -497,7 +508,13 @@ module mux_local
     
     always@(posedge clk) begin
         if(reduction_out[DataWidth-1]) begin
-            reduction_table_entry<=reduction_table[reduction_out[IndexWidth+IndexPos-1:IndexPos]];
+            //if the table entry about to be read is the same as the table entry that is about to be written, directly get the new one
+            if(reduction_out_reg[DataWidth-1] && reduction_out_reg[IndexWidth+IndexPos-1:IndexPos] == reduction_out[IndexWidth+IndexPos-1:IndexPos]) begin
+                reduction_table_entry<=reduction_table_entry_next;
+            end
+            else begin
+                reduction_table_entry<=reduction_table[reduction_out[IndexWidth+IndexPos-1:IndexPos]];
+            end
         end
         else begin
             reduction_table_entry<=0;

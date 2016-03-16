@@ -15,7 +15,7 @@
 //#include<boost/multiprecision/cpp_int.hpp>
 
 #define LINEMAX 100
-#define MAX_NUM_CHILDREN 5
+#define MAX_NUM_CHILDREN 6
 #define INIT_WEIGHT 512
 #define ROUTING_TABLE_SIZE  2300
 #define MULTICAST_TABLE_SIZE 256
@@ -34,7 +34,7 @@
 #define MULTICASTPCKT 9
 #define REDUCTIONPCKT 10
 
-#define MODE 2
+#define MODE 3
 
 
 int mode = MODE; //1 is the multicast mode, 2 is the reduction mode, 3 is the forward singlecast mode, 4 is the reverse singlecast mode.
@@ -47,8 +47,8 @@ int X=4; // number of nodes on X dimension
 int Y=4; // number of nodes on Y dimension
 int Z=4; // number of nodes on Z dimension
 double r2c=1;// the ratio between the cutoff radius and box size
-int particle_per_box=1;
-int particle_per_cell = 1;
+int particle_per_box=172;
+int particle_per_cell = 172;
 float r = 12;
 float xsize = 108;
 float ysize = 108;
@@ -1034,11 +1034,11 @@ void table_gen(node** tree_array){
 		}
 	}
 	else if (mode == 2){
-		
+		for (int j = 0; j < particle_per_box; j++){
 			for (int i = 0; i < X*Y*Z; i++){
 				cur_tree = tree_array[i];
 				cur_xyzlist = xyz_list[i];
-				for (int j = 0; j < particle_per_box; j++){
+	
 				BFS_write_table_reduction(cur_tree, cur_xyzlist[j], j);
 			}
 		}
