@@ -34,7 +34,7 @@
 #define MULTICASTPCKT 9
 #define REDUCTIONPCKT 10
 
-#define MODE 3
+#define MODE 4
 
 
 int mode = MODE; //1 is the multicast mode, 2 is the reduction mode, 3 is the forward singlecast mode, 4 is the reverse singlecast mode.

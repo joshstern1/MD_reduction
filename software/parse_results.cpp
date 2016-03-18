@@ -281,6 +281,8 @@ void verify_reduction(){
 }
 
 void verify_multicast(){
+	int avg_timing=0;
+	int aggregate_timing = 0;
 	int bitmap[X*Y*Z];
 	int ref_counter = 0;
 	int counter;
@@ -309,6 +311,10 @@ void verify_multicast(){
 		}
 	}
 	cout << "all correct!" << endl;
+	for (int i = 0; i < PARTICLE_PER_BOX; i++){
+		aggregate_timing += multicast_timing[i][j]
+	}
+
 }
 
 void verify_singlecast(){

@@ -36,7 +36,7 @@
         
     */
 
-`define REDUCTION
+`define SINGLECAST
 
 module local_unit
 #(
