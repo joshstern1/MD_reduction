@@ -67,14 +67,17 @@ struct reduction_packet_timing{
 	int valid;
 };
 
+int avg_reduction_departure_time[PARTICLE_PER_BOX];
+int reduction_depart_counter[PARTICLE_PER_BOX];
+int avg_reduction_arrival_time[PARTICLE_PER_BOX];
+
 struct packet_timing** multicast_timing;
 struct reduction_packet_timing** reduction_timing;
 
-struct singlecast_packet_timing** singlecast_timing;
 
-void read_dump_singlecast(char* filename){
+void read_dump_singlecast_multicast(char* filename){
 	ifstream input_file;
-	int line_counter = 0; 
+	int line_counter = 0;
 	input_file.open(filename);
 	char *tokens;// the number is going to be read from the dump.txt
 	int src_x;
@@ -103,7 +106,14 @@ void read_dump_singlecast(char* filename){
 			id = atoi(tokens);
 			tokens = strtok(NULL, " ");
 			depart_time = atoi(tokens);
-			singlecast_timing[src_x*Y*Z + src_y*Z + src_z][id].depart_counter++;
+			if (multicast_timing[src_x*Y*Z + src_y*Z + src_z][id].valid == false){
+				multicast_timing[src_x*Y*Z + src_y*Z + src_z][id].valid = true;
+				multicast_timing[src_x*Y*Z + src_y*Z + src_z][id].depart_time = depart_time;
+				for (int i = 0; i < X*Y*Z; i++){
+					multicast_timing[src_x*Y*Z + src_y*Z + src_z][id].arrival_time[i] = -1;
+				}
+			}
+			
 
 		}
 		else if (line[0] == 'A'){
@@ -126,11 +136,105 @@ void read_dump_singlecast(char* filename){
 
 			tokens = strtok(NULL, " ");
 			arrival_time = atoi(tokens);
-			singlecast_timing[src_x*Y*Z + src_y*Z + src_z][id].arrival_counter++;
+
+				multicast_timing[src_x*Y*Z + src_y*Z + src_z][id].arrival_time[dst_x*Y*Z + dst_y*Z + dst_z] = arrival_time;
+
+			
 		}
 
 
 	}
+	input_file.close();
+}
+
+void read_dump_singlecast_reduction(char* filename){
+	ifstream input_file;
+	int line_counter = 0;
+	input_file.open(filename);
+	if (input_file.fail()){
+		cout << "open file failed" << filename << endl;
+		return;
+	}
+	char *tokens;// the number is going to be read from the dump.txt
+	int src_x;
+	int src_y;
+	int src_z;
+	int dst_x;
+	int dst_y;
+	int dst_z;
+	int id;
+	int depart_time;
+	int arrival_time;
+	char line[LINEMAX];
+	for (int i = 0; i < PARTICLE_PER_BOX; i++){
+		avg_reduction_departure_time[i] = 0;
+		reduction_depart_counter[i] = 0;
+		avg_reduction_arrival_time[i] = 0;
+	}
+
+	while (!input_file.eof()){
+		input_file.getline(line, LINEMAX);
+		line_counter++;
+		if (line[0] == 'D'){
+			input_file.getline(line, LINEMAX);
+			line_counter++;
+			tokens = strtok(line, " ");
+			src_x = atoi(tokens);
+			tokens = strtok(NULL, " ");
+			src_y = atoi(tokens);
+			tokens = strtok(NULL, " ");
+			src_z = atoi(tokens);
+			tokens = strtok(NULL, " ");
+			id = atoi(tokens);
+			tokens = strtok(NULL, " ");
+			depart_time = atoi(tokens);
+			avg_reduction_departure_time[id] += depart_time;
+			reduction_depart_counter[id]++;
+
+
+		}
+		else if (line[0] == 'A'){
+			input_file.getline(line, LINEMAX);
+			line_counter++;
+			tokens = strtok(line, " ");
+			src_x = atoi(tokens);
+			tokens = strtok(NULL, " ");
+			src_y = atoi(tokens);
+			tokens = strtok(NULL, " ");
+			src_z = atoi(tokens);
+			tokens = strtok(NULL, " ");
+			dst_x = atoi(tokens);
+			tokens = strtok(NULL, " ");
+			dst_y = atoi(tokens);
+			tokens = strtok(NULL, " ");
+			dst_z = atoi(tokens);
+			tokens = strtok(NULL, " ");
+			id = atoi(tokens);
+
+			tokens = strtok(NULL, " ");
+			arrival_time = atoi(tokens);
+			if (reduction_timing[dst_x*Y*Z + dst_y*Z + dst_z][id].valid == false){
+				reduction_timing[dst_x*Y*Z + dst_y*Z + dst_z][id].arrival_time = arrival_time;
+				reduction_timing[dst_x*Y*Z + dst_y*Z + dst_z][id].valid = true;
+			}
+			else{
+				if (reduction_timing[dst_x*Y*Z + dst_y*Z + dst_z][id].arrival_time < arrival_time){
+					reduction_timing[dst_x*Y*Z + dst_y*Z + dst_z][id].arrival_time = arrival_time;
+				}
+			}
+
+
+		}
+
+
+	}
+
+	for (int i = 0; i < PARTICLE_PER_BOX; i++){
+		avg_reduction_departure_time[i] = avg_reduction_departure_time[i] / reduction_depart_counter[i];
+	}
+
+
+
 	input_file.close();
 }
 
@@ -153,11 +257,31 @@ void read_dump_reduction(char* filename){
 	int depart_time;
 	int arrival_time;
 	char line[LINEMAX];
+	for (int i = 0; i < PARTICLE_PER_BOX; i++){
+		avg_reduction_departure_time[i] =0;
+		reduction_depart_counter[i]=0;
+		avg_reduction_arrival_time[i] = 0;
+	}
+
 	while (!input_file.eof()){
 		input_file.getline(line, LINEMAX);
 		line_counter++;
 		if (line[0] == 'D'){
-			continue;
+			input_file.getline(line, LINEMAX);
+			line_counter++;
+			tokens = strtok(line, " ");
+			src_x = atoi(tokens);
+			tokens = strtok(NULL, " ");
+			src_y = atoi(tokens);
+			tokens = strtok(NULL, " ");
+			src_z = atoi(tokens);
+			tokens = strtok(NULL, " ");
+			id = atoi(tokens);
+			tokens = strtok(NULL, " ");
+			depart_time = atoi(tokens);
+			avg_reduction_departure_time[id] += depart_time;
+			reduction_depart_counter[id]++;
+			
 
 		}
 		else if (line[0] == 'A'){
@@ -188,6 +312,13 @@ void read_dump_reduction(char* filename){
 
 
 	}
+
+	for (int i = 0; i < PARTICLE_PER_BOX; i++){
+		avg_reduction_departure_time[i] = avg_reduction_departure_time[i] / reduction_depart_counter[i];
+	}
+
+
+	
 	input_file.close();
 
 }
@@ -217,7 +348,7 @@ void read_dump_multicast(char* filename){
 		if (line[0] == 'D'){
 			input_file.getline(line, LINEMAX);
 			line_counter++;
-			tokens = strtok(line," ");
+			tokens = strtok(line, " ");
 			src_x = atoi(tokens);
 			tokens = strtok(NULL, " ");
 			src_y = atoi(tokens);
@@ -227,7 +358,7 @@ void read_dump_multicast(char* filename){
 			id = atoi(tokens);
 			tokens = strtok(NULL, " ");
 			depart_time = atoi(tokens);
-			multicast_timing[src_x*Y*Z+src_y*Z+src_z][id].depart_time=depart_time;
+			multicast_timing[src_x*Y*Z + src_y*Z + src_z][id].depart_time = depart_time;
 			for (int i = 0; i < X*Y*Z; i++){
 				multicast_timing[src_x*Y*Z + src_y*Z + src_z][id].arrival_time[i] = -1;
 			}
@@ -278,11 +409,23 @@ void verify_reduction(){
 		}
 
 	}
+
+	for (int i = 0; i < PARTICLE_PER_BOX; i++){
+		for (int j = 0; j < X*Y*Z; j++){
+			avg_reduction_arrival_time[i] += reduction_timing[i][j].arrival_time;
+		}
+		avg_reduction_arrival_time[i] = avg_reduction_arrival_time[i] / (X*Y*Z); 
+	}
+	int latency = 0;
+	for (int i = 0; i < PARTICLE_PER_BOX; i++){
+		latency += avg_reduction_arrival_time[i] - avg_reduction_departure_time[i];
+	}
+	latency = latency / PARTICLE_PER_BOX;
+	cout << "avg latency is " << latency << endl;
+	
 }
 
 void verify_multicast(){
-	int avg_timing=0;
-	int aggregate_timing = 0;
 	int bitmap[X*Y*Z];
 	int ref_counter = 0;
 	int counter;
@@ -311,13 +454,29 @@ void verify_multicast(){
 		}
 	}
 	cout << "all correct!" << endl;
-	for (int i = 0; i < PARTICLE_PER_BOX; i++){
-		aggregate_timing += multicast_timing[i][j]
+	int last_arrival_time = 0;
+	int depart_time = 0;
+	int aggregate_latency = 0;
+	int latency = 0;
+	float avg_latency = 0;
+	for (int i = 0; i<X*Y*Z; i++){
+		for (int j = 0; j<PARTICLE_PER_BOX; j++){
+			depart_time = multicast_timing[i][j].depart_time;
+			last_arrival_time = 0;
+			for (int k = 0; k<X*Y*Z; k++){
+				if (multicast_timing[i][j].arrival_time[k]>last_arrival_time){
+					last_arrival_time = multicast_timing[i][j].arrival_time[k];
+				}
+			}
+			latency = last_arrival_time - depart_time;
+			aggregate_latency += latency;
+		}
 	}
-
+	avg_latency = (float)aggregate_latency / (float)(X*Y*Z*PARTICLE_PER_BOX);
+	cout << "avg latency is" << avg_latency << endl;
 }
 
-void verify_singlecast(){
+/*void verify_singlecast(){
 	for (int i = 0; i < X*Y*Z; i++){
 		for (int j = 0; j < PARTICLE_PER_BOX; j++){
 			if (singlecast_timing[i][j].arrival_counter < singlecast_timing[i][j].depart_counter){
@@ -326,10 +485,10 @@ void verify_singlecast(){
 			}
 		}
 	}
-}
+}*/
 
 int main(){
-	
+
 	char filename[200] = "C:/Users/Jiayi/Documents/GitHub/MD_reduction/software/dump.txt";
 	if (mode == 1){
 		if (!(multicast_timing = (packet_timing**)malloc(X*Y*Z*sizeof(packet_timing*)))){
@@ -352,7 +511,7 @@ int main(){
 		}
 		read_dump_multicast(filename);
 		verify_multicast();
-		
+
 	}
 	else if (mode == 2){
 		if (!(reduction_timing = (reduction_packet_timing**)malloc(X*Y*Z*sizeof(reduction_packet_timing*)))){
@@ -376,13 +535,13 @@ int main(){
 		read_dump_reduction(filename);
 		verify_reduction();
 	}
-	else if (mode == 3 || mode == 4){
-		if (!(singlecast_timing = (singlecast_packet_timing**)malloc(X*Y*Z*sizeof(singlecast_packet_timing*)))){
+	else if (mode == 3){
+		if (!(multicast_timing = (packet_timing**)malloc(X*Y*Z*sizeof(packet_timing*)))){
 			cout << "No mem for singlecast_timing" << endl;
 			exit(-1);
 		}
 		for (int i = 0; i < X*Y*Z; i++){
-			if (!(singlecast_timing[i] = (singlecast_packet_timing*)malloc(PARTICLE_PER_BOX*sizeof(singlecast_packet_timing)))){
+			if (!(multicast_timing[i] = (packet_timing*)malloc(PARTICLE_PER_BOX*sizeof(packet_timing)))){
 				cout << "No mem for singlecast_timing" << i << endl;
 				exit(-1);
 			}
@@ -390,12 +549,35 @@ int main(){
 		//init multicast_timing
 		for (int i = 0; i < X*Y*Z; i++){
 			for (int j = 0; j < PARTICLE_PER_BOX; j++){
-				singlecast_timing[i][j].depart_counter = 0;
-				singlecast_timing[i][j].arrival_counter = 0;			
+				multicast_timing[i][j].depart_time = 0;
+				multicast_timing[i][j].valid = false;
 			}
 		}
-		read_dump_singlecast(filename);
-		verify_singlecast();
+		read_dump_singlecast_multicast(filename);
+		verify_multicast();
+
+	}
+	else if (mode == 4){
+		if (!(reduction_timing = (reduction_packet_timing**)malloc(X*Y*Z*sizeof(reduction_packet_timing*)))){
+			cout << "No mem for reduction_timing" << endl;
+			exit(-1);
+		}
+		for (int i = 0; i < X*Y*Z; i++){
+			if (!(reduction_timing[i] = (reduction_packet_timing*)malloc(PARTICLE_PER_BOX*sizeof(reduction_packet_timing)))){
+				cout << "No mem for reduction_timing" << i << endl;
+				exit(-1);
+			}
+		}
+		//init multicast_timing
+		for (int i = 0; i < X*Y*Z; i++){
+			for (int j = 0; j < PARTICLE_PER_BOX; j++){
+				//multicast_timing[i][j].arrival_time = 0;
+				reduction_timing[i][j].arrival_time = 0;
+				reduction_timing[i][j].valid = false;
+			}
+		}
+		read_dump_singlecast_reduction(filename);
+		verify_reduction();
 
 	}
 
