@@ -20,7 +20,7 @@ using namespace std;
 
 #define LINEMAX 100
 
-#define PARTICLE_PER_BOX 172
+#define PARTICLE_PER_BOX 10
 #define MODE 3 // 1 is multicast mode, 2 is reduction mode, 3 is the singlecast multicastmode, 4 is the singlecast reduction mode
 #define MAX_NUM_CHILDREN 6
 
@@ -40,8 +40,8 @@ int export_num;
 
 
 double r2c = 1;// the ratio between the cutoff radius and box size
-int particle_per_box = 172;
-int particle_per_cell = 172;
+int particle_per_box = PARTICLE_PER_BOX;
+int particle_per_cell = PARTICLE_PER_BOX;
 float r = 12;
 float xsize = 108;
 float ysize = 108;
@@ -412,7 +412,7 @@ void verify_reduction(){
 
 	for (int i = 0; i < PARTICLE_PER_BOX; i++){
 		for (int j = 0; j < X*Y*Z; j++){
-			avg_reduction_arrival_time[i] += reduction_timing[i][j].arrival_time;
+			avg_reduction_arrival_time[i] += reduction_timing[j][i].arrival_time;
 		}
 		avg_reduction_arrival_time[i] = avg_reduction_arrival_time[i] / (X*Y*Z); 
 	}

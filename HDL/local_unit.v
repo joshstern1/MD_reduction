@@ -102,6 +102,12 @@ module local_unit
     output inject_receive_local,
     output EjectSlotAvail_local
 );
+
+    parameter injection_rate=4'd1; //injection rate means inject one packet per injection_rate cycles
+
+    reg [3:0] injection_control_counter;
+
+
     wire local_fifo_full;
     wire local_fifo_empty;
     wire [DataWidth-1:0] local_fifo_out;
@@ -127,6 +133,17 @@ module local_unit
     reg [DataWidth-1:0] eject_reduction_reg;
 
     always@(posedge clk) begin
+        if(rst) begin
+            injection_control_counter<=0;
+        end
+        else begin
+            injection_control_counter<=(injection_control_counter==injection_rate-1)?0:injection_control_counter+1;
+        end
+    end
+
+
+
+    always@(posedge clk) begin
         if(rst)
             cycle_counter<=0;
         else
@@ -140,7 +157,7 @@ module local_unit
     reg [7:0] data_ptr;
     wire [15:0] table_ptr;
 
-    assign inject_local=(data_ptr>=DataSize)?0:data[data_ptr];
+    assign inject_local=(injection_control_counter==0)?((data_ptr>=DataSize)?0:data[data_ptr]):0;
     assign inject_receive_local=inject_local[DataWidth-1];
 
     always@(posedge clk) begin
@@ -292,8 +309,11 @@ module local_unit
     //all the data share the same path, so each data will use the same table entry
     reg [15:0] data_ptr;
     wire [15:0] table_ptr;
-    assign inject_local=(data_ptr>=DataSize)?0:data[data_ptr];
+
+    assign inject_local=(injection_control_counter==0)?((data_ptr>=DataSize)?0:data[data_ptr]):0;
     assign inject_receive_local=inject_local[DataWidth-1];
+//    assign inject_local=(data_ptr>=DataSize)?0:data[data_ptr];
+//    assign inject_receive_local=inject_local[DataWidth-1];
     always@(posedge clk) begin
         if(rst) begin
             data_ptr<=0;
@@ -341,45 +361,58 @@ module local_unit
     reg [IndexWidth-1:0] table_index;
 
 
-    assign inject_receive_local=inject_local[DataWidth-1];
+//    assign inject_receive_local=inject_local[DataWidth-1];
 
     assign inject_local=(data_ptr>=DataSize)?0:{data[data_ptr][DataWidth-1:IndexPos+IndexWidth],table_index,data[data_ptr][IndexPos-1:0]};
-    
+//    assign inject_local=(injection_control_counter==0)?((data_ptr>=DataSize)?0:data[data_ptr]):0;
+        
+    assign inject_receive_local=(injection_control_counter==0)?inject_local[DataWidth-1]:0;
+
     always@(posedge clk) begin
         if(rst) begin
             table_index<=0;
             data_ptr<=0;
         end
-        else if(routing_table[table_index+1][RoutingTableWidth-1]&&inject_receive_local) begin
-            if(InjectSlotAvail_local) begin
-                table_index<=table_index+1;
-                data_ptr<=data_ptr;
-                fd=$fopen("dump.txt","a");
-                if(fd)
-                    $display("file: dump.txt open successfully\n");
-                else
-                    $display("file open failed\n");
-                $strobe("Displaying in %m\t");
-                $strobe("singlecast packet\t");
-                $strobe("data from (%d, %d, %d) whose id #%d is injected into the network at cycle %d",XCoord,YCoord,ZCoord,data_ptr,cycle_counter);
-                //format [src.x] [src.y] [src.z] [id] [time] [packet type]
-                $fdisplay(fd,"Departuring: \n %d %d %d %d %d 10",XCoord,YCoord,ZCoord,data_ptr,cycle_counter);
-                $fclose(fd);
+        else begin
+            if(injection_control_counter==0) begin
+                if(routing_table[table_index+1][RoutingTableWidth-1]&&inject_receive_local) begin
+                    if(InjectSlotAvail_local) begin
+                        table_index<=table_index+1;
+                        data_ptr<=data_ptr;
+                        fd=$fopen("dump.txt","a");
+                        if(fd)
+                            $display("file: dump.txt open successfully\n");
+                        else
+                            $display("file open failed\n");
+                    $strobe("Displaying in %m\t");
+                    $strobe("singlecast packet\t");
+                    $strobe("data from (%d, %d, %d) whose id #%d is injected into the network at cycle %d",XCoord,YCoord,ZCoord,data_ptr,cycle_counter);
+                    //format [src.x] [src.y] [src.z] [id] [time] [packet type]
+                    $fdisplay(fd,"Departuring: \n %d %d %d %d %d 10",XCoord,YCoord,ZCoord,data_ptr,cycle_counter);
+                    $fclose(fd);
 
+                    end
+                    else begin
+                        table_index<=table_index;
+                        data_ptr<=data_ptr;
+                    end
+                end
+                else begin
+                    table_index<=0;
+                    if(data[data_ptr][DataWidth-1]) begin
+                        data_ptr<=data_ptr+1;
+                    end
+                    else begin
+                        data_ptr<=data_ptr;
+                    end
+                end
             end
             else begin
+                data_ptr<=data_ptr;
                 table_index<=table_index;
-                data_ptr<=data_ptr;
             end
-        end
-        else begin
-            table_index<=0;
-            if(data[data_ptr][DataWidth-1]) begin
-                data_ptr<=data_ptr+1;
-            end
-            else
-                data_ptr<=data_ptr;
-        end
+        end    
+
     end
     assign EjectSlotAvail_local=1;
     always@(posedge clk) begin
