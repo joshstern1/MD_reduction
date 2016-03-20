@@ -3,6 +3,7 @@
 //Organization: CAAD lab @ Boston University
 //Start date: Feb 10th 2015
 //
+`define SIM
 
 module buffer
 #(
@@ -28,6 +29,47 @@ module buffer
 	reg[buffer_depth-1:0] tail;
 
 	reg[buffer_width-1:0] fifo[buffer_depth-1:0];  
+    
+`ifdef SIM
+    parameter sample_cycle=8
+    reg[15:0] sample_counter;
+    integer fd;
+    always@(posedge clk) begin
+        if(rst) begin
+            sample_counter<=0;
+        end
+        else begin
+            sample_counter<=(sample_counter==sample_cycle-1)?0:sample_counter+1;
+        end
+    end
+
+    always@(posedge clk) begin
+        if(sample_counter==sample_cycle-1) begin
+            fd=$fopen("buffer_size.txt","a");
+            if(fd)
+                $display("buffer_size.txt open successfully\n");
+            else
+                $display("file open failed\n");
+            $strobe("Displaying in %m\t");
+            $strobe("buffer utilization is:\t");
+            $strobe("%d\n",(tail>head)?(tail-head):(tail-head+buffer_depth));
+            $fdisplay(fd."%d %d",(tail>head)?(tail-head):(tail-head+buffer_depth),buffer_depth);
+            $fclose(fd);
+        end
+    end
+
+
+`endif
+    
+
+            
+
+    
+
+
+`endif
+    
+
 
     assign empty=(head==tail);
 	assign full=(tail==buffer_depth-1)?(head==0):(head==tail+1);
@@ -73,6 +115,5 @@ module buffer
                 head<=head_next;
         end
     end
-    
 endmodule
         
