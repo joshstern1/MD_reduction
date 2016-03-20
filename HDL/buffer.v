@@ -31,7 +31,7 @@ module buffer
 	reg[buffer_width-1:0] fifo[buffer_depth-1:0];  
     
 `ifdef SIM
-    parameter sample_cycle=8
+    parameter sample_cycle=64;
     reg[15:0] sample_counter;
     integer fd;
     always@(posedge clk) begin
@@ -46,14 +46,16 @@ module buffer
     always@(posedge clk) begin
         if(sample_counter==sample_cycle-1) begin
             fd=$fopen("buffer_size.txt","a");
-            if(fd)
+            if(fd) begin
                 $display("buffer_size.txt open successfully\n");
-            else
+            end
+            else begin
                 $display("file open failed\n");
-            $strobe("Displaying in %m\t");
-            $strobe("buffer utilization is:\t");
-            $strobe("%d\n",(tail>head)?(tail-head):(tail-head+buffer_depth));
-            $fdisplay(fd."%d %d",(tail>head)?(tail-head):(tail-head+buffer_depth),buffer_depth);
+            end
+            $strobe("Displaying in %m ");
+            $strobe("buffer utilization is: ");
+            $strobe("tail is %d, head is %d, util is %d ",tail, head,((tail>=head)?(tail-head):(tail-head+buffer_depth)));
+            $fdisplay(fd,"%d %d",((tail>=head)?(tail-head):(tail-head+buffer_depth)),buffer_depth);
             $fclose(fd);
         end
     end
@@ -67,7 +69,6 @@ module buffer
     
 
 
-`endif
     
 
 

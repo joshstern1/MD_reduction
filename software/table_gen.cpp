@@ -34,7 +34,7 @@
 #define MULTICASTPCKT 9
 #define REDUCTIONPCKT 10
 
-#define MODE 4
+#define MODE 3
 
 
 int mode = MODE; //1 is the multicast mode, 2 is the reduction mode, 3 is the forward singlecast mode, 4 is the reverse singlecast mode.
@@ -47,8 +47,8 @@ int X=4; // number of nodes on X dimension
 int Y=4; // number of nodes on Y dimension
 int Z=4; // number of nodes on Z dimension
 double r2c=1;// the ratio between the cutoff radius and box size
-int particle_per_box=10;
-int particle_per_cell = 10;
+int particle_per_box=100;
+int particle_per_cell = 100;
 float r = 12;
 float xsize = 108;
 float ysize = 108;
