@@ -17,11 +17,16 @@ void read_src_dst_file(string filename){
 	ifstream input_file;
 	input_file.open(filename);
 	int line_counter = 0;
-	for ()
+	while (!input_file.eof){
+
+	}
+		
+
+	
 
 }
 
 int main(){
-	string filename = "C:/Users/Jiayi/Documents/GitHub/MD_reduction/software/destination"
+	string filename = "C:/Users/Jiayi/Documents/GitHub/MD_reduction/software/destination.txt"
 	return 0;
 }
