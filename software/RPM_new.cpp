@@ -8,21 +8,86 @@
 #define X 4
 #define Y 4
 #define Z 4
+#define LINEMAX 100
 #include<iostream>
 #include<fstream>
 #include<string>
 using namespace std;
 
+struct xyz{
+	int x;
+	int y;
+	int z;
+};
+
 struct src_dst_list{
 	int x;
 	int y;
 	int z;
+	bool valid;
 	bool src_or_dst;//true is src, false is dst
 	src_dst_list* next;
 };
 
 struct src_dst_list** src_list; 
 
+
+struct xyz extract_node_from_line(char* line){
+	struct xyz ret;
+	int i = 0;
+	char x_str[3];
+	char y_str[3];
+	char z_str[3];
+	int cur_root_x; // the current x of the root node 
+	int cur_root_y; // current y of the root node
+	int cur_root_z; // current z of the root node
+	while (line[i]){
+		if (line[i] != '('){
+			i++;
+			continue;//searching for the bracket
+		}
+		else{
+			x_str[0] = line[i + 1];
+			if (line[i + 2] != ','){
+				x_str[1] = line[i + 2];
+				x_str[2] = '\0';
+				i = i + 4;
+			}
+			else{
+				i = i + 3;
+				x_str[1] = '\0';
+			}
+			y_str[0] = line[i];
+			if (line[i + 1] != ','){
+				y_str[1] = line[i + 1];
+				y_str[2] = '\0';
+				i = i + 3;
+			}
+			else{
+				i = i + 2;
+				y_str[1] = '\0';
+			}
+			z_str[0] = line[i];
+			if (line[i + 1] != ')'){
+				z_str[1] = line[i + 1];
+				z_str[2] = '\0';
+				i = i + 3;
+			}
+			else{
+				i = i + 2;
+				z_str[1] = '\0';
+			}
+			break; // the root node xyz have all acquired
+		}
+	}
+
+	//create a new node as root
+	ret.x = atoi(x_str);
+	ret.y = atoi(y_str);
+	ret.z = atoi(z_str);
+	return ret;
+
+}
 struct chunk{
 	//data structure to express a divided chunk
 	int x_downlim;
@@ -90,7 +155,27 @@ void read_src_dst_file(string filename){
 	ifstream input_file;
 	input_file.open(filename);
 	int line_counter = 0;
+	char line[LINEMAX];
+	//init the src list
+	if (!(src_list = (struct src_dst_list**)malloc(X*Y*Z*sizeof(struct src_dst_list)))){
+		cout << "No mem" << endl;
+		exit(-1);
+	}
+	for (int i = 0; i < X*Y*Z; i++){
+		src_list[i]->valid = false;
+	}
 	while (!input_file.eof){
+		input_file.getline(line, LINEMAX);
+		line_counter++;
+		if (line[0] == '{' && line[1] == 'S'){
+			struct xyz cur_xyz = extract_node_from_line(line);
+			//found a new source dst list, the cur xyz is the src node
+			//init the src node
+			cur_xyz
+			
+			
+		}
+
 		
 	}
 		
