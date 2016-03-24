@@ -156,6 +156,13 @@ void read_src_dst_file(string filename){
 	input_file.open(filename);
 	int line_counter = 0;
 	char line[LINEMAX];
+	int src_id;
+	int dst_id; 
+	struct xyz cur_xyz;
+	struct src_dst_list* head;
+	struct src_dst_list* tail;
+	struct src_dst_list* new_dst;
+	struct src_dst_list* prev_node;
 	//init the src list
 	if (!(src_list = (struct src_dst_list**)malloc(X*Y*Z*sizeof(struct src_dst_list)))){
 		cout << "No mem" << endl;
@@ -168,12 +175,41 @@ void read_src_dst_file(string filename){
 		input_file.getline(line, LINEMAX);
 		line_counter++;
 		if (line[0] == '{' && line[1] == 'S'){
-			struct xyz cur_xyz = extract_node_from_line(line);
+			cur_xyz = extract_node_from_line(line);
 			//found a new source dst list, the cur xyz is the src node
 			//init the src node
-			cur_xyz
+			src_id = cur_xyz.x*Y*Z + cur_xyz.y*Z + cur_xyz.z;
+			src_list[src_id]->valid = true;
+			src_list[src_id]->src_or_dst = true;
+			src_list[src_id]->next = NULL;
+			src_list[src_id]->x = cur_xyz.x;
+			src_list[src_id]->y = cur_xyz.y;
+			src_list[src_id]->z = cur_xyz.z;
+			head = src_list[src_id];
+			tail = src_list[src_id];
+			prev_node = src_list[src_id];
+			
+
 			
 			
+		}
+		else if (line[0] == 'D'){
+			cur_xyz = extract_node_from_line(line);
+			dst_id = cur_xyz.x*Y*Z + cur_xyz.y*Z + cur_xyz.z;
+			//create a new dst node that linked behind the right src list
+			if (!(new_dst = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout << "no mem" << endl;
+				exit(-1);
+			}
+			new_dst->valid = true;
+			new_dst->src_or_dst = false;
+			new_dst->next = NULL;
+			new_dst->x = cur_xyz.x;
+			new_dst->y = cur_xyz.y;
+			new_dst->z = cur_xyz.z;
+			prev_node->next = new_dst;
+			prev_node = new_dst;
+				
 		}
 
 		
