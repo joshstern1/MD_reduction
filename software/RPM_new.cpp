@@ -29,7 +29,12 @@ struct src_dst_list{
 	src_dst_list* next;
 };
 
+
+
 struct src_dst_list** src_list; 
+int x_link_counter[X*Y*Z];
+int y_link_counter[X*Y*Z];
+int z_link_counter[X*Y*Z];
 
 
 struct xyz extract_node_from_line(char* line){
@@ -219,8 +224,29 @@ void read_src_dst_file(string filename){
 	
 
 }
+void evaluate_partition(struct src_dst_list* node_list){
+	int src_x = node_list->x; 
+	int src_y = node_list->y;
+	int src_z = node_list->z;
+	bool xpos, xneg, ypos, yneg, zpos, zneg; 
+	struct src_dst_list* dst=node_list->next;
+	while (dst){
+		if ()
+	}
+}
+
+
 
 int main(){
 	string filename = "C:/Users/Jiayi/Documents/GitHub/MD_reduction/software/destination.txt";
+	for (int i = 0; i < X; i++){
+		for (int j = 0; j < Y; j++){
+			for (int k = 0; k < Z; k++){
+				x_link_counter[i][j][k] = 0;
+				y_link_counter[i][j][k] = 0;
+				z_link_counter[i][j][k] = 0;
+			}
+		}
+	}
 	return 0;
 }
