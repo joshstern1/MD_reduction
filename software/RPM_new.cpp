@@ -230,18 +230,196 @@ int evaluate_plane(struct src_dst_list* src, int direction){//return the count o
 	//if the direction is 0, this is the yz plane
 	//if the direction is 1, this is the zx plane
 	//if the direction is 2, this is the xy plane
-
+	//divide the plane into 8 regions beyond src
+	// ____________________
+	// |       |  |       |
+    // |   2   |1 |   0   |
+    // |_______|__|_______|
+	// |___3___|S_|___7___|
+	// |       |  |       |
+	// |   4   |5 |   6   |
+	// |_______|__|_______|
+	//if yz plane
+	//---> y
+	//|
+	//\/
+	//z
+	//if zx plane
+	//---> x
+	//|
+	//\/
+	//z
+	//if xy plane
+	//---> x
+	//|
+	//\/
+	//y
+	int region0_count = 0;
+	int region1_count = 0;
+	int region2_count = 0;
+	int region3_count = 0;
+	int region4_count = 0;
+	int region5_count = 0;
+	int region6_count = 0;
+	int region7_count = 0;
+	int xpos_enable = 0;
+	int xneg_enable = 0;
+	int ypos_enable = 0;
+	int yneg_enable = 0;
+	int zpos_enable = 0;
+	int zneg_enable = 0;
+	int src_x = src->x;
+	int src_y = src->y;
+	int src_z = src->z;
+	int relative_x;
+	int relative_y;
+	int relative_z;
+	struct src_dst_list* node_ptr = src->next;
 	if (direction == 0){
-		while (src){
+		while (node_ptr){
+			relative_y = node_ptr->y - src->y<0 ? node_ptr->y - src->y + Y : node_ptr->y - src->y;
+			relative_z = node_ptr->z - src->z<0 ? node_ptr->z - src->z + Z : node_ptr->z - src->z;
+			if (relative_y > Y / 2){
+				if (relative_z > Z/2){
+					region2_count++;
+
+				}
+				else if (relative_z <= Z / 2 && relative_z > 0){
+					region4_count++;
+				}
+				else if (relative_z == 0){
+					region3_count++;
+				}
+
+
+			}
+			else if (relative_y < Y / 2){
+				if (relative_z > Z / 2){
+					region0_count++;
+
+				}
+				else if (relative_z <= Z / 2 && relative_z > 0){
+					region6_count++;
+				}
+				else if (relative_z == 0){
+					region7_count++;
+				}
+
+			}
+			else{
+				if (relative_z > Z / 2){
+					region1_count++;
+
+				}
+				else if (relative_z <= Z / 2 && relative_z > 0){
+					region5_count++;
+				}
+
+
+
+			}
+			node_ptr = node_ptr->next;
 
 		}
 	}
 	else if (direction == 1){
+		while (node_ptr){
+			relative_x = node_ptr->x - src->x<0 ? node_ptr->x - src->x + X : node_ptr->x - src->x;
+			relative_z = node_ptr->z - src->z<0 ? node_ptr->z - src->z + Z : node_ptr->z - src->z;
+			if (relative_x > X / 2){
+				if (relative_z > Z / 2){
+					region2_count++;
+
+				}
+				else if (relative_z <= Z / 2 && relative_z > 0){
+					region4_count++;
+				}
+				else if (relative_z == 0){
+					region3_count++;
+				}
+
+
+			}
+			else if (relative_x < X / 2){
+				if (relative_z > Z / 2){
+					region0_count++;
+
+				}
+				else if (relative_z <= Z / 2 && relative_z > 0){
+					region6_count++;
+				}
+				else if (relative_z == 0){
+					region7_count++;
+				}
+
+			}
+			else{
+				if (relative_z > Z / 2){
+					region1_count++;
+
+				}
+				else if (relative_z <= Z / 2 && relative_z > 0){
+					region5_count++;
+				}
+
+
+
+			}
+			node_ptr = node_ptr->next;
+
+		}
 
 	}
 	else if (direction == 2){
+		while (node_ptr){
+			relative_x = node_ptr->x - src->x<0 ? node_ptr->x - src->x + X : node_ptr->x - src->x;
+			relative_y = node_ptr->y - src->y<0 ? node_ptr->y - src->y + Y : node_ptr->y - src->y;
+			if (relative_x > X / 2){
+				if (relative_y > Y / 2){
+					region2_count++;
+
+				}
+				else if (relative_y <= Y / 2 && relative_y > 0){
+					region4_count++;
+				}
+				else if (relative_y == 0){
+					region3_count++;
+				}
+
+
+			}
+			else if (relative_x < X / 2){
+				if (relative_y > Y / 2){
+					region0_count++;
+
+				}
+				else if (relative_y <= Y / 2 && relative_y > 0){
+					region6_count++;
+				}
+				else if (relative_y == 0){
+					region7_count++;
+				}
+
+			}
+			else{
+				if (relative_y > Y / 2){
+					region1_count++;
+
+				}
+				else if (relative_y <= Y / 2 && relative_y > 0){
+					region5_count++;
+				}
+
+
+
+			}
+			node_ptr = node_ptr->next;
+
+		}
 
 	}
+	return xpos_enable+xneg_enable+ypos_enable+yneg_enable+zpos_enable+zneg_enable;
+
 
 }
 
