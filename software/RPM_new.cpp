@@ -9,6 +9,8 @@
 #define Y 4
 #define Z 4
 #define LINEMAX 100
+
+
 #include<iostream>
 #include<fstream>
 #include<string>
@@ -224,15 +226,93 @@ void read_src_dst_file(string filename){
 	
 
 }
-void evaluate_partition(struct src_dst_list* node_list){
+int evaluate_plane(struct src_dst_list* src, int direction){//return the count of the fanout links on the plance
+	//if the direction is 0, this is the yz plane
+	//if the direction is 1, this is the zx plane
+	//if the direction is 2, this is the xy plane
+
+	if (direction == 0){
+		while (src){
+
+		}
+	}
+	else if (direction == 1){
+
+	}
+	else if (direction == 2){
+
+	}
+
+}
+
+void evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 	int src_x = node_list->x; 
 	int src_y = node_list->y;
 	int src_z = node_list->z;
 	bool xpos, xneg, ypos, yneg, zpos, zneg; 
 	struct src_dst_list* dst=node_list->next;
+	int partition_along_xy_count;//if partition along xy plane, the count of the link outbound from the src
+	int partition_along_yz_count;//if partition along yz plane, the count of the link outbound from the src
+	int partition_along_zx_count;//if partition along zx plane, the count of the link outbound from the src
+	bool xpos_enable = false;
+	bool xneg_enable = false;
+	bool ypos_enable = false;
+	bool yneg_enable = false;
+	bool zpos_enable = false;
+	bool zneg_enable = false;
+	
+	struct src_dst_list* plane_dst_list;
+
+	//first partition along yz plane, the entire src_dst_list will be divided into three parts: the nodes that are in the up chunk of the src node, 
+	// the nodes that are in the downwards chunk of the src node, the nodes that in the same plane with the src node.
+	plane_dst_list->x = src_x;
+	plane_dst_list->y = src_y;
+	plane_dst_list->z = src_z;
+	plane_dst_list->next = NULL;
+	plane_dst_list->src_or_dst = true;
+	plane_dst_list->valid = true;
+	struct src_dst_list* cur_plane_node;
+	cur_plane_node = plane_dst_list;
+
+	partition_along_yz_count = 0;
+	xpos_enable = false;
+	xneg_enable = false;
+
 	while (dst){
-		if ()
+		if (dst->x == src_x){
+			//create the src-dst list on the yz plane
+			//add the dst to the plane_dst_list
+			struct src_dst_list* new_plane_node;
+			if (!(new_plane_node = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout << "no mem" << endl;
+				exit(-1);
+			}
+			new_plane_node->x = dst->x;
+			new_plane_node->y = dst->y;
+			new_plane_node->z = dst->z;
+			new_plane_node->next = NULL;
+			new_plane_node->src_or_dst = false;
+			new_plane_node->valid = true;
+			cur_plane_node->next = new_plane_node;
+			cur_plane_node = new_plane_node;
+		
+		}
+		else if((dst->x>src_x && dst->x-src_x <= X/2)||(dst->x<src_x && src_x-dst->x>=X/2)){
+			if (~xpos_enable){
+				xpos_enable = true;
+				partition_along_yz_count++;
+			}
+		}
+
+		else if ((dst->x>src_x && dst->x - src_x > X / 2) || (dst->x < src_x && src_x - dst->x < X / 2)){
+			if (~xneg_enable){
+				xneg_enable = true;
+				partition_along_yz_count++;
+			}
+		}
+		dst = dst->next;	
 	}
+
 }
 
 
