@@ -31,7 +31,78 @@ struct src_dst_list{
 	src_dst_list* next;
 };
 
+struct chunk{
+	//data structure to express a divided chunk
+	int x_downlim;
+	int x_uplim;
+	int y_downlim;
+	int y_uplim;
+	int z_downlim;
+	int z_uplim;
+	bool x_wrap(){
+		return x_uplim + 1 == x_downlim || x_uplim + 1 - X == x_downlim;
+	}
+	bool y_wrap(){
+		return y_uplim + 1 == y_downlim || y_uplim + 1 - Y == y_downlim;
+	}
+	bool z_wrap(){
+		return z_uplim + 1 == z_downlim || z_uplim + 1 - Z == z_downlim;
+	}
 
+	int get_x_size(){
+		if (x_downlim >= x_uplim){
+			return x_downlim - x_uplim + 1;
+		}
+		else if (x_uplim>x_downlim){
+			return X - x_uplim + x_downlim;
+		}
+	}
+	int get_y_size(){
+		if (y_downlim >= y_uplim){
+			return y_downlim - y_uplim + 1;
+		}
+		else if (y_uplim>y_downlim){
+			return Y - y_uplim + y_downlim;
+		}
+	}
+	int get_z_size(){
+		if (z_downlim >= z_uplim){
+			return z_downlim - z_uplim + 1;
+		}
+		else if (z_uplim>z_downlim){
+			return Z - z_uplim + z_downlim;
+		}
+	}
+	bool within_x(int x){
+		if (x_uplim > x_downlim){
+			return x >= x_downlim && x <= x_uplim;
+		}
+		else{
+			return x <= x_downlim && x >= x_uplim;
+		}
+	}
+
+	bool within_y(int y){
+		if (y_uplim > y_downlim){
+			return y >= y_downlim && y <= y_uplim;
+		}
+		else{
+			return y <= y_downlim && y >= y_uplim;
+		}
+	}
+	bool within_z(int z){
+		if (z_uplim > z_downlim){
+			return z >= z_downlim && z <= z_uplim;
+		}
+		else{
+			return z <= z_downlim && z >= z_uplim;
+		}
+	}
+
+
+
+
+};
 
 struct src_dst_list** src_list; 
 int x_link_counter[X*Y*Z];
@@ -95,68 +166,7 @@ struct xyz extract_node_from_line(char* line){
 	return ret;
 
 }
-struct chunk{
-	//data structure to express a divided chunk
-	int x_downlim;
-	int x_uplim;
-	int y_downlim;
-	int y_uplim;
-	int z_downlim;
-	int z_uplim;
-	int get_x_size(){
-		if (x_downlim >= x_uplim){
-			return x_downlim-x_uplim+1;
-		}
-		else if (x_uplim>x_downlim){
-			return X - x_uplim + x_downlim;
-		}
-	}
-	int get_y_size(){
-		if (y_downlim >= y_uplim){
-			return y_downlim - y_uplim+1;
-		}
-		else if (y_uplim>y_downlim){
-			return Y - y_uplim + y_downlim;
-		}
-	}
-	int get_z_size(){
-		if (z_downlim >= z_uplim){
-			return z_downlim - z_uplim+1;
-		}
-		else if (z_uplim>z_downlim){
-			return Z - z_uplim + z_downlim;
-		}
-	}
-	bool within_x(int x){
-		if (x_uplim > x_downlim){
-			return x >= x_downlim && x <= x_uplim;
-		}
-		else{
-			return x <= x_downlim && x >= x_uplim;
-		}
-	}
 
-	bool within_y(int y){
-		if (y_uplim > y_downlim){
-			return y >= y_downlim && y <= y_uplim;
-		}
-		else{
-			return y <= y_downlim && y >= y_uplim;
-		}
-	}
-	bool within_z(int z){
-		if (z_uplim > z_downlim){
-			return z >= z_downlim && z <= z_uplim;
-		}
-		else{
-			return z <= z_downlim && z >= z_uplim;
-		}
-	}
-
-	
-	
-
-};
 
 void read_src_dst_file(string filename){
 	ifstream input_file;
@@ -226,7 +236,8 @@ void read_src_dst_file(string filename){
 	
 
 }
-int evaluate_plane(struct src_dst_list* src, int direction){//return the count of the fanout links on the plance
+int evaluate_plane(struct src_dst_list* src, struct trunk plane_trunk, int direction){
+	//return the count of the fanout links on the plance
 	//if the direction is 0, this is the yz plane
 	//if the direction is 1, this is the zx plane
 	//if the direction is 2, this is the xy plane
@@ -275,149 +286,205 @@ int evaluate_plane(struct src_dst_list* src, int direction){//return the count o
 	int relative_y;
 	int relative_z;
 	struct src_dst_list* node_ptr = src->next;
-	if (direction == 0){
-		while (node_ptr){
-			relative_y = node_ptr->y - src->y<0 ? node_ptr->y - src->y + Y : node_ptr->y - src->y;
-			relative_z = node_ptr->z - src->z<0 ? node_ptr->z - src->z + Z : node_ptr->z - src->z;
-			if (relative_y > Y / 2){
-				if (relative_z > Z/2){
-					region2_count++;
-
-				}
-				else if (relative_z <= Z / 2 && relative_z > 0){
-					region4_count++;
-				}
-				else if (relative_z == 0){
-					region3_count++;
-				}
-
-
-			}
-			else if (relative_y < Y / 2){
-				if (relative_z > Z / 2){
-					region0_count++;
-
-				}
-				else if (relative_z <= Z / 2 && relative_z > 0){
-					region6_count++;
-				}
-				else if (relative_z == 0){
-					region7_count++;
-				}
-
-			}
-			else{
-				if (relative_z > Z / 2){
-					region1_count++;
-
-				}
-				else if (relative_z <= Z / 2 && relative_z > 0){
-					region5_count++;
-				}
-
-
-
-			}
-			node_ptr = node_ptr->next;
-
-		}
-	}
-	else if (direction == 1){
-		while (node_ptr){
+	int plane_X = plane_trunk.get_x_size();
+	int plane_Y = plane_trunk.get_y_size();
+	int plane_Z = plane_trunk.get_z_size();
+	int x_dir;
+	int y_dir;
+	int z_dir;
+	while (node_ptr){
+		if (plane_trunk.x_wrap()){
 			relative_x = node_ptr->x - src->x<0 ? node_ptr->x - src->x + X : node_ptr->x - src->x;
-			relative_z = node_ptr->z - src->z<0 ? node_ptr->z - src->z + Z : node_ptr->z - src->z;
-			if (relative_x > X / 2){
-				if (relative_z > Z / 2){
-					region2_count++;
-
-				}
-				else if (relative_z <= Z / 2 && relative_z > 0){
-					region4_count++;
-				}
-				else if (relative_z == 0){
-					region3_count++;
-				}
-
-
-			}
-			else if (relative_x < X / 2){
-				if (relative_z > Z / 2){
-					region0_count++;
-
-				}
-				else if (relative_z <= Z / 2 && relative_z > 0){
-					region6_count++;
-				}
-				else if (relative_z == 0){
-					region7_count++;
-				}
-
-			}
-			else{
-				if (relative_z > Z / 2){
-					region1_count++;
-
-				}
-				else if (relative_z <= Z / 2 && relative_z > 0){
-					region5_count++;
-				}
-
-
-
-			}
-			node_ptr = node_ptr->next;
-
+			if (relative_x> X / 2)
+				x_dir = -1;
+			else if (relative_x == 0)
+				x_dir = 0;
+			else
+				x_dir = 1;
 		}
-
-	}
-	else if (direction == 2){
-		while (node_ptr){
-			relative_x = node_ptr->x - src->x<0 ? node_ptr->x - src->x + X : node_ptr->x - src->x;
+		else{
+			if (plane_trunk.x_downlim<plane_trunk.x_uplim){
+				if (node_ptr->x>src->x)
+					x_dir = 1;
+				else if (node_ptr->x == src->x)
+					x_dir = 0;
+				else
+					x_dir = -1;
+			}
+			else if (plane_trunk.x_downlim > plane_trunk.x_uplim){
+				int src_x_relative_to_downlim;// the distance between src->y to the y downlim
+				int node_ptr_x_relative_to_downlim; // the distance between node_ptr->y to the y downlim
+				src_x_relative_to_downlim = (src->x >= plane_trunk.x_downlim) ? src_x - plane_trunk.x_downlim : src_x - plane_trunk.x_downlim + X;
+				node_ptr_x_relative_to_downlim = (node_ptr->x >= plane_trunk.x_downlim) ? node_ptr->x - plane_trunk.x_downlim : node_ptr->x - plane_trunk.x_downlim + X;
+				if (node_ptr_x_relative_to_downlim > src_x_relative_to_downlim)
+					x_dir = 1;
+				else if (node_ptr_x_relative_to_downlim < src_x_relative_to_downlim)
+					x_dir = -1;
+				else
+					x_dir = 0;
+			}
+			else
+				x_dir = 0;
+		}
+		if (plane_trunk.y_wrap()){
 			relative_y = node_ptr->y - src->y<0 ? node_ptr->y - src->y + Y : node_ptr->y - src->y;
-			if (relative_x > X / 2){
-				if (relative_y > Y / 2){
-					region2_count++;
-
-				}
-				else if (relative_y <= Y / 2 && relative_y > 0){
-					region4_count++;
-				}
-				else if (relative_y == 0){
-					region3_count++;
-				}
-
-
+			if (relative_y> Y / 2)
+				y_dir = -1;
+			else if (relative_y == 0)
+				y_dir = 0;
+			else
+				y_dir = 1;
+		}
+		else{
+			if (plane_trunk.y_downlim<plane_trunk.y_uplim){
+				if (node_ptr->y>src->y)
+					y_dir = 1;
+				else if (node_ptr->y == src->y)
+					y_dir = 0;
+				else
+					y_dir = -1;
 			}
-			else if (relative_x < X / 2){
-				if (relative_y > Y / 2){
-					region0_count++;
-
-				}
-				else if (relative_y <= Y / 2 && relative_y > 0){
-					region6_count++;
-				}
-				else if (relative_y == 0){
-					region7_count++;
-				}
-
+			else if (plane_trunk.y_downlim > plane_trunk.y_uplim){
+				int src_y_relative_to_downlim;// the distance between src->y to the y downlim
+				int node_ptr_y_relative_to_downlim; // the distance between node_ptr->y to the y downlim
+				src_y_relative_to_downlim = (src->y >= plane_trunk.y_downlim) ? src_y - plane_trunk.y_downlim : src_y - plane_trunk.y_downlim + Y;
+				node_ptr_y_relative_to_downlim = (node_ptr->y >= plane_trunk.y_downlim) ? node_ptr->y - plane_trunk.y_downlim : node_ptr->y - plane_trunk.y_downlim + Y;
+				if (node_ptr_y_relative_to_downlim > src_y_relative_to_downlim)
+					y_dir = 1;
+				else if (node_ptr_y_relative_to_downlim < src_y_relative_to_downlim)
+					y_dir = -1;
+				else
+					y_dir = 0;
 			}
-			else{
-				if (relative_y > Y / 2){
-					region1_count++;
-
-				}
-				else if (relative_y <= Y / 2 && relative_y > 0){
-					region5_count++;
-				}
-
-
-
+			else
+				y_dir = 0;
+		}
+		if (plane_trunk.z_wrap()){
+			relative_z = node_ptr->z - src->z<0 ? node_ptr->z - src->z + Z : node_ptr->z - src->z;
+			if (relative_z> Z / 2)
+				z_dir = -1;
+			else if (relative_z == 0)
+				z_dir = 0;
+			else
+				z_dir = 1;
+		}
+		else{
+			if (plane_trunk.z_downlim<plane_trunk.z_uplim){
+				if (node_ptr->z>src->z)
+					z_dir = 1;
+				else if (node_ptr->z == src->z)
+					z_dir = 0;
+				else
+					z_dir = -1;
 			}
-			node_ptr = node_ptr->next;
-
+			else if (plane_trunk.z_downlim > plane_trunk.z_uplim){
+				int src_z_relative_to_downlim;// the distance between src->y to the y downlim
+				int node_ptr_z_relative_to_downlim; // the distance between node_ptr->y to the y downlim
+				src_z_relative_to_downlim = (src->z >= plane_trunk.z_downlim) ? src_z - plane_trunk.z_downlim : src_z - plane_trunk.z_downlim + Z;
+				node_ptr_z_relative_to_downlim = (node_ptr->z >= plane_trunk.z_downlim) ? node_ptr->z - plane_trunk.z_downlim : node_ptr->z - plane_trunk.z_downlim + Z;
+				if (node_ptr_z_relative_to_downlim > src_z_relative_to_downlim)
+					z_dir = 1;
+				else if (node_ptr_z_relative_to_downlim < src_z_relative_to_downlim)
+					z_dir = -1;
+				else
+					z_dir = 0;
+			}
+			else
+				z_dir = 0;
 		}
 
+		if (direction == 0){
+			if (y_dir == 1){
+				if (z_dir == 1)
+					region6_count++;
+				else if (z_dir == 0)
+					region7_count++;
+				else if (z_dir == -1)
+					region0_count++;
+			}
+			else if (y_dir == 0){
+				if (z_dir == 1)
+					region5_count++;
+
+				else if (z_dir == -1)
+					region1_count++;
+
+
+			}
+			else if (y_dir == -1){
+				if (z_dir == 1)
+					region4_count++;
+				else if (z_dir == 0)
+					region3_count++;
+				else if (z_dir == -1)
+					region2_count++;
+
+			}
+		}
+		else if (direction == 1){
+			if (x_dir == 1){
+				if (z_dir == 1)
+					region6_count++;
+				else if (z_dir == 0)
+					region7_count++;
+				else if (z_dir == -1)
+					region0_count++;
+			}
+			else if (x_dir == 0){
+				if (z_dir == 1)
+					region5_count++;
+
+				else if (z_dir == -1)
+					region1_count++;
+
+
+			}
+			else if (x_dir == -1){
+				if (z_dir == 1)
+					region4_count++;
+				else if (z_dir == 0)
+					region3_count++;
+				else if (z_dir == -1)
+					region2_count++;
+
+			}
+		}
+		else if (direction == 2){
+			if (x_dir == 1){
+				if (y_dir == 1)
+					region6_count++;
+				else if (y_dir == 0)
+					region7_count++;
+				else if (y_dir == -1)
+					region0_count++;
+			}
+			else if (x_dir == 0){
+				if (y_dir == 1)
+					region5_count++;
+
+				else if (y_dir == -1)
+					region1_count++;
+
+
+			}
+			else if (x_dir == -1){
+				if (y_dir == 1)
+					region4_count++;
+				else if (y_dir == 0)
+					region3_count++;
+				else if (y_dir == -1)
+					region2_count++;
+
+			}
+		}
 	}
+	
+
+	
+
+	
+
+
 	return xpos_enable+xneg_enable+ypos_enable+yneg_enable+zpos_enable+zneg_enable;
 
 
@@ -500,9 +567,9 @@ int main(){
 	for (int i = 0; i < X; i++){
 		for (int j = 0; j < Y; j++){
 			for (int k = 0; k < Z; k++){
-				x_link_counter[i][j][k] = 0;
-				y_link_counter[i][j][k] = 0;
-				z_link_counter[i][j][k] = 0;
+				x_link_counter[i*Y*Z+j*Z+k] = 0;
+				y_link_counter[i*Y*Z + j*Z + k] = 0;
+				z_link_counter[i*Y*Z + j*Z + k] = 0;
 			}
 		}
 	}
