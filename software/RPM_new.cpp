@@ -105,9 +105,12 @@ struct chunk{
 };
 
 struct src_dst_list** src_list; 
-int x_link_counter[X*Y*Z];
-int y_link_counter[X*Y*Z];
-int z_link_counter[X*Y*Z];
+int xpos_link_counter[X*Y*Z];
+int ypos_link_counter[X*Y*Z];
+int zpos_link_counter[X*Y*Z];
+int xneg_link_counter[X*Y*Z];
+int yneg_link_counter[X*Y*Z];
+int zneg_link_counter[X*Y*Z];
 
 
 struct xyz extract_node_from_line(char* line){
@@ -478,6 +481,245 @@ int evaluate_plane(struct src_dst_list* src, struct trunk plane_trunk, int direc
 			}
 		}
 	}
+
+	if (direction == 0){
+		if (region7_count > 0)
+			ypos_enable = 1;
+		if (region5_count > 0)
+			zpos_enable = 1;
+		if (region1_count > 0)
+			yneg_enable = 1;
+		if (region3_count > 0)
+			zneg_enable = 1;
+		if (region0_count > 0){
+			if (zneg_enable == 0 && ypos_enable == 0){
+				if (region2_count > 0 && region6_count == 0)
+					zneg_enable = 1;
+				else if (region2_count == 0 && region6_count > 0)
+					ypos_enable = 1;
+				else if (region2_count > 0 && region6_count > 0){
+					//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
+					int yposlink_id = src->x*Y*Z + src->y*Z + src->z;
+					int zneglink_id = src->x*Y*Z + src->y*Z + src->z - 1;
+					if (ypos_link_counter[yposlink_id] <= zneg_link_counter[zneglink_id])
+						ypos_enable = 1;
+					else
+						zneg_enable = 1;
+				}	
+			}
+		}
+		if (region2_count > 0){
+			if (zneg_enable == 0 && yneg_enable == 0){
+				if (region0_count > 0 && region4_count == 0)
+					zneg_enable = 1;
+				else if (region0_count == 0 && region4_count > 0)
+					yneg_enable = 1;
+				else if (region0_count > 0 && region4_count > 0){
+					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
+					int yneglink_id = src->x*Y*Z + (src->y-1)*Z + src->z;
+					int zneglink_id = src->x*Y*Z + src->y*Z + src->z - 1;
+					if (yneg_link_counter[yneglink_id] <= zneg_link_counter[zneglink_id])
+						yneg_enable = 1;
+					else
+						zneg_enable = 1;
+				}
+			}
+		}
+		if (region4_count > 0){
+			if (zpos_enable == 0 && yneg_enable == 0){
+				if (region6_count > 0 && region2_count == 0)
+					zpos_enable = 1;
+				else if (region6_count == 0 && region2_count > 0)
+					yneg_enable = 1;
+				else if (region6_count > 0 && region2_count > 0){
+					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
+					int yneglink_id = src->x*Y*Z + (src->y - 1)*Z + src->z;
+					int zposlink_id = src->x*Y*Z + src->y*Z + src->z;
+					if (yneg_link_counter[yneglink_id] <= zpos_link_counter[zposlink_id])
+						yneg_enable = 1;
+					else
+						zpos_enable = 1;
+				}
+			}
+		}
+		if (region6_count > 0){
+			if (zpos_enable == 0 && ypos_enable == 0){
+				if (region4_count > 0 && region0_count == 0)
+					zpos_enable = 1;
+				else if (region4_count == 0 && region0_count > 0)
+					ypos_enable = 1;
+				else if (region4_count > 0 && region0_count > 0){
+					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
+					int yposlink_id = src->x*Y*Z + src->y*Z + src->z;
+					int zposlink_id = src->x*Y*Z + src->y*Z + src->z;
+					if (ypos_link_counter[yposlink_id] <= zpos_link_counter[zposlink_id])
+						ypos_enable = 1;
+					else
+						zpos_enable = 1;
+				}
+			}
+		}
+
+	}
+	if (direction == 1){
+		if (region7_count > 0)
+			xpos_enable = 1;
+		if (region5_count > 0)
+			zpos_enable = 1;
+		if (region1_count > 0)
+			xneg_enable = 1;
+		if (region3_count > 0)
+			zneg_enable = 1;
+		if (region0_count > 0){
+			if (zneg_enable == 0 && xpos_enable == 0){
+				if (region2_count > 0 && region6_count == 0)
+					zneg_enable = 1;
+				else if (region2_count == 0 && region6_count > 0)
+					xpos_enable = 1;
+				else if (region2_count > 0 && region6_count > 0){
+					//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
+					int xposlink_id = src->x*Y*Z + src->y*Z + src->z;
+					int zneglink_id = src->x*Y*Z + src->y*Z + src->z - 1;
+					if (xpos_link_counter[xposlink_id] <= zneg_link_counter[zneglink_id])
+						xpos_enable = 1;
+					else
+						zneg_enable = 1;
+				}
+			}
+		}
+		if (region2_count > 0){
+			if (zneg_enable == 0 && xneg_enable == 0){
+				if (region0_count > 0 && region4_count == 0)
+					zneg_enable = 1;
+				else if (region0_count == 0 && region4_count > 0)
+					xneg_enable = 1;
+				else if (region0_count > 0 && region4_count > 0){
+					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
+					int xneglink_id = (src->x-1)*Y*Z + src->y*Z + src->z;
+					int zneglink_id = src->x*Y*Z + src->y*Z + src->z - 1;
+					if (xneg_link_counter[xneglink_id] <= zneg_link_counter[zneglink_id])
+						xneg_enable = 1;
+					else
+						zneg_enable = 1;
+				}
+			}
+		}
+		if (region4_count > 0){
+			if (zpos_enable == 0 && xneg_enable == 0){
+				if (region6_count > 0 && region2_count == 0)
+					zpos_enable = 1;
+				else if (region6_count == 0 && region2_count > 0)
+					xneg_enable = 1;
+				else if (region6_count > 0 && region2_count > 0){
+					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
+					int xneglink_id = (src->x-1)*Y*Z + src->y*Z + src->z;
+					int zposlink_id = src->x*Y*Z + src->y*Z + src->z;
+					if (xneg_link_counter[xneglink_id] <= zpos_link_counter[zposlink_id])
+						xneg_enable = 1;
+					else
+						zpos_enable = 1;
+				}
+			}
+		}
+		if (region6_count > 0){
+			if (xpos_enable == 0 && zpos_enable == 0){
+				if (region4_count > 0 && region0_count == 0)
+					xpos_enable = 1;
+				else if (region4_count == 0 && region0_count > 0)
+					zpos_enable = 1;
+				else if (region4_count > 0 && region0_count > 0){
+					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
+					int xposlink_id = src->x*Y*Z + src->y*Z + src->z;
+					int zposlink_id = src->x*Y*Z + src->y*Z + src->z;
+					if (zpos_link_counter[zposlink_id] <= xpos_link_counter[xposlink_id])
+						zpos_enable = 1;
+					else
+						xpos_enable = 1;
+				}
+			}
+		}
+
+	}
+	if (direction == 2){
+		if (region7_count > 0)
+			xpos_enable = 1;
+		if (region5_count > 0)
+			ypos_enable = 1;
+		if (region1_count > 0)
+			xneg_enable = 1;
+		if (region3_count > 0)
+			yneg_enable = 1;
+		if (region0_count > 0){
+			if (yneg_enable == 0 && xpos_enable == 0){
+				if (region2_count > 0 && region6_count == 0)
+					yneg_enable = 1;
+				else if (region2_count == 0 && region6_count > 0)
+					xpos_enable = 1;
+				else if (region2_count > 0 && region6_count > 0){
+					//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
+					int xposlink_id = src->x*Y*Z + src->y*Z + src->z;
+					int yneglink_id = src->x*Y*Z + (src->y-1)*Z + src->z;
+					if (xpos_link_counter[xposlink_id] <= yneg_link_counter[yneglink_id])
+						xpos_enable = 1;
+					else
+						yneg_enable = 1;
+				}
+			}
+		}
+		if (region2_count > 0){
+			if (yneg_enable == 0 && xneg_enable == 0){
+				if (region0_count > 0 && region4_count == 0)
+					yneg_enable = 1;
+				else if (region0_count == 0 && region4_count > 0)
+					xneg_enable = 1;
+				else if (region0_count > 0 && region4_count > 0){
+					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
+					int xneglink_id = (src->x - 1)*Y*Z + src->y*Z + src->z;
+					int yneglink_id = src->x*Y*Z + (src->y-1)*Z + src->z;
+					if (xneg_link_counter[xneglink_id] <= yneg_link_counter[yneglink_id])
+						xneg_enable = 1;
+					else
+						yneg_enable = 1;
+				}
+			}
+		}
+		if (region4_count > 0){
+			if (ypos_enable == 0 && xneg_enable == 0){
+				if (region6_count > 0 && region2_count == 0)
+					ypos_enable = 1;
+				else if (region6_count == 0 && region2_count > 0)
+					xneg_enable = 1;
+				else if (region6_count > 0 && region2_count > 0){
+					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
+					int xneglink_id = (src->x - 1)*Y*Z + src->y*Z + src->z;
+					int yposlink_id = src->x*Y*Z + src->y*Z + src->z;
+					if (xneg_link_counter[xneglink_id] <= ypos_link_counter[yposlink_id])
+						xneg_enable = 1;
+					else
+						ypos_enable = 1;
+				}
+			}
+		}
+		if (region6_count > 0){
+			if (xpos_enable == 0 && ypos_enable == 0){
+				if (region4_count > 0 && region0_count == 0)
+					xpos_enable = 1;
+				else if (region4_count == 0 && region0_count > 0)
+					ypos_enable = 1;
+				else if (region4_count > 0 && region0_count > 0){
+					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
+					int xposlink_id = src->x*Y*Z + src->y*Z + src->z;
+					int yposlink_id = src->x*Y*Z + src->y*Z + src->z;
+					if (ypos_link_counter[yposlink_id] <= xpos_link_counter[xposlink_id])
+						ypos_enable = 1;
+					else
+						xpos_enable = 1;
+				}
+			}
+		}
+
+	}
+
 	
 
 	
@@ -567,9 +809,12 @@ int main(){
 	for (int i = 0; i < X; i++){
 		for (int j = 0; j < Y; j++){
 			for (int k = 0; k < Z; k++){
-				x_link_counter[i*Y*Z+j*Z+k] = 0;
-				y_link_counter[i*Y*Z + j*Z + k] = 0;
-				z_link_counter[i*Y*Z + j*Z + k] = 0;
+				xpos_link_counter[i*Y*Z+j*Z+k] = 0;
+				ypos_link_counter[i*Y*Z + j*Z + k] = 0;
+				zpos_link_counter[i*Y*Z + j*Z + k] = 0;
+				xneg_link_counter[i*Y*Z + j*Z + k] = 0;
+				yneg_link_counter[i*Y*Z + j*Z + k] = 0;
+				zneg_link_counter[i*Y*Z + j*Z + k] = 0;
 			}
 		}
 	}
