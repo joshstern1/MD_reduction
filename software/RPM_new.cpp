@@ -239,7 +239,7 @@ void read_src_dst_file(string filename){
 	
 
 }
-int evaluate_plane(struct src_dst_list* src, struct trunk plane_trunk, int direction){
+int evaluate_plane(struct src_dst_list* src, struct chunk plane_trunk, int direction){
 	//return the count of the fanout links on the plance
 	//if the direction is 0, this is the yz plane
 	//if the direction is 1, this is the zx plane
@@ -741,14 +741,15 @@ void evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 	int partition_along_xy_count;//if partition along xy plane, the count of the link outbound from the src
 	int partition_along_yz_count;//if partition along yz plane, the count of the link outbound from the src
 	int partition_along_zx_count;//if partition along zx plane, the count of the link outbound from the src
-	bool xpos_enable = false;
-	bool xneg_enable = false;
-	bool ypos_enable = false;
-	bool yneg_enable = false;
-	bool zpos_enable = false;
-	bool zneg_enable = false;
+	int xpos_enable = 0;
+	int xneg_enable = 0;
+	int ypos_enable = 0;
+	int yneg_enable = 0;
+	int zpos_enable = 0;
+	int zneg_enable = 0;
 	
 	struct src_dst_list* plane_dst_list;
+	struct chunk plane_chunk;
 
 	//first partition along yz plane, the entire src_dst_list will be divided into three parts: the nodes that are in the up chunk of the src node, 
 	// the nodes that are in the downwards chunk of the src node, the nodes that in the same plane with the src node.
@@ -764,6 +765,14 @@ void evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 	partition_along_yz_count = 0;
 	xpos_enable = false;
 	xneg_enable = false;
+
+	plane_chunk.x_downlim = src_x;
+	plane_chunk.x_uplim = src_x;
+	plane_chunk.y_downlim = region.y_downlim;
+	plane_chunk.y_uplim = region.y_uplim;
+	plane_chunk.z_downlim = region.z_downlim;
+	plane_chunk.z_uplim = region.z_uplim;
+
 
 	while (dst){
 		if (dst->x == src_x){
@@ -784,21 +793,70 @@ void evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 			cur_plane_node = new_plane_node;
 		
 		}
-		else if((dst->x>src_x && dst->x-src_x <= X/2)||(dst->x<src_x && src_x-dst->x>=X/2)){
-			if (~xpos_enable){
-				xpos_enable = true;
-				partition_along_yz_count++;
+		else{
+			// now determine the dst should be reached from xpos or xneg
+			if (region.x_wrap()){
+				if (dst->x > src_x){
+					if (dst->x - src_x <= X / 2){
+						xpos_enable = 1;
+						partition_along_yz_count++;
+					}
+					else{
+						xneg_enable = 1;
+						partition_along_yz_count++;
+					}
+				}
+				else{
+					if (src_x - dst->x < X / 2){
+						xneg_enable = 1;
+						partition_along_yz_count++;
+					}
+					else{
+						xpos_enable = 1;
+						partition_along_yz_count++;
+					}
+					
+
+				}
 			}
+			else{
+				if (region.x_downlim<region.x_uplim){
+					if (dst->x>src_x){
+						xpos_enable = 1;
+						partition_along_yz_count++;
+					}
+					else{
+						xneg_enable = 1;
+						partition_along_yz_count++;
+					}
+
+				}
+				else if (region.x_downlim > region.x_uplim){
+					int xdistance_between_src_downlim = (src_x >= region.x_downlim) ? (src_x - region.x_downlim) : (src_x - region.x_downlim + X);
+					int xdistance_between_dst_downlim = (dst->x >= region.x_downlim) ? (dst->x - region.x_downlim) : (dst->x - region.x_downlim + X);
+					if (xdistance_between_src_downlim < xdistance_between_dst_downlim){
+						xpos_enable = 1;
+						partition_along_yz_count++;
+					}
+					else{
+						xneg_enable = 1;
+						partition_along_yz_count++;
+					}
+
+
+				}
+
+
+			}
+
 		}
 
-		else if ((dst->x>src_x && dst->x - src_x > X / 2) || (dst->x < src_x && src_x - dst->x < X / 2)){
-			if (~xneg_enable){
-				xneg_enable = true;
-				partition_along_yz_count++;
-			}
-		}
+
+
+
 		dst = dst->next;	
 	}
+	patition_along_yz_count += evaluate_plane(plane_dst_list,)
 
 }
 
