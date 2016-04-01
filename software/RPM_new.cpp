@@ -1219,7 +1219,12 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		}
 
 		//now distribute the nodes in node_list into three parts
-		while (node_list){
+		struct src_dst_list* node_ptr;
+		node_ptr = node_list->next;
+		while (node_ptr){
+			node_ptr = node_ptr;
+			
+
 			
 		}
 
