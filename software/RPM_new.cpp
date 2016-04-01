@@ -9,12 +9,39 @@
 #define Y 4
 #define Z 4
 #define LINEMAX 100
+#define MAX_NUM_CHILDREN 6
 
 
 #include<iostream>
 #include<fstream>
 #include<string>
 using namespace std;
+
+class node{
+public:
+	int x;
+	int y;
+	int z;
+	int weight; // the children in the same level share the same weight
+	int num_children;
+//	int incoming_port_num; // the port num where the packet where come from, could be LOCAL, XPOS, XNEG, YPOS, YNEG, ZPOS, ZNEG
+	int depth;//root is 0
+	node* parent;
+	node* children[MAX_NUM_CHILDREN];
+	node(int x_val, int y_val, int z_val, int w_val){
+		x = x_val;
+		y = y_val;
+		z = z_val;
+		weight = w_val;
+		parent = NULL;
+		depth = 0;
+		for (int i = 0; i < MAX_NUM_CHILDREN; ++i)
+			children[i] = NULL;
+		num_children = 0;
+//		incoming_port_num = LOCAL; // init as LOCAL first.
+
+	}
+};
 
 struct xyz{
 	int x;
@@ -732,7 +759,7 @@ int evaluate_plane(struct src_dst_list* src, struct chunk plane_trunk, int direc
 
 }
 
-void evaluate_partition(struct src_dst_list* node_list,struct chunk region){
+int evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 	int src_x = node_list->x; 
 	int src_y = node_list->y;
 	int src_z = node_list->z;
@@ -740,7 +767,7 @@ void evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 	struct src_dst_list* dst=node_list->next;
 	int partition_along_xy_count;//if partition along xy plane, the count of the link outbound from the src
 	int partition_along_yz_count;//if partition along yz plane, the count of the link outbound from the src
-	int partition_along_zx_count;//if partition along zx plane, the count of the link outbound from the src
+	int partition_along_xz_count;//if partition along zx plane, the count of the link outbound from the src
 	int xpos_enable = 0;
 	int xneg_enable = 0;
 	int ypos_enable = 0;
@@ -748,30 +775,31 @@ void evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 	int zpos_enable = 0;
 	int zneg_enable = 0;
 	
-	struct src_dst_list* plane_dst_list;
-	struct chunk plane_chunk;
+	
 
 	//first partition along yz plane, the entire src_dst_list will be divided into three parts: the nodes that are in the up chunk of the src node, 
 	// the nodes that are in the downwards chunk of the src node, the nodes that in the same plane with the src node.
-	plane_dst_list->x = src_x;
-	plane_dst_list->y = src_y;
-	plane_dst_list->z = src_z;
-	plane_dst_list->next = NULL;
-	plane_dst_list->src_or_dst = true;
-	plane_dst_list->valid = true;
+	struct src_dst_list* yz_plane_dst_list;
+	struct chunk yz_plane_chunk;
+	yz_plane_dst_list->x = src_x;
+	yz_plane_dst_list->y = src_y;
+	yz_plane_dst_list->z = src_z;
+	yz_plane_dst_list->next = NULL;
+	yz_plane_dst_list->src_or_dst = true;
+	yz_plane_dst_list->valid = true;
 	struct src_dst_list* cur_plane_node;
-	cur_plane_node = plane_dst_list;
+	cur_plane_node = yz_plane_dst_list;
 
 	partition_along_yz_count = 0;
 	xpos_enable = false;
 	xneg_enable = false;
 
-	plane_chunk.x_downlim = src_x;
-	plane_chunk.x_uplim = src_x;
-	plane_chunk.y_downlim = region.y_downlim;
-	plane_chunk.y_uplim = region.y_uplim;
-	plane_chunk.z_downlim = region.z_downlim;
-	plane_chunk.z_uplim = region.z_uplim;
+	yz_plane_chunk.x_downlim = src_x;
+	yz_plane_chunk.x_uplim = src_x;
+	yz_plane_chunk.y_downlim = region.y_downlim;
+	yz_plane_chunk.y_uplim = region.y_uplim;
+	yz_plane_chunk.z_downlim = region.z_downlim;
+	yz_plane_chunk.z_uplim = region.z_uplim;
 
 
 	while (dst){
@@ -799,21 +827,21 @@ void evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 				if (dst->x > src_x){
 					if (dst->x - src_x <= X / 2){
 						xpos_enable = 1;
-						partition_along_yz_count++;
+				//		partition_along_yz_count++;
 					}
 					else{
 						xneg_enable = 1;
-						partition_along_yz_count++;
+					//	partition_along_yz_count++;
 					}
 				}
 				else{
 					if (src_x - dst->x < X / 2){
 						xneg_enable = 1;
-						partition_along_yz_count++;
+					//	partition_along_yz_count++;
 					}
 					else{
 						xpos_enable = 1;
-						partition_along_yz_count++;
+					//	partition_along_yz_count++;
 					}
 					
 
@@ -823,11 +851,11 @@ void evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 				if (region.x_downlim<region.x_uplim){
 					if (dst->x>src_x){
 						xpos_enable = 1;
-						partition_along_yz_count++;
+					//	partition_along_yz_count++;
 					}
 					else{
 						xneg_enable = 1;
-						partition_along_yz_count++;
+					//	partition_along_yz_count++;
 					}
 
 				}
@@ -836,15 +864,16 @@ void evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 					int xdistance_between_dst_downlim = (dst->x >= region.x_downlim) ? (dst->x - region.x_downlim) : (dst->x - region.x_downlim + X);
 					if (xdistance_between_src_downlim < xdistance_between_dst_downlim){
 						xpos_enable = 1;
-						partition_along_yz_count++;
+					//	partition_along_yz_count++;
 					}
 					else{
 						xneg_enable = 1;
-						partition_along_yz_count++;
+					//	partition_along_yz_count++;
 					}
 
 
 				}
+				//if region.x_downlim == region.x_uplim, the region is a plane
 
 
 			}
@@ -856,9 +885,357 @@ void evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 
 		dst = dst->next;	
 	}
-	patition_along_yz_count += evaluate_plane(plane_dst_list,)
+	partition_along_yz_count = evaluate_plane(yz_plane_dst_list, yz_plane_chunk, 0) + xpos_enable + xneg_enable;
+	
+
+	//second partition along xz plane, the entire src_dst_list will be divided into three parts: the nodes that are in the up chunk of the src node along y dimension, 
+	// the nodes that are in the downwards chunk of the src node, the nodes that in the same xz plane with the src node.
+	struct src_dst_list* xz_plane_dst_list;
+	struct chunk xz_plane_chunk;
+	xz_plane_dst_list->x = src_x;
+	xz_plane_dst_list->y = src_y;
+	xz_plane_dst_list->z = src_z;
+	xz_plane_dst_list->next = NULL;
+	xz_plane_dst_list->src_or_dst = true;
+	xz_plane_dst_list->valid = true;
+	struct src_dst_list* cur_plane_node;
+	cur_plane_node = xz_plane_dst_list;
+
+	partition_along_xz_count = 0;
+	ypos_enable = false;
+	yneg_enable = false;
+
+	xz_plane_chunk.x_downlim = region.x_downlim;
+	xz_plane_chunk.x_uplim = region.x_uplim;
+	xz_plane_chunk.y_downlim = src_y;
+	xz_plane_chunk.y_uplim = src_y;
+	xz_plane_chunk.z_downlim = region.z_downlim;
+	xz_plane_chunk.z_uplim = region.z_uplim;
+	while (dst){
+		if (dst->y == src_y){
+			//create the src-dst list on the yz plane
+			//add the dst to the plane_dst_list
+			struct src_dst_list* new_plane_node;
+			if (!(new_plane_node = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout << "no mem" << endl;
+				exit(-1);
+			}
+			new_plane_node->x = dst->x;
+			new_plane_node->y = dst->y;
+			new_plane_node->z = dst->z;
+			new_plane_node->next = NULL;
+			new_plane_node->src_or_dst = false;
+			new_plane_node->valid = true;
+			cur_plane_node->next = new_plane_node;
+			cur_plane_node = new_plane_node;
+
+		}
+		else{
+			// now determine the dst should be reached from xpos or xneg
+			if (region.y_wrap()){
+				if (dst->y > src_y){
+					if (dst->y - src_y <= Y / 2){
+						ypos_enable = 1;
+						//		partition_along_yz_count++;
+					}
+					else{
+						yneg_enable = 1;
+						//	partition_along_yz_count++;
+					}
+				}
+				else{
+					if (src_y - dst->y < Y / 2){
+						yneg_enable = 1;
+						//	partition_along_yz_count++;
+					}
+					else{
+						ypos_enable = 1;
+						//	partition_along_yz_count++;
+					}
+
+
+				}
+			}
+			else{
+				if (region.y_downlim<region.y_uplim){
+					if (dst->y>src_y){
+						ypos_enable = 1;
+						//	partition_along_yz_count++;
+					}
+					else{
+						yneg_enable = 1;
+						//	partition_along_yz_count++;
+					}
+
+				}
+				else if (region.y_downlim > region.y_uplim){
+					int ydistance_between_src_downlim = (src_y >= region.y_downlim) ? (src_y - region.y_downlim) : (src_y - region.y_downlim + Y);
+					int ydistance_between_dst_downlim = (dst->y >= region.y_downlim) ? (dst->y - region.y_downlim) : (dst->y - region.y_downlim + Y);
+					if (ydistance_between_src_downlim < ydistance_between_dst_downlim){
+						ypos_enable = 1;
+						//	partition_along_yz_count++;
+					}
+					else{
+						yneg_enable = 1;
+						//	partition_along_yz_count++;
+					}
+
+
+				}
+				//if region.x_downlim == region.x_uplim, the region is a plane
+
+
+
+			}
+
+		}
+
+
+
+
+		dst = dst->next;
+	}
+	partition_along_xz_count = evaluate_plane(xz_plane_dst_list, xz_plane_chunk, 0) + ypos_enable + yneg_enable;
+
+	//third partition along xy plane, the entire src_dst_list will be divided into three parts: the nodes that are in the up chunk of the src node along z dimension, 
+	// the nodes that are in the downwards chunk of the src node, the nodes that in the same xy plane with the src node.
+	struct src_dst_list* xy_plane_dst_list;
+	struct chunk xy_plane_chunk;
+	xy_plane_dst_list->x = src_x;
+	xy_plane_dst_list->y = src_y;
+	xy_plane_dst_list->z = src_z;
+	xy_plane_dst_list->next = NULL;
+	xy_plane_dst_list->src_or_dst = true;
+	xy_plane_dst_list->valid = true;
+	struct src_dst_list* cur_plane_node;
+	cur_plane_node = xy_plane_dst_list;
+
+	partition_along_xy_count = 0;
+	zpos_enable = false;
+	zneg_enable = false;
+
+	xy_plane_chunk.x_downlim = region.x_downlim;
+	xy_plane_chunk.x_uplim = region.x_uplim;
+	xy_plane_chunk.y_downlim = region.y_downlim;
+	xy_plane_chunk.y_uplim = region.y_uplim;
+	xy_plane_chunk.z_downlim = src_z;
+	xy_plane_chunk.z_uplim = src_z;
+	while (dst){
+		if (dst->z == src_z){
+			//create the src-dst list on the yz plane
+			//add the dst to the plane_dst_list
+			struct src_dst_list* new_plane_node;
+			if (!(new_plane_node = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout << "no mem" << endl;
+				exit(-1);
+			}
+			new_plane_node->x = dst->x;
+			new_plane_node->y = dst->y;
+			new_plane_node->z = dst->z;
+			new_plane_node->next = NULL;
+			new_plane_node->src_or_dst = false;
+			new_plane_node->valid = true;
+			cur_plane_node->next = new_plane_node;
+			cur_plane_node = new_plane_node;
+
+		}
+		else{
+			// now determine the dst should be reached from xpos or xneg
+			if (region.z_wrap()){
+				if (dst->z > src_z){
+					if (dst->z - src_z <= Z / 2){
+						zpos_enable = 1;
+						//		partition_along_yz_count++;
+					}
+					else{
+						zneg_enable = 1;
+						//	partition_along_yz_count++;
+					}
+				}
+				else{
+					if (src_z - dst->z < Z / 2){
+						zneg_enable = 1;
+						//	partition_along_yz_count++;
+					}
+					else{
+						zpos_enable = 1;
+						//	partition_along_yz_count++;
+					}
+
+
+				}
+			}
+			else{
+				if (region.z_downlim<region.z_uplim){
+					if (dst->z>src_z){
+						zpos_enable = 1;
+						//	partition_along_yz_count++;
+					}
+					else{
+						zneg_enable = 1;
+						//	partition_along_yz_count++;
+					}
+
+				}
+				else if (region.z_downlim > region.z_uplim){
+					int zdistance_between_src_downlim = (src_z >= region.z_downlim) ? (src_z - region.y_downlim) : (src_z - region.z_downlim + Z);
+					int zdistance_between_dst_downlim = (dst->z >= region.z_downlim) ? (dst->z - region.y_downlim) : (dst->z - region.z_downlim + Z);
+					if (zdistance_between_src_downlim < zdistance_between_dst_downlim){
+						zpos_enable = 1;
+						//	partition_along_yz_count++;
+					}
+					else{
+						zneg_enable = 1;
+						//	partition_along_yz_count++;
+					}
+
+
+				}
+				//if region.x_downlim == region.x_uplim, the region is a plane
+
+
+
+			}
+
+		}
+
+
+
+
+		dst = dst->next;
+	}
+	partition_along_xy_count = evaluate_plane(xy_plane_dst_list, xy_plane_chunk, 0) + zpos_enable + zneg_enable;
+	//now get the biggest among the partition_along_xy_count, partition_along_yz_count, partition_along_xz_count
+	int biggest_count;
+	int middle_count;
+	int smallest_count;
+	int which_is_smallest;//0 is yz, 1 is xz, 2 is xy
+	int which_is_middle;//0 is yz, 1 is xz, 2 is xy
+
+	if (partition_along_xy_count >= partition_along_yz_count && partition_along_xy_count>=partition_along_xz_count){
+		biggest_count = partition_along_xy_count;
+		if (partition_along_yz_count >= partition_along_xz_count){
+			middle_count = partition_along_yz_count;
+			smallest_count = partition_along_xz_count;
+			which_is_middle = 0;
+			which_is_smallest = 1;
+		}
+		else{
+			middle_count = partition_along_xz_count; 
+			smallest_count = partition_along_yz_count;
+			which_is_middle = 1;
+			which_is_smallest = 0;
+		}
+	}
+	else if (partition_along_yz_count >= partition_along_xz_count){//the xy_count is definitely not the biggest one
+		biggest_count = partition_along_yz_count;
+		if (partition_along_xy_count >= partition_along_xz_count){
+			middle_count = partition_along_xy_count;
+			smallest_count = partition_along_xz_count;
+			which_is_middle = 2;
+			which_is_smallest = 1;
+		}
+		else{
+			middle_count = partition_along_xz_count;
+			smallest_count = partition_along_xy_count;
+			which_is_middle = 1;
+			which_is_smallest = 2;
+		}
+
+	}
+	else{
+		biggest_count = partition_along_xz_count;
+		if (partition_along_xy_count >= partition_along_yz_count){
+			middle_count = partition_along_xy_count;
+			smallest_count = partition_along_yz_count;
+			which_is_middle = 2;
+			which_is_smallest = 0;
+		}
+		else{
+			middle_count = partition_along_yz_count;
+			smallest_count = partition_along_xy_count; 
+			which_is_middle = 0;
+			which_is_smallest = 2;
+		}
+	}
+	if (middle_count == smallest_count){
+		//may alter these two because of the value of the link counter
+	}
+	//free all the link lists that are created
+
+	//
+	return which_is_smallest;
+
+
 
 }
+
+void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tree_src){
+	int partition_eval = evaluate_partition(node_list, Chunk);
+	if (partition_eval == 0){
+		//partition along yz plane
+		struct src_dst_list* x_up_node_list=NULL;
+		struct src_dst_list* x_down_node_list=NULL;
+		struct src_dst_list* yz_plane_node_list;
+		//init the three link lists
+		if (!(x_up_node_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+			cout << "no mem" << endl;
+			exit(-1);
+		}
+
+		if (!(yz_plane_node_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+			cout << "no mem" << endl;
+			exit(-1);
+		}
+		yz_plane_node_list->next = NULL;
+		yz_plane_node_list->x = node_list->x;
+		yz_plane_node_list->y = node_list->y;
+		yz_plane_node_list->z = node_list->z;
+		yz_plane_node_list->valid = true;
+		yz_plane_node_list->src_or_dst = true;
+		if (Chunk.x_wrap() || ((!Chunk.x_wrap()) && node_list->x != Chunk.x_downlim)){
+			if (!(x_down_node_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout << "no mem" << endl;
+				exit(-1);
+			}
+			x_down_node_list->x = node_list->x != 0 ? (node_list->x - 1) : X - 1;
+			x_down_node_list->y = node_list->y;
+			x_down_node_list->z = node_list->z;
+			x_down_node_list->next = NULL;
+			x_down_node_list->valid = true;
+			x_down_node_list->src_or_dst = true;
+		}
+		if (Chunk.x_wrap() || ((!Chunk.x_wrap()) && node_list->x != Chunk.x_uplim)){
+			if (!(x_up_node_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout << "no mem" << endl;
+				exit(-1);
+			}
+			x_up_node_list->x = node_list->x != X-1 ? (node_list->x + 1) : 0;
+			x_up_node_list->y = node_list->y;
+			x_up_node_list->z = node_list->z;
+			x_up_node_list->next = NULL;
+			x_up_node_list->valid = true;
+			x_up_node_list->src_or_dst = true;
+		}
+
+		//now distribute the nodes in node_list into three parts
+		while (node_list){
+			
+		}
+
+
+	}
+	else if (partition_eval == 1){
+		//partition_along y direction
+	}
+	else if (partition_eval == 2){
+		//partition along z direction
+	}
+	
+	
+}
+
+
 
 
 
