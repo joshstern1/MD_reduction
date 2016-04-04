@@ -1222,7 +1222,16 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		struct src_dst_list* node_ptr;
 		node_ptr = node_list->next;
 		while (node_ptr){
-			node_ptr = node_ptr;
+			if (node_ptr->x == yz_plane_node_list->x){
+				//insert this node into yz_plane_node_list
+				node_ptr->next = yz_plane_node_list->next;
+				yz_plane_node_list->next = node_ptr;
+				
+			}
+			else if (Chunk.x_wrap()){
+				if (node_pt
+
+			}
 			
 
 			
@@ -1232,6 +1241,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 	}
 	else if (partition_eval == 1){
 		//partition_along y direction
+
 	}
 	else if (partition_eval == 2){
 		//partition along z direction
