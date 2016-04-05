@@ -1229,22 +1229,425 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				
 			}
 			else if (Chunk.x_wrap()){
-				if (node_pt
+				if (node_ptr->x > yz_plane_node_list->x){
+					if (node_ptr->x - yz_plane_node_list->x <= X / 2){
+						//insert this node into the x_up_node_list
+						if (x_up_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = x_up_node_list->next; 
+							x_up_node_list->next = node_ptr;
+						}
+					}
+					else{
+						//insert this node int othe x_down_node_list
+						if (x_down_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = x_down_node_list->next;
+							x_down_node_list->next = node_ptr;
+						}
+					}
+
+				}
+				else{
+					if (yz_plane_node_list->x - node_ptr->x <= X / 2){
+						//insert this node into the x_down_node_list
+						if (x_down_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = x_down_node_list->next;
+							x_down_node_list->next = node_ptr;
+						}
+					}
+					else{
+						//insert this node into the x_up_node_list
+						if (x_up_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = x_up_node_list->next;
+							x_up_node_list->next = node_ptr;
+						}
+					}
+				}
 
 			}
-			
-
-			
+			else{//x is not wrap up
+				if (Chunk.x_downlim < Chunk.x_downlim){
+					if (node_ptr->x>yz_plane_node_list->x){
+						//insert this node into the x_up_node_list
+						if (x_up_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = x_up_node_list->next;
+							x_up_node_list->next = node_ptr;
+						}
+					}
+					else{
+						//insert this node into the x_down_node_list
+						if (x_down_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = x_down_node_list->next;
+							x_down_node_list->next = node_ptr;
+						}
+					}
+				}
+				else if (Chunk.x_downlim > Chunk.x_downlim){
+					int x_distance_between_node_ptr_downlim = (node_ptr->x >= Chunk.x_downlim) ? (node_ptr->x - Chunk.x_downlim) : (node_ptr->x - Chunk.x_downlim+X);
+					int x_distance_between_src_downlim = (yz_plane_node_list->x >= Chunk.x_downlim) ? (yz_plane_node_list->x - Chunk.x_downlim) : (yz_plane_node_list->x - Chunk.x_downlim+X);
+					if (x_distance_between_src_downlim < x_distance_between_node_ptr_downlim){
+						//insert this node into the x_up_node_list
+						if (x_up_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = x_up_node_list->next;
+							x_up_node_list->next = node_ptr;
+						}
+					}
+					else{
+						//insert this node into the x_down_node_list
+						if (x_down_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = x_down_node_list->next;
+							x_down_node_list->next = node_ptr;
+						}
+					}
+				
+				}
+				
+			}
+			node_ptr = node_ptr->next;		
 		}
 
 
 	}
 	else if (partition_eval == 1){
 		//partition_along y direction
+		//partition along xz plane
+		struct src_dst_list* y_up_node_list = NULL;
+		struct src_dst_list* y_down_node_list = NULL;
+		struct src_dst_list* xz_plane_node_list;
+		//init the three link lists
+		if (!(y_up_node_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+			cout << "no mem" << endl;
+			exit(-1);
+		}
+
+		if (!(xz_plane_node_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+			cout << "no mem" << endl;
+			exit(-1);
+		}
+		xz_plane_node_list->next = NULL;
+		xz_plane_node_list->x = node_list->x;
+		xz_plane_node_list->y = node_list->y;
+		xz_plane_node_list->z = node_list->z;
+		xz_plane_node_list->valid = true;
+		xz_plane_node_list->src_or_dst = true;
+		if (Chunk.y_wrap() || ((!Chunk.y_wrap()) && node_list->y != Chunk.y_downlim)){
+			if (!(y_down_node_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout << "no mem" << endl;
+				exit(-1);
+			}
+			y_down_node_list->x = node_list->x;
+			y_down_node_list->y = node_list->y != 0 ? (node_list->y - 1) : Y - 1;
+			y_down_node_list->z = node_list->z;
+			y_down_node_list->next = NULL;
+			y_down_node_list->valid = true;
+			y_down_node_list->src_or_dst = true;
+		}
+		if (Chunk.y_wrap() || ((!Chunk.y_wrap()) && node_list->y != Chunk.y_uplim)){
+			if (!(y_up_node_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout << "no mem" << endl;
+				exit(-1);
+			}
+			y_up_node_list->x = node_list->x;
+			y_up_node_list->y = node_list->y != Y - 1 ? (node_list->y + 1) : 0;
+			y_up_node_list->z = node_list->z;
+			y_up_node_list->next = NULL;
+			y_up_node_list->valid = true;
+			y_up_node_list->src_or_dst = true;
+		}
+
+		//now distribute the nodes in node_list into three parts
+		struct src_dst_list* node_ptr;
+		node_ptr = node_list->next;
+		while (node_ptr){
+			if (node_ptr->y == xz_plane_node_list->y){
+				//insert this node into xz_plane_node_list
+				node_ptr->next = xz_plane_node_list->next;
+				xz_plane_node_list->next = node_ptr;
+
+			}
+			else if (Chunk.y_wrap()){
+				if (node_ptr->y > xz_plane_node_list->y){
+					if (node_ptr->y - xz_plane_node_list->y <= Y / 2){
+						//insert this node into the x_up_node_list
+						if (y_up_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = y_up_node_list->next;
+							y_up_node_list->next = node_ptr;
+						}
+					}
+					else{
+						//insert this node int othe x_down_node_list
+						if (y_down_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = y_down_node_list->next;
+							y_down_node_list->next = node_ptr;
+						}
+					}
+
+				}
+				else{
+					if (xz_plane_node_list->y - node_ptr->y <= Y / 2){
+						//insert this node into the x_down_node_list
+						if (y_down_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = y_down_node_list->next;
+							y_down_node_list->next = node_ptr;
+						}
+					}
+					else{
+						//insert this node into the x_up_node_list
+						if (y_up_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = y_up_node_list->next;
+							y_up_node_list->next = node_ptr;
+						}
+					}
+				}
+
+			}
+			else{//y is not wrap up
+				if (Chunk.y_downlim < Chunk.y_downlim){
+					if (node_ptr->y>xz_plane_node_list->x){
+						//insert this node into the x_up_node_list
+						if (y_up_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = y_up_node_list->next;
+							y_up_node_list->next = node_ptr;
+						}
+					}
+					else{
+						//insert this node into the x_down_node_list
+						if (y_down_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = y_down_node_list->next;
+							y_down_node_list->next = node_ptr;
+						}
+					}
+				}
+				else if (Chunk.y_downlim > Chunk.y_downlim){
+					int y_distance_between_node_ptr_downlim = (node_ptr->y >= Chunk.y_downlim) ? (node_ptr->y - Chunk.y_downlim) : (node_ptr->y - Chunk.y_downlim + Y);
+					int y_distance_between_src_downlim = (xz_plane_node_list->y >= Chunk.y_downlim) ? (xz_plane_node_list->y - Chunk.y_downlim) : (xz_plane_node_list->y - Chunk.y_downlim + Y);
+					if (y_distance_between_src_downlim < y_distance_between_node_ptr_downlim){
+						//insert this node into the x_up_node_list
+						if (y_up_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = y_up_node_list->next;
+							y_up_node_list->next = node_ptr;
+						}
+					}
+					else{
+						//insert this node into the x_down_node_list
+						if (y_down_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = y_down_node_list->next;
+							y_down_node_list->next = node_ptr;
+						}
+					}
+
+				}
+
+			}
+			node_ptr = node_ptr->next;
+		}
+
 
 	}
 	else if (partition_eval == 2){
-		//partition along z direction
+		//partition_along z direction
+		//partition along xy plane
+		struct src_dst_list* z_up_node_list = NULL;
+		struct src_dst_list* z_down_node_list = NULL;
+		struct src_dst_list* xy_plane_node_list;
+		//init the three link lists
+		if (!(z_up_node_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+			cout << "no mem" << endl;
+			exit(-1);
+		}
+
+		if (!(xy_plane_node_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+			cout << "no mem" << endl;
+			exit(-1);
+		}
+		xy_plane_node_list->next = NULL;
+		xy_plane_node_list->x = node_list->x;
+		xy_plane_node_list->y = node_list->y;
+		xy_plane_node_list->z = node_list->z;
+		xy_plane_node_list->valid = true;
+		xy_plane_node_list->src_or_dst = true;
+		if (Chunk.z_wrap() || ((!Chunk.z_wrap()) && node_list->z != Chunk.z_downlim)){
+			if (!(z_down_node_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout << "no mem" << endl;
+				exit(-1);
+			}
+			z_down_node_list->x = node_list->x;
+			z_down_node_list->y = node_list->y;
+			z_down_node_list->z = node_list->z != 0 ? (node_list->z - 1) : Z - 1;
+			z_down_node_list->next = NULL;
+			z_down_node_list->valid = true;
+			z_down_node_list->src_or_dst = true;
+		}
+		if (Chunk.z_wrap() || ((!Chunk.z_wrap()) && node_list->z != Chunk.z_uplim)){
+			if (!(z_up_node_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout << "no mem" << endl;
+				exit(-1);
+			}
+			z_up_node_list->x = node_list->x;
+			z_up_node_list->y = node_list->y;
+			z_up_node_list->z = node_list->z != Z - 1 ? (node_list->z + 1) : 0;
+			z_up_node_list->next = NULL;
+			z_up_node_list->valid = true;
+			z_up_node_list->src_or_dst = true;
+		}
+
+		//now distribute the nodes in node_list into three parts
+		struct src_dst_list* node_ptr;
+		node_ptr = node_list->next;
+		while (node_ptr){
+			if (node_ptr->z == xy_plane_node_list->z){
+				//insert this node into xy_plane_node_list
+				node_ptr->next = xy_plane_node_list->next;
+				xy_plane_node_list->next = node_ptr;
+
+			}
+			else if (Chunk.z_wrap()){
+				if (node_ptr->z > xy_plane_node_list->y){
+					if (node_ptr->z - xy_plane_node_list->z <= Z / 2){
+						//insert this node into the z_up_node_list
+						if (z_up_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = z_up_node_list->next;
+							z_up_node_list->next = node_ptr;
+						}
+					}
+					else{
+						//insert this node int othe z_down_node_list
+						if (z_down_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = z_down_node_list->next;
+							z_down_node_list->next = node_ptr;
+						}
+					}
+
+				}
+				else{
+					if (xy_plane_node_list->z - node_ptr->z <= Z / 2){
+						//insert this node into the z_down_node_list
+						if (z_down_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = z_down_node_list->next;
+							z_down_node_list->next = node_ptr;
+						}
+					}
+					else{
+						//insert this node into the z_up_node_list
+						if (z_up_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = z_up_node_list->next;
+							z_up_node_list->next = node_ptr;
+						}
+					}
+				}
+
+			}
+			else{//z is not wrap up
+				if (Chunk.z_downlim < Chunk.z_downlim){
+					if (node_ptr->z>xy_plane_node_list->x){
+						//insert this node into the z_up_node_list
+						if (z_up_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = z_up_node_list->next;
+							z_up_node_list->next = node_ptr;
+						}
+					}
+					else{
+						//insert this node into the z_down_node_list
+						if (z_down_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = z_down_node_list->next;
+							z_down_node_list->next = node_ptr;
+						}
+					}
+				}
+				else if (Chunk.z_downlim > Chunk.z_downlim){
+					int z_distance_between_node_ptr_downlim = (node_ptr->z >= Chunk.z_downlim) ? (node_ptr->z - Chunk.z_downlim) : (node_ptr->z - Chunk.z_downlim + Z);
+					int z_distance_between_src_downlim = (xy_plane_node_list->z >= Chunk.z_downlim) ? (xy_plane_node_list->z - Chunk.z_downlim) : (xy_plane_node_list->z - Chunk.z_downlim + Z);
+					if (z_distance_between_src_downlim < z_distance_between_node_ptr_downlim){
+						//insert this node into the x_up_node_list
+						if (z_up_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = z_up_node_list->next;
+							z_up_node_list->next = node_ptr;
+						}
+					}
+					else{
+						//insert this node into the x_down_node_list
+						if (z_down_node_list == NULL){
+							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
+						}
+						else{
+							node_ptr->next = z_down_node_list->next;
+							z_down_node_list->next = node_ptr;
+						}
+					}
+
+				}
+
+			}
+			node_ptr = node_ptr->next;
+		}
 	}
 	
 	
