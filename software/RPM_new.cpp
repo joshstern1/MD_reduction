@@ -295,6 +295,50 @@ int evaluate_plane(struct src_dst_list* src, struct chunk plane_trunk, int direc
 	//|
 	//\/
 	//y
+
+	//there are six possible partition method
+	// method 0
+	// ____________________
+	// |                  |
+    // |                  |
+    // |__________________|
+	// |________S_________|
+	// |                  |
+	// |                  |
+	// |__________________|
+
+	// method 1
+	// ____________________
+	// |                  |
+	// |                  |
+	// |__________________|
+	// |________S_________|
+	// |                  |
+	// |                  |
+	// |__________________|
+	
+	// method 2
+	// ____________________
+	// |       | |        |
+	// |       | |        |
+	// |       | |        |
+	// |_______|S|________|
+	// |                  |
+	// |                  |
+	// |__________________|
+
+
+
+
+	//region0 2 4 and 6 may be merged into 1 3 5 7
+	int region0_merge;//0 means merging to 1, 1 means merging to 7
+	int region2_merge;//0 means merging to 3, 1 means merging to 1
+	int region4_merge;//0 means merging to 5, 1 means merging to 3
+	int region6_merge;//0 means merging to 7, 1 means merging to 5
+
+
+
+
 	int region0_count = 0;
 	int region1_count = 0;
 	int region2_count = 0;
@@ -1170,7 +1214,37 @@ int evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 
 }
 
+void RPM_partition
+
+
+void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, int direction){
+	if (node_list->next == NULL){
+		//the node list only contains leave nodes
+		return void();
+	}
+	//direction: 0 is the yz plane
+	//1 is the xz plane
+	//2 is the xy plane
+	
+	
+
+
+}
 void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tree_src){
+	if (node_list->next == NULL){
+		//the node list only contains leave nodes
+		return void();
+	}
+	if (Chunk.get_x_size == 1){
+		RPM_partition_2D(node_list, Chunk, 0);
+
+	}
+	else if (Chunk.get_y_size == 1){
+		RPM_partition_2D(node_list, Chunk, 1);
+	}
+	else if (Chunk.get_z_size == 1){
+		RPM_partition_2D(node_list, Chunk, 2);
+	}
 	int partition_eval = evaluate_partition(node_list, Chunk);
 	if (partition_eval == 0){
 		//partition along yz plane
@@ -1328,6 +1402,34 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			}
 			node_ptr = node_ptr->next;		
 		}
+		//now the nodes are all in the three link lists
+		//generate the xpos chunk and xneg chunk
+		struct chunk xpos_chunk;
+		struct chunk xneg_chunk;
+		if (x_up_node_list){
+			xpos_chunk.x_downlim = x_up_node_list->x;
+			if (Chunk.x_wrap()){
+				xpos_chunk.x_uplim = yz_plane_node_list->x + X / 2;
+			}
+			xpos_chunk.y_downlim = Chunk.y_downlim;
+			xpos_chunk.y_uplim = Chunk.y_uplim;
+			xpos_chunk.z_downlim = Chunk.z_downlim;
+			xpos_chunk.z_uplim = Chunk.z_uplim;
+			
+		}
+		if (x_down_node_list){
+			xneg_chunk.x_uplim = x_down_node_list->x;
+			if (Chunk.x_wrap()){
+				xneg_chunk.x_downlim = yz_plane_node_list->x - X / 2+1;
+			}
+			xpos_chunk.y_downlim = Chunk.y_downlim;
+			xpos_chunk.y_uplim = Chunk.y_uplim;
+			xpos_chunk.z_downlim = Chunk.z_downlim;
+			xpos_chunk.z_uplim = Chunk.z_uplim;
+		}
+		//now partition the yz plane
+		//
+
 
 
 	}
