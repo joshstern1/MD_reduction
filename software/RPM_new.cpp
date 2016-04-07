@@ -131,6 +131,21 @@ struct chunk{
 
 };
 
+
+struct plane_evaluation{
+	int xpos_enable;
+	int xneg_enable;
+	int ypos_enable;
+	int yneg_enable;
+	int zpos_enable;
+	int zneg_enable;
+	int region0_merge;
+	int region2_merge;
+	int region4_merge;
+	int region6_merge;
+};
+
+
 struct src_dst_list** src_list; 
 int xpos_link_counter[X*Y*Z];
 int ypos_link_counter[X*Y*Z];
@@ -266,7 +281,7 @@ void read_src_dst_file(string filename){
 	
 
 }
-int evaluate_plane(struct src_dst_list* src, struct chunk plane_trunk, int direction){
+struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk plane_trunk, int direction){
 	//return the count of the fanout links on the plance
 	//if the direction is 0, this is the yz plane
 	//if the direction is 1, this is the zx plane
@@ -331,10 +346,10 @@ int evaluate_plane(struct src_dst_list* src, struct chunk plane_trunk, int direc
 
 
 	//region0 2 4 and 6 may be merged into 1 3 5 7
-	int region0_merge;//0 means merging to 1, 1 means merging to 7
-	int region2_merge;//0 means merging to 3, 1 means merging to 1
-	int region4_merge;//0 means merging to 5, 1 means merging to 3
-	int region6_merge;//0 means merging to 7, 1 means merging to 5
+	int region0_merge=2;//0 means merging to 1, 1 means merging to 7, 2 means dont use
+	int region2_merge=2;//0 means merging to 3, 1 means merging to 1, 2 means dont use
+	int region4_merge=2;//0 means merging to 5, 1 means merging to 3, 2 means dont use
+	int region6_merge=2;//0 means merging to 7, 1 means merging to 5, 2 means dont use
 
 
 
@@ -564,69 +579,101 @@ int evaluate_plane(struct src_dst_list* src, struct chunk plane_trunk, int direc
 			zneg_enable = 1;
 		if (region0_count > 0){
 			if (zneg_enable == 0 && ypos_enable == 0){
-				if (region2_count > 0 && region6_count == 0)
+				if (region2_count > 0 && region6_count == 0){
 					zneg_enable = 1;
-				else if (region2_count == 0 && region6_count > 0)
+					region0_merge = 0;
+				}
+				else if (region2_count == 0 && region6_count > 0){
 					ypos_enable = 1;
+					region0_merge = 1;
+				}
 				else if (region2_count > 0 && region6_count > 0){
 					//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
 					int yposlink_id = src->x*Y*Z + src->y*Z + src->z;
 					int zneglink_id = src->x*Y*Z + src->y*Z + src->z - 1;
-					if (ypos_link_counter[yposlink_id] <= zneg_link_counter[zneglink_id])
+					if (ypos_link_counter[yposlink_id] <= zneg_link_counter[zneglink_id]){
 						ypos_enable = 1;
-					else
+						region0_merge = 1;
+					}
+					else{
 						zneg_enable = 1;
+						region0_merge = 0;
+					}
 				}	
 			}
 		}
 		if (region2_count > 0){
 			if (zneg_enable == 0 && yneg_enable == 0){
-				if (region0_count > 0 && region4_count == 0)
+				if (region0_count > 0 && region4_count == 0){
 					zneg_enable = 1;
-				else if (region0_count == 0 && region4_count > 0)
+					region2_merge = 1;
+				}
+				else if (region0_count == 0 && region4_count > 0){
 					yneg_enable = 1;
+					region2_merge = 0;
+				}
 				else if (region0_count > 0 && region4_count > 0){
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
 					int yneglink_id = src->x*Y*Z + (src->y-1)*Z + src->z;
 					int zneglink_id = src->x*Y*Z + src->y*Z + src->z - 1;
-					if (yneg_link_counter[yneglink_id] <= zneg_link_counter[zneglink_id])
+					if (yneg_link_counter[yneglink_id] <= zneg_link_counter[zneglink_id]){
 						yneg_enable = 1;
-					else
+						region2_merge = 0;
+					}
+					else{
 						zneg_enable = 1;
+						region2_merge = 1;
+					}
 				}
 			}
 		}
 		if (region4_count > 0){
 			if (zpos_enable == 0 && yneg_enable == 0){
-				if (region6_count > 0 && region2_count == 0)
+				if (region6_count > 0 && region2_count == 0){
 					zpos_enable = 1;
-				else if (region6_count == 0 && region2_count > 0)
+					region4_merge = 0;
+				}
+				else if (region6_count == 0 && region2_count > 0){
 					yneg_enable = 1;
+					region4_merge = 1;
+				}
 				else if (region6_count > 0 && region2_count > 0){
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
 					int yneglink_id = src->x*Y*Z + (src->y - 1)*Z + src->z;
 					int zposlink_id = src->x*Y*Z + src->y*Z + src->z;
-					if (yneg_link_counter[yneglink_id] <= zpos_link_counter[zposlink_id])
+					if (yneg_link_counter[yneglink_id] <= zpos_link_counter[zposlink_id]){
 						yneg_enable = 1;
-					else
+						region4_merge = 1;
+					}
+					else{
 						zpos_enable = 1;
+						region4_merge = 0;
+					}
 				}
 			}
 		}
 		if (region6_count > 0){
 			if (zpos_enable == 0 && ypos_enable == 0){
-				if (region4_count > 0 && region0_count == 0)
+				if (region4_count > 0 && region0_count == 0){
 					zpos_enable = 1;
-				else if (region4_count == 0 && region0_count > 0)
+					region6_merge = 1;
+				}
+				else if (region4_count == 0 && region0_count > 0){
 					ypos_enable = 1;
+					region6_merge = 0;
+				}
 				else if (region4_count > 0 && region0_count > 0){
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
 					int yposlink_id = src->x*Y*Z + src->y*Z + src->z;
 					int zposlink_id = src->x*Y*Z + src->y*Z + src->z;
-					if (ypos_link_counter[yposlink_id] <= zpos_link_counter[zposlink_id])
+					if (ypos_link_counter[yposlink_id] <= zpos_link_counter[zposlink_id]){
 						ypos_enable = 1;
-					else
+						region6_merge = 0;
+					}
+					else{
 						zpos_enable = 1;
+						region6_merge = 1;
+					}
 				}
 			}
 		}
@@ -643,69 +690,101 @@ int evaluate_plane(struct src_dst_list* src, struct chunk plane_trunk, int direc
 			zneg_enable = 1;
 		if (region0_count > 0){
 			if (zneg_enable == 0 && xpos_enable == 0){
-				if (region2_count > 0 && region6_count == 0)
+				if (region2_count > 0 && region6_count == 0){
 					zneg_enable = 1;
-				else if (region2_count == 0 && region6_count > 0)
+					region0_merge = 0;
+				}
+				else if (region2_count == 0 && region6_count > 0){
 					xpos_enable = 1;
+					region0_merge = 1;
+				}
 				else if (region2_count > 0 && region6_count > 0){
 					//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
 					int xposlink_id = src->x*Y*Z + src->y*Z + src->z;
 					int zneglink_id = src->x*Y*Z + src->y*Z + src->z - 1;
-					if (xpos_link_counter[xposlink_id] <= zneg_link_counter[zneglink_id])
+					if (xpos_link_counter[xposlink_id] <= zneg_link_counter[zneglink_id]){
 						xpos_enable = 1;
-					else
+						region0_merge = 1;
+					}
+					else{
 						zneg_enable = 1;
+						region0_merge = 0;
+					}
 				}
 			}
 		}
 		if (region2_count > 0){
 			if (zneg_enable == 0 && xneg_enable == 0){
-				if (region0_count > 0 && region4_count == 0)
+				if (region0_count > 0 && region4_count == 0){
 					zneg_enable = 1;
-				else if (region0_count == 0 && region4_count > 0)
+					region2_merge = 1;
+				}
+				else if (region0_count == 0 && region4_count > 0){
 					xneg_enable = 1;
+					region2_merge = 0;
+				}
 				else if (region0_count > 0 && region4_count > 0){
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
 					int xneglink_id = (src->x-1)*Y*Z + src->y*Z + src->z;
 					int zneglink_id = src->x*Y*Z + src->y*Z + src->z - 1;
-					if (xneg_link_counter[xneglink_id] <= zneg_link_counter[zneglink_id])
+					if (xneg_link_counter[xneglink_id] <= zneg_link_counter[zneglink_id]){
 						xneg_enable = 1;
-					else
+						region2_merge = 0;
+					}
+					else{
 						zneg_enable = 1;
+						region2_merge = 1;
+					}
 				}
 			}
 		}
 		if (region4_count > 0){
 			if (zpos_enable == 0 && xneg_enable == 0){
-				if (region6_count > 0 && region2_count == 0)
+				if (region6_count > 0 && region2_count == 0){
 					zpos_enable = 1;
-				else if (region6_count == 0 && region2_count > 0)
+					region4_merge = 0;
+				}
+				else if (region6_count == 0 && region2_count > 0){
 					xneg_enable = 1;
+					region4_merge = 1;
+				}
 				else if (region6_count > 0 && region2_count > 0){
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
 					int xneglink_id = (src->x-1)*Y*Z + src->y*Z + src->z;
 					int zposlink_id = src->x*Y*Z + src->y*Z + src->z;
-					if (xneg_link_counter[xneglink_id] <= zpos_link_counter[zposlink_id])
+					if (xneg_link_counter[xneglink_id] <= zpos_link_counter[zposlink_id]){
 						xneg_enable = 1;
-					else
+						region4_merge = 1;
+					}
+					else{
 						zpos_enable = 1;
+						region4_merge = 0;
+					}
 				}
 			}
 		}
 		if (region6_count > 0){
 			if (xpos_enable == 0 && zpos_enable == 0){
-				if (region4_count > 0 && region0_count == 0)
-					xpos_enable = 1;
-				else if (region4_count == 0 && region0_count > 0)
+				if (region4_count > 0 && region0_count == 0){
 					zpos_enable = 1;
+					region6_merge = 1;
+				}
+				else if (region4_count == 0 && region0_count > 0){
+					xpos_enable = 1;
+					region6_merge = 0;
+				}
 				else if (region4_count > 0 && region0_count > 0){
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
 					int xposlink_id = src->x*Y*Z + src->y*Z + src->z;
 					int zposlink_id = src->x*Y*Z + src->y*Z + src->z;
-					if (zpos_link_counter[zposlink_id] <= xpos_link_counter[xposlink_id])
+					if (zpos_link_counter[zposlink_id] <= xpos_link_counter[xposlink_id]){
 						zpos_enable = 1;
-					else
+						region6_merge = 1;
+					}
+					else{
 						xpos_enable = 1;
+						region6_merge = 1;
+					}
 				}
 			}
 		}
@@ -722,75 +801,118 @@ int evaluate_plane(struct src_dst_list* src, struct chunk plane_trunk, int direc
 			yneg_enable = 1;
 		if (region0_count > 0){
 			if (yneg_enable == 0 && xpos_enable == 0){
-				if (region2_count > 0 && region6_count == 0)
+				if (region2_count > 0 && region6_count == 0){
 					yneg_enable = 1;
-				else if (region2_count == 0 && region6_count > 0)
+					region0_merge = 0;
+				}
+				else if (region2_count == 0 && region6_count > 0){
 					xpos_enable = 1;
+					region0_merge = 1;
+				}
 				else if (region2_count > 0 && region6_count > 0){
 					//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
 					int xposlink_id = src->x*Y*Z + src->y*Z + src->z;
 					int yneglink_id = src->x*Y*Z + (src->y-1)*Z + src->z;
-					if (xpos_link_counter[xposlink_id] <= yneg_link_counter[yneglink_id])
+					if (xpos_link_counter[xposlink_id] <= yneg_link_counter[yneglink_id]){
 						xpos_enable = 1;
-					else
+						region0_merge = 1;
+					}
+					else{
 						yneg_enable = 1;
+						region0_merge = 0;
+					}
 				}
 			}
 		}
 		if (region2_count > 0){
 			if (yneg_enable == 0 && xneg_enable == 0){
-				if (region0_count > 0 && region4_count == 0)
+				if (region0_count > 0 && region4_count == 0){
 					yneg_enable = 1;
-				else if (region0_count == 0 && region4_count > 0)
+					region2_merge = 1;
+				}
+				else if (region0_count == 0 && region4_count > 0){
 					xneg_enable = 1;
+					region2_merge = 0;
+				}
 				else if (region0_count > 0 && region4_count > 0){
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
 					int xneglink_id = (src->x - 1)*Y*Z + src->y*Z + src->z;
 					int yneglink_id = src->x*Y*Z + (src->y-1)*Z + src->z;
-					if (xneg_link_counter[xneglink_id] <= yneg_link_counter[yneglink_id])
+					if (xneg_link_counter[xneglink_id] <= yneg_link_counter[yneglink_id]){
 						xneg_enable = 1;
-					else
+						region2_merge = 0;
+					}
+					else{
 						yneg_enable = 1;
+						region2_merge = 1;
+					}
 				}
 			}
 		}
 		if (region4_count > 0){
 			if (ypos_enable == 0 && xneg_enable == 0){
-				if (region6_count > 0 && region2_count == 0)
+				if (region6_count > 0 && region2_count == 0){
 					ypos_enable = 1;
-				else if (region6_count == 0 && region2_count > 0)
+					region4_merge = 0;
+				}
+				else if (region6_count == 0 && region2_count > 0){
 					xneg_enable = 1;
+					region4_merge = 1;
+				}
 				else if (region6_count > 0 && region2_count > 0){
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
 					int xneglink_id = (src->x - 1)*Y*Z + src->y*Z + src->z;
 					int yposlink_id = src->x*Y*Z + src->y*Z + src->z;
-					if (xneg_link_counter[xneglink_id] <= ypos_link_counter[yposlink_id])
+					if (xneg_link_counter[xneglink_id] <= ypos_link_counter[yposlink_id]){
 						xneg_enable = 1;
-					else
+						region4_merge = 1;
+					}
+					else{
 						ypos_enable = 1;
+						region4_merge = 1;
+					}
 				}
 			}
 		}
 		if (region6_count > 0){
 			if (xpos_enable == 0 && ypos_enable == 0){
-				if (region4_count > 0 && region0_count == 0)
+				if (region4_count > 0 && region0_count == 0){
 					xpos_enable = 1;
-				else if (region4_count == 0 && region0_count > 0)
+					region6_merge = 1;
+				}
+				else if (region4_count == 0 && region0_count > 0){
 					ypos_enable = 1;
+					region6_merge = 0;
+				}
 				else if (region4_count > 0 && region0_count > 0){
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
 					int xposlink_id = src->x*Y*Z + src->y*Z + src->z;
 					int yposlink_id = src->x*Y*Z + src->y*Z + src->z;
-					if (ypos_link_counter[yposlink_id] <= xpos_link_counter[xposlink_id])
+					if (ypos_link_counter[yposlink_id] <= xpos_link_counter[xposlink_id]){
 						ypos_enable = 1;
-					else
+						region6_merge = 0;
+					}
+					else{
 						xpos_enable = 1;
+						region6_merge = 1;
+					}
 				}
 			}
 		}
 
 	}
-
+	struct plane_evaluation ret;
+	
+	ret.region0_merge = region0_merge;
+	ret.region2_merge = region2_merge;
+	ret.region4_merge = region4_merge;
+	ret.region6_merge = region6_merge;
+	ret.xpos_enable = xpos_enable;
+	ret.xneg_enable = xneg_enable;
+	ret.ypos_enable = ypos_enable;
+	ret.yneg_enable = yneg_enable;
+	ret.zpos_enable = zpos_enable;
+	ret.zneg_enable = zneg_enable;
 	
 
 	
@@ -798,7 +920,7 @@ int evaluate_plane(struct src_dst_list* src, struct chunk plane_trunk, int direc
 	
 
 
-	return xpos_enable+xneg_enable+ypos_enable+yneg_enable+zpos_enable+zneg_enable;
+	return ret;
 
 
 }
@@ -929,7 +1051,8 @@ int evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 
 		dst = dst->next;	
 	}
-	partition_along_yz_count = evaluate_plane(yz_plane_dst_list, yz_plane_chunk, 0) + xpos_enable + xneg_enable;
+	struct plane_evaluation yz_plane_eval = evaluate_plane(yz_plane_dst_list, yz_plane_chunk, 0);
+	partition_along_yz_count = yz_plane_eval.ypos_enable + yz_plane_eval.yneg_enable + yz_plane_eval.zpos_enable + yz_plane_eval.zneg_enable + xpos_enable + xneg_enable;
 	
 
 	//second partition along xz plane, the entire src_dst_list will be divided into three parts: the nodes that are in the up chunk of the src node along y dimension, 
@@ -1039,7 +1162,9 @@ int evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 
 		dst = dst->next;
 	}
-	partition_along_xz_count = evaluate_plane(xz_plane_dst_list, xz_plane_chunk, 0) + ypos_enable + yneg_enable;
+	struct plane_evaluation xz_plane_eval = evaluate_plane(xz_plane_dst_list, xz_plane_chunk, 0);
+	partition_along_xz_count = xz_plane_eval.xpos_enable + xz_plane_eval.xneg_enable + xz_plane_eval.zpos_enable + xz_plane_eval.zneg_enable + xpos_enable + xneg_enable;
+	
 
 	//third partition along xy plane, the entire src_dst_list will be divided into three parts: the nodes that are in the up chunk of the src node along z dimension, 
 	// the nodes that are in the downwards chunk of the src node, the nodes that in the same xy plane with the src node.
@@ -1148,7 +1273,10 @@ int evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 
 		dst = dst->next;
 	}
-	partition_along_xy_count = evaluate_plane(xy_plane_dst_list, xy_plane_chunk, 0) + zpos_enable + zneg_enable;
+	struct plane_evaluation xy_plane_eval = evaluate_plane(xy_plane_dst_list, xy_plane_chunk, 0);
+	partition_along_xy_count = xy_plane_eval.xpos_enable + xy_plane_eval.xneg_enable + xy_plane_eval.ypos_enable + xz_plane_eval.yneg_enable + xpos_enable + xneg_enable;
+
+	
 	//now get the biggest among the partition_along_xy_count, partition_along_yz_count, partition_along_xz_count
 	int biggest_count;
 	int middle_count;
@@ -1214,7 +1342,7 @@ int evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 
 }
 
-void RPM_partition
+
 
 
 void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, int direction){
@@ -1406,6 +1534,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		//generate the xpos chunk and xneg chunk
 		struct chunk xpos_chunk;
 		struct chunk xneg_chunk;
+		struct chunk yz_plane;
 		if (x_up_node_list){
 			xpos_chunk.x_downlim = x_up_node_list->x;
 			if (Chunk.x_wrap()){
@@ -1427,8 +1556,19 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			xpos_chunk.z_downlim = Chunk.z_downlim;
 			xpos_chunk.z_uplim = Chunk.z_uplim;
 		}
+		yz_plane.x_downlim = yz_plane_node_list->x;
+		yz_plane.x_uplim = yz_plane_node_list->x;
+		yz_plane.y_downlim = Chunk.y_downlim;
+		yz_plane.y_uplim = Chunk.y_uplim;
+		yz_plane.z_downlim = Chunk.z_downlim;
+		yz_plane.z_uplim = Chunk.z_uplim;
 		//now partition the yz plane
-		//
+		//first evalute this plane
+		struct plane_evaluation yz_eval;
+		yz_eval = evaluate_plane(yz_plane_node_list,yz_plane,0);
+		
+		
+		
 
 
 
