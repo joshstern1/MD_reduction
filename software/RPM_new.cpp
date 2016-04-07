@@ -1566,7 +1566,75 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		//first evalute this plane
 		struct plane_evaluation yz_eval;
 		yz_eval = evaluate_plane(yz_plane_node_list,yz_plane,0);
+		//go around the four possible merged regions
+		//at most partition the plane into four parts
+		struct chunk part0;
+		struct chunk part1;
+		struct chunk part2;
+		struct chunk part3;
+		int part_valid[4] = { 0, 0, 0, 0 };
+		if (yz_eval.region0_merge == 0){
+			//region 0 is merged with region1
+			part_valid[0] = 1;
+			part0.x_uplim = yz_plane_node_list->x;
+			part0.x_downlim = yz_plane_node_list->x;
+			part0.y_downlim = yz_plane_node_list->y;
+			part0.y_uplim = yz_plane.y_uplim;
+			part0.z_downlim = yz_plane.z_downlim + 1 >= Z ? 0 : yz_plane.z_downlim + 1;
+			part0.z_uplim = yz_plane.z_uplim;
+		}
 		
+		else if (yz_eval.region0_merge == 1){
+			//region0 is merged with regino7
+			part_valid[0] = 1;
+			part0.x_uplim = yz_plane_node_list->x;
+			part0.x_downlim = yz_plane_node_list->x;
+			part0.y_downlim = yz_plane.y_downlim + 1 >= Y ? 0 : yz_plane.y_downlim + 1;
+			part0.y_uplim = yz_plane.y_uplim;
+			part0.z_downlim = yz_plane.z_downlim;
+			part0.z_uplim = yz_plane_node_list->z;
+		}
+		else if (yz_eval.region0_merge == 2){ // the region 0 is not used
+			part_valid[0] = 0;
+		}
+
+		if (yz_eval.region2_merge == 0){
+			//region 2 is merged with region 3
+			part_valid[1] = 1;
+			part1.x_uplim = yz_plane_node_list->x;
+			part1.x_downlim = yz_plane_node_list->x;
+			part1.y_downlim = yz_plane.y_downlim;
+			part1.y_uplim = yz_plane_node_list->y - 1<0 ? Y - 1 : yz_plane_node_list->y - 1;
+			part1.z_downlim = yz_plane.z_downlim;
+			part1.z_uplim = yz_plane_node_list->z;
+
+		}
+		else if (yz_eval.region2_merge == 1){
+			//region2 is merged with region1
+			if (part_valid[0] == 0 || part_valid[0]==2){
+				part_valid[1] = 1;
+				part1.x_uplim = yz_plane_node_list->x;
+				part1.x_downlim = yz_plane_node_list->x;
+				part1.y_downlim = yz_plane.y_downlim;
+				part1.y_uplim = yz_plane_node_list->y;
+				part1.z_downlim = yz_plane.z_downlim;
+				part1.z_uplim = yz_plane_node_list->z - 1 < 0 ? Z - 1 : yz_plane_node_list->z - 1;
+			}
+			else if (part_valid[0]==1){
+				//region0 and region2 should be merged together
+				part_valid[1] = 0;
+				part0.y_downlim = yz_plane.y_downlim;
+				part0.y_uplim = yz_plane.y_uplim;
+				part0.z_downlim = yz_plane.z_downlim;
+				part0.z_uplim = yz_plane_node_list->z - 1 < 0 ? Z - 1 : yz_plane_node_list->z - 1;
+
+			}
+		}
+		else if (yz_eval.region0_merge == 2){ // the region 0 is not used
+			part_valid[1] = 0;
+
+		}
+
 		
 		
 
