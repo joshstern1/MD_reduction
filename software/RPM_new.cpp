@@ -281,6 +281,63 @@ void read_src_dst_file(string filename){
 	
 
 }
+
+
+bool within_range(struct chunk Chunk, struct src_dst_list* node){
+	bool x_within_range = false;
+	bool y_within_range = false;
+	bool z_within_range = false;
+	if (Chunk.x_downlim < Chunk.x_uplim){
+		if (node->x >= Chunk.x_downlim && node->x <= Chunk.x_uplim){
+			x_within_range = true;
+		}
+	}
+	else if (Chunk.x_downlim>Chunk.x_uplim){
+		if (node->x >= Chunk.x_downlim || node->x <= Chunk.x_uplim){
+			x_within_range = true;
+		}
+	}
+	else{
+		if (node->x == Chunk.x_downlim){
+			x_within_range = true;
+		}
+	}
+	if (Chunk.y_downlim < Chunk.y_uplim){
+		if (node->y >= Chunk.y_downlim && node->y <= Chunk.y_uplim){
+			y_within_range = true;
+		}
+	}
+	else if (Chunk.y_downlim>Chunk.y_uplim){
+		if (node->y >= Chunk.y_downlim || node->y <= Chunk.y_uplim){
+			y_within_range = true;
+		}
+	}
+	else{
+		if (node->y == Chunk.y_downlim){
+			y_within_range = true;
+		}
+	}
+	if (Chunk.z_downlim < Chunk.z_uplim){
+		if (node->z >= Chunk.z_downlim && node->z <= Chunk.z_uplim){
+			z_within_range = true;
+		}
+	}
+	else if (Chunk.z_downlim>Chunk.z_uplim){
+		if (node->z >= Chunk.z_downlim || node->z <= Chunk.z_uplim){
+			z_within_range = true;
+		}
+	}
+	else{
+		if (node->z == Chunk.z_downlim){
+			z_within_range = true;
+		}
+	}
+
+	return x_within_range && y_within_range && z_within_range;
+
+	
+	
+}
 struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk plane_trunk, int direction){
 	//return the count of the fanout links on the plance
 	//if the direction is 0, this is the yz plane
@@ -1775,6 +1832,30 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			part3_list->x=yz_plane_node_ptr->x;
 			part3_list->y=part3.y_downlim;
 			part3_list->z=part3.z_downlim;
+		}
+
+		struct src_dst_list* new_node;
+
+		while (yz_plane_node_ptr){
+			if (part_valid[0]){
+				if (within_range(part0, yz_plane_node_ptr)){
+					//insert a node into the part0 list
+					if (!(new_node = (struct src_dst_list*)malloc(sizeof(src_dst_list)))){
+						cout << "no mem" << endl;
+						exit(-1);
+					}
+					new_node->x = yz_plane_node_ptr->x;
+					new_node->y = yz_plane_node_ptr->y;
+					new_node->z = yz_plane_node_ptr->z;
+					new_node->src_or_dst = false;
+					new_node->valid = true;
+					new_node->next = part0_list->next;
+					part0_list->next = new_node;
+				}
+
+			}
+
+			yz_plane_node_ptr = yz_plane_node_ptr->next;
 		}
 
 		
