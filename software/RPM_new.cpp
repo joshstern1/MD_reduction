@@ -1423,7 +1423,7 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 		node* cur_xneg_node=tree_src;
 		if(Chunk_1D.x_wrap()){
 			for(int i=1;i<=X/2+1;i++){
-				int idx=node_ptr->x+i>=X?node_ptr->x+i-X:node_ptr->x+i;
+				int idx=node_list->x+i>=X?node_list->x+i-X:node_list->x+i;
 				if(x_map[idx]!=0){
 					xpos_enable=true;
 					xpos_max=idx;
@@ -1431,7 +1431,7 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 
 			}
 			for(int i=1;i<=X/2;i++){
-				int idx=node_ptr->x-i<0?node_ptr->x-i+X:node_ptr->x-i;
+				int idx = node_list->x - i<0 ? node_list->x - i + X : node_list->x - i;
 				if(x_map[idx]!=0){
 					xneg_enable=true;
 					xneg_max=idx;
@@ -1439,7 +1439,7 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 			}
 			int new_weight=tree_src->weight==1?1:tree_src->weight/2;
 			if(xpos_enable){
-				tree_src->children[tree_src->num_children]=new node(node_ptr->x+1>=X?node_ptr->x+1-X:node_ptr->x+1, node_list->y,node_list->z,new_weight);
+				tree_src->children[tree_src->num_children]=new node(node_list->x+1>=X?node_list->x+1-X:node_list->x+1, node_list->y,node_list->z,new_weight);
 				cur_xpos_node=tree_src->children[tree_src->num_children];
 				while(cur_xpos_node->x!=xpos_max){
 					cur_xpos_node->children[0]=new node(cur_xpos_node->x+1>=X?cur_xpos_node->x+1-X:cur_xpos_node->x+1, node_list->y,node_list->z,new_weight);
@@ -1450,8 +1450,9 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 				tree_src->num_children++;
 				
 			}
+			new_weight = tree_src->weight == 1 ? 1 : tree_src->weight / 2;
 			if(xneg_enable){
-				tree_src->children[tree_src->num_children]=new node(node_ptr->x-1<0?node_ptr->x-1+X:node_ptr->x-1, node_list->y,node_list->z,new_weight);
+				tree_src->children[tree_src->num_children]=new node(node_list->x-1<0?node_list->x-1+X:node_list->x-1, node_list->y,node_list->z,new_weight);
 				cur_xneg_node=tree_src->children[tree_src->num_children];
 				while(cur_xneg_node->x!=xneg_max){
 					cur_xneg_node->children[0]=new node(cur_xneg_node->x-1<0?cur_xneg_node->x-1+X:cur_xneg_node->x-1, node_list->y,node_list->z,new_weight);
@@ -1493,10 +1494,96 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 				}
 
 			}
-		}
+		
 
 		}
 		else{
+			// the chunk is not wrapped around at x dimension
+			if (node_list->x == Chunk_1D.x_uplim){
+				xpos_enable = false;
+				xneg_enable = true;
+			}
+			else if (node_list->x == Chunk_1D.x_downlim){
+				xpos_enable = true;
+				xneg_enable = false;
+			}
+			for (int i = 1;; i++){
+				int idx = node_list->x + i >= X ? node_list->x + i - X : node_list->x + i;
+				if (x_map[idx] != 0){
+					xpos_enable = true;
+					xpos_max = idx;
+				}
+				if (idx == Chunk_1D.x_uplim)
+					break;				
+			}
+			for (int i = 1;; i++){
+				int idx = node_list->x - i <0 ? node_list->x - i + X : node_list->x - i;
+				if (x_map[idx] != 0){
+					xneg_enable = true;
+					xneg_max = idx;
+				}
+				if (idx == Chunk_1D.x_downlim)
+					break;
+			}
+			int new_weight = tree_src->weight == 1 ? 1 : tree_src->weight / 2;
+			if (xpos_enable){
+				tree_src->children[tree_src->num_children] = new node(node_list->x + 1 >= X ? node_list->x + 1 - X : node_list->x + 1, node_list->y, node_list->z, new_weight);
+				cur_xpos_node = tree_src->children[tree_src->num_children];
+				while (cur_xpos_node->x != xpos_max){
+					cur_xpos_node->children[0] = new node(cur_xpos_node->x + 1 >= X ? cur_xpos_node->x + 1 - X : cur_xpos_node->x + 1, node_list->y, node_list->z, new_weight);
+					cur_xpos_node->num_children = 1;
+					cur_xpos_node = cur_xpos_node->children[0];
+					new_weight = new_weight == 1 ? 1 : new_weight / 2;
+				}
+				tree_src->num_children++;
+
+			}
+			new_weight = tree_src->weight == 1 ? 1 : tree_src->weight / 2;
+			if (xneg_enable){
+				tree_src->children[tree_src->num_children] = new node(node_list->x - 1<0 ? node_list->x - 1 + X : node_list->x - 1, node_list->y, node_list->z, new_weight);
+				cur_xneg_node = tree_src->children[tree_src->num_children];
+				while (cur_xneg_node->x != xneg_max){
+					cur_xneg_node->children[0] = new node(cur_xneg_node->x - 1<0 ? cur_xneg_node->x - 1 + X : cur_xneg_node->x - 1, node_list->y, node_list->z, new_weight);
+					cur_xneg_node->num_children = 1;
+					cur_xneg_node = cur_xneg_node->children[0];
+					new_weight = new_weight == 1 ? 1 : new_weight / 2;
+				}
+				tree_src->num_children++;
+			}
+
+
+			std::cout << "{src:(" << node_list->x << "," << node_list->y << "," << node_list->z << ") weight: " << tree_src->weight << endl;
+			for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
+				std::cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << tree_src->children[children_idx]->weight << endl;
+			}
+			std::cout << "}" << endl;
+			if (xpos_enable){
+				cur_xpos_node = tree_src->children[0];
+
+				while (cur_xpos_node->children[0]){
+					std::cout << "{src:(" << cur_xpos_node->x << "," << cur_xpos_node->y << "," << cur_xpos_node->z << ") weight: " << cur_xpos_node->weight << endl;
+					std::cout << "dst: (" << cur_xpos_node->children[0]->x << "," << cur_xpos_node->children[0]->y << "," << cur_xpos_node->children[0]->z << ") weight" << cur_xpos_node->children[0]->weight << endl;
+					std::cout << "}" << endl;
+					cur_xpos_node = cur_xpos_node->children[0];
+				}
+			}
+			if (xneg_enable){
+				if (xpos_enable){
+					cur_xneg_node = tree_src->children[1];
+				}
+				else{
+					cur_xneg_node = tree_src->children[0];
+				}
+				while (cur_xneg_node->children[0]){
+					std::cout << "{src:(" << cur_xneg_node->x << "," << cur_xneg_node->y << "," << cur_xneg_node->z << ") weight: " << cur_xneg_node->weight << endl;
+					std::cout << "dst: (" << cur_xneg_node->children[0]->x << "," << cur_xneg_node->children[0]->y << "," << cur_xneg_node->children[0]->z << ") weight" << cur_xneg_node->children[0]->weight << endl;
+					std::cout << "}" << endl;
+					cur_xneg_node = cur_xneg_node->children[0];
+				}
+
+			}
+			
+
 		}
 		
 		
