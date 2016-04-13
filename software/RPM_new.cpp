@@ -1399,15 +1399,115 @@ int evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 
 }
 
-void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, node* tree_src){
+void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, node* tree_src, int direction){
 	if (node_list == NULL || node_list->next == NULL)
 		return void();
+	if(direction==0){
+		// this is a pencil that is along the x direction
+		int srcx=node_list->x;
+		int x_map[X];
+		for(int i=0;i<X;i++){
+			x_map[i]=0;
+		}
+		struct src_dst_list* node_ptr;
+		node_ptr=node_list->next;
+		while(node_ptr){
+			x_map[node_ptr->x]=1;
+			node_ptr=node_ptr->next;
+		}
+		bool xpos_enable = false;
+		bool xneg_enable = false;
+		int xpos_max;
+		int xneg_max;
+		node* cur_xpos_node= tree_src;
+		node* cur_xneg_node=tree_src;
+		if(Chunk_1D.x_wrap()){
+			for(int i=1;i<=X/2+1;i++){
+				int idx=node_ptr->x+i>=X?node_ptr->x+i-X:node_ptr->x+i;
+				if(x_map[idx]!=0){
+					xpos_enable=true;
+					xpos_max=idx;
+				}
+
+			}
+			for(int i=1;i<=X/2;i++){
+				int idx=node_ptr->x-i<0?node_ptr->x-i+X:node_ptr->x-i;
+				if(x_map[idx]!=0){
+					xneg_enable=true;
+					xneg_max=idx;
+				}
+			}
+			int new_weight=tree_src->weight==1?1:tree_src->weight/2;
+			if(xpos_enable){
+				tree_src->children[tree_src->num_children]=new node(node_ptr->x+1>=X?node_ptr->x+1-X:node_ptr->x+1, node_list->y,node_list->z,new_weight);
+				cur_xpos_node=tree_src->children[tree_src->num_children];
+				while(cur_xpos_node->x!=xpos_max){
+					cur_xpos_node->children[0]=new node(cur_xpos_node->x+1>=X?cur_xpos_node->x+1-X:cur_xpos_node->x+1, node_list->y,node_list->z,new_weight);
+					cur_xpos_node->num_children=1;
+					cur_xpos_node=cur_xpos_node->children[0];
+					new_weight=new_weight==1?1:new_weight/2;
+				}
+				tree_src->num_children++;
+				
+			}
+			if(xneg_enable){
+				tree_src->children[tree_src->num_children]=new node(node_ptr->x-1<0?node_ptr->x-1+X:node_ptr->x-1, node_list->y,node_list->z,new_weight);
+				cur_xneg_node=tree_src->children[tree_src->num_children];
+				while(cur_xneg_node->x!=xneg_max){
+					cur_xneg_node->children[0]=new node(cur_xneg_node->x-1<0?cur_xneg_node->x-1+X:cur_xneg_node->x-1, node_list->y,node_list->z,new_weight);
+					cur_xneg_node->num_children=1;
+					cur_xneg_node=cur_xneg_node->children[0];
+					new_weight=new_weight==1?1:new_weight/2;
+				}
+				tree_src->num_children++;
+			}
+
+
+			std::cout<<"{src:("<<node_list->x<<","<<node_list->y<<","<<node_list->z<<") weight: "<<tree_src->weight<<endl;
+			for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
+				std::cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << tree_src->children[children_idx]->weight << endl;
+			}
+			std::cout<<"}"<<endl;
+			if(xpos_enable){
+				cur_xpos_node=tree_src->children[0];
+	
+				while(cur_xpos_node->children[0]){
+					std::cout<<"{src:("<<cur_xpos_node->x<<","<<cur_xpos_node->y<<","<<cur_xpos_node->z<<") weight: "<<cur_xpos_node->weight<<endl;
+					std::cout << "dst: (" << cur_xpos_node->children[0]->x << "," << cur_xpos_node->children[0]->y << "," << cur_xpos_node->children[0]->z << ") weight" <<  cur_xpos_node->children[0]->weight << endl;
+					std::cout<<"}"<<endl;
+					cur_xpos_node=cur_xpos_node->children[0];
+				}
+			}
+			if(xneg_enable){
+				if(xpos_enable){
+					cur_xneg_node=tree_src->children[1];
+				}
+				else{
+					cur_xneg_node=tree_src->children[0];
+				}
+				while(cur_xneg_node->children[0]){
+					std::cout<<"{src:("<<cur_xneg_node->x<<","<<cur_xneg_node->y<<","<<cur_xneg_node->z<<") weight: "<<cur_xneg_node->weight<<endl;
+					std::cout << "dst: (" << cur_xneg_node->children[0]->x << "," << cur_xneg_node->children[0]->y << "," << cur_xneg_node->children[0]->z << ") weight" <<  cur_xneg_node->children[0]->weight << endl;
+					std::cout<<"}"<<endl;
+					cur_xneg_node=cur_xneg_node->children[0];
+				}
+
+			}
+		}
+
+		}
+		else{
+		}
+		
+		
+		
+	}
 
 }
 
 
 
-void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, node* tree_src){
+void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, node* tree_src,int direction){
 	if (node_list==NULL || node_list->next == NULL){
 		//the node list only contains leave nodes
 		return void();
@@ -1415,6 +1515,19 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 	//direction: 0 is the yz plane
 	//1 is the xz plane
 	//2 is the xy plane
+	if(Chunk_2D.get_y_size()==1 && Chunk_2D.get_z_size()==1){
+		RPM_partition_1D(node_list,Chunk_2D,tree_src,0);
+	}
+	else if(Chunk_2D.get_x_size()==1 && Chunk_2D.get_z_size()==1){
+		RPM_partition_1D(node_list,Chunk_2D,tree_src,1);
+	}
+	else if(Chunk_2D.get_x_size()==1 && Chunk_2D.get_y_size()==1){
+		RPM_partition_1D(node_list,Chunk_2D,tree_src,2);
+	}
+	else{
+		
+	}
+	
 	
 	
 
@@ -1426,14 +1539,17 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		return void();
 	}
 	if (Chunk.get_x_size == 1){
-		RPM_partition_2D(node_list, Chunk, 0);
+		RPM_partition_2D(node_list, Chunk, tree_src, 0);
+		return void();
 
 	}
 	else if (Chunk.get_y_size == 1){
-		RPM_partition_2D(node_list, Chunk, 1);
+		RPM_partition_2D(node_list, Chunk, tree_src, 1);
+		return void();
 	}
 	else if (Chunk.get_z_size == 1){
-		RPM_partition_2D(node_list, Chunk, 2);
+		RPM_partition_2D(node_list, Chunk, tree_src, 2);
+		return void();
 	}
 	int partition_eval = evaluate_partition(node_list, Chunk);
 	if (partition_eval == 0){
