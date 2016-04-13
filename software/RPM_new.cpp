@@ -17,6 +17,10 @@
 #include<string>
 using namespace std;
 
+
+
+ofstream fout;
+
 class node{
 public:
 	int x;
@@ -226,14 +230,20 @@ void read_src_dst_file(string filename){
 	struct src_dst_list* new_dst;
 	struct src_dst_list* prev_node;
 	//init the src list
-	if (!(src_list = (struct src_dst_list**)malloc(X*Y*Z*sizeof(struct src_dst_list)))){
+	if (!(src_list = (struct src_dst_list**)malloc(X*Y*Z*sizeof(struct src_dst_list*)))){
 		cout << "No mem" << endl;
 		exit(-1);
+	}
+	for(int i=0;i<X*Y*Z;i++){
+		if(!(src_list[i]=(struct src_dst_list*) malloc(sizeof(struct src_dst_list)))){
+			cout<<"no mem"<<endl;
+			exit(-1);
+		}
 	}
 	for (int i = 0; i < X*Y*Z; i++){
 		src_list[i]->valid = false;
 	}
-	while (!input_file.eof){
+	while (!input_file.eof()){
 		input_file.getline(line, LINEMAX);
 		line_counter++;
 		if (line[0] == '{' && line[1] == 'S'){
@@ -1122,7 +1132,7 @@ int evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 	xz_plane_dst_list->next = NULL;
 	xz_plane_dst_list->src_or_dst = true;
 	xz_plane_dst_list->valid = true;
-	struct src_dst_list* cur_plane_node;
+//	struct src_dst_list* cur_plane_node;
 	cur_plane_node = xz_plane_dst_list;
 
 	partition_along_xz_count = 0;
@@ -1233,7 +1243,7 @@ int evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 	xy_plane_dst_list->next = NULL;
 	xy_plane_dst_list->src_or_dst = true;
 	xy_plane_dst_list->valid = true;
-	struct src_dst_list* cur_plane_node;
+//	struct src_dst_list* cur_plane_node;
 	cur_plane_node = xy_plane_dst_list;
 
 	partition_along_xy_count = 0;
@@ -1464,18 +1474,18 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 			}
 
 
-			std::cout<<"{src:("<<node_list->x<<","<<node_list->y<<","<<node_list->z<<") weight: "<<tree_src->weight<<endl;
+			fout<<"{src:("<<node_list->x<<","<<node_list->y<<","<<node_list->z<<") weight: "<<tree_src->weight<<endl;
 			for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-				std::cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << tree_src->children[children_idx]->weight << endl;
+				fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << tree_src->children[children_idx]->weight << endl;
 			}
-			std::cout<<"}"<<endl;
+			fout<<"}"<<endl;
 			if(xpos_enable){
 				cur_xpos_node=tree_src->children[0];
 	
 				while(cur_xpos_node->children[0]){
-					std::cout<<"{src:("<<cur_xpos_node->x<<","<<cur_xpos_node->y<<","<<cur_xpos_node->z<<") weight: "<<cur_xpos_node->weight<<endl;
-					std::cout << "dst: (" << cur_xpos_node->children[0]->x << "," << cur_xpos_node->children[0]->y << "," << cur_xpos_node->children[0]->z << ") weight" <<  cur_xpos_node->children[0]->weight << endl;
-					std::cout<<"}"<<endl;
+					fout<<"{src:("<<cur_xpos_node->x<<","<<cur_xpos_node->y<<","<<cur_xpos_node->z<<") weight: "<<cur_xpos_node->weight<<endl;
+					fout << "dst: (" << cur_xpos_node->children[0]->x << "," << cur_xpos_node->children[0]->y << "," << cur_xpos_node->children[0]->z << ") weight" <<  cur_xpos_node->children[0]->weight << endl;
+					fout<<"}"<<endl;
 					cur_xpos_node=cur_xpos_node->children[0];
 				}
 			}
@@ -1487,9 +1497,9 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 					cur_xneg_node=tree_src->children[0];
 				}
 				while(cur_xneg_node->children[0]){
-					std::cout<<"{src:("<<cur_xneg_node->x<<","<<cur_xneg_node->y<<","<<cur_xneg_node->z<<") weight: "<<cur_xneg_node->weight<<endl;
-					std::cout << "dst: (" << cur_xneg_node->children[0]->x << "," << cur_xneg_node->children[0]->y << "," << cur_xneg_node->children[0]->z << ") weight" <<  cur_xneg_node->children[0]->weight << endl;
-					std::cout<<"}"<<endl;
+					fout<<"{src:("<<cur_xneg_node->x<<","<<cur_xneg_node->y<<","<<cur_xneg_node->z<<") weight: "<<cur_xneg_node->weight<<endl;
+					fout << "dst: (" << cur_xneg_node->children[0]->x << "," << cur_xneg_node->children[0]->y << "," << cur_xneg_node->children[0]->z << ") weight" <<  cur_xneg_node->children[0]->weight << endl;
+					fout<<"}"<<endl;
 					cur_xneg_node=cur_xneg_node->children[0];
 				}
 
@@ -1552,18 +1562,18 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 			}
 
 
-			std::cout << "{src:(" << node_list->x << "," << node_list->y << "," << node_list->z << ") weight: " << tree_src->weight << endl;
+			fout << "{src:(" << node_list->x << "," << node_list->y << "," << node_list->z << ") weight: " << tree_src->weight << endl;
 			for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-				std::cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << tree_src->children[children_idx]->weight << endl;
+				fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << tree_src->children[children_idx]->weight << endl;
 			}
-			std::cout << "}" << endl;
+			fout << "}" << endl;
 			if (xpos_enable){
 				cur_xpos_node = tree_src->children[0];
 
 				while (cur_xpos_node->children[0]){
-					std::cout << "{src:(" << cur_xpos_node->x << "," << cur_xpos_node->y << "," << cur_xpos_node->z << ") weight: " << cur_xpos_node->weight << endl;
-					std::cout << "dst: (" << cur_xpos_node->children[0]->x << "," << cur_xpos_node->children[0]->y << "," << cur_xpos_node->children[0]->z << ") weight" << cur_xpos_node->children[0]->weight << endl;
-					std::cout << "}" << endl;
+					fout << "{src:(" << cur_xpos_node->x << "," << cur_xpos_node->y << "," << cur_xpos_node->z << ") weight: " << cur_xpos_node->weight << endl;
+					fout << "dst: (" << cur_xpos_node->children[0]->x << "," << cur_xpos_node->children[0]->y << "," << cur_xpos_node->children[0]->z << ") weight" << cur_xpos_node->children[0]->weight << endl;
+					fout << "}" << endl;
 					cur_xpos_node = cur_xpos_node->children[0];
 				}
 			}
@@ -1575,9 +1585,9 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 					cur_xneg_node = tree_src->children[0];
 				}
 				while (cur_xneg_node->children[0]){
-					std::cout << "{src:(" << cur_xneg_node->x << "," << cur_xneg_node->y << "," << cur_xneg_node->z << ") weight: " << cur_xneg_node->weight << endl;
-					std::cout << "dst: (" << cur_xneg_node->children[0]->x << "," << cur_xneg_node->children[0]->y << "," << cur_xneg_node->children[0]->z << ") weight" << cur_xneg_node->children[0]->weight << endl;
-					std::cout << "}" << endl;
+					fout << "{src:(" << cur_xneg_node->x << "," << cur_xneg_node->y << "," << cur_xneg_node->z << ") weight: " << cur_xneg_node->weight << endl;
+					fout << "dst: (" << cur_xneg_node->children[0]->x << "," << cur_xneg_node->children[0]->y << "," << cur_xneg_node->children[0]->z << ") weight" << cur_xneg_node->children[0]->weight << endl;
+					fout << "}" << endl;
 					cur_xneg_node = cur_xneg_node->children[0];
 				}
 
@@ -1611,8 +1621,1185 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 	else if(Chunk_2D.get_x_size()==1 && Chunk_2D.get_y_size()==1){
 		RPM_partition_1D(node_list,Chunk_2D,tree_src,2);
 	}
-	else{
+	else if(direction==0){
+		//now partition the yz plane
+		//first evalute this plane
+		struct chunk yz_plane=Chunk_2D;
+		struct src_dst_list* yz_plane_node_list=node_list;
+		struct plane_evaluation yz_eval;
+		yz_eval = evaluate_plane(yz_plane_node_list, Chunk_2D,0);
+		//go around the four possible merged regions
+		//at most partition the plane into four parts
+		struct chunk part0;
+		struct chunk part1;
+		struct chunk part2;
+		struct chunk part3;
+		int part0_srcx, part0_srcy, part0_srcz;
+		int part1_srcx, part1_srcy, part1_srcz;
+		int part2_srcx, part2_srcy, part2_srcz;
+		int part3_srcx, part3_srcy, part3_srcz;
+		int part_valid[4] = { 0, 0, 0, 0 };
+		if (yz_eval.region0_merge == 0){
+			//region 0 is merged with region1
+			part_valid[0] = 1;
+			part0.x_uplim = yz_plane_node_list->x;
+			part0.x_downlim = yz_plane_node_list->x;
+			part0.y_downlim = yz_plane_node_list->y;
+			part0.y_uplim = yz_plane.y_uplim;
+			part0.z_downlim = yz_plane.z_downlim;
+			part0.z_uplim = yz_plane.z_uplim - 1 <0 ? Z - 1 : yz_plane.z_uplim - 1 <0;
+
+			part0_srcx = part0.x_downlim; 
+			part0_srcy = part0.y_downlim;
+			part0_srcz = part0.z_uplim;
+		}
 		
+		else if (yz_eval.region0_merge == 1){
+			//region0 is merged with regino7
+			part_valid[0] = 1;
+			part0.x_uplim = yz_plane_node_list->x;
+			part0.x_downlim = yz_plane_node_list->x;
+			part0.y_downlim = yz_plane.y_downlim + 1 >= Y ? 0 : yz_plane.y_downlim + 1;
+			part0.y_uplim = yz_plane.y_uplim;
+			part0.z_downlim = yz_plane.z_downlim;
+			part0.z_uplim = yz_plane_node_list->z;
+
+			part0_srcx = part0.x_downlim;
+			part0_srcy = part0.y_downlim;
+			part0_srcz = part0.z_uplim;
+		}
+		else if (yz_eval.region0_merge == 2){ // the region 0 is not used
+			part_valid[0] = 0;
+		}
+
+		if (yz_eval.region2_merge == 0){
+			//region 2 is merged with region 3
+			part_valid[1] = 1;
+			part1.x_uplim = yz_plane_node_list->x;
+			part1.x_downlim = yz_plane_node_list->x;
+			part1.y_downlim = yz_plane.y_downlim;
+			part1.y_uplim = yz_plane_node_list->y - 1<0 ? Y - 1 : yz_plane_node_list->y - 1;
+			part1.z_downlim = yz_plane.z_downlim;
+			part1.z_uplim = yz_plane_node_list->z;
+
+			part1_srcx = part1.x_downlim;
+			part1_srcy = part1.y_uplim;
+			part1_srcz = part1.z_uplim;
+
+		}
+		else if (yz_eval.region2_merge == 1){
+			//region2 is merged with region1
+			if (part_valid[0] == 0 || part_valid[0]==2){
+				part_valid[1] = 1;
+				part1.x_uplim = yz_plane_node_list->x;
+				part1.x_downlim = yz_plane_node_list->x;
+				part1.y_downlim = yz_plane.y_downlim;
+				part1.y_uplim = yz_plane_node_list->y;
+				part1.z_downlim = yz_plane.z_downlim;
+				part1.z_uplim = yz_plane_node_list->z - 1 < 0 ? Z - 1 : yz_plane_node_list->z - 1;
+				part1_srcx = part1.x_downlim;
+				part1_srcy = part1.y_uplim;
+				part1_srcz = part1.z_uplim;
+			}
+			else if (part_valid[0]==1){
+				//region0 and region2 should be merged together
+				part_valid[1] = 0;
+				part0.y_downlim = yz_plane.y_downlim;
+				part0.y_uplim = yz_plane.y_uplim;
+				part0.z_downlim = yz_plane.z_downlim;
+				part0.z_uplim = yz_plane_node_list->z - 1 < 0 ? Z - 1 : yz_plane_node_list->z - 1;
+				part0_srcx = part0.x_downlim;
+				part0_srcy = yz_plane_node_list->y;
+				part0_srcz = part0.z_uplim;
+
+			}
+		}
+		else if (yz_eval.region2_merge == 2){ // the region 2 is not used
+			part_valid[1] = 0;
+
+		}
+
+		if (yz_eval.region4_merge == 0){
+			//region 4 is merged with region 5
+			part_valid[2] = 1;
+			part2.x_uplim = yz_plane_node_list->x;
+			part2.x_downlim = yz_plane_node_list->x;
+			part2.y_downlim = yz_plane.y_downlim;
+			part2.y_uplim = yz_plane_node_list->y;
+			part2.z_downlim = yz_plane_node_list->z+1>=Z?0: yz_plane_node_list->z+1;
+			part2.z_uplim = yz_plane.z_uplim;
+			part2_srcx = part2.x_downlim;
+			part2_srcy = part2.y_uplim;
+			part2_srcz = part2.z_downlim;
+
+		}
+		else if (yz_eval.region4_merge == 1){
+			//region4 is merged with region3
+			if (part_valid[1] == 0 || part_valid[1]==2){
+				part_valid[2] = 1;
+				part2.x_uplim = yz_plane_node_list->x;
+				part2.x_downlim = yz_plane_node_list->x;
+				part2.y_downlim = yz_plane.y_downlim;
+				part2.y_uplim = yz_plane_node_list->y- 1 < 0 ? Y - 1 : yz_plane_node_list->y - 1;
+				part2.z_downlim = yz_plane_node_list->z;
+				part2.z_uplim = yz_plane.z_uplim;
+
+				part2_srcx = part2.x_downlim;
+				part2_srcy = part2.y_uplim;
+				part2_srcz = part2.z_downlim;
+			}
+			else if (part_valid[1]==1){
+				//region2 and region4 should be merged together
+				part_valid[2] = 0;
+				part1.y_downlim = yz_plane.y_downlim;
+				part1.y_uplim = yz_plane_node_list->y- 1 < 0 ? Y - 1 : yz_plane_node_list->y - 1;
+				part1.z_downlim = yz_plane.z_downlim;
+				part1.z_uplim =  yz_plane.z_uplim;
+				part1_srcx = part1.x_downlim;
+				part1_srcy = part1.y_uplim;
+				part1_srcz = yz_plane_node_list->z;
+
+			}
+		}
+		else if (yz_eval.region4_merge == 2){ // the region 4 is not used
+			part_valid[2] = 0;
+
+		}
+
+		if (yz_eval.region6_merge == 0){
+			//region 6 is merged with region 7
+			if(part_valid[0] == 0 || part_valid[0]==2){
+				part_valid[3] = 1;
+				part3.x_uplim = yz_plane_node_list->x;
+				part3.x_downlim = yz_plane_node_list->x;
+				part3.y_downlim = yz_plane_node_list->y+1>=Y?0:yz_plane_node_list->y+1;
+				part3.y_uplim = yz_plane.y_uplim;
+				part3.z_downlim = yz_plane_node_list->z;
+				part3.z_uplim = yz_plane.z_uplim;
+				part3_srcx = part3.x_downlim;
+				part3_srcy = part3.y_downlim;
+				part3_srcz = part3.z_downlim;
+			}
+			else if(part_valid[0]==1){
+				//region0 and region6 should be merged together
+				part_valid[3] = 0;
+				part0.x_uplim = yz_plane_node_list->x;
+				part0.x_downlim = yz_plane_node_list->x;
+				part0.y_downlim= yz_plane_node_list->y+1>=Y?0:yz_plane_node_list->y+1;
+				part0.y_uplim=yz_plane.y_uplim;
+				part0.z_downlim =yz_plane.z_downlim;
+				part0.z_uplim = yz_plane.z_uplim;
+
+				part0_srcx = part0.x_downlim;
+				part0_srcy = part0.y_downlim;
+				part0_srcz = yz_plane_node_list->z;
+
+				
+			}
+		}
+		else if (yz_eval.region6_merge == 1){
+			//region6 is merged with region5
+			if (part_valid[2] == 0 || part_valid[2]==2){
+				part_valid[3] = 1;
+				part3.x_uplim = yz_plane_node_list->x;
+				part3.x_downlim = yz_plane_node_list->x;
+				part3.y_downlim = yz_plane_node_list->y;
+				part3.y_uplim = yz_plane.y_uplim;
+				part3.z_downlim = yz_plane_node_list->z+1>=Z?0: yz_plane_node_list->z+1;
+				part3.z_uplim = yz_plane.z_uplim;
+				part3_srcx = part3.x_downlim;
+				part3_srcy = part3.y_downlim;
+				part3_srcz = part3.z_downlim;
+			}
+			else if (part_valid[2]==1){
+				//region4 and region6 should be merged together
+				part_valid[3] = 0;
+				part2.y_downlim = yz_plane.y_downlim;
+				part2.y_uplim = yz_plane.y_uplim;
+				part2.z_downlim = yz_plane_node_list->z+1>=Z?0: yz_plane_node_list->z+1;
+				part2.z_uplim =  yz_plane.z_uplim;
+				part2_srcx = part2.x_downlim;
+				part2_srcy = yz_plane_node_list->y;
+				part2_srcz = part2.z_downlim;
+
+			}
+		}
+		else if (yz_eval.region6_merge == 2){ // the region 6 is not used
+			part_valid[3] = 0;
+
+		}
+
+		//now distribute the yz_plane_node_list into parts (up to 4)
+		struct src_dst_list* yz_plane_node_ptr=yz_plane_node_list->next;
+		struct src_dst_list* part0_list=NULL;
+		struct src_dst_list* part1_list=NULL;
+		struct src_dst_list* part2_list=NULL;
+		struct src_dst_list* part3_list=NULL;
+
+		if(part_valid[0]){
+			if(!(part0_list=(struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout<<"no mem"<<endl;
+				exit(-1);
+			}
+			part0_list->valid=true;
+			part0_list->src_or_dst=true;
+			part0_list->next=NULL;
+			part0_list->x=part0_srcx;
+			part0_list->y=part0_srcy;
+			part0_list->z=part0_srcz;
+		}
+		if(part_valid[1]){
+			if(!(part1_list=(struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout<<"no mem"<<endl;
+				exit(-1);
+			}
+			part1_list->valid=true;
+			part1_list->src_or_dst=true;
+			part1_list->next=NULL;
+			part1_list->x=part1_srcx;
+			part1_list->y=part1_srcy;
+			part1_list->z=part1_srcz;
+		}
+		if(part_valid[2]){
+			if(!(part2_list=(struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout<<"no mem"<<endl;
+				exit(-1);
+			}
+			part2_list->valid=true;
+			part2_list->src_or_dst=true;
+			part2_list->next=NULL;
+			part2_list->x=part2_srcx;
+			part2_list->y=part2_srcy;
+			part2_list->z=part2_srcz;
+		}
+		if(part_valid[3]){
+			if(!(part3_list=(struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout<<"no mem"<<endl;
+				exit(-1);
+			}
+			part3_list->valid=true;
+			part3_list->src_or_dst=true;
+			part3_list->next=NULL;
+			part3_list->x=part3_srcx;
+			part3_list->y=part3_srcy;
+			part3_list->z=part3_srcz;
+		}
+
+		struct src_dst_list* new_node;
+
+		while (yz_plane_node_ptr){
+			if (part_valid[0] && within_range(part0, yz_plane_node_ptr)){
+				//insert a node into the part0 list
+				if (!(new_node = (struct src_dst_list*)malloc(sizeof(src_dst_list)))){
+					cout << "no mem" << endl;
+					exit(-1);
+				}
+				new_node->x = yz_plane_node_ptr->x;
+				new_node->y = yz_plane_node_ptr->y;
+				new_node->z = yz_plane_node_ptr->z;
+				new_node->src_or_dst = false;
+				new_node->valid = true;
+				new_node->next = part0_list->next;
+				part0_list->next = new_node;	
+
+			}
+			else if (part_valid[1] && within_range(part1, yz_plane_node_ptr)){
+				
+				//insert a node into the part1 list
+				if (!(new_node = (struct src_dst_list*)malloc(sizeof(src_dst_list)))){
+					cout << "no mem" << endl;
+					exit(-1);
+				}
+				new_node->x = yz_plane_node_ptr->x;
+				new_node->y = yz_plane_node_ptr->y;
+				new_node->z = yz_plane_node_ptr->z;
+				new_node->src_or_dst = false;
+				new_node->valid = true;
+				new_node->next = part1_list->next;
+				part1_list->next = new_node;
+				
+
+			}
+			else if (part_valid[2] && within_range(part2, yz_plane_node_ptr)){
+				
+				//insert a node into the part2 list
+				if (!(new_node = (struct src_dst_list*)malloc(sizeof(src_dst_list)))){
+					cout << "no mem" << endl;
+					exit(-1);
+				}
+				new_node->x = yz_plane_node_ptr->x;
+				new_node->y = yz_plane_node_ptr->y;
+				new_node->z = yz_plane_node_ptr->z;
+				new_node->src_or_dst = false;
+				new_node->valid = true;
+				new_node->next = part2_list->next;
+				part2_list->next = new_node;
+				
+
+			}
+			else if (part_valid[3] && within_range(part3, yz_plane_node_ptr)){
+				
+					//insert a node into the part3 list
+				if (!(new_node = (struct src_dst_list*)malloc(sizeof(src_dst_list)))){
+					cout << "no mem" << endl;
+					exit(-1);
+				}
+				new_node->x = yz_plane_node_ptr->x;
+				new_node->y = yz_plane_node_ptr->y;
+				new_node->z = yz_plane_node_ptr->z;
+				new_node->src_or_dst = false;
+				new_node->valid = true;
+				new_node->next = part3_list->next;
+				part3_list->next = new_node;
+				
+
+			}
+
+			yz_plane_node_ptr = yz_plane_node_ptr->next;
+		}
+		
+		int new_weight = (tree_src->weight == 1) ? 1 : tree_src->weight / 2;
+		node* part0_src;
+		node* part1_src;
+		node* part2_src;
+		node* part3_src;
+		
+		if (part_valid[0]){
+			tree_src->children[tree_src->num_children] = new node(part0_list->x,part0_list->y,part0_list->z, new_weight);
+			tree_src->children[tree_src->num_children]->parent = tree_src;
+			part0_src = tree_src->children[tree_src->num_children];
+			tree_src->num_children++;
+		}
+		if (part_valid[1]){
+			tree_src->children[tree_src->num_children] = new node(part1_list->x, part1_list->y, part1_list->z, new_weight);
+			tree_src->children[tree_src->num_children]->parent = tree_src;
+			part1_src = tree_src->children[tree_src->num_children];
+			tree_src->num_children++;
+		}
+		if (part_valid[2]){
+			tree_src->children[tree_src->num_children] = new node(part2_list->x, part2_list->y, part2_list->z, new_weight);
+			tree_src->children[tree_src->num_children]->parent = tree_src;
+			part2_src = tree_src->children[tree_src->num_children];
+			tree_src->num_children++;
+		}
+		if (part_valid[3]){
+			tree_src->children[tree_src->num_children] = new node(part3_list->x, part3_list->y, part3_list->z, new_weight);
+			tree_src->children[tree_src->num_children]->parent = tree_src;
+			part3_src = tree_src->children[tree_src->num_children];
+			tree_src->num_children++;
+		}
+		//print the current the src and dst nodes on the current node
+		fout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
+		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
+			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
+
+		}
+		fout << "}" << endl;
+		if (part_valid[0]){
+			RPM_partition_2D(part0_list, part0, part0_src,0);
+		}
+		if (part_valid[1]){
+			RPM_partition_2D(part1_list, part1, part1_src,0);
+		}
+		if (part_valid[2]){
+			RPM_partition_2D(part2_list, part2, part2_src,0);
+		}
+		if (part_valid[3]){
+			RPM_partition_2D(part3_list, part3, part3_src,0);
+		}
+
+
+	}
+	else if(direction==1){
+		//now partition the xz plane
+		struct chunk xz_plane= Chunk_2D;
+		struct src_dst_list* xz_plane_node_list=node_list;
+		//first evalute this plane
+		struct plane_evaluation xz_eval;
+		xz_eval = evaluate_plane(xz_plane_node_list, xz_plane, 1);
+		//go around the four possible merged regions
+		//at most partition the plane into four parts
+		struct chunk part0;
+		struct chunk part1;
+		struct chunk part2;
+		struct chunk part3;
+		int part0_srcx, part0_srcy, part0_srcz;
+		int part1_srcx, part1_srcy, part1_srcz;
+		int part2_srcx, part2_srcy, part2_srcz;
+		int part3_srcx, part3_srcy, part3_srcz;
+
+		int part_valid[4] = { 0, 0, 0, 0 };
+		if (xz_eval.region0_merge == 0){
+			//region 0 is merged with region1
+			part_valid[0] = 1;
+
+			part0.y_uplim = xz_plane_node_list->y;
+			part0.y_downlim = xz_plane_node_list->y;
+			part0.x_downlim = xz_plane_node_list->x;
+			part0.x_uplim = xz_plane.x_uplim;
+			part0.z_downlim = xz_plane.z_downlim;
+			part0.z_uplim = xz_plane_node_list->z - 1<0 ? Z - 1 : xz_plane_node_list->z - 1;
+			part0_srcx = part0.x_downlim;
+			part0_srcy = part0.y_downlim;
+			part0_srcz = part0.z_uplim;
+		}
+
+		else if (xz_eval.region0_merge == 1){
+			//region0 is merged with regino7
+			part_valid[0] = 1;
+			part0.y_uplim = xz_plane_node_list->y;
+			part0.y_downlim = xz_plane_node_list->y;
+			part0.x_downlim = xz_plane.x_downlim + 1 >= X ? 0 : xz_plane.x_downlim + 1;
+			part0.x_uplim = xz_plane.x_uplim;
+			part0.z_downlim = xz_plane.z_downlim;
+			part0.z_uplim = xz_plane_node_list->z;
+			part0_srcx = part0.x_downlim;
+			part0_srcy = part0.y_downlim;
+			part0_srcz = part0.z_uplim;
+		}
+		else if (xz_eval.region0_merge == 2){ // the region 0 is not used
+			part_valid[0] = 0;
+		}
+
+		if (xz_eval.region2_merge == 0){
+			//region 2 is merged with region 3
+			part_valid[1] = 1;
+
+			part1.y_uplim = xz_plane_node_list->y;
+			part1.y_downlim = xz_plane_node_list->y;
+			part1.x_downlim = xz_plane.y_downlim;
+			part1.x_uplim = xz_plane_node_list->x - 1<0 ? X - 1 : xz_plane_node_list->x - 1;
+			part1.z_downlim = xz_plane.z_downlim;
+			part1.z_uplim = xz_plane_node_list->z;
+			part1_srcx = part1.x_uplim;
+			part1_srcy = part1.y_downlim;
+			part1_srcz = part1.z_uplim;
+
+		}
+		else if (xz_eval.region2_merge == 1){
+			//region2 is merged with region1
+			if (part_valid[0] == 0 || part_valid[0] == 2){
+				part_valid[1] = 1;
+
+				part1.y_uplim = xz_plane_node_list->y;
+				part1.y_downlim = xz_plane_node_list->y;
+				part1.x_downlim = xz_plane.x_downlim;
+				part1.x_uplim = xz_plane_node_list->x;
+				part1.z_downlim = xz_plane.z_downlim;
+				part1.z_uplim = xz_plane_node_list->z - 1 < 0 ? Z - 1 : xz_plane_node_list->z - 1;
+				part1_srcx = part1.x_uplim;
+				part1_srcy = part1.y_downlim;
+				part1_srcz = part1.z_uplim;
+			}
+			else if (part_valid[0] == 1){
+				//region0 and region2 should be merged together
+				part_valid[1] = 0;
+				part0.x_downlim = xz_plane.x_downlim;
+				part0.x_uplim = xz_plane.x_uplim;
+				part0.z_downlim = xz_plane.z_downlim;
+				part0.z_uplim = xz_plane_node_list->z - 1 < 0 ? Z - 1 : xz_plane_node_list->z - 1;
+				part0_srcx = xz_plane_node_list->x;
+				part0_srcy = part1.y_downlim;
+				part0_srcz = part1.z_uplim;
+
+			}
+		}
+		else if (xz_eval.region2_merge == 2){ // the region 2 is not used
+			part_valid[1] = 0;
+
+		}
+
+		if (xz_eval.region4_merge == 0){
+			//region 4 is merged with region 5
+			part_valid[2] = 1;
+			part2.y_uplim = xz_plane_node_list->y;
+			part2.y_downlim = xz_plane_node_list->y;
+			part2.x_downlim = xz_plane.x_downlim;
+			part2.x_uplim = xz_plane_node_list->x;
+			part2.z_downlim = xz_plane_node_list->z + 1 >= Z ? 0 : xz_plane_node_list->z + 1;
+			part2.z_uplim = xz_plane.z_uplim;
+			part2_srcx = part2.x_uplim;
+			part2_srcy = part2.y_downlim;
+			part2_srcz = part2.z_downlim;
+
+		}
+		else if (xz_eval.region4_merge == 1){
+			//region4 is merged with region3
+			if (part_valid[1] == 0 || part_valid[1] == 2){
+				part_valid[2] = 1;
+
+				part2.y_uplim = xz_plane_node_list->y;
+				part2.y_downlim = xz_plane_node_list->y;
+				part2.x_downlim = xz_plane.x_downlim;
+				part2.x_uplim = xz_plane_node_list->x - 1 < 0 ? X - 1 : xz_plane_node_list->x - 1;
+				part2.z_downlim = xz_plane_node_list->z;
+				part2.z_uplim = xz_plane.z_uplim;
+				part2_srcx = part2.x_uplim;
+				part2_srcy = part2.y_downlim;
+				part2_srcz = part2.z_downlim;
+			}
+			else if (part_valid[1] == 1){
+				//region2 and region4 should be merged together
+				part_valid[2] = 0;
+
+
+				part1.x_downlim = xz_plane.x_downlim;
+				part1.x_uplim = xz_plane_node_list->x - 1 < 0 ? X - 1 : xz_plane_node_list->x - 1;
+				part1.z_downlim = xz_plane.z_downlim;
+				part1.z_uplim = xz_plane.z_uplim;
+				part1_srcx = part1.x_uplim;
+				part1_srcy = part1.y_downlim;
+				part1_srcz = xz_plane_node_list->z;
+
+			}
+		}
+		else if (xz_eval.region4_merge == 2){ // the region 4 is not used
+			part_valid[2] = 0;
+
+		}
+
+		if (xz_eval.region6_merge == 0){
+			//region 6 is merged with region 7
+			if (part_valid[0] == 0 || part_valid[0] == 2){
+				part_valid[3] = 1;
+
+				part3.y_uplim = xz_plane_node_list->y;
+				part3.y_downlim = xz_plane_node_list->y;
+				part3.x_downlim = xz_plane_node_list->x + 1 >= X ? 0 : xz_plane_node_list->x + 1;
+				part3.x_uplim = xz_plane.x_uplim;
+				part3.z_downlim = xz_plane_node_list->z;
+				part3.z_uplim = xz_plane.z_uplim;
+				part3_srcx = part3.x_downlim;
+				part3_srcy = part3.y_downlim;
+				part3_srcz = part3.z_downlim;
+			}
+			else if (part_valid[0] == 1){
+				//region0 and region6 should be merged together
+				part_valid[3] = 0;
+
+
+				part0.y_uplim = xz_plane_node_list->y;
+				part0.y_downlim = xz_plane_node_list->y;
+				part0.x_downlim = xz_plane_node_list->x + 1 >= X ? 0 : xz_plane_node_list->x + 1;
+				part0.x_uplim = xz_plane.x_uplim;
+				part0.z_downlim = xz_plane.z_downlim;
+				part0.z_uplim = xz_plane.z_uplim;
+				part0_srcx = part0.x_downlim;
+				part0_srcy = part0.y_downlim;
+				part0_srcz = xz_plane_node_list->z;
+
+			}
+		}
+		else if (xz_eval.region6_merge == 1){
+			//region6 is merged with region5
+			if (part_valid[2] == 0 || part_valid[2] == 2){
+				part_valid[3] = 1;
+
+
+				part3.y_uplim = xz_plane_node_list->y;
+				part3.y_downlim = xz_plane_node_list->y;
+				part3.x_downlim = xz_plane_node_list->x;
+				part3.x_uplim = xz_plane.x_uplim;
+				part3.z_downlim = xz_plane_node_list->z + 1 >= Z ? 0 : xz_plane_node_list->z + 1;
+				part3.z_uplim = xz_plane.z_uplim;
+				part3_srcx = part3.x_downlim;
+				part3_srcy = part3.y_downlim;
+				part3_srcz = part3.z_downlim;
+			}
+			else if (part_valid[2] == 1){
+				//region4 and region6 should be merged together
+				part_valid[3] = 0;
+
+				part2.x_downlim = xz_plane.x_downlim;
+				part2.x_uplim = xz_plane.x_uplim;
+				part2.z_downlim = xz_plane_node_list->z + 1 >= Z ? 0 : xz_plane_node_list->z + 1;
+				part2.z_uplim = xz_plane.z_uplim;
+				part2_srcx = xz_plane_node_list->x;
+				part2_srcy = part2.y_downlim;
+				part2_srcz = part2.z_downlim;
+
+			}
+		}
+		else if (xz_eval.region6_merge == 2){ // the region 6 is not used
+			part_valid[3] = 0;
+
+		}
+
+		//now distribute the xz_plane_node_list into parts (up to 4)
+		struct src_dst_list* xz_plane_node_ptr = xz_plane_node_list->next;
+		struct src_dst_list* part0_list = NULL;
+		struct src_dst_list* part1_list = NULL;
+		struct src_dst_list* part2_list = NULL;
+		struct src_dst_list* part3_list = NULL;
+
+		if (part_valid[0]){
+			if (!(part0_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout << "no mem" << endl;
+				exit(-1);
+			}
+			part0_list->valid = true;
+			part0_list->src_or_dst = true;
+			part0_list->next = NULL;
+			part0_list->x = part0_srcx;
+			part0_list->y = part0_srcy;
+			part0_list->z = part0_srcz;
+		}
+		if (part_valid[1]){
+			if (!(part1_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout << "no mem" << endl;
+				exit(-1);
+			}
+			part1_list->valid = true;
+			part1_list->src_or_dst = true;
+			part1_list->next = NULL;
+			part1_list->x = part1_srcx;
+			part1_list->y = part1_srcy;
+			part1_list->z = part1_srcz;
+		}
+		if (part_valid[2]){
+			if (!(part2_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout << "no mem" << endl;
+				exit(-1);
+			}
+			part2_list->valid = true;
+			part2_list->src_or_dst = true;
+			part2_list->next = NULL;
+			part2_list->x = part2_srcx;
+			part2_list->y = part2_srcy;
+			part2_list->z = part2_srcz;
+		}
+		if (part_valid[3]){
+			if (!(part3_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout << "no mem" << endl;
+				exit(-1);
+			}
+			part3_list->valid = true;
+			part3_list->src_or_dst = true;
+			part3_list->next = NULL;
+			part3_list->x = part3_srcx;
+			part3_list->y = part3_srcy;
+			part3_list->z = part3_srcz;
+		}
+
+		struct src_dst_list* new_node;
+
+		while (xz_plane_node_ptr){
+			if (part_valid[0] && within_range(part0, xz_plane_node_ptr)){
+				//insert a node into the part0 list
+				if (!(new_node = (struct src_dst_list*)malloc(sizeof(src_dst_list)))){
+					cout << "no mem" << endl;
+					exit(-1);
+				}
+				new_node->x = xz_plane_node_ptr->x;
+				new_node->y = xz_plane_node_ptr->y;
+				new_node->z = xz_plane_node_ptr->z;
+				new_node->src_or_dst = false;
+				new_node->valid = true;
+				new_node->next = part0_list->next;
+				part0_list->next = new_node;
+
+			}
+			else if (part_valid[1] && within_range(part1, xz_plane_node_ptr)){
+
+				//insert a node into the part1 list
+				if (!(new_node = (struct src_dst_list*)malloc(sizeof(src_dst_list)))){
+					cout << "no mem" << endl;
+					exit(-1);
+				}
+				new_node->x = xz_plane_node_ptr->x;
+				new_node->y = xz_plane_node_ptr->y;
+				new_node->z = xz_plane_node_ptr->z;
+				new_node->src_or_dst = false;
+				new_node->valid = true;
+				new_node->next = part1_list->next;
+				part1_list->next = new_node;
+
+
+			}
+			else if (part_valid[2] && within_range(part2, xz_plane_node_ptr)){
+
+				//insert a node into the part2 list
+				if (!(new_node = (struct src_dst_list*)malloc(sizeof(src_dst_list)))){
+					cout << "no mem" << endl;
+					exit(-1);
+				}
+				new_node->x = xz_plane_node_ptr->x;
+				new_node->y = xz_plane_node_ptr->y;
+				new_node->z = xz_plane_node_ptr->z;
+				new_node->src_or_dst = false;
+				new_node->valid = true;
+				new_node->next = part2_list->next;
+				part2_list->next = new_node;
+
+
+			}
+			else if (part_valid[3] && within_range(part3, xz_plane_node_ptr)){
+
+				//insert a node into the part3 list
+				if (!(new_node = (struct src_dst_list*)malloc(sizeof(src_dst_list)))){
+					cout << "no mem" << endl;
+					exit(-1);
+				}
+				new_node->x = xz_plane_node_ptr->x;
+				new_node->y = xz_plane_node_ptr->y;
+				new_node->z = xz_plane_node_ptr->z;
+				new_node->src_or_dst = false;
+				new_node->valid = true;
+				new_node->next = part3_list->next;
+				part3_list->next = new_node;
+
+
+			}
+
+			xz_plane_node_ptr = xz_plane_node_ptr->next;
+		}
+
+		int new_weight = (tree_src->weight == 1) ? 1 : tree_src->weight / 2;
+		node* part0_src;
+		node* part1_src;
+		node* part2_src;
+		node* part3_src;
+
+		if (part_valid[0]){
+			tree_src->children[tree_src->num_children] = new node(part0_list->x, part0_list->y, part0_list->z, new_weight);
+			tree_src->children[tree_src->num_children]->parent = tree_src;
+			part0_src = tree_src->children[tree_src->num_children];
+			tree_src->num_children++;
+		}
+		if (part_valid[1]){
+			tree_src->children[tree_src->num_children] = new node(part1_list->x, part1_list->y, part1_list->z, new_weight);
+			tree_src->children[tree_src->num_children]->parent = tree_src;
+			part1_src = tree_src->children[tree_src->num_children];
+			tree_src->num_children++;
+		}
+		if (part_valid[2]){
+			tree_src->children[tree_src->num_children] = new node(part2_list->x, part2_list->y, part2_list->z, new_weight);
+			tree_src->children[tree_src->num_children]->parent = tree_src;
+			part2_src = tree_src->children[tree_src->num_children];
+			tree_src->num_children++;
+		}
+		if (part_valid[3]){
+			tree_src->children[tree_src->num_children] = new node(part3_list->x, part3_list->y, part3_list->z, new_weight);
+			tree_src->children[tree_src->num_children]->parent = tree_src;
+			part3_src = tree_src->children[tree_src->num_children];
+			tree_src->num_children++;
+		}
+		//print the current the src and dst nodes on the current node
+		fout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
+		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
+			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
+
+		}
+		fout << "}" << endl;
+
+		if (part_valid[0]){
+			RPM_partition_2D(part0_list, part0, part0_src,1);
+		}
+		if (part_valid[1]){
+			RPM_partition_2D(part1_list, part1, part1_src,1);
+		}
+		if (part_valid[2]){
+			RPM_partition_2D(part2_list, part2, part2_src,1);
+		}
+		if (part_valid[3]){
+			RPM_partition_2D(part3_list, part3, part3_src,1);
+		}
+	}
+	else if(direction==2){
+		//now partition the xz plane
+		//first evalute this plane
+		struct chunk xy_plane=Chunk_2D;
+		struct src_dst_list* xy_plane_node_list=node_list;
+		struct plane_evaluation xy_eval;
+		xy_eval = evaluate_plane(xy_plane_node_list, xy_plane, 2);
+		//go around the four possible merged regions
+		//at most partition the plane into four parts
+		struct chunk part0;
+		struct chunk part1;
+		struct chunk part2;
+		struct chunk part3;
+		int part0_srcx, part0_srcy, part0_srcz;
+		int part1_srcx, part1_srcy, part1_srcz;
+		int part2_srcx, part2_srcy, part2_srcz;
+		int part3_srcx, part3_srcy, part3_srcz;
+
+		int part_valid[4] = { 0, 0, 0, 0 };
+		if (xy_eval.region0_merge == 0){
+			//region 0 is merged with region1
+			part_valid[0] = 1;
+
+			part0.z_uplim = xy_plane_node_list->z;
+			part0.z_downlim = xy_plane_node_list->z;
+			part0.x_downlim = xy_plane_node_list->x;
+			part0.x_uplim = xy_plane.x_uplim;
+			part0.y_downlim = xy_plane.y_downlim;
+			part0.y_uplim = xy_plane_node_list->y - 1<0 ? Y - 1 : xy_plane_node_list->y - 1;
+			part0_srcx = part0.x_downlim;
+			part0_srcz = part0.z_downlim;
+			part0_srcy = part0.y_uplim;
+		}
+
+		else if (xy_eval.region0_merge == 1){
+			//region0 is merged with regino7
+			part_valid[0] = 1;
+			part0.z_uplim = xy_plane_node_list->z;
+			part0.z_downlim = xy_plane_node_list->z;
+			part0.x_downlim = xy_plane.x_downlim + 1 >= X ? 0 : xy_plane.x_downlim + 1;
+			part0.x_uplim = xy_plane.x_uplim;
+			part0.y_downlim = xy_plane.z_downlim;
+			part0.y_uplim = xy_plane_node_list->y;
+			part0_srcx = part0.x_downlim;
+			part0_srcz = part0.z_downlim;
+			part0_srcy = part0.y_uplim;
+		}
+		else if (xy_eval.region0_merge == 2){ // the region 0 is not used
+			part_valid[0] = 0;
+		}
+
+		if (xy_eval.region2_merge == 0){
+			//region 2 is merged with region 3
+			part_valid[1] = 1;
+
+			part1.z_uplim = xy_plane_node_list->z;
+			part1.z_downlim = xy_plane_node_list->z;
+			part1.x_downlim = xy_plane.z_downlim;
+			part1.x_uplim = xy_plane_node_list->x - 1<0 ? X - 1 : xy_plane_node_list->x - 1;
+			part1.y_downlim = xy_plane.y_downlim;
+			part1.y_uplim = xy_plane_node_list->y;
+			part1_srcx = part1.x_uplim;
+			part1_srcz = part1.z_downlim;
+			part1_srcy = part1.y_uplim;
+
+		}
+		else if (xy_eval.region2_merge == 1){
+			//region2 is merged with region1
+			if (part_valid[0] == 0 || part_valid[0] == 2){
+				part_valid[1] = 1;
+
+				part1.z_uplim = xy_plane_node_list->z;
+				part1.z_downlim = xy_plane_node_list->z;
+				part1.x_downlim = xy_plane.x_downlim;
+				part1.x_uplim = xy_plane_node_list->x;
+				part1.y_downlim = xy_plane.y_downlim;
+				part1.y_uplim = xy_plane_node_list->y - 1 < 0 ? Y - 1 : xy_plane_node_list->y - 1;
+				part1_srcx = part1.x_uplim;
+				part1_srcz = part1.z_downlim;
+				part1_srcy = part1.y_uplim;
+			}
+			else if (part_valid[0] == 1){
+				//region0 and region2 should be merged together
+				part_valid[1] = 0;
+				part0.x_downlim = xy_plane.x_downlim;
+				part0.x_uplim = xy_plane.x_uplim;
+				part0.y_downlim = xy_plane.y_downlim;
+				part0.y_uplim = xy_plane_node_list->y - 1 < 0 ? Y - 1 : xy_plane_node_list->y - 1;
+				part0_srcx = xy_plane_node_list->x;
+				part0_srcz = part1.z_downlim;
+				part0_srcy = part1.y_uplim;
+
+			}
+		}
+		else if (xy_eval.region2_merge == 2){ // the region 2 is not used
+			part_valid[1] = 0;
+
+		}
+
+		if (xy_eval.region4_merge == 0){
+			//region 4 is merged with region 5
+			part_valid[2] = 1;
+			part2.z_uplim = xy_plane_node_list->z;
+			part2.z_downlim = xy_plane_node_list->z;
+			part2.x_downlim = xy_plane.x_downlim;
+			part2.x_uplim = xy_plane_node_list->x;
+			part2.y_downlim = xy_plane_node_list->y + 1 >= Y ? 0 : xy_plane_node_list->y + 1;
+			part2.y_uplim = xy_plane.y_uplim;
+			part2_srcx = part2.x_uplim;
+			part2_srcz = part2.z_downlim;
+			part2_srcy = part2.y_downlim;
+
+		}
+		else if (xy_eval.region4_merge == 1){
+			//region4 is merged with region3
+			if (part_valid[1] == 0 || part_valid[1] == 2){
+				part_valid[2] = 1;
+
+				part2.z_uplim = xy_plane_node_list->z;
+				part2.z_downlim = xy_plane_node_list->z;
+				part2.x_downlim = xy_plane.x_downlim;
+				part2.x_uplim = xy_plane_node_list->x - 1 < 0 ? X - 1 : xy_plane_node_list->x - 1;
+				part2.y_downlim = xy_plane_node_list->y;
+				part2.y_uplim = xy_plane.y_uplim;
+				part2_srcx = part2.x_uplim;
+				part2_srcz = part2.z_downlim;
+				part2_srcy = part2.y_downlim;
+			}
+			else if (part_valid[1] == 1){
+				//region2 and region4 should be merged together
+				part_valid[2] = 0;
+
+
+				part1.x_downlim = xy_plane.x_downlim;
+				part1.x_uplim = xy_plane_node_list->x - 1 < 0 ? X - 1 : xy_plane_node_list->x - 1;
+				part1.y_downlim = xy_plane.y_downlim;
+				part1.y_uplim = xy_plane.y_uplim;
+				part1_srcx = part1.x_uplim;
+				part1_srcz = part1.z_downlim;
+				part1_srcy = xy_plane_node_list->y;
+
+			}
+		}
+		else if (xy_eval.region4_merge == 2){ // the region 4 is not used
+			part_valid[2] = 0;
+
+		}
+
+		if (xy_eval.region6_merge == 0){
+			//region 6 is merged with region 7
+			if (part_valid[0] == 0 || part_valid[0] == 2){
+				part_valid[3] = 1;
+
+				part3.z_uplim = xy_plane_node_list->z;
+				part3.z_downlim = xy_plane_node_list->z;
+				part3.x_downlim = xy_plane_node_list->x + 1 >= X ? 0 : xy_plane_node_list->x + 1;
+				part3.x_uplim = xy_plane.x_uplim;
+				part3.y_downlim = xy_plane_node_list->y;
+				part3.y_uplim = xy_plane.y_uplim;
+				part3_srcx = part3.x_downlim;
+				part3_srcz = part3.z_downlim;
+				part3_srcy = part3.y_downlim;
+			}
+			else if (part_valid[0] == 1){
+				//region0 and region6 should be merged together
+				part_valid[3] = 0;
+
+
+				part0.z_uplim = xy_plane_node_list->z;
+				part0.z_downlim = xy_plane_node_list->z;
+				part0.x_downlim = xy_plane_node_list->x + 1 >= X ? 0 : xy_plane_node_list->x + 1;
+				part0.x_uplim = xy_plane.x_uplim;
+				part0.y_downlim = xy_plane.y_downlim;
+				part0.y_uplim = xy_plane.y_uplim;
+				part0_srcx = part0.x_downlim;
+				part0_srcz = part0.z_downlim;
+				part0_srcy = xy_plane_node_list->y;
+
+			}
+		}
+		else if (xy_eval.region6_merge == 1){
+			//region6 is merged with region5
+			if (part_valid[2] == 0 || part_valid[2] == 2){
+				part_valid[3] = 1;
+
+
+				part3.z_uplim = xy_plane_node_list->z;
+				part3.z_downlim = xy_plane_node_list->z;
+				part3.x_downlim = xy_plane_node_list->x;
+				part3.x_uplim = xy_plane.x_uplim;
+				part3.y_downlim = xy_plane_node_list->y + 1 >= Y ? 0 : xy_plane_node_list->y + 1;
+				part3.y_uplim = xy_plane.y_uplim;
+				part3_srcx = part3.x_downlim;
+				part3_srcz = part3.z_downlim;
+				part3_srcy = part3.y_downlim;
+			}
+			else if (part_valid[2] == 1){
+				//region4 and region6 should be merged together
+				part_valid[3] = 0;
+
+				part2.x_downlim = xy_plane.x_downlim;
+				part2.x_uplim = xy_plane.x_uplim;
+				part2.y_downlim = xy_plane_node_list->y + 1 >= Y ? 0 : xy_plane_node_list->y + 1;
+				part2.y_uplim = xy_plane.y_uplim;
+				part2_srcx = xy_plane_node_list->x;
+				part2_srcz = part2.z_downlim;
+				part2_srcy = part2.y_downlim;
+
+			}
+		}
+		else if (xy_eval.region6_merge == 2){ // the region 6 is not used
+			part_valid[3] = 0;
+
+		}
+
+		//now distribute the xy_plane_node_list into parts (up to 4)
+		struct src_dst_list* xy_plane_node_ptr = xy_plane_node_list->next;
+		struct src_dst_list* part0_list = NULL;
+		struct src_dst_list* part1_list = NULL;
+		struct src_dst_list* part2_list = NULL;
+		struct src_dst_list* part3_list = NULL;
+
+		if (part_valid[0]){
+			if (!(part0_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout << "no mem" << endl;
+				exit(-1);
+			}
+			part0_list->valid = true;
+			part0_list->src_or_dst = true;
+			part0_list->next = NULL;
+			part0_list->x = part0_srcx;
+			part0_list->y = part0_srcy;
+			part0_list->z = part0_srcz;
+		}
+		if (part_valid[1]){
+			if (!(part1_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout << "no mem" << endl;
+				exit(-1);
+			}
+			part1_list->valid = true;
+			part1_list->src_or_dst = true;
+			part1_list->next = NULL;
+			part1_list->x = part1_srcx;
+			part1_list->y = part1_srcy;
+			part1_list->z = part1_srcz;
+		}
+		if (part_valid[2]){
+			if (!(part2_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout << "no mem" << endl;
+				exit(-1);
+			}
+			part2_list->valid = true;
+			part2_list->src_or_dst = true;
+			part2_list->next = NULL;
+			part2_list->x = part2_srcx;
+			part2_list->y = part2_srcy;
+			part2_list->z = part2_srcz;
+		}
+		if (part_valid[3]){
+			if (!(part3_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
+				cout << "no mem" << endl;
+				exit(-1);
+			}
+			part3_list->valid = true;
+			part3_list->src_or_dst = true;
+			part3_list->next = NULL;
+			part3_list->x = part3_srcx;
+			part3_list->y = part3_srcy;
+			part3_list->z = part3_srcz;
+		}
+
+		struct src_dst_list* new_node;
+
+		while (xy_plane_node_ptr){
+			if (part_valid[0] && within_range(part0, xy_plane_node_ptr)){
+				//insert a node into the part0 list
+				if (!(new_node = (struct src_dst_list*)malloc(sizeof(src_dst_list)))){
+					cout << "no mem" << endl;
+					exit(-1);
+				}
+				new_node->x = xy_plane_node_ptr->x;
+				new_node->y = xy_plane_node_ptr->y;
+				new_node->z = xy_plane_node_ptr->z;
+				new_node->src_or_dst = false;
+				new_node->valid = true;
+				new_node->next = part0_list->next;
+				part0_list->next = new_node;
+
+			}
+			else if (part_valid[1] && within_range(part1, xy_plane_node_ptr)){
+
+				//insert a node into the part1 list
+				if (!(new_node = (struct src_dst_list*)malloc(sizeof(src_dst_list)))){
+					cout << "no mem" << endl;
+					exit(-1);
+				}
+				new_node->x = xy_plane_node_ptr->x;
+				new_node->y = xy_plane_node_ptr->y;
+				new_node->z = xy_plane_node_ptr->z;
+				new_node->src_or_dst = false;
+				new_node->valid = true;
+				new_node->next = part1_list->next;
+				part1_list->next = new_node;
+
+
+			}
+			else if (part_valid[2] && within_range(part2, xy_plane_node_ptr)){
+
+				//insert a node into the part2 list
+				if (!(new_node = (struct src_dst_list*)malloc(sizeof(src_dst_list)))){
+					cout << "no mem" << endl;
+					exit(-1);
+				}
+				new_node->x = xy_plane_node_ptr->x;
+				new_node->y = xy_plane_node_ptr->y;
+				new_node->z = xy_plane_node_ptr->z;
+				new_node->src_or_dst = false;
+				new_node->valid = true;
+				new_node->next = part2_list->next;
+				part2_list->next = new_node;
+
+
+			}
+			else if (part_valid[3] && within_range(part3, xy_plane_node_ptr)){
+
+				//insert a node into the part3 list
+				if (!(new_node = (struct src_dst_list*)malloc(sizeof(src_dst_list)))){
+					cout << "no mem" << endl;
+					exit(-1);
+				}
+				new_node->x = xy_plane_node_ptr->x;
+				new_node->y = xy_plane_node_ptr->y;
+				new_node->z = xy_plane_node_ptr->z;
+				new_node->src_or_dst = false;
+				new_node->valid = true;
+				new_node->next = part3_list->next;
+				part3_list->next = new_node;
+
+
+			}
+
+			xy_plane_node_ptr = xy_plane_node_ptr->next;
+		}
+
+		int new_weight = (tree_src->weight == 1) ? 1 : tree_src->weight / 2;
+
+		node* part0_src;
+		node* part1_src;
+		node* part2_src;
+		node* part3_src;
+
+		if (part_valid[0]){
+			tree_src->children[tree_src->num_children] = new node(part0_list->x, part0_list->y, part0_list->z, new_weight);
+			tree_src->children[tree_src->num_children]->parent = tree_src;
+			part0_src = tree_src->children[tree_src->num_children];
+			tree_src->num_children++;
+		}
+		if (part_valid[1]){
+			tree_src->children[tree_src->num_children] = new node(part1_list->x, part1_list->y, part1_list->z, new_weight);
+			tree_src->children[tree_src->num_children]->parent = tree_src;
+			part1_src = tree_src->children[tree_src->num_children];
+			tree_src->num_children++;
+		}
+		if (part_valid[2]){
+			tree_src->children[tree_src->num_children] = new node(part2_list->x, part2_list->y, part2_list->z, new_weight);
+			tree_src->children[tree_src->num_children]->parent = tree_src;
+			part2_src = tree_src->children[tree_src->num_children];
+			tree_src->num_children++;
+		}
+		if (part_valid[3]){
+			tree_src->children[tree_src->num_children] = new node(part3_list->x, part3_list->y, part3_list->z, new_weight);
+			tree_src->children[tree_src->num_children]->parent = tree_src;
+			part3_src = tree_src->children[tree_src->num_children];
+			tree_src->num_children++;
+		}
+		//print the current the src and dst nodes on the current node
+		fout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
+		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
+			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
+
+		}
+		fout << "}" << endl;
+		
+		if (part_valid[0]){
+			RPM_partition_2D(part0_list, part0, part0_src,2);
+		}
+		if (part_valid[1]){
+			RPM_partition_2D(part1_list, part1, part1_src,2);
+		}
+		if (part_valid[2]){
+			RPM_partition_2D(part2_list, part2, part2_src,2);
+		}
+		if (part_valid[3]){
+			RPM_partition_2D(part3_list, part3, part3_src,2);
+		}
 	}
 	
 	
@@ -1625,16 +2812,16 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		//the node list only contains leave nodes
 		return void();
 	}
-	if (Chunk.get_x_size == 1){
+	if (Chunk.get_x_size() == 1){
 		RPM_partition_2D(node_list, Chunk, tree_src, 0);
 		return void();
 
 	}
-	else if (Chunk.get_y_size == 1){
+	else if (Chunk.get_y_size() == 1){
 		RPM_partition_2D(node_list, Chunk, tree_src, 1);
 		return void();
 	}
-	else if (Chunk.get_z_size == 1){
+	else if (Chunk.get_z_size() == 1){
 		RPM_partition_2D(node_list, Chunk, tree_src, 2);
 		return void();
 	}
@@ -2211,12 +3398,12 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			tree_src->num_children++;
 		}
 		//print the current the src and dst nodes on the current node
-		cout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
+		fout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-			cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
+			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
 
 		}
-		cout << "}" << endl;
+		fout << "}" << endl;
 		if (x_up_node_list){
 			RPM_partition(x_up_node_list, xpos_chunk, x_pos_src);
 		}
@@ -2224,16 +3411,16 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			RPM_partition(x_down_node_list, xneg_chunk, x_neg_src);
 		}
 		if (part_valid[0]){
-			RPM_partition_2D(part0_list, part0, part0_src);
+			RPM_partition_2D(part0_list, part0, part0_src,0);
 		}
 		if (part_valid[1]){
-			RPM_partition_2D(part1_list, part1, part1_src);
+			RPM_partition_2D(part1_list, part1, part1_src,0);
 		}
 		if (part_valid[2]){
-			RPM_partition_2D(part2_list, part2, part2_src);
+			RPM_partition_2D(part2_list, part2, part2_src,0);
 		}
 		if (part_valid[3]){
-			RPM_partition_2D(part3_list, part3, part3_src);
+			RPM_partition_2D(part3_list, part3, part3_src,0);
 		}
 
 		
@@ -2817,12 +4004,12 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			tree_src->num_children++;
 		}
 		//print the current the src and dst nodes on the current node
-		cout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
+		fout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-			cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
+			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
 
 		}
-		cout << "}" << endl;
+		fout << "}" << endl;
 		if (y_up_node_list){
 			RPM_partition(y_up_node_list, ypos_chunk, y_pos_src);
 		}
@@ -2830,16 +4017,16 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			RPM_partition(y_down_node_list, yneg_chunk, y_neg_src);
 		}
 		if (part_valid[0]){
-			RPM_partition_2D(part0_list, part0, part0_src);
+			RPM_partition_2D(part0_list, part0, part0_src,1);
 		}
 		if (part_valid[1]){
-			RPM_partition_2D(part1_list, part1, part1_src);
+			RPM_partition_2D(part1_list, part1, part1_src,1);
 		}
 		if (part_valid[2]){
-			RPM_partition_2D(part2_list, part2, part2_src);
+			RPM_partition_2D(part2_list, part2, part2_src,1);
 		}
 		if (part_valid[3]){
-			RPM_partition_2D(part3_list, part3, part3_src);
+			RPM_partition_2D(part3_list, part3, part3_src,1);
 		}
 
 
@@ -3423,12 +4610,12 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			tree_src->num_children++;
 		}
 		//print the current the src and dst nodes on the current node
-		cout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
+		fout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-			cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
+			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
 
 		}
-		cout << "}" << endl;
+		fout << "}" << endl;
 		if (z_up_node_list){
 			RPM_partition(z_up_node_list, zpos_chunk, z_pos_src);
 		}
@@ -3436,16 +4623,16 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			RPM_partition(z_down_node_list, zneg_chunk, z_neg_src);
 		}
 		if (part_valid[0]){
-			RPM_partition_2D(part0_list, part0, part0_src);
+			RPM_partition_2D(part0_list, part0, part0_src,2);
 		}
 		if (part_valid[1]){
-			RPM_partition_2D(part1_list, part1, part1_src);
+			RPM_partition_2D(part1_list, part1, part1_src,2);
 		}
 		if (part_valid[2]){
-			RPM_partition_2D(part2_list, part2, part2_src);
+			RPM_partition_2D(part2_list, part2, part2_src,2);
 		}
 		if (part_valid[3]){
-			RPM_partition_2D(part3_list, part3, part3_src);
+			RPM_partition_2D(part3_list, part3, part3_src,2);
 		}
 	}
 	
@@ -3458,6 +4645,9 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 int main(){
 	string filename = "C:/Users/Jiayi/Documents/GitHub/MD_reduction/software/destination.txt";
+	string output="C:/Users/Jiayi/Documents/GitHub/MD_reduction/software/output.txt";
+	fout.open(output);
+	
 	for (int i = 0; i < X; i++){
 		for (int j = 0; j < Y; j++){
 			for (int k = 0; k < Z; k++){
@@ -3470,7 +4660,25 @@ int main(){
 			}
 		}
 	}
+	chunk entire_space;
+	entire_space.x_downlim=0;
+	entire_space.x_uplim=X-1;
+	entire_space.y_downlim=0;
+	entire_space.y_uplim=Y-1;
+	entire_space.z_downlim=0;
+	entire_space.z_uplim=Z-1;
 	read_src_dst_file(filename);
+	node* tree_src_array[X*Y*Z];
+
+	for(int i=0;i<X*Y*Z;i++){
+		if(src_list[i]->valid){
+			tree_src_array[i]=new node(src_list[i]->x,src_list[i]->y,src_list[i]->z,512);
+			RPM_partition(src_list[i],entire_space,tree_src_array[i]);
+		}
+		else{
+			tree_src_array[i]=NULL;
+		}
+	}
 	
 	return 0;
 }
