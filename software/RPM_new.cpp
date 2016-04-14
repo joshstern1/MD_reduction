@@ -292,6 +292,33 @@ void read_src_dst_file(string filename){
 
 }
 
+void accumulate_link(struct node* head, struct node* tail){
+	if(head->y == tail->y && head->z == tail->z){
+		if(head->x+1== tail->x || (head->x==X-1 && tail->x==0){
+			xpos_link_counter[head->x*Y*Z+head->y*Z+head->z]++;
+		}
+		else if(tail->x+1==head->x || (tail->x==X-1 && head->x==0){
+			xneg_link_counter[tail->x*Y*Z+tail->y*Z+tail->z]++;
+		}
+	}
+	else if(head->x == tail->x && head->z == tail->z){
+		if(head->y+1== tail->y || (head->y==Y-1 && tail->y==0){
+			ypos_link_counter[head->x*Y*Z+head->y*Z+head->z]++;
+		}
+		else if(tail->y+1==head->y || (tail->y==Y-1 && head->y==0){
+			yneg_link_counter[tail->x*Y*Z+tail->y*Z+tail->z]++;
+		}
+	}
+	else if(head->y == tail->y && head->x == tail->x){
+		if(head->z+1== tail->z || (head->z==Z-1 && tail->z==0){
+			zpos_link_counter[head->x*Y*Z+head->y*Z+head->z]++;
+		}
+		else if(tail->z+1==head->z || (tail->z==Z-1 && head->z==0){
+			zneg_link_counter[tail->x*Y*Z+tail->y*Z+tail->z]++;
+		}
+	}
+
+}
 
 bool within_range(struct chunk Chunk, struct src_dst_list* node){
 	bool x_within_range = false;
@@ -657,7 +684,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 				else if (region2_count > 0 && region6_count > 0){
 					//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
 					int yposlink_id = src->x*Y*Z + src->y*Z + src->z;
-					int zneglink_id = src->x*Y*Z + src->y*Z + src->z - 1;
+					int zneglink_id = src->x*Y*Z + src->y*Z + (src->z - 1<0?Z-1:src->z-1);
 					if (ypos_link_counter[yposlink_id] <= zneg_link_counter[zneglink_id]){
 						ypos_enable = 1;
 						region0_merge = 1;
@@ -681,8 +708,8 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 				}
 				else if (region0_count > 0 && region4_count > 0){
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
-					int yneglink_id = src->x*Y*Z + (src->y-1)*Z + src->z;
-					int zneglink_id = src->x*Y*Z + src->y*Z + src->z - 1;
+					int yneglink_id = src->x*Y*Z + (src->y-1<0?Y-1:src->y-1)*Z + src->z;
+					int zneglink_id = src->x*Y*Z + src->y*Z + (src->z - 1<0?Z-1:src->z-1);
 					if (yneg_link_counter[yneglink_id] <= zneg_link_counter[zneglink_id]){
 						yneg_enable = 1;
 						region2_merge = 0;
@@ -706,7 +733,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 				}
 				else if (region6_count > 0 && region2_count > 0){
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
-					int yneglink_id = src->x*Y*Z + (src->y - 1)*Z + src->z;
+					int yneglink_id = src->x*Y*Z + (src->y - 1<0?Y-1:src->y-1)*Z + src->z;
 					int zposlink_id = src->x*Y*Z + src->y*Z + src->z;
 					if (yneg_link_counter[yneglink_id] <= zpos_link_counter[zposlink_id]){
 						yneg_enable = 1;
@@ -768,7 +795,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 				else if (region2_count > 0 && region6_count > 0){
 					//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
 					int xposlink_id = src->x*Y*Z + src->y*Z + src->z;
-					int zneglink_id = src->x*Y*Z + src->y*Z + src->z - 1;
+					int zneglink_id = src->x*Y*Z + src->y*Z + (src->z - 1<0:Z-1:src->z-1);
 					if (xpos_link_counter[xposlink_id] <= zneg_link_counter[zneglink_id]){
 						xpos_enable = 1;
 						region0_merge = 1;
@@ -792,8 +819,8 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 				}
 				else if (region0_count > 0 && region4_count > 0){
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
-					int xneglink_id = (src->x-1)*Y*Z + src->y*Z + src->z;
-					int zneglink_id = src->x*Y*Z + src->y*Z + src->z - 1;
+					int xneglink_id = (src->x-1<0?X-1:src->x-1)*Y*Z + src->y*Z + src->z;
+					int zneglink_id = src->x*Y*Z + src->y*Z + (src->z - 1<0?Z-1:src->z-1);
 					if (xneg_link_counter[xneglink_id] <= zneg_link_counter[zneglink_id]){
 						xneg_enable = 1;
 						region2_merge = 0;
@@ -817,7 +844,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 				}
 				else if (region6_count > 0 && region2_count > 0){
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
-					int xneglink_id = (src->x-1)*Y*Z + src->y*Z + src->z;
+					int xneglink_id = (src->x-1<0?X-1:src->x-1)*Y*Z + src->y*Z + src->z;
 					int zposlink_id = src->x*Y*Z + src->y*Z + src->z;
 					if (xneg_link_counter[xneglink_id] <= zpos_link_counter[zposlink_id]){
 						xneg_enable = 1;
@@ -879,7 +906,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 				else if (region2_count > 0 && region6_count > 0){
 					//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
 					int xposlink_id = src->x*Y*Z + src->y*Z + src->z;
-					int yneglink_id = src->x*Y*Z + (src->y-1)*Z + src->z;
+					int yneglink_id = src->x*Y*Z + (src->y-1<0?Y-1:src->y-1)*Z + src->z;
 					if (xpos_link_counter[xposlink_id] <= yneg_link_counter[yneglink_id]){
 						xpos_enable = 1;
 						region0_merge = 1;
@@ -903,8 +930,8 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 				}
 				else if (region0_count > 0 && region4_count > 0){
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
-					int xneglink_id = (src->x - 1)*Y*Z + src->y*Z + src->z;
-					int yneglink_id = src->x*Y*Z + (src->y-1)*Z + src->z;
+					int xneglink_id = (src->x - 1<0?X-1:src->x-1)*Y*Z + src->y*Z + src->z;
+					int yneglink_id = src->x*Y*Z + (src->y-1<0?Y-1:src->y-1)*Z + src->z;
 					if (xneg_link_counter[xneglink_id] <= yneg_link_counter[yneglink_id]){
 						xneg_enable = 1;
 						region2_merge = 0;
@@ -928,7 +955,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 				}
 				else if (region6_count > 0 && region2_count > 0){
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
-					int xneglink_id = (src->x - 1)*Y*Z + src->y*Z + src->z;
+					int xneglink_id = (src->x - 1<0?X-1:src->x-1)*Y*Z + src->y*Z + src->z;
 					int yposlink_id = src->x*Y*Z + src->y*Z + src->z;
 					if (xneg_link_counter[xneglink_id] <= ypos_link_counter[yposlink_id]){
 						xneg_enable = 1;
@@ -1477,6 +1504,7 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 			fout<<"{src:("<<node_list->x<<","<<node_list->y<<","<<node_list->z<<") weight: "<<tree_src->weight<<endl;
 			for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
 				fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << tree_src->children[children_idx]->weight << endl;
+				accumulate_link(tree_src,tree_src->children[children_idx]);
 			}
 			fout<<"}"<<endl;
 			if(xpos_enable){
@@ -1485,6 +1513,7 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 				while(cur_xpos_node->children[0]){
 					fout<<"{src:("<<cur_xpos_node->x<<","<<cur_xpos_node->y<<","<<cur_xpos_node->z<<") weight: "<<cur_xpos_node->weight<<endl;
 					fout << "dst: (" << cur_xpos_node->children[0]->x << "," << cur_xpos_node->children[0]->y << "," << cur_xpos_node->children[0]->z << ") weight" <<  cur_xpos_node->children[0]->weight << endl;
+					accumulate_link(cur_xpos_node,cur_xpos_node->children[0]);
 					fout<<"}"<<endl;
 					cur_xpos_node=cur_xpos_node->children[0];
 				}
@@ -1499,6 +1528,7 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 				while(cur_xneg_node->children[0]){
 					fout<<"{src:("<<cur_xneg_node->x<<","<<cur_xneg_node->y<<","<<cur_xneg_node->z<<") weight: "<<cur_xneg_node->weight<<endl;
 					fout << "dst: (" << cur_xneg_node->children[0]->x << "," << cur_xneg_node->children[0]->y << "," << cur_xneg_node->children[0]->z << ") weight" <<  cur_xneg_node->children[0]->weight << endl;
+					accumulate_link(cur_xneg_node,cur_xneg_node->children[0]);
 					fout<<"}"<<endl;
 					cur_xneg_node=cur_xneg_node->children[0];
 				}
@@ -1565,6 +1595,7 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 			fout << "{src:(" << node_list->x << "," << node_list->y << "," << node_list->z << ") weight: " << tree_src->weight << endl;
 			for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
 				fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << tree_src->children[children_idx]->weight << endl;
+				accumulate_link(tree_src,tree_src->children[children_idx]);
 			}
 			fout << "}" << endl;
 			if (xpos_enable){
@@ -1573,6 +1604,7 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 				while (cur_xpos_node->children[0]){
 					fout << "{src:(" << cur_xpos_node->x << "," << cur_xpos_node->y << "," << cur_xpos_node->z << ") weight: " << cur_xpos_node->weight << endl;
 					fout << "dst: (" << cur_xpos_node->children[0]->x << "," << cur_xpos_node->children[0]->y << "," << cur_xpos_node->children[0]->z << ") weight" << cur_xpos_node->children[0]->weight << endl;
+					accumulate_link(cur_xpos_node,cur_xpos_node->children[0]);
 					fout << "}" << endl;
 					cur_xpos_node = cur_xpos_node->children[0];
 				}
@@ -1587,6 +1619,7 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 				while (cur_xneg_node->children[0]){
 					fout << "{src:(" << cur_xneg_node->x << "," << cur_xneg_node->y << "," << cur_xneg_node->z << ") weight: " << cur_xneg_node->weight << endl;
 					fout << "dst: (" << cur_xneg_node->children[0]->x << "," << cur_xneg_node->children[0]->y << "," << cur_xneg_node->children[0]->z << ") weight" << cur_xneg_node->children[0]->weight << endl;
+					accumulate_link(cur_xneg_node,cur_xneg_node->children[0]);
 					fout << "}" << endl;
 					cur_xneg_node = cur_xneg_node->children[0];
 				}
@@ -1992,7 +2025,7 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 		fout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
 			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
-
+			accumulate_link(tree_src,tree_src->children[children_idx]);
 		}
 		fout << "}" << endl;
 		if (part_valid[0]){
@@ -2388,7 +2421,7 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 		fout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
 			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
-
+			accumulate_link(tree_src,tree_src->children[children_idx]);
 		}
 		fout << "}" << endl;
 
@@ -2784,9 +2817,12 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 		fout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
 			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
-
+			accumulate_link(tree_src,tree_src->children[children_idx]);
 		}
 		fout << "}" << endl;
+
+		//accumulate the link counter
+
 		
 		if (part_valid[0]){
 			RPM_partition_2D(part0_list, part0, part0_src,2);
@@ -3401,7 +3437,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		fout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
 			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
-
+			accumulate_link(tree_src,tree_src->children[children_idx]);
 		}
 		fout << "}" << endl;
 		if (x_up_node_list){
@@ -4007,7 +4043,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		fout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
 			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
-
+			accumulate_link(tree_src,tree_src->children[children_idx]);
 		}
 		fout << "}" << endl;
 		if (y_up_node_list){
@@ -4613,7 +4649,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		fout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
 			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
-
+			accumulate_link(tree_src,tree_src->children[children_idx]);
 		}
 		fout << "}" << endl;
 		if (z_up_node_list){
