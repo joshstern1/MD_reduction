@@ -82,6 +82,7 @@ int main(){
 				if(j==i){
 					no_dup=true;
 					src_list[i]=new_random;
+					break;
 				}
 			}
 		}
@@ -100,6 +101,7 @@ int main(){
 				if(j==i){
 					no_dup=true;
 					dst_list[i]=new_random;
+					break;
 				}
 			}
 		}
