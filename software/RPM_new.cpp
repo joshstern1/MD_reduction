@@ -726,7 +726,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 					ypos_enable = 1;
 					region0_merge = 1;
 				}
-				else if (region2_count > 0 && region6_count > 0){
+				else{
 					//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
 					int yposlink_id = src->x*Y*Z + src->y*Z + src->z;
 					int zneglink_id = src->x*Y*Z + src->y*Z + (src->z - 1<0?Z-1:src->z-1);
@@ -770,7 +770,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 					yneg_enable = 1;
 					region2_merge = 0;
 				}
-				else if (region0_count > 0 && region4_count > 0){
+				else{
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
 					int yneglink_id = src->x*Y*Z + (src->y-1<0?Y-1:src->y-1)*Z + src->z;
 					int zneglink_id = src->x*Y*Z + src->y*Z + (src->z - 1<0?Z-1:src->z-1);
@@ -813,7 +813,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 					yneg_enable = 1;
 					region4_merge = 1;
 				}
-				else if (region6_count > 0 && region2_count > 0){
+				else{
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
 					int yneglink_id = src->x*Y*Z + (src->y - 1<0?Y-1:src->y-1)*Z + src->z;
 					int zposlink_id = src->x*Y*Z + src->y*Z + src->z;
@@ -857,7 +857,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 					ypos_enable = 1;
 					region6_merge = 0;
 				}
-				else if (region4_count > 0 && region0_count > 0){
+				else{
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
 					int yposlink_id = src->x*Y*Z + src->y*Z + src->z;
 					int zposlink_id = src->x*Y*Z + src->y*Z + src->z;
@@ -912,7 +912,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 					xpos_enable = 1;
 					region0_merge = 1;
 				}
-				else if (region2_count > 0 && region6_count > 0){
+				else{
 					//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
 					int xposlink_id = src->x*Y*Z + src->y*Z + src->z;
 					int zneglink_id = src->x*Y*Z + src->y*Z + (src->z - 1<0?Z-1:src->z-1);
@@ -956,7 +956,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 					xneg_enable = 1;
 					region2_merge = 0;
 				}
-				else if (region0_count > 0 && region4_count > 0){
+				else{
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
 					int xneglink_id = (src->x-1<0?X-1:src->x-1)*Y*Z + src->y*Z + src->z;
 					int zneglink_id = src->x*Y*Z + src->y*Z + (src->z - 1<0?Z-1:src->z-1);
@@ -999,7 +999,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 					xneg_enable = 1;
 					region4_merge = 1;
 				}
-				else if (region6_count > 0 && region2_count > 0){
+				else{
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
 					int xneglink_id = (src->x-1<0?X-1:src->x-1)*Y*Z + src->y*Z + src->z;
 					int zposlink_id = src->x*Y*Z + src->y*Z + src->z;
@@ -1042,7 +1042,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 					xpos_enable = 1;
 					region6_merge = 0;
 				}
-				else if (region4_count > 0 && region0_count > 0){
+				else{
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
 					int xposlink_id = src->x*Y*Z + src->y*Z + src->z;
 					int zposlink_id = src->x*Y*Z + src->y*Z + src->z;
@@ -1098,7 +1098,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 					xpos_enable = 1;
 					region0_merge = 1;
 				}
-				else if (region2_count > 0 && region6_count > 0){
+				else{
 					//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
 					int xposlink_id = src->x*Y*Z + src->y*Z + src->z;
 					int yneglink_id = src->x*Y*Z + (src->y-1<0?Y-1:src->y-1)*Z + src->z;
@@ -1143,7 +1143,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 					xneg_enable = 1;
 					region2_merge = 0;
 				}
-				else if (region0_count > 0 && region4_count > 0){
+				else{
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
 					int xneglink_id = (src->x - 1<0?X-1:src->x-1)*Y*Z + src->y*Z + src->z;
 					int yneglink_id = src->x*Y*Z + (src->y-1<0?Y-1:src->y-1)*Z + src->z;
@@ -1186,7 +1186,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 					xneg_enable = 1;
 					region4_merge = 1;
 				}
-				else if (region6_count > 0 && region2_count > 0){
+				else{
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
 					int xneglink_id = (src->x - 1<0?X-1:src->x-1)*Y*Z + src->y*Z + src->z;
 					int yposlink_id = src->x*Y*Z + src->y*Z + src->z;
@@ -1229,7 +1229,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 					ypos_enable = 1;
 					region6_merge = 0;
 				}
-				else if (region4_count > 0 && region0_count > 0){
+				else{
 					//at this point, the selection between the zneg and yneg is decided by the link count of the zneg and yneg
 					int xposlink_id = src->x*Y*Z + src->y*Z + src->z;
 					int yposlink_id = src->x*Y*Z + src->y*Z + src->z;
@@ -1767,6 +1767,9 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 	if (node_list == NULL || node_list->next == NULL)
 		return void();
 	if(direction==0){
+		if (Chunk_1D.get_x_size() == 1){
+			return void();
+		}
 		// this is a pencil that is along the x direction
 		int srcx=node_list->x;
 		int x_map[X];
@@ -1866,6 +1869,7 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 		}
 		else{
 			// the chunk is not wrapped around at x dimension
+
 			if (node_list->x == Chunk_1D.x_uplim){
 				xpos_enable = false;
 				xneg_enable = true;
@@ -1874,9 +1878,9 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 				xpos_enable = true;
 				xneg_enable = false;
 			}
-			for (int i = 1;; i++){
+			for (int i = 0;; i++){
 				int idx = node_list->x + i >= X ? node_list->x + i - X : node_list->x + i;
-				if (x_map[idx] != 0){
+				if (x_map[idx] != 0 && i!=0){
 					xpos_enable = true;
 					xpos_max = idx;
 				}
@@ -1885,7 +1889,7 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 			}
 			for (int i = 1;; i++){
 				int idx = node_list->x - i <0 ? node_list->x - i + X : node_list->x - i;
-				if (x_map[idx] != 0){
+				if (x_map[idx] != 0 && i!=0){
 					xneg_enable = true;
 					xneg_max = idx;
 				}
@@ -2005,9 +2009,9 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 			part0.x_uplim = yz_plane_node_list->x;
 			part0.x_downlim = yz_plane_node_list->x;
 			part0.y_downlim = yz_plane_node_list->y;
-			part0.y_uplim = yz_plane.y_uplim;
-			part0.z_downlim = yz_plane.z_downlim;
-			part0.z_uplim = yz_plane.z_uplim - 1 <0 ? Z - 1 : yz_plane.z_uplim - 1 <0;
+			part0.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
+			part0.z_downlim = yz_plane.z_wrap() ? (yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : yz_plane.z_downlim;
+			part0.z_uplim = yz_plane_node_list->z - 1 <0 ? Z - 1 : yz_plane_node_list->z - 1;
 
 			part0_srcx = part0.x_downlim; 
 			part0_srcy = part0.y_downlim;
@@ -2019,9 +2023,9 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 			part_valid[0] = 1;
 			part0.x_uplim = yz_plane_node_list->x;
 			part0.x_downlim = yz_plane_node_list->x;
-			part0.y_downlim = yz_plane.y_downlim + 1 >= Y ? 0 : yz_plane.y_downlim + 1;
-			part0.y_uplim = yz_plane.y_uplim;
-			part0.z_downlim = yz_plane.z_downlim;
+			part0.y_downlim = yz_plane_node_list->y + 1 >= Y ? 0 : yz_plane_node_list->y + 1;
+			part0.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
+			part0.z_downlim = yz_plane.z_wrap() ? (yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : yz_plane.z_downlim;
 			part0.z_uplim = yz_plane_node_list->z;
 
 			part0_srcx = part0.x_downlim;
@@ -2037,9 +2041,9 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 			part_valid[1] = 1;
 			part1.x_uplim = yz_plane_node_list->x;
 			part1.x_downlim = yz_plane_node_list->x;
-			part1.y_downlim = yz_plane.y_downlim;
+			part1.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
 			part1.y_uplim = yz_plane_node_list->y - 1<0 ? Y - 1 : yz_plane_node_list->y - 1;
-			part1.z_downlim = yz_plane.z_downlim;
+			part1.z_downlim = yz_plane.z_wrap() ? (yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : yz_plane.z_downlim;
 			part1.z_uplim = yz_plane_node_list->z;
 
 			part1_srcx = part1.x_downlim;
@@ -2053,9 +2057,9 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part_valid[1] = 1;
 				part1.x_uplim = yz_plane_node_list->x;
 				part1.x_downlim = yz_plane_node_list->x;
-				part1.y_downlim = yz_plane.y_downlim;
+				part1.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
 				part1.y_uplim = yz_plane_node_list->y;
-				part1.z_downlim = yz_plane.z_downlim;
+				part1.z_downlim = yz_plane.z_wrap() ? (yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : yz_plane.z_downlim;
 				part1.z_uplim = yz_plane_node_list->z - 1 < 0 ? Z - 1 : yz_plane_node_list->z - 1;
 				part1_srcx = part1.x_downlim;
 				part1_srcy = part1.y_uplim;
@@ -2066,7 +2070,7 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part_valid[1] = 0;
 				part0.y_downlim = yz_plane.y_downlim;
 				part0.y_uplim = yz_plane.y_uplim;
-				part0.z_downlim = yz_plane.z_downlim;
+				part0.z_downlim = yz_plane.z_wrap() ? (yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : yz_plane.z_downlim;
 				part0.z_uplim = yz_plane_node_list->z - 1 < 0 ? Z - 1 : yz_plane_node_list->z - 1;
 				part0_srcx = part0.x_downlim;
 				part0_srcy = yz_plane_node_list->y;
@@ -2084,10 +2088,10 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 			part_valid[2] = 1;
 			part2.x_uplim = yz_plane_node_list->x;
 			part2.x_downlim = yz_plane_node_list->x;
-			part2.y_downlim = yz_plane.y_downlim;
+			part2.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
 			part2.y_uplim = yz_plane_node_list->y;
-			part2.z_downlim = yz_plane_node_list->z+1>=Z?0: yz_plane_node_list->z+1;
-			part2.z_uplim = yz_plane.z_uplim;
+			part2.z_downlim = yz_plane_node_list->z + 1 >= Z ? 0 : yz_plane_node_list->z + 1;
+			part2.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
 			part2_srcx = part2.x_downlim;
 			part2_srcy = part2.y_uplim;
 			part2_srcz = part2.z_downlim;
@@ -2099,10 +2103,10 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part_valid[2] = 1;
 				part2.x_uplim = yz_plane_node_list->x;
 				part2.x_downlim = yz_plane_node_list->x;
-				part2.y_downlim = yz_plane.y_downlim;
-				part2.y_uplim = yz_plane_node_list->y- 1 < 0 ? Y - 1 : yz_plane_node_list->y - 1;
+				part2.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
+				part2.y_uplim = yz_plane_node_list->y - 1 < 0 ? Y - 1 : yz_plane_node_list->y - 1;
 				part2.z_downlim = yz_plane_node_list->z;
-				part2.z_uplim = yz_plane.z_uplim;
+				part2.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
 
 				part2_srcx = part2.x_downlim;
 				part2_srcy = part2.y_uplim;
@@ -2111,10 +2115,10 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 			else if (part_valid[1]==1){
 				//region2 and region4 should be merged together
 				part_valid[2] = 0;
-				part1.y_downlim = yz_plane.y_downlim;
-				part1.y_uplim = yz_plane_node_list->y- 1 < 0 ? Y - 1 : yz_plane_node_list->y - 1;
+				part1.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
+				part1.y_uplim = yz_plane_node_list->y - 1 < 0 ? Y - 1 : yz_plane_node_list->y - 1;
 				part1.z_downlim = yz_plane.z_downlim;
-				part1.z_uplim =  yz_plane.z_uplim;
+				part1.z_uplim = yz_plane.z_uplim;
 				part1_srcx = part1.x_downlim;
 				part1_srcy = part1.y_uplim;
 				part1_srcz = yz_plane_node_list->z;
@@ -2132,10 +2136,10 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part_valid[3] = 1;
 				part3.x_uplim = yz_plane_node_list->x;
 				part3.x_downlim = yz_plane_node_list->x;
-				part3.y_downlim = yz_plane_node_list->y+1>=Y?0:yz_plane_node_list->y+1;
-				part3.y_uplim = yz_plane.y_uplim;
+				part3.y_downlim = yz_plane_node_list->y + 1 >= Y ? 0 : yz_plane_node_list->y + 1;
+				part3.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
 				part3.z_downlim = yz_plane_node_list->z;
-				part3.z_uplim = yz_plane.z_uplim;
+				part3.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
 				part3_srcx = part3.x_downlim;
 				part3_srcy = part3.y_downlim;
 				part3_srcz = part3.z_downlim;
@@ -2145,9 +2149,9 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part_valid[3] = 0;
 				part0.x_uplim = yz_plane_node_list->x;
 				part0.x_downlim = yz_plane_node_list->x;
-				part0.y_downlim= yz_plane_node_list->y+1>=Y?0:yz_plane_node_list->y+1;
-				part0.y_uplim=yz_plane.y_uplim;
-				part0.z_downlim =yz_plane.z_downlim;
+				part0.y_downlim = yz_plane_node_list->y + 1 >= Y ? 0 : yz_plane_node_list->y + 1;
+				part0.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
+				part0.z_downlim = yz_plane.z_downlim;
 				part0.z_uplim = yz_plane.z_uplim;
 
 				part0_srcx = part0.x_downlim;
@@ -2164,9 +2168,9 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part3.x_uplim = yz_plane_node_list->x;
 				part3.x_downlim = yz_plane_node_list->x;
 				part3.y_downlim = yz_plane_node_list->y;
-				part3.y_uplim = yz_plane.y_uplim;
-				part3.z_downlim = yz_plane_node_list->z+1>=Z?0: yz_plane_node_list->z+1;
-				part3.z_uplim = yz_plane.z_uplim;
+				part3.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
+				part3.z_downlim = yz_plane_node_list->z + 1 >= Z ? 0 : yz_plane_node_list->z + 1;
+				part3.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
 				part3_srcx = part3.x_downlim;
 				part3_srcy = part3.y_downlim;
 				part3_srcz = part3.z_downlim;
@@ -2176,17 +2180,75 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part_valid[3] = 0;
 				part2.y_downlim = yz_plane.y_downlim;
 				part2.y_uplim = yz_plane.y_uplim;
-				part2.z_downlim = yz_plane_node_list->z+1>=Z?0: yz_plane_node_list->z+1;
-				part2.z_uplim =  yz_plane.z_uplim;
+				part2.z_downlim = yz_plane_node_list->z + 1 >= Z ? 0 : yz_plane_node_list->z + 1;
+				part2.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
 				part2_srcx = part2.x_downlim;
 				part2_srcy = yz_plane_node_list->y;
 				part2_srcz = part2.z_downlim;
-
 			}
 		}
 		else if (yz_eval.region6_merge == 2){ // the region 6 is not used
 			part_valid[3] = 0;
 
+		}
+
+		if (yz_eval.region0_merge == 2 && yz_eval.region2_merge == 2){
+			if (yz_eval.zneg_enable){
+				//this is region1, now use part0 to cover it(part1 is also ok, but we use part0 here
+				part_valid[0] = 1;
+				part0.x_downlim = yz_plane.x_downlim;
+				part0.x_uplim = yz_plane.x_uplim;
+				part0.y_downlim = yz_plane_node_list->y;
+				part0.y_uplim = yz_plane_node_list->y;
+				part0.z_downlim = yz_plane.z_wrap() ? (yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : yz_plane.z_downlim;
+				part0.z_uplim = yz_plane_node_list->z - 1<0 ? Z - 1 : yz_plane_node_list->z - 1;
+				part0_srcy = yz_plane_node_list->y;
+				part0_srcx = yz_plane.x_downlim;
+				part0_srcz = part0.z_uplim;
+			}
+		}
+		if (yz_eval.region2_merge == 2 && yz_eval.region4_merge == 2){
+			if (yz_eval.yneg_enable){
+				part_valid[1] = 1;
+				part1.x_downlim = yz_plane.x_downlim;
+				part1.x_uplim = yz_plane.x_uplim;
+				part1.z_downlim = yz_plane_node_list->z;
+				part1.z_uplim = yz_plane_node_list->z;
+				part1.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
+				part1.y_uplim = yz_plane_node_list->y - 1<0 ? Y - 1 : yz_plane_node_list->y - 1;
+				part1_srcy = part1.y_uplim;
+				part1_srcx = yz_plane.x_downlim;
+				part1_srcz = part1.z_uplim;
+			}
+		}
+		if (yz_eval.region4_merge == 2 && yz_eval.region6_merge == 2){
+			if (yz_eval.zpos_enable){
+
+				part_valid[2] = 1;
+				part2.x_downlim = yz_plane.x_downlim;
+				part2.x_uplim = yz_plane.x_uplim;
+				part2.y_downlim = yz_plane_node_list->y;
+				part2.y_uplim = yz_plane_node_list->y;
+				part2.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
+				part2.z_downlim = yz_plane_node_list->z + 1 >= Z ? 0 : yz_plane_node_list->z + 1;
+				part2_srcy = part2.y_uplim;
+				part2_srcx = yz_plane.x_downlim;
+				part2_srcz = part2.z_downlim;
+			}
+		}
+		if (yz_eval.region6_merge == 2 && yz_eval.region0_merge == 2){
+			if (yz_eval.ypos_enable){
+				part_valid[3] = 1;
+				part3.x_downlim = yz_plane.x_downlim;
+				part3.x_uplim = yz_plane.x_uplim;
+				part3.z_downlim = yz_plane_node_list->z;
+				part3.z_uplim = yz_plane_node_list->z;
+				part3.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
+				part3.y_downlim = yz_plane_node_list->y + 1 >= Y ? 0 : yz_plane_node_list->y + 1;
+				part3_srcy = part3.y_downlim;
+				part3_srcx = yz_plane.x_downlim;
+				part3_srcz = part3.z_downlim;
+			}
 		}
 
 		//now distribute the yz_plane_node_list into parts (up to 4)
@@ -2396,8 +2458,8 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 			part0.y_uplim = xz_plane_node_list->y;
 			part0.y_downlim = xz_plane_node_list->y;
 			part0.x_downlim = xz_plane_node_list->x;
-			part0.x_uplim = xz_plane.x_uplim;
-			part0.z_downlim = xz_plane.z_downlim;
+			part0.x_uplim = xz_plane.x_wrap() ? (xz_plane_node_list->x + X / 2 >= X ? xz_plane_node_list->x + X / 2 - X : xz_plane_node_list->x + X / 2) : xz_plane.x_uplim;
+			part0.z_downlim = xz_plane.z_wrap() ? (xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : xz_plane.z_downlim;
 			part0.z_uplim = xz_plane_node_list->z - 1<0 ? Z - 1 : xz_plane_node_list->z - 1;
 			part0_srcx = part0.x_downlim;
 			part0_srcy = part0.y_downlim;
@@ -2409,9 +2471,9 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 			part_valid[0] = 1;
 			part0.y_uplim = xz_plane_node_list->y;
 			part0.y_downlim = xz_plane_node_list->y;
-			part0.x_downlim = xz_plane.x_downlim + 1 >= X ? 0 : xz_plane.x_downlim + 1;
-			part0.x_uplim = xz_plane.x_uplim;
-			part0.z_downlim = xz_plane.z_downlim;
+			part0.x_downlim = xz_plane_node_list->x + 1 >= X ? 0 : xz_plane_node_list->x + 1;
+			part0.x_uplim = xz_plane.x_wrap() ? (xz_plane_node_list->x + X / 2 >= X ? xz_plane_node_list->x + X / 2 - X : xz_plane_node_list->x + X / 2) : xz_plane.x_uplim;
+			part0.z_downlim = xz_plane.z_wrap() ? (xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : xz_plane.z_downlim;
 			part0.z_uplim = xz_plane_node_list->z;
 			part0_srcx = part0.x_downlim;
 			part0_srcy = part0.y_downlim;
@@ -2427,14 +2489,13 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 
 			part1.y_uplim = xz_plane_node_list->y;
 			part1.y_downlim = xz_plane_node_list->y;
-			part1.x_downlim = xz_plane.y_downlim;
+			part1.x_downlim = xz_plane.x_wrap() ? (xz_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xz_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xz_plane_node_list->x - X / 2 + (X % 2 == 0)) : xz_plane.x_downlim;
 			part1.x_uplim = xz_plane_node_list->x - 1<0 ? X - 1 : xz_plane_node_list->x - 1;
-			part1.z_downlim = xz_plane.z_downlim;
+			part1.z_downlim = xz_plane.z_wrap() ? (xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : xz_plane.z_downlim;
 			part1.z_uplim = xz_plane_node_list->z;
 			part1_srcx = part1.x_uplim;
 			part1_srcy = part1.y_downlim;
 			part1_srcz = part1.z_uplim;
-
 		}
 		else if (xz_eval.region2_merge == 1){
 			//region2 is merged with region1
@@ -2443,9 +2504,9 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 
 				part1.y_uplim = xz_plane_node_list->y;
 				part1.y_downlim = xz_plane_node_list->y;
-				part1.x_downlim = xz_plane.x_downlim;
+				part1.x_downlim = xz_plane.x_wrap() ? (xz_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xz_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xz_plane_node_list->x - X / 2 + (X % 2 == 0)) : xz_plane.x_downlim;
 				part1.x_uplim = xz_plane_node_list->x;
-				part1.z_downlim = xz_plane.z_downlim;
+				part1.z_downlim = xz_plane.z_wrap() ? (xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : xz_plane.z_downlim;
 				part1.z_uplim = xz_plane_node_list->z - 1 < 0 ? Z - 1 : xz_plane_node_list->z - 1;
 				part1_srcx = part1.x_uplim;
 				part1_srcy = part1.y_downlim;
@@ -2456,7 +2517,7 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part_valid[1] = 0;
 				part0.x_downlim = xz_plane.x_downlim;
 				part0.x_uplim = xz_plane.x_uplim;
-				part0.z_downlim = xz_plane.z_downlim;
+				part0.z_downlim = xz_plane.z_wrap() ? (xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : xz_plane.z_downlim;
 				part0.z_uplim = xz_plane_node_list->z - 1 < 0 ? Z - 1 : xz_plane_node_list->z - 1;
 				part0_srcx = xz_plane_node_list->x;
 				part0_srcy = part1.y_downlim;
@@ -2474,10 +2535,10 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 			part_valid[2] = 1;
 			part2.y_uplim = xz_plane_node_list->y;
 			part2.y_downlim = xz_plane_node_list->y;
-			part2.x_downlim = xz_plane.x_downlim;
+			part2.x_downlim = xz_plane.x_wrap() ? (xz_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xz_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xz_plane_node_list->x - X / 2 + (X % 2 == 0)) : xz_plane.x_downlim;
 			part2.x_uplim = xz_plane_node_list->x;
 			part2.z_downlim = xz_plane_node_list->z + 1 >= Z ? 0 : xz_plane_node_list->z + 1;
-			part2.z_uplim = xz_plane.z_uplim;
+			part2.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
 			part2_srcx = part2.x_uplim;
 			part2_srcy = part2.y_downlim;
 			part2_srcz = part2.z_downlim;
@@ -2490,10 +2551,10 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 
 				part2.y_uplim = xz_plane_node_list->y;
 				part2.y_downlim = xz_plane_node_list->y;
-				part2.x_downlim = xz_plane.x_downlim;
+				part2.x_downlim = xz_plane.x_wrap() ? (xz_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xz_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xz_plane_node_list->x - X / 2 + (X % 2 == 0)) : xz_plane.x_downlim;
 				part2.x_uplim = xz_plane_node_list->x - 1 < 0 ? X - 1 : xz_plane_node_list->x - 1;
 				part2.z_downlim = xz_plane_node_list->z;
-				part2.z_uplim = xz_plane.z_uplim;
+				part2.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
 				part2_srcx = part2.x_uplim;
 				part2_srcy = part2.y_downlim;
 				part2_srcz = part2.z_downlim;
@@ -2503,14 +2564,13 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part_valid[2] = 0;
 
 
-				part1.x_downlim = xz_plane.x_downlim;
+				part1.x_downlim = xz_plane.x_wrap() ? (xz_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xz_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xz_plane_node_list->x - X / 2 + (X % 2 == 0)) : xz_plane.x_downlim;
 				part1.x_uplim = xz_plane_node_list->x - 1 < 0 ? X - 1 : xz_plane_node_list->x - 1;
 				part1.z_downlim = xz_plane.z_downlim;
 				part1.z_uplim = xz_plane.z_uplim;
 				part1_srcx = part1.x_uplim;
 				part1_srcy = part1.y_downlim;
 				part1_srcz = xz_plane_node_list->z;
-
 			}
 		}
 		else if (xz_eval.region4_merge == 2){ // the region 4 is not used
@@ -2526,9 +2586,9 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part3.y_uplim = xz_plane_node_list->y;
 				part3.y_downlim = xz_plane_node_list->y;
 				part3.x_downlim = xz_plane_node_list->x + 1 >= X ? 0 : xz_plane_node_list->x + 1;
-				part3.x_uplim = xz_plane.x_uplim;
+				part3.x_uplim = xz_plane.x_wrap() ? (xz_plane_node_list->x + X / 2 >= X ? xz_plane_node_list->x + X / 2 - X : xz_plane_node_list->x + X / 2) : xz_plane.x_uplim;
 				part3.z_downlim = xz_plane_node_list->z;
-				part3.z_uplim = xz_plane.z_uplim;
+				part3.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
 				part3_srcx = part3.x_downlim;
 				part3_srcy = part3.y_downlim;
 				part3_srcz = part3.z_downlim;
@@ -2541,7 +2601,7 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part0.y_uplim = xz_plane_node_list->y;
 				part0.y_downlim = xz_plane_node_list->y;
 				part0.x_downlim = xz_plane_node_list->x + 1 >= X ? 0 : xz_plane_node_list->x + 1;
-				part0.x_uplim = xz_plane.x_uplim;
+				part0.x_uplim = xz_plane.x_wrap() ? (xz_plane_node_list->x + X / 2 >= X ? xz_plane_node_list->x + X / 2 - X : xz_plane_node_list->x + X / 2) : xz_plane.x_uplim;
 				part0.z_downlim = xz_plane.z_downlim;
 				part0.z_uplim = xz_plane.z_uplim;
 				part0_srcx = part0.x_downlim;
@@ -2559,9 +2619,9 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part3.y_uplim = xz_plane_node_list->y;
 				part3.y_downlim = xz_plane_node_list->y;
 				part3.x_downlim = xz_plane_node_list->x;
-				part3.x_uplim = xz_plane.x_uplim;
+				part3.x_uplim = xz_plane.x_wrap() ? (xz_plane_node_list->x + X / 2 >= X ? xz_plane_node_list->x + X / 2 - X : xz_plane_node_list->x + X / 2) : xz_plane.x_uplim;
 				part3.z_downlim = xz_plane_node_list->z + 1 >= Z ? 0 : xz_plane_node_list->z + 1;
-				part3.z_uplim = xz_plane.z_uplim;
+				part3.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
 				part3_srcx = part3.x_downlim;
 				part3_srcy = part3.y_downlim;
 				part3_srcz = part3.z_downlim;
@@ -2573,7 +2633,7 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part2.x_downlim = xz_plane.x_downlim;
 				part2.x_uplim = xz_plane.x_uplim;
 				part2.z_downlim = xz_plane_node_list->z + 1 >= Z ? 0 : xz_plane_node_list->z + 1;
-				part2.z_uplim = xz_plane.z_uplim;
+				part2.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
 				part2_srcx = xz_plane_node_list->x;
 				part2_srcy = part2.y_downlim;
 				part2_srcz = part2.z_downlim;
@@ -2583,6 +2643,63 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 		else if (xz_eval.region6_merge == 2){ // the region 6 is not used
 			part_valid[3] = 0;
 
+		}
+		if (xz_eval.region0_merge == 2 && xz_eval.region2_merge == 2){
+			if (xz_eval.zneg_enable){
+				//this is region1, now use part0 to cover it(part1 is also ok, but we use part0 here
+				part_valid[0] = 1;
+				part0.y_downlim = xz_plane.y_downlim;
+				part0.y_uplim = xz_plane.y_uplim;
+				part0.x_downlim = xz_plane_node_list->x;
+				part0.x_uplim = xz_plane_node_list->x;
+				part0.z_downlim = xz_plane.z_wrap() ? (xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : xz_plane.z_downlim;
+				part0.z_uplim = xz_plane_node_list->z - 1<0 ? Z - 1 : xz_plane_node_list->z - 1;
+				part0_srcx = xz_plane_node_list->x;
+				part0_srcy = xz_plane.y_downlim;
+				part0_srcz = part0.z_uplim;
+			}
+		}
+		if (xz_eval.region2_merge == 2 && xz_eval.region4_merge == 2){
+			if (xz_eval.xneg_enable){
+				part_valid[1] = 1;
+				part1.y_downlim = xz_plane.y_downlim;
+				part1.y_uplim = xz_plane.y_uplim;
+				part1.z_downlim = xz_plane_node_list->z;
+				part1.z_uplim = xz_plane_node_list->z;
+				part1.x_downlim = xz_plane.x_wrap() ? (xz_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xz_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xz_plane_node_list->x - X / 2 + (X % 2 == 0)) : xz_plane.x_downlim;
+				part1.x_uplim = xz_plane_node_list->x - 1<0 ? X - 1 : xz_plane_node_list->x - 1;
+				part1_srcx = part1.x_uplim;
+				part1_srcy = xz_plane.y_downlim;
+				part1_srcz = part1.z_uplim;
+			}
+		}
+		if (xz_eval.region4_merge == 2 && xz_eval.region6_merge == 2){
+			if (xz_eval.zpos_enable){
+				part_valid[2] = 1;
+				part2.y_downlim = xz_plane.y_downlim;
+				part2.y_uplim = xz_plane.y_uplim;
+				part2.x_downlim = xz_plane_node_list->x;
+				part2.x_uplim = xz_plane_node_list->x;
+				part2.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
+				part2.z_downlim = xz_plane_node_list->z + 1 >= Z ? 0 : xz_plane_node_list->z + 1;
+				part2_srcx = part2.x_uplim;
+				part2_srcy = xz_plane.y_downlim;
+				part2_srcz = part2.z_downlim;
+			}
+		}
+		if (xz_eval.region6_merge == 2 && xz_eval.region0_merge == 2){
+			if (xz_eval.xpos_enable){
+				part_valid[3] = 1;
+				part3.y_downlim = xz_plane.y_downlim;
+				part3.y_uplim = xz_plane.y_uplim;
+				part3.z_downlim = xz_plane_node_list->z;
+				part3.z_uplim = xz_plane_node_list->z;
+				part3.x_uplim = xz_plane.x_wrap() ? (xz_plane_node_list->x + X / 2 >= X ? xz_plane_node_list->x + X / 2 - X : xz_plane_node_list->x + X / 2) : xz_plane.x_uplim;
+				part3.x_downlim = xz_plane_node_list->x + 1 >= X ? 0 : xz_plane_node_list->x + 1;
+				part3_srcx = part3.x_downlim;
+				part3_srcy = xz_plane.y_downlim;
+				part3_srcz = part3.z_downlim;
+			}
 		}
 
 		//now distribute the xz_plane_node_list into parts (up to 4)
@@ -2978,6 +3095,64 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 		else if (xy_eval.region6_merge == 2){ // the region 6 is not used
 			part_valid[3] = 0;
 
+		}
+
+		if (xy_eval.region0_merge == 2 && xy_eval.region2_merge == 2){
+			if (xy_eval.yneg_enable){
+				//this is region1, now use part0 to cover it(part1 is also ok, but we use part0 here
+				part_valid[0] = 1;
+				part0.z_downlim = xy_plane.z_downlim;
+				part0.z_uplim = xy_plane.z_uplim;
+				part0.x_downlim = xy_plane_node_list->x;
+				part0.x_uplim = xy_plane_node_list->x;
+				part0.y_downlim = xy_plane.y_downlim;
+				part0.y_uplim = xy_plane_node_list->y - 1<0 ? Y - 1 : xy_plane_node_list->y - 1;
+				part0_srcx = xy_plane_node_list->x;
+				part0_srcz = xy_plane.z_downlim;
+				part0_srcy = part0.y_uplim;
+			}
+		}
+		if (xy_eval.region2_merge == 2 && xy_eval.region4_merge == 2){
+			if (xy_eval.xneg_enable){
+				part_valid[1] = 1;
+				part1.z_downlim = xy_plane.z_downlim;
+				part1.z_uplim = xy_plane.z_uplim;
+				part1.y_downlim = xy_plane_node_list->y;
+				part1.y_uplim = xy_plane_node_list->y;
+				part1.x_downlim = xy_plane.x_downlim;
+				part1.x_uplim = xy_plane_node_list->x - 1<0 ? X - 1 : xy_plane_node_list->x - 1;
+				part1_srcx = part1.x_uplim;
+				part1_srcz = xy_plane.z_downlim;
+				part1_srcy = part1.y_uplim;
+			}
+		}
+		if (xy_eval.region4_merge == 2 && xy_eval.region6_merge == 2){
+			if (xy_eval.ypos_enable){
+				part_valid[2] = 1;
+				part2.z_downlim = xy_plane.z_downlim;
+				part2.z_uplim = xy_plane.z_uplim;
+				part2.x_downlim = xy_plane_node_list->x;
+				part2.x_uplim = xy_plane_node_list->x;
+				part2.y_uplim = xy_plane.y_uplim;
+				part2.y_downlim = xy_plane_node_list->y + 1 >= Y ? 0 : xy_plane_node_list->y + 1;
+				part2_srcx = part2.x_uplim;
+				part2_srcz = xy_plane.z_downlim;
+				part2_srcy = part2.y_downlim;
+			}
+		}
+		if (xy_eval.region6_merge == 2 && xy_eval.region0_merge == 2){
+			if (xy_eval.xpos_enable){
+				part_valid[3] = 1;
+				part3.z_downlim = xy_plane.z_downlim;
+				part3.z_uplim = xy_plane.z_uplim;
+				part3.y_downlim = xy_plane_node_list->y;
+				part3.y_uplim = xy_plane_node_list->y;
+				part3.x_uplim = xy_plane.x_uplim;
+				part3.x_downlim = xy_plane_node_list->x + 1 >= X ? 0 : xy_plane_node_list->x + 1;
+				part3_srcx = part3.x_downlim;
+				part3_srcz = xy_plane.z_downlim;
+				part3_srcy = part3.y_downlim;
+			}
 		}
 
 		//now distribute the xy_plane_node_list into parts (up to 4)
@@ -3406,9 +3581,9 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			part0.x_uplim = yz_plane_node_list->x;
 			part0.x_downlim = yz_plane_node_list->x;
 			part0.y_downlim = yz_plane_node_list->y;
-			part0.y_uplim = yz_plane.y_uplim;
-			part0.z_downlim = yz_plane.z_downlim;
-			part0.z_uplim = yz_plane.z_uplim - 1 <0 ? Z - 1 : yz_plane.z_uplim - 1 <0;
+			part0.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
+			part0.z_downlim = yz_plane.z_wrap() ? (yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)+ Z : yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : yz_plane.z_downlim;
+			part0.z_uplim = yz_plane_node_list->z - 1 <0 ? Z - 1 : yz_plane_node_list->z - 1;
 
 			part0_srcx = part0.x_downlim; 
 			part0_srcy = part0.y_downlim;
@@ -3420,9 +3595,9 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			part_valid[0] = 1;
 			part0.x_uplim = yz_plane_node_list->x;
 			part0.x_downlim = yz_plane_node_list->x;
-			part0.y_downlim = yz_plane.y_downlim + 1 >= Y ? 0 : yz_plane.y_downlim + 1;
-			part0.y_uplim = yz_plane.y_uplim;
-			part0.z_downlim = yz_plane.z_downlim;
+			part0.y_downlim = yz_plane_node_list->y + 1 >= Y ? 0 : yz_plane_node_list->y + 1;
+			part0.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
+			part0.z_downlim = yz_plane.z_wrap() ? (yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : yz_plane.z_downlim;
 			part0.z_uplim = yz_plane_node_list->z;
 
 			part0_srcx = part0.x_downlim;
@@ -3438,9 +3613,9 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			part_valid[1] = 1;
 			part1.x_uplim = yz_plane_node_list->x;
 			part1.x_downlim = yz_plane_node_list->x;
-			part1.y_downlim = yz_plane.y_downlim;
+			part1.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
 			part1.y_uplim = yz_plane_node_list->y - 1<0 ? Y - 1 : yz_plane_node_list->y - 1;
-			part1.z_downlim = yz_plane.z_downlim;
+			part1.z_downlim = yz_plane.z_wrap() ? (yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : yz_plane.z_downlim;
 			part1.z_uplim = yz_plane_node_list->z;
 
 			part1_srcx = part1.x_downlim;
@@ -3454,9 +3629,9 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part_valid[1] = 1;
 				part1.x_uplim = yz_plane_node_list->x;
 				part1.x_downlim = yz_plane_node_list->x;
-				part1.y_downlim = yz_plane.y_downlim;
+				part1.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
 				part1.y_uplim = yz_plane_node_list->y;
-				part1.z_downlim = yz_plane.z_downlim;
+				part1.z_downlim = yz_plane.z_wrap() ? (yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : yz_plane.z_downlim;
 				part1.z_uplim = yz_plane_node_list->z - 1 < 0 ? Z - 1 : yz_plane_node_list->z - 1;
 				part1_srcx = part1.x_downlim;
 				part1_srcy = part1.y_uplim;
@@ -3467,7 +3642,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part_valid[1] = 0;
 				part0.y_downlim = yz_plane.y_downlim;
 				part0.y_uplim = yz_plane.y_uplim;
-				part0.z_downlim = yz_plane.z_downlim;
+				part0.z_downlim = yz_plane.z_wrap() ? (yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : yz_plane.z_downlim;
 				part0.z_uplim = yz_plane_node_list->z - 1 < 0 ? Z - 1 : yz_plane_node_list->z - 1;
 				part0_srcx = part0.x_downlim;
 				part0_srcy = yz_plane_node_list->y;
@@ -3485,10 +3660,10 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			part_valid[2] = 1;
 			part2.x_uplim = yz_plane_node_list->x;
 			part2.x_downlim = yz_plane_node_list->x;
-			part2.y_downlim = yz_plane.y_downlim;
+			part2.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
 			part2.y_uplim = yz_plane_node_list->y;
 			part2.z_downlim = yz_plane_node_list->z+1>=Z?0: yz_plane_node_list->z+1;
-			part2.z_uplim = yz_plane.z_uplim;
+			part2.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
 			part2_srcx = part2.x_downlim;
 			part2_srcy = part2.y_uplim;
 			part2_srcz = part2.z_downlim;
@@ -3500,10 +3675,10 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part_valid[2] = 1;
 				part2.x_uplim = yz_plane_node_list->x;
 				part2.x_downlim = yz_plane_node_list->x;
-				part2.y_downlim = yz_plane.y_downlim;
+				part2.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
 				part2.y_uplim = yz_plane_node_list->y- 1 < 0 ? Y - 1 : yz_plane_node_list->y - 1;
 				part2.z_downlim = yz_plane_node_list->z;
-				part2.z_uplim = yz_plane.z_uplim;
+				part2.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
 
 				part2_srcx = part2.x_downlim;
 				part2_srcy = part2.y_uplim;
@@ -3512,7 +3687,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			else if (part_valid[1]==1){
 				//region2 and region4 should be merged together
 				part_valid[2] = 0;
-				part1.y_downlim = yz_plane.y_downlim;
+				part1.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
 				part1.y_uplim = yz_plane_node_list->y- 1 < 0 ? Y - 1 : yz_plane_node_list->y - 1;
 				part1.z_downlim = yz_plane.z_downlim;
 				part1.z_uplim =  yz_plane.z_uplim;
@@ -3534,9 +3709,9 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part3.x_uplim = yz_plane_node_list->x;
 				part3.x_downlim = yz_plane_node_list->x;
 				part3.y_downlim = yz_plane_node_list->y+1>=Y?0:yz_plane_node_list->y+1;
-				part3.y_uplim = yz_plane.y_uplim;
+				part3.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
 				part3.z_downlim = yz_plane_node_list->z;
-				part3.z_uplim = yz_plane.z_uplim;
+				part3.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
 				part3_srcx = part3.x_downlim;
 				part3_srcy = part3.y_downlim;
 				part3_srcz = part3.z_downlim;
@@ -3547,7 +3722,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part0.x_uplim = yz_plane_node_list->x;
 				part0.x_downlim = yz_plane_node_list->x;
 				part0.y_downlim= yz_plane_node_list->y+1>=Y?0:yz_plane_node_list->y+1;
-				part0.y_uplim=yz_plane.y_uplim;
+				part0.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
 				part0.z_downlim =yz_plane.z_downlim;
 				part0.z_uplim = yz_plane.z_uplim;
 
@@ -3565,9 +3740,9 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part3.x_uplim = yz_plane_node_list->x;
 				part3.x_downlim = yz_plane_node_list->x;
 				part3.y_downlim = yz_plane_node_list->y;
-				part3.y_uplim = yz_plane.y_uplim;
+				part3.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
 				part3.z_downlim = yz_plane_node_list->z+1>=Z?0: yz_plane_node_list->z+1;
-				part3.z_uplim = yz_plane.z_uplim;
+				part3.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
 				part3_srcx = part3.x_downlim;
 				part3_srcy = part3.y_downlim;
 				part3_srcz = part3.z_downlim;
@@ -3578,7 +3753,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part2.y_downlim = yz_plane.y_downlim;
 				part2.y_uplim = yz_plane.y_uplim;
 				part2.z_downlim = yz_plane_node_list->z+1>=Z?0: yz_plane_node_list->z+1;
-				part2.z_uplim =  yz_plane.z_uplim;
+				part2.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
 				part2_srcx = part2.x_downlim;
 				part2_srcy = yz_plane_node_list->y;
 				part2_srcz = part2.z_downlim;
@@ -3588,6 +3763,64 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		else if (yz_eval.region6_merge == 2){ // the region 6 is not used
 			part_valid[3] = 0;
 
+		}
+
+		if (yz_eval.region0_merge == 2 && yz_eval.region2_merge == 2){
+			if (yz_eval.zneg_enable){
+				//this is region1, now use part0 to cover it(part1 is also ok, but we use part0 here
+				part_valid[0] = 1;
+				part0.x_downlim = yz_plane.x_downlim;
+				part0.x_uplim = yz_plane.x_uplim;
+				part0.y_downlim = yz_plane_node_list->y;
+				part0.y_uplim = yz_plane_node_list->y;
+				part0.z_downlim = yz_plane.z_wrap() ? (yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : yz_plane.z_downlim;
+				part0.z_uplim = yz_plane_node_list->z - 1<0 ? Z - 1 : yz_plane_node_list->z - 1;
+				part0_srcy = yz_plane_node_list->y;
+				part0_srcx = yz_plane.x_downlim;
+				part0_srcz = part0.z_uplim;
+			}
+		}
+		if (yz_eval.region2_merge == 2 && yz_eval.region4_merge == 2){
+			if (yz_eval.yneg_enable){
+				part_valid[1] = 1;
+				part1.x_downlim = yz_plane.x_downlim;
+				part1.x_uplim = yz_plane.x_uplim;
+				part1.z_downlim = yz_plane_node_list->z;
+				part1.z_uplim = yz_plane_node_list->z;
+				part1.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
+				part1.y_uplim = yz_plane_node_list->y - 1<0 ? Y - 1 : yz_plane_node_list->y - 1;
+				part1_srcy = part1.y_uplim;
+				part1_srcx = yz_plane.x_downlim;
+				part1_srcz = part1.z_uplim;
+			}
+		}
+		if (yz_eval.region4_merge == 2 && yz_eval.region6_merge == 2){
+			if (yz_eval.zpos_enable){
+				part_valid[2] = 1;
+				part2.x_downlim = yz_plane.x_downlim;
+				part2.x_uplim = yz_plane.x_uplim;
+				part2.y_downlim = yz_plane_node_list->y;
+				part2.y_uplim = yz_plane_node_list->y;
+				part2.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
+				part2.z_downlim = yz_plane_node_list->z + 1 >= Z ? 0 : yz_plane_node_list->z + 1;
+				part2_srcy = part2.y_uplim;
+				part2_srcx = yz_plane.x_downlim;
+				part2_srcz = part2.z_downlim;
+			}
+		}
+		if (yz_eval.region6_merge == 2 && yz_eval.region0_merge == 2){
+			if (yz_eval.ypos_enable){
+				part_valid[3] = 1;
+				part3.x_downlim = yz_plane.x_downlim;
+				part3.x_uplim = yz_plane.x_uplim;
+				part3.z_downlim = yz_plane_node_list->z;
+				part3.z_uplim = yz_plane_node_list->z;
+				part3.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
+				part3.y_downlim = yz_plane_node_list->y + 1 >= Y ? 0 : yz_plane_node_list->y + 1;
+				part3_srcy = part3.y_downlim;
+				part3_srcx = yz_plane.x_downlim;
+				part3_srcz = part3.z_downlim;
+			}
 		}
 
 		//now distribute the yz_plane_node_list into parts (up to 4)
@@ -4009,8 +4242,8 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			part0.y_uplim = xz_plane_node_list->y;
 			part0.y_downlim = xz_plane_node_list->y;
 			part0.x_downlim = xz_plane_node_list->x;
-			part0.x_uplim = xz_plane.x_uplim;
-			part0.z_downlim = xz_plane.z_downlim;
+			part0.x_uplim = xz_plane.x_wrap() ? (xz_plane_node_list->x + X / 2 >= X ? xz_plane_node_list->x + X / 2 - X : xz_plane_node_list->x + X / 2) : xz_plane.x_uplim;
+			part0.z_downlim = xz_plane.z_wrap() ? (xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : xz_plane.z_downlim;
 			part0.z_uplim = xz_plane_node_list->z - 1<0 ? Z - 1 : xz_plane_node_list->z - 1;
 			part0_srcx = part0.x_downlim;
 			part0_srcy = part0.y_downlim;
@@ -4022,9 +4255,9 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			part_valid[0] = 1;
 			part0.y_uplim = xz_plane_node_list->y;
 			part0.y_downlim = xz_plane_node_list->y;
-			part0.x_downlim = xz_plane.x_downlim + 1 >= X ? 0 : xz_plane.x_downlim + 1;
-			part0.x_uplim = xz_plane.x_uplim;
-			part0.z_downlim = xz_plane.z_downlim;
+			part0.x_downlim = xz_plane_node_list->x + 1 >= X ? 0 : xz_plane_node_list->x + 1;
+			part0.x_uplim = xz_plane.x_wrap() ? (xz_plane_node_list->x + X / 2 >= X ? xz_plane_node_list->x + X / 2 - X : xz_plane_node_list->x + X / 2) : xz_plane.x_uplim;
+			part0.z_downlim = xz_plane.z_wrap() ? (xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : xz_plane.z_downlim;
 			part0.z_uplim = xz_plane_node_list->z;
 			part0_srcx = part0.x_downlim;
 			part0_srcy = part0.y_downlim;
@@ -4040,9 +4273,9 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 			part1.y_uplim = xz_plane_node_list->y;
 			part1.y_downlim = xz_plane_node_list->y;
-			part1.x_downlim = xz_plane.y_downlim;
+			part1.x_downlim = xz_plane.x_wrap() ? (xz_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xz_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xz_plane_node_list->x - X / 2 + (X % 2 == 0)) : xz_plane.x_downlim;
 			part1.x_uplim = xz_plane_node_list->x - 1<0 ? X - 1 : xz_plane_node_list->x - 1;
-			part1.z_downlim = xz_plane.z_downlim;
+			part1.z_downlim = xz_plane.z_wrap() ? (xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : xz_plane.z_downlim;
 			part1.z_uplim = xz_plane_node_list->z;
 			part1_srcx = part1.x_uplim;
 			part1_srcy = part1.y_downlim;
@@ -4056,9 +4289,9 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 				part1.y_uplim = xz_plane_node_list->y;
 				part1.y_downlim = xz_plane_node_list->y;
-				part1.x_downlim = xz_plane.x_downlim;
+				part1.x_downlim = xz_plane.x_wrap() ? (xz_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xz_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xz_plane_node_list->x - X / 2 + (X % 2 == 0)) : xz_plane.x_downlim;
 				part1.x_uplim = xz_plane_node_list->x;
-				part1.z_downlim = xz_plane.z_downlim;
+				part1.z_downlim = xz_plane.z_wrap() ? (xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : xz_plane.z_downlim;
 				part1.z_uplim = xz_plane_node_list->z - 1 < 0 ? Z - 1 : xz_plane_node_list->z - 1;
 				part1_srcx = part1.x_uplim;
 				part1_srcy = part1.y_downlim;
@@ -4069,7 +4302,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part_valid[1] = 0;
 				part0.x_downlim = xz_plane.x_downlim;
 				part0.x_uplim = xz_plane.x_uplim;
-				part0.z_downlim = xz_plane.z_downlim;
+				part0.z_downlim = xz_plane.z_wrap() ? (xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : xz_plane.z_downlim;
 				part0.z_uplim = xz_plane_node_list->z - 1 < 0 ? Z - 1 : xz_plane_node_list->z - 1;
 				part0_srcx = xz_plane_node_list->x;
 				part0_srcy = part1.y_downlim;
@@ -4087,10 +4320,10 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			part_valid[2] = 1;
 			part2.y_uplim = xz_plane_node_list->y;
 			part2.y_downlim = xz_plane_node_list->y;
-			part2.x_downlim = xz_plane.x_downlim;
+			part2.x_downlim = xz_plane.x_wrap() ? (xz_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xz_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xz_plane_node_list->x - X / 2 + (X % 2 == 0)) : xz_plane.x_downlim;
 			part2.x_uplim = xz_plane_node_list->x;
 			part2.z_downlim = xz_plane_node_list->z + 1 >= Z ? 0 : xz_plane_node_list->z + 1;
-			part2.z_uplim = xz_plane.z_uplim;
+			part2.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
 			part2_srcx = part2.x_uplim;
 			part2_srcy = part2.y_downlim;
 			part2_srcz = part2.z_downlim;
@@ -4103,10 +4336,10 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 				part2.y_uplim = xz_plane_node_list->y;
 				part2.y_downlim = xz_plane_node_list->y;
-				part2.x_downlim = xz_plane.x_downlim;
+				part2.x_downlim = xz_plane.x_wrap() ? (xz_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xz_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xz_plane_node_list->x - X / 2 + (X % 2 == 0)) : xz_plane.x_downlim;
 				part2.x_uplim = xz_plane_node_list->x - 1 < 0 ? X - 1 : xz_plane_node_list->x - 1;
 				part2.z_downlim = xz_plane_node_list->z;
-				part2.z_uplim = xz_plane.z_uplim;
+				part2.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
 				part2_srcx = part2.x_uplim;
 				part2_srcy = part2.y_downlim;
 				part2_srcz = part2.z_downlim;
@@ -4116,7 +4349,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part_valid[2] = 0;
 
 
-				part1.x_downlim = xz_plane.x_downlim;
+				part1.x_downlim = xz_plane.x_wrap() ? (xz_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xz_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xz_plane_node_list->x - X / 2 + (X % 2 == 0)) : xz_plane.x_downlim;
 				part1.x_uplim = xz_plane_node_list->x - 1 < 0 ? X - 1 : xz_plane_node_list->x - 1;
 				part1.z_downlim = xz_plane.z_downlim;
 				part1.z_uplim = xz_plane.z_uplim;
@@ -4139,9 +4372,9 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part3.y_uplim = xz_plane_node_list->y;
 				part3.y_downlim = xz_plane_node_list->y;
 				part3.x_downlim = xz_plane_node_list->x + 1 >= X ? 0 : xz_plane_node_list->x + 1;
-				part3.x_uplim = xz_plane.x_uplim;
+				part3.x_uplim = xz_plane.x_wrap() ? (xz_plane_node_list->x + X / 2 >= X ? xz_plane_node_list->x + X / 2 - X : xz_plane_node_list->x + X / 2) : xz_plane.x_uplim;
 				part3.z_downlim = xz_plane_node_list->z;
-				part3.z_uplim = xz_plane.z_uplim;
+				part3.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
 				part3_srcx = part3.x_downlim;
 				part3_srcy = part3.y_downlim;
 				part3_srcz = part3.z_downlim;
@@ -4154,7 +4387,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part0.y_uplim = xz_plane_node_list->y;
 				part0.y_downlim = xz_plane_node_list->y;
 				part0.x_downlim = xz_plane_node_list->x + 1 >= X ? 0 : xz_plane_node_list->x + 1;
-				part0.x_uplim = xz_plane.x_uplim;
+				part0.x_uplim = xz_plane.x_wrap() ? (xz_plane_node_list->x + X / 2 >= X ? xz_plane_node_list->x + X / 2 - X : xz_plane_node_list->x + X / 2) : xz_plane.x_uplim;
 				part0.z_downlim = xz_plane.z_downlim;
 				part0.z_uplim = xz_plane.z_uplim;
 				part0_srcx = part0.x_downlim;
@@ -4172,9 +4405,9 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part3.y_uplim = xz_plane_node_list->y;
 				part3.y_downlim = xz_plane_node_list->y;
 				part3.x_downlim = xz_plane_node_list->x;
-				part3.x_uplim = xz_plane.x_uplim;
+				part3.x_uplim = xz_plane.x_wrap() ? (xz_plane_node_list->x + X / 2 >= X ? xz_plane_node_list->x + X / 2 - X : xz_plane_node_list->x + X / 2) : xz_plane.x_uplim;
 				part3.z_downlim = xz_plane_node_list->z + 1 >= Z ? 0 : xz_plane_node_list->z + 1;
-				part3.z_uplim = xz_plane.z_uplim;
+				part3.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
 				part3_srcx = part3.x_downlim;
 				part3_srcy = part3.y_downlim;
 				part3_srcz = part3.z_downlim;
@@ -4186,7 +4419,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part2.x_downlim = xz_plane.x_downlim;
 				part2.x_uplim = xz_plane.x_uplim;
 				part2.z_downlim = xz_plane_node_list->z + 1 >= Z ? 0 : xz_plane_node_list->z + 1;
-				part2.z_uplim = xz_plane.z_uplim;
+				part2.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
 				part2_srcx = xz_plane_node_list->x;
 				part2_srcy = part2.y_downlim;
 				part2_srcz = part2.z_downlim;
@@ -4205,7 +4438,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part0.y_uplim=xz_plane.y_uplim;
 				part0.x_downlim=xz_plane_node_list->x;
 				part0.x_uplim=xz_plane_node_list->x;
-				part0.z_downlim=xz_plane.z_downlim;
+				part0.z_downlim = xz_plane.z_wrap() ? (xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : xz_plane.z_downlim;
 				part0.z_uplim=xz_plane_node_list->z-1<0?Z-1:xz_plane_node_list->z-1;
 				part0_srcx=xz_plane_node_list->x;
 				part0_srcy=xz_plane.y_downlim;
@@ -4219,7 +4452,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part1.y_uplim=xz_plane.y_uplim;
 				part1.z_downlim=xz_plane_node_list->z;
 				part1.z_uplim=xz_plane_node_list->z;
-				part1.x_downlim=xz_plane.x_downlim;
+				part1.x_downlim = xz_plane.x_wrap() ? (xz_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xz_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xz_plane_node_list->x - X / 2 + (X % 2 == 0)) : xz_plane.x_downlim;
 				part1.x_uplim=xz_plane_node_list->x-1<0?X-1:xz_plane_node_list->x-1;
 				part1_srcx=part1.x_uplim;
 				part1_srcy=xz_plane.y_downlim;
@@ -4233,7 +4466,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part2.y_uplim=xz_plane.y_uplim;
 				part2.x_downlim=xz_plane_node_list->x;
 				part2.x_uplim=xz_plane_node_list->x;
-				part2.z_uplim=xz_plane.z_uplim;
+				part2.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
 				part2.z_downlim=xz_plane_node_list->z+1>=Z?0:xz_plane_node_list->z+1;
 				part2_srcx=part2.x_uplim;
 				part2_srcy=xz_plane.y_downlim;
@@ -4247,11 +4480,11 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part3.y_uplim=xz_plane.y_uplim;
 				part3.z_downlim=xz_plane_node_list->z;
 				part3.z_uplim=xz_plane_node_list->z;
-				part3.x_uplim=xz_plane.x_uplim;
+				part3.x_uplim = xz_plane.x_wrap() ? (xz_plane_node_list->x + X / 2 >= X ? xz_plane_node_list->x + X / 2 - X : xz_plane_node_list->x + X / 2) : xz_plane.x_uplim;
 				part3.x_downlim=xz_plane_node_list->x+1>=X?0:xz_plane_node_list->x+1;
 				part3_srcx=part3.x_downlim;
 				part3_srcy=xz_plane.y_downlim;
-				part3_srcz=part1.z_downlim;
+				part3_srcz=part3.z_downlim;
 			}
 		}
 
@@ -4675,8 +4908,8 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			part0.z_uplim = xy_plane_node_list->z;
 			part0.z_downlim = xy_plane_node_list->z;
 			part0.x_downlim = xy_plane_node_list->x;
-			part0.x_uplim = xy_plane.x_uplim;
-			part0.y_downlim = xy_plane.y_downlim;
+			part0.x_uplim = xy_plane.x_wrap() ? (xy_plane_node_list->x + X / 2 >= X ? xy_plane_node_list->x + X / 2 - X : xy_plane_node_list->x + X / 2) : xy_plane.x_uplim;
+			part0.y_downlim = xy_plane.y_wrap() ? (xy_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? xy_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : xy_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : xy_plane.y_downlim;
 			part0.y_uplim = xy_plane_node_list->y - 1<0 ? Y - 1 : xy_plane_node_list->y - 1;
 			part0_srcx = part0.x_downlim;
 			part0_srcz = part0.z_downlim;
@@ -4688,9 +4921,9 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			part_valid[0] = 1;
 			part0.z_uplim = xy_plane_node_list->z;
 			part0.z_downlim = xy_plane_node_list->z;
-			part0.x_downlim = xy_plane.x_downlim + 1 >= X ? 0 : xy_plane.x_downlim + 1;
-			part0.x_uplim = xy_plane.x_uplim;
-			part0.y_downlim = xy_plane.z_downlim;
+			part0.x_downlim = xy_plane_node_list->x + 1 >= X ? 0 : xy_plane_node_list->x + 1;
+			part0.x_uplim = xy_plane.x_wrap() ? (xy_plane_node_list->x + X / 2 >= X ? xy_plane_node_list->x + X / 2 - X : xy_plane_node_list->x + X / 2) : xy_plane.x_uplim;
+			part0.y_downlim = xy_plane.y_wrap() ? (xy_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? xy_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : xy_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : xy_plane.y_downlim;
 			part0.y_uplim = xy_plane_node_list->y;
 			part0_srcx = part0.x_downlim;
 			part0_srcz = part0.z_downlim;
@@ -4706,9 +4939,9 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 			part1.z_uplim = xy_plane_node_list->z;
 			part1.z_downlim = xy_plane_node_list->z;
-			part1.x_downlim = xy_plane.z_downlim;
+			part1.x_downlim = xy_plane.x_wrap() ? (xy_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xy_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xy_plane_node_list->x - X / 2 + (X % 2 == 0)) : xy_plane.x_downlim;
 			part1.x_uplim = xy_plane_node_list->x - 1<0 ? X - 1 : xy_plane_node_list->x - 1;
-			part1.y_downlim = xy_plane.y_downlim;
+			part1.y_downlim = xy_plane.y_wrap() ? (xy_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? xy_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : xy_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : xy_plane.y_downlim;
 			part1.y_uplim = xy_plane_node_list->y;
 			part1_srcx = part1.x_uplim;
 			part1_srcz = part1.z_downlim;
@@ -4722,9 +4955,9 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 				part1.z_uplim = xy_plane_node_list->z;
 				part1.z_downlim = xy_plane_node_list->z;
-				part1.x_downlim = xy_plane.x_downlim;
+				part1.x_downlim = xy_plane.x_wrap() ? (xy_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xy_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xy_plane_node_list->x - X / 2 + (X % 2 == 0)) : xy_plane.x_downlim;
 				part1.x_uplim = xy_plane_node_list->x;
-				part1.y_downlim = xy_plane.y_downlim;
+				part1.y_downlim = xy_plane.y_wrap() ? (xy_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? xy_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : xy_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : xy_plane.y_downlim;
 				part1.y_uplim = xy_plane_node_list->y - 1 < 0 ? Y - 1 : xy_plane_node_list->y - 1;
 				part1_srcx = part1.x_uplim;
 				part1_srcz = part1.z_downlim;
@@ -4735,7 +4968,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part_valid[1] = 0;
 				part0.x_downlim = xy_plane.x_downlim;
 				part0.x_uplim = xy_plane.x_uplim;
-				part0.y_downlim = xy_plane.y_downlim;
+				part0.y_downlim = xy_plane.y_wrap() ? (xy_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? xy_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : xy_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : xy_plane.y_downlim;
 				part0.y_uplim = xy_plane_node_list->y - 1 < 0 ? Y - 1 : xy_plane_node_list->y - 1;
 				part0_srcx = xy_plane_node_list->x;
 				part0_srcz = part1.z_downlim;
@@ -4753,10 +4986,10 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			part_valid[2] = 1;
 			part2.z_uplim = xy_plane_node_list->z;
 			part2.z_downlim = xy_plane_node_list->z;
-			part2.x_downlim = xy_plane.x_downlim;
+			part2.x_downlim = xy_plane.x_wrap() ? (xy_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xy_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xy_plane_node_list->x - X / 2 + (X % 2 == 0)) : xy_plane.x_downlim;
 			part2.x_uplim = xy_plane_node_list->x;
 			part2.y_downlim = xy_plane_node_list->y + 1 >= Y ? 0 : xy_plane_node_list->y + 1;
-			part2.y_uplim = xy_plane.y_uplim;
+			part2.y_uplim = xy_plane.y_wrap() ? (xy_plane_node_list->y + Y / 2 >= X ? xy_plane_node_list->y + Y / 2 - Y : xy_plane_node_list->y + Y / 2) : xy_plane.y_uplim;
 			part2_srcx = part2.x_uplim;
 			part2_srcz = part2.z_downlim;
 			part2_srcy = part2.y_downlim;
@@ -4769,10 +5002,10 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 				part2.z_uplim = xy_plane_node_list->z;
 				part2.z_downlim = xy_plane_node_list->z;
-				part2.x_downlim = xy_plane.x_downlim;
+				part2.x_downlim = xy_plane.x_wrap() ? (xy_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xy_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xy_plane_node_list->x - X / 2 + (X % 2 == 0)) : xy_plane.x_downlim;
 				part2.x_uplim = xy_plane_node_list->x - 1 < 0 ? X - 1 : xy_plane_node_list->x - 1;
 				part2.y_downlim = xy_plane_node_list->y;
-				part2.y_uplim = xy_plane.y_uplim;
+				part2.y_uplim = xy_plane.y_wrap() ? (xy_plane_node_list->y + Y / 2 >= X ? xy_plane_node_list->y + Y / 2 - Y : xy_plane_node_list->y + Y / 2) : xy_plane.y_uplim;
 				part2_srcx = part2.x_uplim;
 				part2_srcz = part2.z_downlim;
 				part2_srcy = part2.y_downlim;
@@ -4782,7 +5015,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part_valid[2] = 0;
 
 
-				part1.x_downlim = xy_plane.x_downlim;
+				part1.x_downlim = xy_plane.x_wrap() ? (xy_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xy_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xy_plane_node_list->x - X / 2 + (X % 2 == 0)) : xy_plane.x_downlim;
 				part1.x_uplim = xy_plane_node_list->x - 1 < 0 ? X - 1 : xy_plane_node_list->x - 1;
 				part1.y_downlim = xy_plane.y_downlim;
 				part1.y_uplim = xy_plane.y_uplim;
@@ -4805,9 +5038,9 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part3.z_uplim = xy_plane_node_list->z;
 				part3.z_downlim = xy_plane_node_list->z;
 				part3.x_downlim = xy_plane_node_list->x + 1 >= X ? 0 : xy_plane_node_list->x + 1;
-				part3.x_uplim = xy_plane.x_uplim;
+				part3.x_uplim = xy_plane.x_wrap() ? (xy_plane_node_list->x + X / 2 >= X ? xy_plane_node_list->x + X / 2 - X : xy_plane_node_list->x + X / 2) : xy_plane.x_uplim;
 				part3.y_downlim = xy_plane_node_list->y;
-				part3.y_uplim = xy_plane.y_uplim;
+				part3.y_uplim = xy_plane.y_wrap() ? (xy_plane_node_list->y + Y / 2 >= X ? xy_plane_node_list->y + Y / 2 - Y : xy_plane_node_list->y + Y / 2) : xy_plane.y_uplim;
 				part3_srcx = part3.x_downlim;
 				part3_srcz = part3.z_downlim;
 				part3_srcy = part3.y_downlim;
@@ -4820,7 +5053,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part0.z_uplim = xy_plane_node_list->z;
 				part0.z_downlim = xy_plane_node_list->z;
 				part0.x_downlim = xy_plane_node_list->x + 1 >= X ? 0 : xy_plane_node_list->x + 1;
-				part0.x_uplim = xy_plane.x_uplim;
+				part0.x_uplim = xy_plane.x_wrap() ? (xy_plane_node_list->x + X / 2 >= X ? xy_plane_node_list->x + X / 2 - X : xy_plane_node_list->x + X / 2) : xy_plane.x_uplim;
 				part0.y_downlim = xy_plane.y_downlim;
 				part0.y_uplim = xy_plane.y_uplim;
 				part0_srcx = part0.x_downlim;
@@ -4838,9 +5071,9 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part3.z_uplim = xy_plane_node_list->z;
 				part3.z_downlim = xy_plane_node_list->z;
 				part3.x_downlim = xy_plane_node_list->x;
-				part3.x_uplim = xy_plane.x_uplim;
+				part3.x_uplim = xy_plane.x_wrap() ? (xy_plane_node_list->x + X / 2 >= X ? xy_plane_node_list->x + X / 2 - X : xy_plane_node_list->x + X / 2) : xy_plane.x_uplim;
 				part3.y_downlim = xy_plane_node_list->y + 1 >= Y ? 0 : xy_plane_node_list->y + 1;
-				part3.y_uplim = xy_plane.y_uplim;
+				part3.y_uplim = xy_plane.y_wrap() ? (xy_plane_node_list->y + Y / 2 >= X ? xy_plane_node_list->y + Y / 2 - Y : xy_plane_node_list->y + Y / 2) : xy_plane.y_uplim;
 				part3_srcx = part3.x_downlim;
 				part3_srcz = part3.z_downlim;
 				part3_srcy = part3.y_downlim;
@@ -4852,7 +5085,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part2.x_downlim = xy_plane.x_downlim;
 				part2.x_uplim = xy_plane.x_uplim;
 				part2.y_downlim = xy_plane_node_list->y + 1 >= Y ? 0 : xy_plane_node_list->y + 1;
-				part2.y_uplim = xy_plane.y_uplim;
+				part2.y_uplim = xy_plane.y_wrap() ? (xy_plane_node_list->y + Y / 2 >= X ? xy_plane_node_list->y + Y / 2 - Y : xy_plane_node_list->y + Y / 2) : xy_plane.y_uplim;
 				part2_srcx = xy_plane_node_list->x;
 				part2_srcz = part2.z_downlim;
 				part2_srcy = part2.y_downlim;
@@ -4862,6 +5095,64 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		else if (xy_eval.region6_merge == 2){ // the region 6 is not used
 			part_valid[3] = 0;
 
+		}
+
+		if (xy_eval.region0_merge == 2 && xy_eval.region2_merge == 2){
+			if (xy_eval.yneg_enable){
+				//this is region1, now use part0 to cover it(part1 is also ok, but we use part0 here
+				part_valid[0] = 1;
+				part0.z_downlim = xy_plane.z_downlim;
+				part0.z_uplim = xy_plane.z_uplim;
+				part0.x_downlim = xy_plane_node_list->x;
+				part0.x_uplim = xy_plane_node_list->x;
+				part0.y_downlim = xy_plane.y_wrap() ? (xy_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? xy_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : xy_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : xy_plane.y_downlim;
+				part0.y_uplim = xy_plane_node_list->y - 1<0 ? Y - 1 : xy_plane_node_list->y - 1;
+				part0_srcx = xy_plane_node_list->x;
+				part0_srcz = xy_plane.z_downlim;
+				part0_srcy = part0.y_uplim;
+			}
+		}
+		if (xy_eval.region2_merge == 2 && xy_eval.region4_merge == 2){
+			if (xy_eval.xneg_enable){
+				part_valid[1] = 1;
+				part1.z_downlim = xy_plane.z_downlim;
+				part1.z_uplim = xy_plane.z_uplim;
+				part1.y_downlim = xy_plane_node_list->y;
+				part1.y_uplim = xy_plane_node_list->y;
+				part1.x_downlim = xy_plane.x_wrap() ? (xy_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xy_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xy_plane_node_list->x - X / 2 + (X % 2 == 0)) : xy_plane.x_downlim;
+				part1.x_uplim = xy_plane_node_list->x - 1<0 ? X - 1 : xy_plane_node_list->x - 1;
+				part1_srcx = part1.x_uplim;
+				part1_srcz = xy_plane.z_downlim;
+				part1_srcy = part1.y_uplim;
+			}
+		}
+		if (xy_eval.region4_merge == 2 && xy_eval.region6_merge == 2){
+			if (xy_eval.ypos_enable){
+				part_valid[2] = 1;
+				part2.z_downlim = xy_plane.z_downlim;
+				part2.z_uplim = xy_plane.z_uplim;
+				part2.x_downlim = xy_plane_node_list->x;
+				part2.x_uplim = xy_plane_node_list->x;
+				part2.y_uplim = xy_plane.y_wrap() ? (xy_plane_node_list->y + Y / 2 >= X ? xy_plane_node_list->y + Y / 2 - Y : xy_plane_node_list->y + Y / 2) : xy_plane.y_uplim;
+				part2.y_downlim = xy_plane_node_list->y + 1 >= Y ? 0 : xy_plane_node_list->y + 1;
+				part2_srcx = part2.x_uplim;
+				part2_srcz = xy_plane.z_downlim;
+				part2_srcy = part2.y_downlim;
+			}
+		}
+		if (xy_eval.region6_merge == 2 && xy_eval.region0_merge == 2){
+			if (xy_eval.xpos_enable){
+				part_valid[3] = 1;
+				part3.z_downlim = xy_plane.z_downlim;
+				part3.z_uplim = xy_plane.z_uplim;
+				part3.y_downlim = xy_plane_node_list->y;
+				part3.y_uplim = xy_plane_node_list->y;
+				part3.x_uplim = xy_plane.x_wrap() ? (xy_plane_node_list->x + X / 2 >= X ? xy_plane_node_list->x + X / 2 - X : xy_plane_node_list->x + X / 2) : xy_plane.x_uplim;
+				part3.x_downlim = xy_plane_node_list->x + 1 >= X ? 0 : xy_plane_node_list->x + 1;
+				part3_srcx = part3.x_downlim;
+				part3_srcz = xy_plane.z_downlim;
+				part3_srcy = part3.y_downlim;
+			}
 		}
 
 		//now distribute the xy_plane_node_list into parts (up to 4)

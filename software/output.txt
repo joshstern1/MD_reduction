@@ -2,3 +2,11 @@
 dst: (0,1,2) weight256
 dst: (0,3,2) weight256
 }
+{src: (0,1,2) weight: 256
+dst: (0,2,2) weight128
+dst: (1,1,2) weight128
+dst: (3,1,2) weight128
+}
+{src: (0,2,2) weight: 128
+dst: (0,2,1) weight64
+}
