@@ -85,7 +85,7 @@ struct chunk{
 			return x_uplim - x_downlim + 1;
 		}
 		else {
-			return X + x_uplim - x_downlim;
+			return X + x_uplim - x_downlim+1;
 		}
 	}
 	int get_y_size(){
@@ -93,7 +93,7 @@ struct chunk{
 			return y_uplim - y_downlim + 1;
 		}
 		else {
-			return Y + y_uplim - y_downlim;
+			return Y + y_uplim - y_downlim+1;
 		}
 	}
 	int get_z_size(){
@@ -101,7 +101,7 @@ struct chunk{
 			return z_uplim - z_downlim + 1;
 		}
 		else {
-			return Z + z_uplim - z_downlim;
+			return Z + z_uplim - z_downlim+1;
 		}
 	}
 	bool within_x(int x){
@@ -1878,23 +1878,27 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 				xpos_enable = true;
 				xneg_enable = false;
 			}
-			for (int i = 0;; i++){
-				int idx = node_list->x + i >= X ? node_list->x + i - X : node_list->x + i;
-				if (x_map[idx] != 0 && i!=0){
-					xpos_enable = true;
-					xpos_max = idx;
+			if(node_list->x != Chunk_1D.x_uplim){
+				for (int i = 0;; i++){
+					int idx = node_list->x + i >= X ? node_list->x + i - X : node_list->x + i;
+					if (x_map[idx] != 0 && i!=0){
+						xpos_enable = true;
+						xpos_max = idx;
+					}
+					if (idx == Chunk_1D.x_uplim)
+						break;				
 				}
-				if (idx == Chunk_1D.x_uplim)
-					break;				
 			}
-			for (int i = 1;; i++){
-				int idx = node_list->x - i <0 ? node_list->x - i + X : node_list->x - i;
-				if (x_map[idx] != 0 && i!=0){
-					xneg_enable = true;
-					xneg_max = idx;
+			if(node_list->x!=Chunk_1D.x_downlim){
+				for (int i = 1;; i++){
+					int idx = node_list->x - i <0 ? node_list->x - i + X : node_list->x - i;
+					if (x_map[idx] != 0 && i!=0){
+						xneg_enable = true;
+						xneg_max = idx;
+					}
+					if (idx == Chunk_1D.x_downlim)
+						break;
 				}
-				if (idx == Chunk_1D.x_downlim)
-					break;
 			}
 			int new_weight = tree_src->weight == 1 ? 1 : tree_src->weight / 2;
 			if (xpos_enable){
