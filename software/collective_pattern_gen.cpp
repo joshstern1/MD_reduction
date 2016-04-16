@@ -11,8 +11,8 @@
 #include<stdlib.h>
 #include<time.h>
 #define MODE 0 //mode 0 is synthetic pattern
-#define MULTICAST_RATIO 0.1// the number of dst nodes / the total number of nodes
-#define SRC_RATIO 0.1 //the number of src nodes/ the total number of nodes
+#define MULTICAST_RATIO 0.5// the number of dst nodes / the total number of nodes
+#define SRC_RATIO 0.5 //the number of src nodes/ the total number of nodes
 #define X 4
 #define Y 4
 #define Z 4
@@ -74,7 +74,7 @@ int main(){
 			while(!no_dup){
 				int new_random=rand()%(X*Y*Z);
 				for(j=0;j<i;j++){
-					if(src_list[i]==new_random){
+					if(src_list[j]==new_random){
 						no_dup=false;
 						break;
 					}
@@ -93,7 +93,7 @@ int main(){
 			while(!no_dup){
 				int new_random=rand()%(X*Y*Z);
 				for(j=0;j<i;j++){
-					if(dst_list[i]==new_random){
+					if(dst_list[j]==new_random){
 						no_dup=false;
 						break;
 					}
