@@ -790,7 +790,13 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 			else if (zneg_enable == 1 && yneg_enable == 0){
 				region2_merge = 1;
 			}
-			else{
+			else if(region0_merge==1){ //zneg and yneg are both enabled
+				region2_merge=1; // otherwise region1 will be covered by no one
+			}
+			else if(region0_merge==0){
+				region2_merge=1;//region0,1,2 shoud be together
+			}
+			else{//regoin0 is not used
 				//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
 				int yneglink_id = src->x*Y*Z +(src->y - 1<0 ? Y - 1 : src->y - 1)*Z + src->z;
 				int zneglink_id = src->x*Y*Z + src->y*Z + (src->z - 1<0 ? Z - 1 : src->z - 1);
@@ -833,6 +839,12 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 			}
 			else if (zpos_enable == 1 && yneg_enable == 0){
 				region4_merge = 0;
+			}
+			else if(region2_merge==1){ //zpos and yneg are both enabled
+				region4_merge=1; // otherwise region1 will be covered by no one
+			}
+			else if(region2_merge==0){
+				region4_merge=1;//region2,3,4 shoud be together
 			}
 			else{
 				//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
@@ -877,6 +889,12 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 			else if (zpos_enable == 1 && ypos_enable == 0){
 				region6_merge = 1;
 			}
+			else if(region4_merge==1){ //zpos and ypos are both enabled
+				region6_merge=1; // otherwise region5 will be covered by no one
+			}
+			else if(region4_merge==0){
+				region6_merge=1;//region4,5,6 shoud be together
+			}
 			else{
 				//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
 				int yposlink_id = src->x*Y*Z + src->y*Z + src->z;
@@ -887,7 +905,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 				}
 				else{
 
-					region6_merge = 1;
+					region6_merge = 0;
 				}
 			}
 		}
@@ -976,6 +994,12 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 			else if (zneg_enable == 1 && xneg_enable == 0){
 				region2_merge = 1;
 			}
+			else if(region0_merge==1){ //zpos and xneg are both enabled
+				region2_merge=1; // otherwise region1 will be covered by no one
+			}
+			else if(region0_merge==0){
+				region2_merge=1;//region0,1,2 shoud be together
+			}
 			else{
 				//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
 				int xneglink_id = (src->x - 1<0 ? X - 1 : src->x - 1)*Y*Z + src->y*Z + src->z;
@@ -1018,6 +1042,12 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 			}
 			else if (zpos_enable == 1 && xneg_enable == 0){
 				region4_merge = 0;
+			}
+			else if(region2_merge==1){ //zpos and xneg are both enabled
+				region4_merge=1; // otherwise region3 will be covered by no one
+			}
+			else if(region2_merge==0){
+				region4_merge=1;//region2,3,4 shoud be together
 			}
 			else{
 				//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
@@ -1063,6 +1093,12 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 			else if (zpos_enable == 1 && xpos_enable == 0){
 				region6_merge = 1;
 			}
+			else if(region4_merge==1){ //zpos and xneg are both enabled
+				region6_merge=1; // otherwise region3 will be covered by no one
+			}
+			else if(region4_merge==0){
+				region6_merge=1;//region2,3,4 shoud be together
+			}
 			else{
 				//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
 				int xposlink_id = src->x*Y*Z + src->y*Z + src->z;
@@ -1073,7 +1109,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 				}
 				else{
 
-					region6_merge = 1;
+					region6_merge = 0;
 				}
 			}
 		}
@@ -1163,6 +1199,12 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 			else if (yneg_enable == 1 && xneg_enable == 0){
 				region2_merge = 1;
 			}
+			else if(region0_merge==1){ //yneg and xneg are both enabled
+				region2_merge=1; // otherwise region1 will be covered by no one
+			}
+			else if(region0_merge==0){
+				region2_merge=1;//region0,1,2 shoud be together
+			}
 			else{
 				//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
 				int xneglink_id = (src->x - 1<0 ? X - 1 : src->x - 1)*Y*Z + src->y*Z + src->z;
@@ -1205,6 +1247,12 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 			}
 			else if (ypos_enable == 1 && xneg_enable == 0){
 				region4_merge = 0;
+			}
+			else if(region2_merge==1){ //ypos and xneg are both enabled
+				region4_merge=1; // otherwise region1 will be covered by no one
+			}
+			else if(region2_merge==0){
+				region4_merge=1;//region2,3,4 shoud be together
 			}
 			else{
 				//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
@@ -1249,6 +1297,12 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 			else if (ypos_enable == 1 && xpos_enable == 0){
 				region6_merge = 1;
 			}
+			else if(region4_merge==1){ //ypos and xneg are both enabled
+				region6_merge=1; // otherwise region5 will be covered by no one
+			}
+			else if(region4_merge==0){
+				region6_merge=1;//region4,5,6 shoud be together
+			}
 			else{
 				//at this point, the selection between the zneg and ypos is decided by the link count of the zneg and ypos
 				int xposlink_id = src->x*Y*Z + src->y*Z + src->z;
@@ -1259,7 +1313,7 @@ struct plane_evaluation evaluate_plane(struct src_dst_list* src, struct chunk pl
 				}
 				else{
 
-					region6_merge = 1;
+					region6_merge = 0;
 				}
 			}
 		}
@@ -1426,6 +1480,7 @@ int evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 
 	//second partition along xz plane, the entire src_dst_list will be divided into three parts: the nodes that are in the up chunk of the src node along y dimension, 
 	// the nodes that are in the downwards chunk of the src node, the nodes that in the same xz plane with the src node.
+	dst=node_list->next;
 	struct src_dst_list* xz_plane_dst_list;
 	if (!(xz_plane_dst_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
 		cout << "no mem" << endl;
@@ -1535,7 +1590,7 @@ int evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 
 		dst = dst->next;
 	}
-	struct plane_evaluation xz_plane_eval = evaluate_plane(xz_plane_dst_list, xz_plane_chunk, 0);
+	struct plane_evaluation xz_plane_eval = evaluate_plane(xz_plane_dst_list, xz_plane_chunk, 1);
 	partition_along_xz_count = xz_plane_eval.xpos_enable + xz_plane_eval.xneg_enable + xz_plane_eval.zpos_enable + xz_plane_eval.zneg_enable + ypos_enable + yneg_enable;
 	double xz_link_var = six_link_variance_delta(node_list, xz_plane_eval.xpos_enable, xz_plane_eval.xneg_enable, ypos_enable, yneg_enable, xz_plane_eval.zpos_enable, xz_plane_eval.zneg_enable);
 	
@@ -1543,6 +1598,7 @@ int evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 	//third partition along xy plane, the entire src_dst_list will be divided into three parts: the nodes that are in the up chunk of the src node along z dimension, 
 	// the nodes that are in the downwards chunk of the src node, the nodes that in the same xy plane with the src node.
 	struct src_dst_list* xy_plane_dst_list;
+	dst=node_list->next;
 	if (!(xy_plane_dst_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
 		cout << "no mem" << endl;
 		exit(-1);
@@ -1651,7 +1707,7 @@ int evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 
 		dst = dst->next;
 	}
-	struct plane_evaluation xy_plane_eval = evaluate_plane(xy_plane_dst_list, xy_plane_chunk, 0);
+	struct plane_evaluation xy_plane_eval = evaluate_plane(xy_plane_dst_list, xy_plane_chunk, 2);
 	partition_along_xy_count = xy_plane_eval.xpos_enable + xy_plane_eval.xneg_enable + xy_plane_eval.ypos_enable + xz_plane_eval.yneg_enable + zpos_enable + zneg_enable;
 	double xy_link_var = six_link_variance_delta(node_list, xy_plane_eval.xpos_enable, xy_plane_eval.xneg_enable, xy_plane_eval.ypos_enable, xy_plane_eval.yneg_enable, zpos_enable, zneg_enable);
 
@@ -2524,20 +2580,7 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 
 		}
 		else if (yz_eval.region2_merge == 1){
-			//region2 is merged with region1
-			if (part_valid[0] == 0 || part_valid[0]==2){
-				part_valid[1] = 1;
-				part1.x_uplim = yz_plane_node_list->x;
-				part1.x_downlim = yz_plane_node_list->x;
-				part1.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
-				part1.y_uplim = yz_plane_node_list->y;
-				part1.z_downlim = yz_plane.z_wrap() ? (yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : yz_plane.z_downlim;
-				part1.z_uplim = yz_plane_node_list->z - 1 < 0 ? Z - 1 : yz_plane_node_list->z - 1;
-				part1_srcx = part1.x_downlim;
-				part1_srcy = part1.y_uplim;
-				part1_srcz = part1.z_uplim;
-			}
-			else if (part_valid[0]==1){
+			if (part_valid[0]==1 && yz_eval.region2_merge == 0){
 				//region0 and region2 should be merged together
 				part_valid[1] = 0;
 				part0.y_downlim = yz_plane.y_downlim;
@@ -2549,6 +2592,20 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part0_srcz = part0.z_uplim;
 
 			}
+			//region2 is merged with region1
+			else{
+				part_valid[1] = 1;
+				part1.x_uplim = yz_plane_node_list->x;
+				part1.x_downlim = yz_plane_node_list->x;
+				part1.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
+				part1.y_uplim = yz_plane_node_list->y;
+				part1.z_downlim = yz_plane.z_wrap() ? (yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : yz_plane.z_downlim;
+				part1.z_uplim = yz_plane_node_list->z - 1 < 0 ? Z - 1 : yz_plane_node_list->z - 1;
+				part1_srcx = part1.x_downlim;
+				part1_srcy = part1.y_uplim;
+				part1_srcz = part1.z_uplim;
+			}
+
 		}
 		else if (yz_eval.region2_merge == 2){ // the region 2 is not used
 			part_valid[1] = 0;
@@ -2570,8 +2627,20 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 
 		}
 		else if (yz_eval.region4_merge == 1){
+			if (part_valid[1]==1 && yz_eval.region2_merge == 0){
+				//region2 and region4 should be merged together
+				part_valid[2] = 0;
+				part1.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
+				part1.y_uplim = yz_plane_node_list->y - 1 < 0 ? Y - 1 : yz_plane_node_list->y - 1;
+				part1.z_downlim = yz_plane.z_downlim;
+				part1.z_uplim = yz_plane.z_uplim;
+				part1_srcx = part1.x_downlim;
+				part1_srcy = part1.y_uplim;
+				part1_srcz = yz_plane_node_list->z;
+
+			}
 			//region4 is merged with region3
-			if (part_valid[1] == 0 || part_valid[1]==2){
+			else{
 				part_valid[2] = 1;
 				part2.x_uplim = yz_plane_node_list->x;
 				part2.x_downlim = yz_plane_node_list->x;
@@ -2584,18 +2653,7 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part2_srcy = part2.y_uplim;
 				part2_srcz = part2.z_downlim;
 			}
-			else if (part_valid[1]==1){
-				//region2 and region4 should be merged together
-				part_valid[2] = 0;
-				part1.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
-				part1.y_uplim = yz_plane_node_list->y - 1 < 0 ? Y - 1 : yz_plane_node_list->y - 1;
-				part1.z_downlim = yz_plane.z_downlim;
-				part1.z_uplim = yz_plane.z_uplim;
-				part1_srcx = part1.x_downlim;
-				part1_srcy = part1.y_uplim;
-				part1_srcz = yz_plane_node_list->z;
 
-			}
 		}
 		else if (yz_eval.region4_merge == 2){ // the region 4 is not used
 			part_valid[2] = 0;
@@ -2603,20 +2661,7 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 		}
 
 		if (yz_eval.region6_merge == 0){
-			//region 6 is merged with region 7
-			if(part_valid[0] == 0 || part_valid[0]==2){
-				part_valid[3] = 1;
-				part3.x_uplim = yz_plane_node_list->x;
-				part3.x_downlim = yz_plane_node_list->x;
-				part3.y_downlim = yz_plane_node_list->y + 1 >= Y ? 0 : yz_plane_node_list->y + 1;
-				part3.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
-				part3.z_downlim = yz_plane_node_list->z;
-				part3.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
-				part3_srcx = part3.x_downlim;
-				part3_srcy = part3.y_downlim;
-				part3_srcz = part3.z_downlim;
-			}
-			else if(part_valid[0]==1){
+			if(part_valid[0]==1 && yz_eval.region0_merge == 1){
 				//region0 and region6 should be merged together
 				part_valid[3] = 0;
 				part0.x_uplim = yz_plane_node_list->x;
@@ -2632,10 +2677,35 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 
 				
 			}
+			//region 6 is merged with region 7
+			else{
+				part_valid[3] = 1;
+				part3.x_uplim = yz_plane_node_list->x;
+				part3.x_downlim = yz_plane_node_list->x;
+				part3.y_downlim = yz_plane_node_list->y + 1 >= Y ? 0 : yz_plane_node_list->y + 1;
+				part3.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
+				part3.z_downlim = yz_plane_node_list->z;
+				part3.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
+				part3_srcx = part3.x_downlim;
+				part3_srcy = part3.y_downlim;
+				part3_srcz = part3.z_downlim;
+			}
+
 		}
 		else if (yz_eval.region6_merge == 1){
+			if (part_valid[2]==1 && yz_eval.region4_merge == 0){
+				//region4 and region6 should be merged together
+				part_valid[3] = 0;
+				part2.y_downlim = yz_plane.y_downlim;
+				part2.y_uplim = yz_plane.y_uplim;
+				part2.z_downlim = yz_plane_node_list->z + 1 >= Z ? 0 : yz_plane_node_list->z + 1;
+				part2.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
+				part2_srcx = part2.x_downlim;
+				part2_srcy = yz_plane_node_list->y;
+				part2_srcz = part2.z_downlim;
+			}
 			//region6 is merged with region5
-			if (part_valid[2] == 0 || part_valid[2]==2){
+			else{
 				part_valid[3] = 1;
 				part3.x_uplim = yz_plane_node_list->x;
 				part3.x_downlim = yz_plane_node_list->x;
@@ -2647,17 +2717,7 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part3_srcy = part3.y_downlim;
 				part3_srcz = part3.z_downlim;
 			}
-			else if (part_valid[2]==1){
-				//region4 and region6 should be merged together
-				part_valid[3] = 0;
-				part2.y_downlim = yz_plane.y_downlim;
-				part2.y_uplim = yz_plane.y_uplim;
-				part2.z_downlim = yz_plane_node_list->z + 1 >= Z ? 0 : yz_plane_node_list->z + 1;
-				part2.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
-				part2_srcx = part2.x_downlim;
-				part2_srcy = yz_plane_node_list->y;
-				part2_srcz = part2.z_downlim;
-			}
+
 		}
 		else if (yz_eval.region6_merge == 2){ // the region 6 is not used
 			part_valid[3] = 0;
@@ -3005,8 +3065,20 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 			part1_srcz = part1.z_uplim;
 		}
 		else if (xz_eval.region2_merge == 1){
+			if (part_valid[0] == 1 && xz_eval.region0_merge == 0){
+				//region0 and region2 should be merged together
+				part_valid[1] = 0;
+				part0.x_downlim = xz_plane.x_downlim;
+				part0.x_uplim = xz_plane.x_uplim;
+				part0.z_downlim = xz_plane.z_wrap() ? (xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : xz_plane.z_downlim;
+				part0.z_uplim = xz_plane_node_list->z - 1 < 0 ? Z - 1 : xz_plane_node_list->z - 1;
+				part0_srcx = xz_plane_node_list->x;
+				part0_srcy = part0.y_downlim;
+				part0_srcz = part0.z_uplim;
+
+			}
 			//region2 is merged with region1
-			if (part_valid[0] == 0 || part_valid[0] == 2){
+			else{
 				part_valid[1] = 1;
 
 				part1.y_uplim = xz_plane_node_list->y;
@@ -3019,18 +3091,7 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part1_srcy = part1.y_downlim;
 				part1_srcz = part1.z_uplim;
 			}
-			else if (part_valid[0] == 1){
-				//region0 and region2 should be merged together
-				part_valid[1] = 0;
-				part0.x_downlim = xz_plane.x_downlim;
-				part0.x_uplim = xz_plane.x_uplim;
-				part0.z_downlim = xz_plane.z_wrap() ? (xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : xz_plane.z_downlim;
-				part0.z_uplim = xz_plane_node_list->z - 1 < 0 ? Z - 1 : xz_plane_node_list->z - 1;
-				part0_srcx = xz_plane_node_list->x;
-				part0_srcy = part0.y_downlim;
-				part0_srcz = part0.z_uplim;
 
-			}
 		}
 		else if (xz_eval.region2_merge == 2){ // the region 2 is not used
 			part_valid[1] = 0;
@@ -3052,21 +3113,7 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 
 		}
 		else if (xz_eval.region4_merge == 1){
-			//region4 is merged with region3
-			if (part_valid[1] == 0 || part_valid[1] == 2){
-				part_valid[2] = 1;
-
-				part2.y_uplim = xz_plane_node_list->y;
-				part2.y_downlim = xz_plane_node_list->y;
-				part2.x_downlim = xz_plane.x_wrap() ? (xz_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xz_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xz_plane_node_list->x - X / 2 + (X % 2 == 0)) : xz_plane.x_downlim;
-				part2.x_uplim = xz_plane_node_list->x - 1 < 0 ? X - 1 : xz_plane_node_list->x - 1;
-				part2.z_downlim = xz_plane_node_list->z;
-				part2.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
-				part2_srcx = part2.x_uplim;
-				part2_srcy = part2.y_downlim;
-				part2_srcz = part2.z_downlim;
-			}
-			else if (part_valid[1] == 1){
+			if (part_valid[1] == 1 && xz_eval.region2_merge == 0){
 				//region2 and region4 should be merged together
 				part_valid[2] = 0;
 
@@ -3079,6 +3126,21 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part1_srcy = part1.y_downlim;
 				part1_srcz = xz_plane_node_list->z;
 			}
+			//region4 is merged with region3
+			else{
+				part_valid[2] = 1;
+
+				part2.y_uplim = xz_plane_node_list->y;
+				part2.y_downlim = xz_plane_node_list->y;
+				part2.x_downlim = xz_plane.x_wrap() ? (xz_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xz_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xz_plane_node_list->x - X / 2 + (X % 2 == 0)) : xz_plane.x_downlim;
+				part2.x_uplim = xz_plane_node_list->x - 1 < 0 ? X - 1 : xz_plane_node_list->x - 1;
+				part2.z_downlim = xz_plane_node_list->z;
+				part2.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
+				part2_srcx = part2.x_uplim;
+				part2_srcy = part2.y_downlim;
+				part2_srcz = part2.z_downlim;
+			}
+
 		}
 		else if (xz_eval.region4_merge == 2){ // the region 4 is not used
 			part_valid[2] = 0;
@@ -3086,21 +3148,7 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 		}
 
 		if (xz_eval.region6_merge == 0){
-			//region 6 is merged with region 7
-			if (part_valid[0] == 0 || part_valid[0] == 2){
-				part_valid[3] = 1;
-
-				part3.y_uplim = xz_plane_node_list->y;
-				part3.y_downlim = xz_plane_node_list->y;
-				part3.x_downlim = xz_plane_node_list->x + 1 >= X ? 0 : xz_plane_node_list->x + 1;
-				part3.x_uplim = xz_plane.x_wrap() ? (xz_plane_node_list->x + X / 2 >= X ? xz_plane_node_list->x + X / 2 - X : xz_plane_node_list->x + X / 2) : xz_plane.x_uplim;
-				part3.z_downlim = xz_plane_node_list->z;
-				part3.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
-				part3_srcx = part3.x_downlim;
-				part3_srcy = part3.y_downlim;
-				part3_srcz = part3.z_downlim;
-			}
-			else if (part_valid[0] == 1){
+			if (part_valid[0] == 1 && xz_eval.region0_merge == 1){
 				//region0 and region6 should be merged together
 				part_valid[3] = 0;
 
@@ -3116,10 +3164,38 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part0_srcz = xz_plane_node_list->z;
 
 			}
+			//region 6 is merged with region 7
+			else{
+				part_valid[3] = 1;
+
+				part3.y_uplim = xz_plane_node_list->y;
+				part3.y_downlim = xz_plane_node_list->y;
+				part3.x_downlim = xz_plane_node_list->x + 1 >= X ? 0 : xz_plane_node_list->x + 1;
+				part3.x_uplim = xz_plane.x_wrap() ? (xz_plane_node_list->x + X / 2 >= X ? xz_plane_node_list->x + X / 2 - X : xz_plane_node_list->x + X / 2) : xz_plane.x_uplim;
+				part3.z_downlim = xz_plane_node_list->z;
+				part3.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
+				part3_srcx = part3.x_downlim;
+				part3_srcy = part3.y_downlim;
+				part3_srcz = part3.z_downlim;
+			}
+
 		}
 		else if (xz_eval.region6_merge == 1){
+			if (part_valid[2] == 1 && xz_eval.region4_merge == 0){
+				//region4 and region6 should be merged together
+				part_valid[3] = 0;
+
+				part2.x_downlim = xz_plane.x_downlim;
+				part2.x_uplim = xz_plane.x_uplim;
+				part2.z_downlim = xz_plane_node_list->z + 1 >= Z ? 0 : xz_plane_node_list->z + 1;
+				part2.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
+				part2_srcx = xz_plane_node_list->x;
+				part2_srcy = part2.y_downlim;
+				part2_srcz = part2.z_downlim;
+
+			}
 			//region6 is merged with region5
-			if (part_valid[2] == 0 || part_valid[2] == 2){
+			else{
 				part_valid[3] = 1;
 
 
@@ -3133,19 +3209,7 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part3_srcy = part3.y_downlim;
 				part3_srcz = part3.z_downlim;
 			}
-			else if (part_valid[2] == 1){
-				//region4 and region6 should be merged together
-				part_valid[3] = 0;
 
-				part2.x_downlim = xz_plane.x_downlim;
-				part2.x_uplim = xz_plane.x_uplim;
-				part2.z_downlim = xz_plane_node_list->z + 1 >= Z ? 0 : xz_plane_node_list->z + 1;
-				part2.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
-				part2_srcx = xz_plane_node_list->x;
-				part2_srcy = part2.y_downlim;
-				part2_srcz = part2.z_downlim;
-
-			}
 		}
 		else if (xz_eval.region6_merge == 2){ // the region 6 is not used
 			part_valid[3] = 0;
@@ -3489,8 +3553,20 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 
 		}
 		else if (xy_eval.region2_merge == 1){
+			if (part_valid[0] == 1 && xy_eval.region0_merge == 0){
+				//region0 and region2 should be merged together
+				part_valid[1] = 0;
+				part0.x_downlim = xy_plane.x_downlim;
+				part0.x_uplim = xy_plane.x_uplim;
+				part0.y_downlim = xy_plane.y_downlim;
+				part0.y_uplim = xy_plane_node_list->y - 1 < 0 ? Y - 1 : xy_plane_node_list->y - 1;
+				part0_srcx = xy_plane_node_list->x;
+				part0_srcz = part0.z_downlim;
+				part0_srcy = part0.y_uplim;
+
+			}
 			//region2 is merged with region1
-			if (part_valid[0] == 0 || part_valid[0] == 2){
+			else{
 				part_valid[1] = 1;
 
 				part1.z_uplim = xy_plane_node_list->z;
@@ -3503,18 +3579,7 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part1_srcz = part1.z_downlim;
 				part1_srcy = part1.y_uplim;
 			}
-			else if (part_valid[0] == 1){
-				//region0 and region2 should be merged together
-				part_valid[1] = 0;
-				part0.x_downlim = xy_plane.x_downlim;
-				part0.x_uplim = xy_plane.x_uplim;
-				part0.y_downlim = xy_plane.y_downlim;
-				part0.y_uplim = xy_plane_node_list->y - 1 < 0 ? Y - 1 : xy_plane_node_list->y - 1;
-				part0_srcx = xy_plane_node_list->x;
-				part0_srcz = part0.z_downlim;
-				part0_srcy = part0.y_uplim;
 
-			}
 		}
 		else if (xy_eval.region2_merge == 2){ // the region 2 is not used
 			part_valid[1] = 0;
@@ -3536,21 +3601,7 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 
 		}
 		else if (xy_eval.region4_merge == 1){
-			//region4 is merged with region3
-			if (part_valid[1] == 0 || part_valid[1] == 2){
-				part_valid[2] = 1;
-
-				part2.z_uplim = xy_plane_node_list->z;
-				part2.z_downlim = xy_plane_node_list->z;
-				part2.x_downlim = xy_plane.x_downlim;
-				part2.x_uplim = xy_plane_node_list->x - 1 < 0 ? X - 1 : xy_plane_node_list->x - 1;
-				part2.y_downlim = xy_plane_node_list->y;
-				part2.y_uplim = xy_plane.y_uplim;
-				part2_srcx = part2.x_uplim;
-				part2_srcz = part2.z_downlim;
-				part2_srcy = part2.y_downlim;
-			}
-			else if (part_valid[1] == 1){
+			if (part_valid[1] == 1 && xy_eval.region2_merge == 0){
 				//region2 and region4 should be merged together
 				part_valid[2] = 0;
 
@@ -3564,6 +3615,21 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part1_srcy = xy_plane_node_list->y;
 
 			}
+			//region4 is merged with region3
+			else{
+				part_valid[2] = 1;
+
+				part2.z_uplim = xy_plane_node_list->z;
+				part2.z_downlim = xy_plane_node_list->z;
+				part2.x_downlim = xy_plane.x_downlim;
+				part2.x_uplim = xy_plane_node_list->x - 1 < 0 ? X - 1 : xy_plane_node_list->x - 1;
+				part2.y_downlim = xy_plane_node_list->y;
+				part2.y_uplim = xy_plane.y_uplim;
+				part2_srcx = part2.x_uplim;
+				part2_srcz = part2.z_downlim;
+				part2_srcy = part2.y_downlim;
+			}
+
 		}
 		else if (xy_eval.region4_merge == 2){ // the region 4 is not used
 			part_valid[2] = 0;
@@ -3571,21 +3637,7 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 		}
 
 		if (xy_eval.region6_merge == 0){
-			//region 6 is merged with region 7
-			if (part_valid[0] == 0 || part_valid[0] == 2){
-				part_valid[3] = 1;
-
-				part3.z_uplim = xy_plane_node_list->z;
-				part3.z_downlim = xy_plane_node_list->z;
-				part3.x_downlim = xy_plane_node_list->x + 1 >= X ? 0 : xy_plane_node_list->x + 1;
-				part3.x_uplim = xy_plane.x_uplim;
-				part3.y_downlim = xy_plane_node_list->y;
-				part3.y_uplim = xy_plane.y_uplim;
-				part3_srcx = part3.x_downlim;
-				part3_srcz = part3.z_downlim;
-				part3_srcy = part3.y_downlim;
-			}
-			else if (part_valid[0] == 1){
+			if (part_valid[0] == 1 && xy_eval.region0_merge == 1){
 				//region0 and region6 should be merged together
 				part_valid[3] = 0;
 
@@ -3601,10 +3653,38 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part0_srcy = xy_plane_node_list->y;
 
 			}
+			//region 6 is merged with region 7
+			else{
+				part_valid[3] = 1;
+
+				part3.z_uplim = xy_plane_node_list->z;
+				part3.z_downlim = xy_plane_node_list->z;
+				part3.x_downlim = xy_plane_node_list->x + 1 >= X ? 0 : xy_plane_node_list->x + 1;
+				part3.x_uplim = xy_plane.x_uplim;
+				part3.y_downlim = xy_plane_node_list->y;
+				part3.y_uplim = xy_plane.y_uplim;
+				part3_srcx = part3.x_downlim;
+				part3_srcz = part3.z_downlim;
+				part3_srcy = part3.y_downlim;
+			}
+
 		}
 		else if (xy_eval.region6_merge == 1){
+			if (part_valid[2] == 1 && xy_eval.region4_merge == 0){
+				//region4 and region6 should be merged together
+				part_valid[3] = 0;
+
+				part2.x_downlim = xy_plane.x_downlim;
+				part2.x_uplim = xy_plane.x_uplim;
+				part2.y_downlim = xy_plane_node_list->y + 1 >= Y ? 0 : xy_plane_node_list->y + 1;
+				part2.y_uplim = xy_plane.y_uplim;
+				part2_srcx = xy_plane_node_list->x;
+				part2_srcz = part2.z_downlim;
+				part2_srcy = part2.y_downlim;
+
+			}
 			//region6 is merged with region5
-			if (part_valid[2] == 0 || part_valid[2] == 2){
+			else{
 				part_valid[3] = 1;
 
 
@@ -3618,19 +3698,7 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 				part3_srcz = part3.z_downlim;
 				part3_srcy = part3.y_downlim;
 			}
-			else if (part_valid[2] == 1){
-				//region4 and region6 should be merged together
-				part_valid[3] = 0;
 
-				part2.x_downlim = xy_plane.x_downlim;
-				part2.x_uplim = xy_plane.x_uplim;
-				part2.y_downlim = xy_plane_node_list->y + 1 >= Y ? 0 : xy_plane_node_list->y + 1;
-				part2.y_uplim = xy_plane.y_uplim;
-				part2_srcx = xy_plane_node_list->x;
-				part2_srcz = part2.z_downlim;
-				part2_srcy = part2.y_downlim;
-
-			}
 		}
 		else if (xy_eval.region6_merge == 2){ // the region 6 is not used
 			part_valid[3] = 0;
@@ -4194,20 +4262,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 		}
 		else if (yz_eval.region2_merge == 1){
-			//region2 is merged with region1
-			if (part_valid[0] == 0 || part_valid[0]==2){
-				part_valid[1] = 1;
-				part1.x_uplim = yz_plane_node_list->x;
-				part1.x_downlim = yz_plane_node_list->x;
-				part1.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
-				part1.y_uplim = yz_plane_node_list->y;
-				part1.z_downlim = yz_plane.z_wrap() ? (yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : yz_plane.z_downlim;
-				part1.z_uplim = yz_plane_node_list->z - 1 < 0 ? Z - 1 : yz_plane_node_list->z - 1;
-				part1_srcx = part1.x_downlim;
-				part1_srcy = part1.y_uplim;
-				part1_srcz = part1.z_uplim;
-			}
-			else if (part_valid[0]==1){
+			if (part_valid[0]==1 && yz_eval.region0_merge == 0){
 				//region0 and region2 should be merged together
 				part_valid[1] = 0;
 				part0.y_downlim = yz_plane.y_downlim;
@@ -4219,6 +4274,20 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part0_srcz = part0.z_uplim;
 
 			}
+			//region2 is merged with region1
+			else{
+				part_valid[1] = 1;
+				part1.x_uplim = yz_plane_node_list->x;
+				part1.x_downlim = yz_plane_node_list->x;
+				part1.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
+				part1.y_uplim = yz_plane_node_list->y;
+				part1.z_downlim = yz_plane.z_wrap() ? (yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : yz_plane.z_downlim;
+				part1.z_uplim = yz_plane_node_list->z - 1 < 0 ? Z - 1 : yz_plane_node_list->z - 1;
+				part1_srcx = part1.x_downlim;
+				part1_srcy = part1.y_uplim;
+				part1_srcz = part1.z_uplim;
+			}
+
 		}
 		else if (yz_eval.region2_merge == 2){ // the region 2 is not used
 			part_valid[1] = 0;
@@ -4240,8 +4309,20 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 		}
 		else if (yz_eval.region4_merge == 1){
+			if (part_valid[1]==1 && yz_eval.region2_merge == 0){
+				//region2 and region4 should be merged together
+				part_valid[2] = 0;
+				part1.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
+				part1.y_uplim = yz_plane_node_list->y- 1 < 0 ? Y - 1 : yz_plane_node_list->y - 1;
+				part1.z_downlim = yz_plane.z_downlim;
+				part1.z_uplim =  yz_plane.z_uplim;
+				part1_srcx = part1.x_downlim;
+				part1_srcy = part1.y_uplim;
+				part1_srcz = yz_plane_node_list->z;
+
+			}
 			//region4 is merged with region3
-			if (part_valid[1] == 0 || part_valid[1]==2){
+			else{
 				part_valid[2] = 1;
 				part2.x_uplim = yz_plane_node_list->x;
 				part2.x_downlim = yz_plane_node_list->x;
@@ -4254,18 +4335,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part2_srcy = part2.y_uplim;
 				part2_srcz = part2.z_downlim;
 			}
-			else if (part_valid[1]==1){
-				//region2 and region4 should be merged together
-				part_valid[2] = 0;
-				part1.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
-				part1.y_uplim = yz_plane_node_list->y- 1 < 0 ? Y - 1 : yz_plane_node_list->y - 1;
-				part1.z_downlim = yz_plane.z_downlim;
-				part1.z_uplim =  yz_plane.z_uplim;
-				part1_srcx = part1.x_downlim;
-				part1_srcy = part1.y_uplim;
-				part1_srcz = yz_plane_node_list->z;
 
-			}
 		}
 		else if (yz_eval.region4_merge == 2){ // the region 4 is not used
 			part_valid[2] = 0;
@@ -4273,20 +4343,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		}
 
 		if (yz_eval.region6_merge == 0){
-			//region 6 is merged with region 7
-			if(part_valid[0] == 0 || part_valid[0]==2){
-				part_valid[3] = 1;
-				part3.x_uplim = yz_plane_node_list->x;
-				part3.x_downlim = yz_plane_node_list->x;
-				part3.y_downlim = yz_plane_node_list->y+1>=Y?0:yz_plane_node_list->y+1;
-				part3.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
-				part3.z_downlim = yz_plane_node_list->z;
-				part3.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
-				part3_srcx = part3.x_downlim;
-				part3_srcy = part3.y_downlim;
-				part3_srcz = part3.z_downlim;
-			}
-			else if(part_valid[0]==1){
+			if(part_valid[0]==1 && yz_eval.region0_merge == 1){
 				//region0 and region6 should be merged together
 				part_valid[3] = 0;
 				part0.x_uplim = yz_plane_node_list->x;
@@ -4302,22 +4359,23 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 				
 			}
-		}
-		else if (yz_eval.region6_merge == 1){
-			//region6 is merged with region5
-			if (part_valid[2] == 0 || part_valid[2]==2){
+			//region 6 is merged with region 7
+			else{
 				part_valid[3] = 1;
 				part3.x_uplim = yz_plane_node_list->x;
 				part3.x_downlim = yz_plane_node_list->x;
-				part3.y_downlim = yz_plane_node_list->y;
+				part3.y_downlim = yz_plane_node_list->y+1>=Y?0:yz_plane_node_list->y+1;
 				part3.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
-				part3.z_downlim = yz_plane_node_list->z+1>=Z?0: yz_plane_node_list->z+1;
+				part3.z_downlim = yz_plane_node_list->z;
 				part3.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
 				part3_srcx = part3.x_downlim;
 				part3_srcy = part3.y_downlim;
 				part3_srcz = part3.z_downlim;
 			}
-			else if (part_valid[2]==1){
+
+		}
+		else if (yz_eval.region6_merge == 1){
+			if (part_valid[2]==1 && yz_eval.region4_merge == 1){
 				//region4 and region6 should be merged together
 				part_valid[3] = 0;
 				part2.y_downlim = yz_plane.y_downlim;
@@ -4329,6 +4387,20 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part2_srcz = part2.z_downlim;
 
 			}
+			//region6 is merged with region5
+			else{
+				part_valid[3] = 1;
+				part3.x_uplim = yz_plane_node_list->x;
+				part3.x_downlim = yz_plane_node_list->x;
+				part3.y_downlim = yz_plane_node_list->y;
+				part3.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
+				part3.z_downlim = yz_plane_node_list->z+1>=Z?0: yz_plane_node_list->z+1;
+				part3.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
+				part3_srcx = part3.x_downlim;
+				part3_srcy = part3.y_downlim;
+				part3_srcz = part3.z_downlim;
+			}
+
 		}
 		else if (yz_eval.region6_merge == 2){ // the region 6 is not used
 			part_valid[3] = 0;
@@ -4889,8 +4961,20 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 		}
 		else if (xz_eval.region2_merge == 1){
+			if (part_valid[0] == 1 && xz_eval.region0_merge == 0){
+				//region0 and region2 should be merged together
+				part_valid[1] = 0;
+				part0.x_downlim = xz_plane.x_downlim;
+				part0.x_uplim = xz_plane.x_uplim;
+				part0.z_downlim = xz_plane.z_wrap() ? (xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : xz_plane.z_downlim;
+				part0.z_uplim = xz_plane_node_list->z - 1 < 0 ? Z - 1 : xz_plane_node_list->z - 1;
+				part0_srcx = xz_plane_node_list->x;
+				part0_srcy = part0.y_downlim;
+				part0_srcz = part0.z_uplim;
+
+			}
 			//region2 is merged with region1
-			if (part_valid[0] == 0 || part_valid[0] == 2){
+			else{
 				part_valid[1] = 1;
 
 				part1.y_uplim = xz_plane_node_list->y;
@@ -4903,18 +4987,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part1_srcy = part1.y_downlim;
 				part1_srcz = part1.z_uplim;
 			}
-			else if (part_valid[0] == 1){
-				//region0 and region2 should be merged together
-				part_valid[1] = 0;
-				part0.x_downlim = xz_plane.x_downlim;
-				part0.x_uplim = xz_plane.x_uplim;
-				part0.z_downlim = xz_plane.z_wrap() ? (xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)< 0 ? xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : xz_plane.z_downlim;
-				part0.z_uplim = xz_plane_node_list->z - 1 < 0 ? Z - 1 : xz_plane_node_list->z - 1;
-				part0_srcx = xz_plane_node_list->x;
-				part0_srcy = part0.y_downlim;
-				part0_srcz = part0.z_uplim;
 
-			}
 		}
 		else if (xz_eval.region2_merge == 2){ // the region 2 is not used
 			part_valid[1] = 0;
@@ -4936,21 +5009,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 		}
 		else if (xz_eval.region4_merge == 1){
-			//region4 is merged with region3
-			if (part_valid[1] == 0 || part_valid[1] == 2){
-				part_valid[2] = 1;
-
-				part2.y_uplim = xz_plane_node_list->y;
-				part2.y_downlim = xz_plane_node_list->y;
-				part2.x_downlim = xz_plane.x_wrap() ? (xz_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xz_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xz_plane_node_list->x - X / 2 + (X % 2 == 0)) : xz_plane.x_downlim;
-				part2.x_uplim = xz_plane_node_list->x - 1 < 0 ? X - 1 : xz_plane_node_list->x - 1;
-				part2.z_downlim = xz_plane_node_list->z;
-				part2.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
-				part2_srcx = part2.x_uplim;
-				part2_srcy = part2.y_downlim;
-				part2_srcz = part2.z_downlim;
-			}
-			else if (part_valid[1] == 1){
+			if (part_valid[1] == 1 && xz_eval.region2_merge == 0){
 				//region2 and region4 should be merged together
 				part_valid[2] = 0;
 
@@ -4964,6 +5023,21 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part1_srcz = xz_plane_node_list->z;
 
 			}
+			//region4 is merged with region3
+			else{
+				part_valid[2] = 1;
+
+				part2.y_uplim = xz_plane_node_list->y;
+				part2.y_downlim = xz_plane_node_list->y;
+				part2.x_downlim = xz_plane.x_wrap() ? (xz_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xz_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xz_plane_node_list->x - X / 2 + (X % 2 == 0)) : xz_plane.x_downlim;
+				part2.x_uplim = xz_plane_node_list->x - 1 < 0 ? X - 1 : xz_plane_node_list->x - 1;
+				part2.z_downlim = xz_plane_node_list->z;
+				part2.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
+				part2_srcx = part2.x_uplim;
+				part2_srcy = part2.y_downlim;
+				part2_srcz = part2.z_downlim;
+			}
+
 		}
 		else if (xz_eval.region4_merge == 2){ // the region 4 is not used
 			part_valid[2] = 0;
@@ -4971,21 +5045,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		}
 
 		if (xz_eval.region6_merge == 0){
-			//region 6 is merged with region 7
-			if (part_valid[0] == 0 || part_valid[0] == 2){
-				part_valid[3] = 1;
-
-				part3.y_uplim = xz_plane_node_list->y;
-				part3.y_downlim = xz_plane_node_list->y;
-				part3.x_downlim = xz_plane_node_list->x + 1 >= X ? 0 : xz_plane_node_list->x + 1;
-				part3.x_uplim = xz_plane.x_wrap() ? (xz_plane_node_list->x + X / 2 >= X ? xz_plane_node_list->x + X / 2 - X : xz_plane_node_list->x + X / 2) : xz_plane.x_uplim;
-				part3.z_downlim = xz_plane_node_list->z;
-				part3.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
-				part3_srcx = part3.x_downlim;
-				part3_srcy = part3.y_downlim;
-				part3_srcz = part3.z_downlim;
-			}
-			else if (part_valid[0] == 1){
+			if (part_valid[0] == 1 && xz_eval.region0_merge == 1){
 				//region0 and region6 should be merged together
 				part_valid[3] = 0;
 
@@ -5001,10 +5061,38 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part0_srcz = xz_plane_node_list->z;
 
 			}
+			//region 6 is merged with region 7
+			else{
+				part_valid[3] = 1;
+
+				part3.y_uplim = xz_plane_node_list->y;
+				part3.y_downlim = xz_plane_node_list->y;
+				part3.x_downlim = xz_plane_node_list->x + 1 >= X ? 0 : xz_plane_node_list->x + 1;
+				part3.x_uplim = xz_plane.x_wrap() ? (xz_plane_node_list->x + X / 2 >= X ? xz_plane_node_list->x + X / 2 - X : xz_plane_node_list->x + X / 2) : xz_plane.x_uplim;
+				part3.z_downlim = xz_plane_node_list->z;
+				part3.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
+				part3_srcx = part3.x_downlim;
+				part3_srcy = part3.y_downlim;
+				part3_srcz = part3.z_downlim;
+			}
+
 		}
 		else if (xz_eval.region6_merge == 1){
+			if (part_valid[2] == 1 && xz_eval.region4_merge == 0){
+				//region4 and region6 should be merged together
+				part_valid[3] = 0;
+
+				part2.x_downlim = xz_plane.x_downlim;
+				part2.x_uplim = xz_plane.x_uplim;
+				part2.z_downlim = xz_plane_node_list->z + 1 >= Z ? 0 : xz_plane_node_list->z + 1;
+				part2.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
+				part2_srcx = xz_plane_node_list->x;
+				part2_srcy = part2.y_downlim;
+				part2_srcz = part2.z_downlim;
+
+			}
 			//region6 is merged with region5
-			if (part_valid[2] == 0 || part_valid[2] == 2){
+			else{
 				part_valid[3] = 1;
 
 
@@ -5018,19 +5106,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part3_srcy = part3.y_downlim;
 				part3_srcz = part3.z_downlim;
 			}
-			else if (part_valid[2] == 1){
-				//region4 and region6 should be merged together
-				part_valid[3] = 0;
 
-				part2.x_downlim = xz_plane.x_downlim;
-				part2.x_uplim = xz_plane.x_uplim;
-				part2.z_downlim = xz_plane_node_list->z + 1 >= Z ? 0 : xz_plane_node_list->z + 1;
-				part2.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
-				part2_srcx = xz_plane_node_list->x;
-				part2_srcy = part2.y_downlim;
-				part2_srcz = part2.z_downlim;
-
-			}
 		}
 		else if (xz_eval.region6_merge == 2){ // the region 6 is not used
 			part_valid[3] = 0;
@@ -5596,8 +5672,21 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 		}
 		else if (xy_eval.region2_merge == 1){
-			//region2 is merged with region1
-			if (part_valid[0] == 0 || part_valid[0] == 2){
+
+			if (part_valid[0] == 1 && xy_eval.region0_merge == 0){
+				//region0 and region2 should be merged together
+				part_valid[1] = 0;
+				part0.x_downlim = xy_plane.x_downlim;
+				part0.x_uplim = xy_plane.x_uplim;
+				part0.y_downlim = xy_plane.y_wrap() ? (xy_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? xy_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : xy_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : xy_plane.y_downlim;
+				part0.y_uplim = xy_plane_node_list->y - 1 < 0 ? Y - 1 : xy_plane_node_list->y - 1;
+				part0_srcx = xy_plane_node_list->x;
+				part0_srcz = part0.z_downlim;
+				part0_srcy = part0.y_uplim;
+
+			}
+						//region2 is merged with region1
+			else{
 				part_valid[1] = 1;
 
 				part1.z_uplim = xy_plane_node_list->z;
@@ -5609,18 +5698,6 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part1_srcx = part1.x_uplim;
 				part1_srcz = part1.z_downlim;
 				part1_srcy = part1.y_uplim;
-			}
-			else if (part_valid[0] == 1){
-				//region0 and region2 should be merged together
-				part_valid[1] = 0;
-				part0.x_downlim = xy_plane.x_downlim;
-				part0.x_uplim = xy_plane.x_uplim;
-				part0.y_downlim = xy_plane.y_wrap() ? (xy_plane_node_list->y - Y / 2 + (Y % 2 == 0)< 0 ? xy_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : xy_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : xy_plane.y_downlim;
-				part0.y_uplim = xy_plane_node_list->y - 1 < 0 ? Y - 1 : xy_plane_node_list->y - 1;
-				part0_srcx = xy_plane_node_list->x;
-				part0_srcz = part0.z_downlim;
-				part0_srcy = part0.y_uplim;
-
 			}
 		}
 		else if (xy_eval.region2_merge == 2){ // the region 2 is not used
@@ -5643,21 +5720,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 		}
 		else if (xy_eval.region4_merge == 1){
-			//region4 is merged with region3
-			if (part_valid[1] == 0 || part_valid[1] == 2){
-				part_valid[2] = 1;
-
-				part2.z_uplim = xy_plane_node_list->z;
-				part2.z_downlim = xy_plane_node_list->z;
-				part2.x_downlim = xy_plane.x_wrap() ? (xy_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xy_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xy_plane_node_list->x - X / 2 + (X % 2 == 0)) : xy_plane.x_downlim;
-				part2.x_uplim = xy_plane_node_list->x - 1 < 0 ? X - 1 : xy_plane_node_list->x - 1;
-				part2.y_downlim = xy_plane_node_list->y;
-				part2.y_uplim = xy_plane.y_wrap() ? (xy_plane_node_list->y + Y / 2 >= X ? xy_plane_node_list->y + Y / 2 - Y : xy_plane_node_list->y + Y / 2) : xy_plane.y_uplim;
-				part2_srcx = part2.x_uplim;
-				part2_srcz = part2.z_downlim;
-				part2_srcy = part2.y_downlim;
-			}
-			else if (part_valid[1] == 1){
+			if (part_valid[1] == 1 && xy_eval.region2_merge == 0){
 				//region2 and region4 should be merged together
 				part_valid[2] = 0;
 
@@ -5671,6 +5734,21 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part1_srcy = xy_plane_node_list->y;
 
 			}
+			//region4 is merged with region3
+			else{
+				part_valid[2] = 1;
+
+				part2.z_uplim = xy_plane_node_list->z;
+				part2.z_downlim = xy_plane_node_list->z;
+				part2.x_downlim = xy_plane.x_wrap() ? (xy_plane_node_list->x - X / 2 + (X % 2 == 0)< 0 ? xy_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xy_plane_node_list->x - X / 2 + (X % 2 == 0)) : xy_plane.x_downlim;
+				part2.x_uplim = xy_plane_node_list->x - 1 < 0 ? X - 1 : xy_plane_node_list->x - 1;
+				part2.y_downlim = xy_plane_node_list->y;
+				part2.y_uplim = xy_plane.y_wrap() ? (xy_plane_node_list->y + Y / 2 >= X ? xy_plane_node_list->y + Y / 2 - Y : xy_plane_node_list->y + Y / 2) : xy_plane.y_uplim;
+				part2_srcx = part2.x_uplim;
+				part2_srcz = part2.z_downlim;
+				part2_srcy = part2.y_downlim;
+			}
+
 		}
 		else if (xy_eval.region4_merge == 2){ // the region 4 is not used
 			part_valid[2] = 0;
@@ -5678,21 +5756,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		}
 
 		if (xy_eval.region6_merge == 0){
-			//region 6 is merged with region 7
-			if (part_valid[0] == 0 || part_valid[0] == 2){
-				part_valid[3] = 1;
-
-				part3.z_uplim = xy_plane_node_list->z;
-				part3.z_downlim = xy_plane_node_list->z;
-				part3.x_downlim = xy_plane_node_list->x + 1 >= X ? 0 : xy_plane_node_list->x + 1;
-				part3.x_uplim = xy_plane.x_wrap() ? (xy_plane_node_list->x + X / 2 >= X ? xy_plane_node_list->x + X / 2 - X : xy_plane_node_list->x + X / 2) : xy_plane.x_uplim;
-				part3.y_downlim = xy_plane_node_list->y;
-				part3.y_uplim = xy_plane.y_wrap() ? (xy_plane_node_list->y + Y / 2 >= X ? xy_plane_node_list->y + Y / 2 - Y : xy_plane_node_list->y + Y / 2) : xy_plane.y_uplim;
-				part3_srcx = part3.x_downlim;
-				part3_srcz = part3.z_downlim;
-				part3_srcy = part3.y_downlim;
-			}
-			else if (part_valid[0] == 1){
+			if (part_valid[0] == 1 && xy_eval.region0_merge == 1){
 				//region0 and region6 should be merged together
 				part_valid[3] = 0;
 
@@ -5708,10 +5772,38 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part0_srcy = xy_plane_node_list->y;
 
 			}
+			//region 6 is merged with region 7
+			else{
+				part_valid[3] = 1;
+
+				part3.z_uplim = xy_plane_node_list->z;
+				part3.z_downlim = xy_plane_node_list->z;
+				part3.x_downlim = xy_plane_node_list->x + 1 >= X ? 0 : xy_plane_node_list->x + 1;
+				part3.x_uplim = xy_plane.x_wrap() ? (xy_plane_node_list->x + X / 2 >= X ? xy_plane_node_list->x + X / 2 - X : xy_plane_node_list->x + X / 2) : xy_plane.x_uplim;
+				part3.y_downlim = xy_plane_node_list->y;
+				part3.y_uplim = xy_plane.y_wrap() ? (xy_plane_node_list->y + Y / 2 >= X ? xy_plane_node_list->y + Y / 2 - Y : xy_plane_node_list->y + Y / 2) : xy_plane.y_uplim;
+				part3_srcx = part3.x_downlim;
+				part3_srcz = part3.z_downlim;
+				part3_srcy = part3.y_downlim;
+			}
+
 		}
 		else if (xy_eval.region6_merge == 1){
+			if (part_valid[2] == 1 && xy_eval.region4_merge == 0){
+				//region4 and region6 should be merged together
+				part_valid[3] = 0;
+
+				part2.x_downlim = xy_plane.x_downlim;
+				part2.x_uplim = xy_plane.x_uplim;
+				part2.y_downlim = xy_plane_node_list->y + 1 >= Y ? 0 : xy_plane_node_list->y + 1;
+				part2.y_uplim = xy_plane.y_wrap() ? (xy_plane_node_list->y + Y / 2 >= X ? xy_plane_node_list->y + Y / 2 - Y : xy_plane_node_list->y + Y / 2) : xy_plane.y_uplim;
+				part2_srcx = xy_plane_node_list->x;
+				part2_srcz = part2.z_downlim;
+				part2_srcy = part2.y_downlim;
+
+			}
 			//region6 is merged with region5
-			if (part_valid[2] == 0 || part_valid[2] == 2){
+			else{
 				part_valid[3] = 1;
 
 
@@ -5725,19 +5817,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 				part3_srcz = part3.z_downlim;
 				part3_srcy = part3.y_downlim;
 			}
-			else if (part_valid[2] == 1){
-				//region4 and region6 should be merged together
-				part_valid[3] = 0;
 
-				part2.x_downlim = xy_plane.x_downlim;
-				part2.x_uplim = xy_plane.x_uplim;
-				part2.y_downlim = xy_plane_node_list->y + 1 >= Y ? 0 : xy_plane_node_list->y + 1;
-				part2.y_uplim = xy_plane.y_wrap() ? (xy_plane_node_list->y + Y / 2 >= X ? xy_plane_node_list->y + Y / 2 - Y : xy_plane_node_list->y + Y / 2) : xy_plane.y_uplim;
-				part2_srcx = xy_plane_node_list->x;
-				part2_srcz = part2.z_downlim;
-				part2_srcy = part2.y_downlim;
-
-			}
 		}
 		else if (xy_eval.region6_merge == 2){ // the region 6 is not used
 			part_valid[3] = 0;
