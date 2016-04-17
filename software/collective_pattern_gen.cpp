@@ -11,8 +11,8 @@
 #include<stdlib.h>
 #include<time.h>
 #define MODE 0 //mode 0 is synthetic pattern
-#define MULTICAST_RATIO 0.5// the number of dst nodes / the total number of nodes
-#define SRC_RATIO 0.5 //the number of src nodes/ the total number of nodes
+#define MULTICAST_RATIO 1// the number of dst nodes / the total number of nodes
+#define SRC_RATIO 1 //the number of src nodes/ the total number of nodes
 #define X 4
 #define Y 4
 #define Z 4

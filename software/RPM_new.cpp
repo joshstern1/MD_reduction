@@ -1756,6 +1756,33 @@ int evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 
 	//free all the link lists that are created
 
+	//free the xy_plane_dst_list yz_plane_dst_list xz_plane_dst_list
+	struct src_dst_list* free_ptr;
+
+	struct src_dst_list* next_free_ptr;
+
+	free_ptr = xy_plane_dst_list;
+	while (free_ptr){
+		next_free_ptr = free_ptr->next;
+		free(free_ptr);
+		free_ptr = next_free_ptr;
+	}
+
+	free_ptr = yz_plane_dst_list;
+	while (free_ptr){
+		next_free_ptr = free_ptr->next;
+		free(free_ptr);
+		free_ptr = next_free_ptr;
+	}
+
+	free_ptr = xz_plane_dst_list;
+	while (free_ptr){
+		next_free_ptr = free_ptr->next;
+		free(free_ptr);
+		free_ptr = next_free_ptr;
+	}
+
+
 	//
 	return which_is_smallest;
 
@@ -1782,6 +1809,19 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 			x_map[node_ptr->x]=1;
 			node_ptr=node_ptr->next;
 		}
+
+		int x_counter = 0;
+		int find_x_valid;
+		for (int i = 0; i < X; i++){
+			if (x_map[i] == 1){
+				find_x_valid = i;
+				x_counter++;
+			}
+		}
+		if (x_counter == 1 && find_x_valid == node_list->x){
+			return void();
+		}
+
 		bool xpos_enable = false;
 		bool xneg_enable = false;
 		int xpos_max;
@@ -1872,10 +1912,10 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 
 			if (node_list->x == Chunk_1D.x_uplim){
 				xpos_enable = false;
-				xneg_enable = true;
+			//	xneg_enable = true;
 			}
 			else if (node_list->x == Chunk_1D.x_downlim){
-				xpos_enable = true;
+			//	xpos_enable = true;
 				xneg_enable = false;
 			}
 			if(node_list->x != Chunk_1D.x_uplim){
@@ -1890,7 +1930,7 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 				}
 			}
 			if(node_list->x!=Chunk_1D.x_downlim){
-				for (int i = 1;; i++){
+				for (int i = 0;; i++){
 					int idx = node_list->x - i <0 ? node_list->x - i + X : node_list->x - i;
 					if (x_map[idx] != 0 && i!=0){
 						xneg_enable = true;
@@ -1983,6 +2023,19 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 			y_map[node_ptr->y] = 1;
 			node_ptr = node_ptr->next;
 		}
+
+		int y_counter = 0;
+		int find_y_valid;
+		for (int i = 0; i < Y; i++){
+			if (y_map[i] == 1){
+				find_y_valid = i;
+				y_counter++;
+			}
+		}
+		if (y_counter == 1 && find_y_valid == node_list->y){
+			return void();
+		}
+
 		bool ypos_enable = false;
 		bool yneg_enable = false;
 		int ypos_max;
@@ -2073,10 +2126,10 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 
 			if (node_list->y == Chunk_1D.y_uplim){
 				ypos_enable = false;
-				yneg_enable = true;
+			//	yneg_enable = true;
 			}
 			else if (node_list->y == Chunk_1D.y_downlim){
-				ypos_enable = true;
+			//	ypos_enable = true;
 				yneg_enable = false;
 			}
 			if (node_list->y != Chunk_1D.y_uplim){
@@ -2091,7 +2144,7 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 				}
 			}
 			if (node_list->y != Chunk_1D.y_downlim){
-				for (int i = 1;; i++){
+				for (int i = 0;; i++){
 					int idy = node_list->y - i <0 ? node_list->y - i + Y : node_list->y - i;
 					if (y_map[idy] != 0 && i != 0){
 						yneg_enable = true;
@@ -2184,6 +2237,19 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 			z_map[node_ptr->z] = 1;
 			node_ptr = node_ptr->next;
 		}
+
+		int z_counter = 0;
+		int find_z_valid;
+		for (int i = 0; i < Z; i++){
+			if (z_map[i] == 1){
+				find_z_valid = i;
+				z_counter++;
+			}
+		}
+		if (z_counter == 1 && find_z_valid == node_list->z){
+			return void();
+		}
+
 		bool zpos_enable = false;
 		bool zneg_enable = false;
 		int zpos_max;
@@ -2274,10 +2340,10 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 
 			if (node_list->z == Chunk_1D.z_uplim){
 				zpos_enable = false;
-				zneg_enable = true;
+			//	zneg_enable = true;
 			}
 			else if (node_list->z == Chunk_1D.z_downlim){
-				zpos_enable = true;
+			//	zpos_enable = true;
 				zneg_enable = false;
 			}
 			if (node_list->z != Chunk_1D.z_uplim){
@@ -2292,7 +2358,7 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 				}
 			}
 			if (node_list->z != Chunk_1D.z_downlim){
-				for (int i = 1;; i++){
+				for (int i = 0;; i++){
 					int idz = node_list->z - i <0 ? node_list->z - i + Z : node_list->z - i;
 					if (z_map[idz] != 0 && i != 0){
 						zneg_enable = true;
@@ -2823,35 +2889,34 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 			accumulate_link(tree_src,tree_src->children[children_idx]);
 		}
 		fout << "}" << endl;
-		if (part_valid[0]){
-			RPM_partition_2D(part0_list, part0, part0_src,0);
-		}
-		if (part_valid[1]){
-			RPM_partition_2D(part1_list, part1, part1_src,0);
-		}
-		if (part_valid[2]){
-			RPM_partition_2D(part2_list, part2, part2_src,0);
-		}
-		if (part_valid[3]){
-			RPM_partition_2D(part3_list, part3, part3_src,0);
-		}
-
-		//free the four part_list
 		struct src_dst_list* free_ptr;
 
 		struct src_dst_list* next_free_ptr;
 
+
+		if (part_valid[0]){
+			RPM_partition_2D(part0_list, part0, part0_src,0);
+		}
+		//free the four part_list
 		free_ptr = part0_list;
 		while (free_ptr){
 			next_free_ptr = free_ptr->next;
 			free(free_ptr);
 			free_ptr = next_free_ptr;
 		}
+		if (part_valid[1]){
+			RPM_partition_2D(part1_list, part1, part1_src,0);
+		}
+
+
 		free_ptr = part1_list;
 		while (free_ptr){
 			next_free_ptr = free_ptr->next;
 			free(free_ptr);
 			free_ptr = next_free_ptr;
+		}
+		if (part_valid[2]){
+			RPM_partition_2D(part2_list, part2, part2_src,0);
 		}
 		free_ptr = part2_list;
 		while (free_ptr){
@@ -2859,6 +2924,12 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 			free(free_ptr);
 			free_ptr = next_free_ptr;
 		}
+		if (part_valid[3]){
+			RPM_partition_2D(part3_list, part3, part3_src,0);
+		}
+
+	
+	
 		free_ptr = part3_list;
 		while (free_ptr){
 			next_free_ptr = free_ptr->next;
@@ -3304,30 +3375,21 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 			accumulate_link(tree_src,tree_src->children[children_idx]);
 		}
 		fout << "}" << endl;
-
-		if (part_valid[0]){
-			RPM_partition_2D(part0_list, part0, part0_src,1);
-		}
-		if (part_valid[1]){
-			RPM_partition_2D(part1_list, part1, part1_src,1);
-		}
-		if (part_valid[2]){
-			RPM_partition_2D(part2_list, part2, part2_src,1);
-		}
-		if (part_valid[3]){
-			RPM_partition_2D(part3_list, part3, part3_src,1);
-		}
-
-		//free the four part_list
 		struct src_dst_list* free_ptr;
 
 		struct src_dst_list* next_free_ptr;
 
+		if (part_valid[0]){
+			RPM_partition_2D(part0_list, part0, part0_src,1);
+		}
 		free_ptr = part0_list;
 		while (free_ptr){
 			next_free_ptr = free_ptr->next;
 			free(free_ptr);
 			free_ptr = next_free_ptr;
+		}
+		if (part_valid[1]){
+			RPM_partition_2D(part1_list, part1, part1_src,1);
 		}
 		free_ptr = part1_list;
 		while (free_ptr){
@@ -3335,12 +3397,24 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 			free(free_ptr);
 			free_ptr = next_free_ptr;
 		}
+		if (part_valid[2]){
+			RPM_partition_2D(part2_list, part2, part2_src,1);
+		}
 		free_ptr = part2_list;
 		while (free_ptr){
 			next_free_ptr = free_ptr->next;
 			free(free_ptr);
 			free_ptr = next_free_ptr;
 		}
+
+		if (part_valid[3]){
+			RPM_partition_2D(part3_list, part3, part3_src,1);
+		}
+
+		//free the four part_list
+
+
+
 		free_ptr = part3_list;
 		while (free_ptr){
 			next_free_ptr = free_ptr->next;
@@ -3790,31 +3864,23 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 		fout << "}" << endl;
 
 		//accumulate the link counter
-
-		
-		if (part_valid[0]){
-			RPM_partition_2D(part0_list, part0, part0_src,2);
-		}
-		if (part_valid[1]){
-			RPM_partition_2D(part1_list, part1, part1_src,2);
-		}
-		if (part_valid[2]){
-			RPM_partition_2D(part2_list, part2, part2_src,2);
-		}
-		if (part_valid[3]){
-			RPM_partition_2D(part3_list, part3, part3_src,2);
-		}
-
 		//free the four part_list
 		struct src_dst_list* free_ptr;
 
 		struct src_dst_list* next_free_ptr;
 
+		
+		if (part_valid[0]){
+			RPM_partition_2D(part0_list, part0, part0_src,2);
+		}
 		free_ptr = part0_list;
 		while (free_ptr){
 			next_free_ptr = free_ptr->next;
 			free(free_ptr);
 			free_ptr = next_free_ptr;
+		}
+		if (part_valid[1]){
+			RPM_partition_2D(part1_list, part1, part1_src,2);
 		}
 		free_ptr = part1_list;
 		while (free_ptr){
@@ -3822,12 +3888,23 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 			free(free_ptr);
 			free_ptr = next_free_ptr;
 		}
+		if (part_valid[2]){
+			RPM_partition_2D(part2_list, part2, part2_src,2);
+		}
 		free_ptr = part2_list;
 		while (free_ptr){
 			next_free_ptr = free_ptr->next;
 			free(free_ptr);
 			free_ptr = next_free_ptr;
 		}
+		if (part_valid[3]){
+			RPM_partition_2D(part3_list, part3, part3_src,2);
+		}
+
+
+
+
+	
 		free_ptr = part3_list;
 		while (free_ptr){
 			next_free_ptr = free_ptr->next;
@@ -3866,10 +3943,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		struct src_dst_list* x_down_node_list=NULL;
 		struct src_dst_list* yz_plane_node_list;
 		//init the three link lists
-		if (!(x_up_node_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
-			cout << "no mem" << endl;
-			exit(-1);
-		}
+
 
 		if (!(yz_plane_node_list = (struct src_dst_list*)malloc(sizeof(struct src_dst_list)))){
 			cout << "no mem" << endl;
@@ -4498,6 +4572,11 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			accumulate_link(tree_src,tree_src->children[children_idx]);
 		}
 		fout << "}" << endl;
+
+		struct src_dst_list* free_ptr;
+
+		struct src_dst_list* next_free_ptr;
+
 		if (x_up_node_list){
 			RPM_partition(x_up_node_list, xpos_chunk, x_pos_src);
 		}
@@ -4507,27 +4586,15 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		if (part_valid[0]){
 			RPM_partition_2D(part0_list, part0, part0_src,0);
 		}
-		if (part_valid[1]){
-			RPM_partition_2D(part1_list, part1, part1_src,0);
-		}
-		if (part_valid[2]){
-			RPM_partition_2D(part2_list, part2, part2_src,0);
-		}
-		if (part_valid[3]){
-			RPM_partition_2D(part3_list, part3, part3_src,0);
-		}
-
-
-		//free the four part_list
-		struct src_dst_list* free_ptr;
-		
-		struct src_dst_list* next_free_ptr;
-
 		free_ptr = part0_list;
 		while (free_ptr){
 			next_free_ptr = free_ptr->next;
 			free(free_ptr);
 			free_ptr = next_free_ptr;
+		}
+
+		if (part_valid[1]){
+			RPM_partition_2D(part1_list, part1, part1_src,0);
 		}
 		free_ptr = part1_list;
 		while (free_ptr){
@@ -4535,12 +4602,25 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			free(free_ptr);
 			free_ptr = next_free_ptr;
 		}
+
+		if (part_valid[2]){
+			RPM_partition_2D(part2_list, part2, part2_src,0);
+		}
+
 		free_ptr = part2_list;
 		while (free_ptr){
 			next_free_ptr = free_ptr->next;
 			free(free_ptr);
 			free_ptr = next_free_ptr;
 		}
+
+		if (part_valid[3]){
+			RPM_partition_2D(part3_list, part3, part3_src,0);
+		}
+
+
+		//free the four part_list
+
 		free_ptr = part3_list;
 		while (free_ptr){
 			next_free_ptr = free_ptr->next;
@@ -5194,6 +5274,11 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			accumulate_link(tree_src,tree_src->children[children_idx]);
 		}
 		fout << "}" << endl;
+
+		struct src_dst_list* free_ptr;
+
+		struct src_dst_list* next_free_ptr;
+
 		if (y_up_node_list){
 			RPM_partition(y_up_node_list, ypos_chunk, y_pos_src);
 		}
@@ -5203,20 +5288,6 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		if (part_valid[0]){
 			RPM_partition_2D(part0_list, part0, part0_src,1);
 		}
-		if (part_valid[1]){
-			RPM_partition_2D(part1_list, part1, part1_src,1);
-		}
-		if (part_valid[2]){
-			RPM_partition_2D(part2_list, part2, part2_src,1);
-		}
-		if (part_valid[3]){
-			RPM_partition_2D(part3_list, part3, part3_src,1);
-		}
-
-		//free the four part_list
-		struct src_dst_list* free_ptr;
-
-		struct src_dst_list* next_free_ptr;
 
 		free_ptr = part0_list;
 		while (free_ptr){
@@ -5224,18 +5295,38 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			free(free_ptr);
 			free_ptr = next_free_ptr;
 		}
+
+		if (part_valid[1]){
+			RPM_partition_2D(part1_list, part1, part1_src,1);
+		}
+
 		free_ptr = part1_list;
 		while (free_ptr){
 			next_free_ptr = free_ptr->next;
 			free(free_ptr);
 			free_ptr = next_free_ptr;
 		}
+
+		if (part_valid[2]){
+			RPM_partition_2D(part2_list, part2, part2_src,1);
+		}
+
 		free_ptr = part2_list;
 		while (free_ptr){
 			next_free_ptr = free_ptr->next;
 			free(free_ptr);
 			free_ptr = next_free_ptr;
 		}
+
+		if (part_valid[3]){
+			RPM_partition_2D(part3_list, part3, part3_src,1);
+		}
+
+		//free the four part_list
+	
+		
+		
+		
 		free_ptr = part3_list;
 		while (free_ptr){
 			next_free_ptr = free_ptr->next;
@@ -5890,6 +5981,11 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			accumulate_link(tree_src,tree_src->children[children_idx]);
 		}
 		fout << "}" << endl;
+
+		struct src_dst_list* free_ptr;
+
+		struct src_dst_list* next_free_ptr;
+
 		if (z_up_node_list){
 			RPM_partition(z_up_node_list, zpos_chunk, z_pos_src);
 		}
@@ -5899,25 +5995,14 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		if (part_valid[0]){
 			RPM_partition_2D(part0_list, part0, part0_src,2);
 		}
-		if (part_valid[1]){
-			RPM_partition_2D(part1_list, part1, part1_src,2);
-		}
-		if (part_valid[2]){
-			RPM_partition_2D(part2_list, part2, part2_src,2);
-		}
-		if (part_valid[3]){
-			RPM_partition_2D(part3_list, part3, part3_src,2);
-		}
-		//free the four part_list
-		struct src_dst_list* free_ptr;
-
-		struct src_dst_list* next_free_ptr;
-
 		free_ptr = part0_list;
 		while (free_ptr){
 			next_free_ptr = free_ptr->next;
 			free(free_ptr);
 			free_ptr = next_free_ptr;
+		}
+		if (part_valid[1]){
+			RPM_partition_2D(part1_list, part1, part1_src,2);
 		}
 		free_ptr = part1_list;
 		while (free_ptr){
@@ -5925,18 +6010,31 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			free(free_ptr);
 			free_ptr = next_free_ptr;
 		}
+		if (part_valid[2]){
+			RPM_partition_2D(part2_list, part2, part2_src,2);
+		}
 		free_ptr = part2_list;
 		while (free_ptr){
 			next_free_ptr = free_ptr->next;
 			free(free_ptr);
 			free_ptr = next_free_ptr;
 		}
+		if (part_valid[3]){
+			RPM_partition_2D(part3_list, part3, part3_src,2);
+		}
+
 		free_ptr = part3_list;
 		while (free_ptr){
 			next_free_ptr = free_ptr->next;
 			free(free_ptr);
 			free_ptr = next_free_ptr;
 		}
+		//free the four part_list
+		
+		
+		
+		
+		
 	}
 	
 	

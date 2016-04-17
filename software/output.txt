@@ -1,16 +1,154 @@
+{src: (0,0,0) weight: 512
+dst: (0,1,0) weight256
+dst: (0,3,0) weight256
+dst: (1,0,0) weight256
+dst: (3,0,0) weight256
+dst: (0,0,1) weight256
+}
+{src: (0,1,0) weight: 256
+dst: (0,2,0) weight128
+dst: (1,1,0) weight128
+dst: (3,1,0) weight128
+dst: (0,1,1) weight128
+}
+{src: (0,2,0) weight: 128
+dst: (1,2,0) weight64
+dst: (3,2,0) weight64
+dst: (0,2,1) weight64
+}
+{src: (1,2,0) weight: 64
+dst: (2,2,0) weight32
+}
+{src:(2,2,0) weight: 32
+dst: (2,2,3) weight16
+}
+{src:(3,2,0) weight: 64
+dst: (3,2,1) weight32
+dst: (3,2,3) weight32
+}
+{src:(3,2,1) weight: 32
+dst: (3,2,2) weight32
+}
+{src:(3,2,2) weight: 32
+dst: (3,2,3) weight16
+}
+{src:(3,2,3) weight: 32
+dst: (3,2,2) weight32
+}
+{src: (0,2,1) weight: 64
+dst: (0,2,2) weight32
+}
+{src:(0,2,2) weight: 32
+dst: (1,2,2) weight16
+}
+{src:(1,2,2) weight: 16
+dst: (2,2,2) weight16
+}
+{src: (1,1,0) weight: 128
+dst: (2,1,0) weight64
+}
+{src:(2,1,0) weight: 64
+dst: (2,1,3) weight32
+}
+{src:(3,1,0) weight: 128
+dst: (3,1,1) weight64
+dst: (3,1,3) weight64
+}
+{src:(3,1,1) weight: 64
+dst: (3,1,2) weight64
+}
+{src:(3,1,2) weight: 64
+dst: (3,1,3) weight32
+}
+{src:(3,1,3) weight: 64
+dst: (3,1,2) weight64
+}
+{src: (0,1,1) weight: 128
+dst: (0,1,2) weight64
+}
+{src:(0,1,2) weight: 64
+dst: (1,1,2) weight32
+}
+{src:(1,1,2) weight: 32
+dst: (2,1,2) weight32
+}
+{src: (0,3,0) weight: 256
+dst: (1,3,0) weight128
+dst: (3,3,0) weight128
+dst: (0,3,1) weight128
+}
+{src: (1,3,0) weight: 128
+dst: (2,3,0) weight64
+}
+{src:(2,3,0) weight: 64
+dst: (2,3,3) weight32
+}
+{src:(3,3,0) weight: 128
+dst: (3,3,1) weight64
+dst: (3,3,3) weight64
+}
+{src:(3,3,1) weight: 64
+dst: (3,3,2) weight64
+}
+{src:(3,3,2) weight: 64
+dst: (3,3,3) weight32
+}
+{src:(3,3,3) weight: 64
+dst: (3,3,2) weight64
+}
+{src: (0,3,1) weight: 128
+dst: (0,3,2) weight64
+}
+{src:(0,3,2) weight: 64
+dst: (1,3,2) weight32
+}
+{src:(1,3,2) weight: 32
+dst: (2,3,2) weight32
+}
+{src: (1,0,0) weight: 256
+dst: (2,0,0) weight128
+}
+{src:(2,0,0) weight: 128
+dst: (2,0,3) weight64
+}
+{src:(3,0,0) weight: 256
+dst: (3,0,1) weight128
+dst: (3,0,3) weight128
+}
+{src:(3,0,1) weight: 128
+dst: (3,0,2) weight128
+}
+{src:(3,0,2) weight: 128
+dst: (3,0,3) weight64
+}
+{src:(3,0,3) weight: 128
+dst: (3,0,2) weight128
+}
+{src: (0,0,1) weight: 256
+dst: (0,0,2) weight128
+}
+{src:(0,0,2) weight: 128
+dst: (1,0,2) weight64
+}
+{src:(1,0,2) weight: 64
+dst: (2,0,2) weight64
+}
 {src: (0,0,1) weight: 512
 dst: (0,1,1) weight256
 dst: (0,3,1) weight256
 dst: (1,0,1) weight256
+dst: (3,0,1) weight256
 dst: (0,0,2) weight256
 }
 {src: (0,1,1) weight: 256
 dst: (0,2,1) weight128
-dst: (0,1,0) weight128
+dst: (1,1,1) weight128
+dst: (3,1,1) weight128
 dst: (0,1,2) weight128
 }
 {src: (0,2,1) weight: 128
 dst: (1,2,1) weight64
+dst: (3,2,1) weight64
 dst: (0,2,2) weight64
 }
 {src: (1,2,1) weight: 64
@@ -19,21 +157,778 @@ dst: (2,2,1) weight32
 {src:(2,2,1) weight: 32
 dst: (2,2,0) weight16
 }
+{src:(3,2,1) weight: 64
+dst: (3,2,2) weight32
+dst: (3,2,0) weight32
+}
+{src:(3,2,2) weight: 32
+dst: (3,2,3) weight32
+}
+{src:(3,2,3) weight: 32
+dst: (3,2,0) weight16
+}
+{src:(3,2,0) weight: 32
+dst: (3,2,3) weight32
+}
 {src: (0,2,2) weight: 64
 dst: (0,2,3) weight32
 }
 {src:(0,2,3) weight: 32
 dst: (1,2,3) weight16
-dst: (3,2,3) weight16
 }
 {src:(1,2,3) weight: 16
 dst: (2,2,3) weight16
 }
-{src:(2,2,3) weight: 16
-dst: (3,2,3) weight8
+{src: (1,1,1) weight: 128
+dst: (2,1,1) weight64
 }
-{src:(3,2,3) weight: 16
-dst: (2,2,3) weight16
+{src:(2,1,1) weight: 64
+dst: (2,1,0) weight32
+}
+{src:(3,1,1) weight: 128
+dst: (3,1,2) weight64
+dst: (3,1,0) weight64
+}
+{src:(3,1,2) weight: 64
+dst: (3,1,3) weight64
+}
+{src:(3,1,3) weight: 64
+dst: (3,1,0) weight32
+}
+{src:(3,1,0) weight: 64
+dst: (3,1,3) weight64
+}
+{src: (0,1,2) weight: 128
+dst: (0,1,3) weight64
+}
+{src:(0,1,3) weight: 64
+dst: (1,1,3) weight32
+}
+{src:(1,1,3) weight: 32
+dst: (2,1,3) weight32
+}
+{src: (0,3,1) weight: 256
+dst: (1,3,1) weight128
+dst: (3,3,1) weight128
+dst: (0,3,2) weight128
+}
+{src: (1,3,1) weight: 128
+dst: (2,3,1) weight64
+}
+{src:(2,3,1) weight: 64
+dst: (2,3,0) weight32
+}
+{src:(3,3,1) weight: 128
+dst: (3,3,2) weight64
+dst: (3,3,0) weight64
+}
+{src:(3,3,2) weight: 64
+dst: (3,3,3) weight64
+}
+{src:(3,3,3) weight: 64
+dst: (3,3,0) weight32
+}
+{src:(3,3,0) weight: 64
+dst: (3,3,3) weight64
+}
+{src: (0,3,2) weight: 128
+dst: (0,3,3) weight64
+}
+{src:(0,3,3) weight: 64
+dst: (1,3,3) weight32
+}
+{src:(1,3,3) weight: 32
+dst: (2,3,3) weight32
+}
+{src: (1,0,1) weight: 256
+dst: (2,0,1) weight128
+}
+{src:(2,0,1) weight: 128
+dst: (2,0,0) weight64
+}
+{src:(3,0,1) weight: 256
+dst: (3,0,2) weight128
+dst: (3,0,0) weight128
+}
+{src:(3,0,2) weight: 128
+dst: (3,0,3) weight128
+}
+{src:(3,0,3) weight: 128
+dst: (3,0,0) weight64
+}
+{src:(3,0,0) weight: 128
+dst: (3,0,3) weight128
+}
+{src: (0,0,2) weight: 256
+dst: (0,0,3) weight128
+}
+{src:(0,0,3) weight: 128
+dst: (1,0,3) weight64
+}
+{src:(1,0,3) weight: 64
+dst: (2,0,3) weight64
+}
+{src: (0,0,2) weight: 512
+dst: (0,1,2) weight256
+dst: (0,3,2) weight256
+dst: (0,0,1) weight256
+dst: (3,0,2) weight256
+dst: (0,0,3) weight256
+}
+{src: (0,1,2) weight: 256
+dst: (0,2,2) weight128
+dst: (0,1,1) weight128
+dst: (3,1,2) weight128
+dst: (0,1,3) weight128
+}
+{src: (0,2,2) weight: 128
+dst: (0,2,1) weight64
+dst: (3,2,2) weight64
+dst: (0,2,3) weight64
+}
+{src:(0,2,1) weight: 64
+dst: (1,2,1) weight32
+}
+{src:(1,2,1) weight: 32
+dst: (2,2,1) weight32
+}
+{src:(3,2,2) weight: 64
+dst: (3,2,3) weight32
+dst: (3,2,1) weight32
+}
+{src:(3,2,3) weight: 32
+dst: (3,2,0) weight32
+}
+{src:(3,2,0) weight: 32
+dst: (3,2,1) weight16
+}
+{src:(3,2,1) weight: 32
+dst: (3,2,0) weight32
+}
+{src: (0,2,3) weight: 64
+dst: (0,2,0) weight32
+}
+{src:(0,2,0) weight: 32
+dst: (1,2,0) weight16
+}
+{src:(1,2,0) weight: 16
+dst: (2,2,0) weight16
+}
+{src:(0,1,1) weight: 128
+dst: (1,1,1) weight64
+}
+{src:(1,1,1) weight: 64
+dst: (2,1,1) weight64
+}
+{src:(3,1,2) weight: 128
+dst: (3,1,3) weight64
+dst: (3,1,1) weight64
+}
+{src:(3,1,3) weight: 64
+dst: (3,1,0) weight64
+}
+{src:(3,1,0) weight: 64
+dst: (3,1,1) weight32
+}
+{src:(3,1,1) weight: 64
+dst: (3,1,0) weight64
+}
+{src: (0,1,3) weight: 128
+dst: (0,1,0) weight64
+}
+{src:(0,1,0) weight: 64
+dst: (1,1,0) weight32
+}
+{src:(1,1,0) weight: 32
+dst: (2,1,0) weight32
+}
+{src: (0,3,2) weight: 256
+dst: (0,3,1) weight128
+dst: (3,3,2) weight128
+dst: (0,3,3) weight128
+}
+{src:(0,3,1) weight: 128
+dst: (1,3,1) weight64
+}
+{src:(1,3,1) weight: 64
+dst: (2,3,1) weight64
+}
+{src:(3,3,2) weight: 128
+dst: (3,3,3) weight64
+dst: (3,3,1) weight64
+}
+{src:(3,3,3) weight: 64
+dst: (3,3,0) weight64
+}
+{src:(3,3,0) weight: 64
+dst: (3,3,1) weight32
+}
+{src:(3,3,1) weight: 64
+dst: (3,3,0) weight64
+}
+{src: (0,3,3) weight: 128
+dst: (0,3,0) weight64
+}
+{src:(0,3,0) weight: 64
+dst: (1,3,0) weight32
+}
+{src:(1,3,0) weight: 32
+dst: (2,3,0) weight32
+}
+{src:(0,0,1) weight: 256
+dst: (1,0,1) weight128
+}
+{src:(1,0,1) weight: 128
+dst: (2,0,1) weight128
+}
+{src:(3,0,2) weight: 256
+dst: (3,0,3) weight128
+dst: (3,0,1) weight128
+}
+{src:(3,0,3) weight: 128
+dst: (3,0,0) weight128
+}
+{src:(3,0,0) weight: 128
+dst: (3,0,1) weight64
+}
+{src:(3,0,1) weight: 128
+dst: (3,0,0) weight128
+}
+{src: (0,0,3) weight: 256
+dst: (0,0,0) weight128
+}
+{src:(0,0,0) weight: 128
+dst: (1,0,0) weight64
+}
+{src:(1,0,0) weight: 64
+dst: (2,0,0) weight64
+}
+{src: (0,0,3) weight: 512
+dst: (0,1,3) weight256
+dst: (0,3,3) weight256
+dst: (0,0,2) weight256
+dst: (3,0,3) weight256
+dst: (0,0,0) weight256
+}
+{src: (0,1,3) weight: 256
+dst: (0,2,3) weight128
+dst: (0,1,2) weight128
+dst: (3,1,3) weight128
+dst: (0,1,0) weight128
+}
+{src: (0,2,3) weight: 128
+dst: (0,2,2) weight64
+dst: (3,2,3) weight64
+dst: (0,2,0) weight64
+}
+{src:(0,2,2) weight: 64
+dst: (1,2,2) weight32
+}
+{src:(1,2,2) weight: 32
+dst: (2,2,2) weight32
+}
+{src:(3,2,3) weight: 64
+dst: (3,2,0) weight32
+dst: (3,2,2) weight32
+}
+{src:(3,2,0) weight: 32
+dst: (3,2,1) weight32
+}
+{src:(3,2,1) weight: 32
+dst: (3,2,2) weight16
+}
+{src:(3,2,2) weight: 32
+dst: (3,2,1) weight32
+}
+{src: (0,2,0) weight: 64
+dst: (0,2,1) weight32
+}
+{src:(0,2,1) weight: 32
+dst: (1,2,1) weight16
+}
+{src:(1,2,1) weight: 16
+dst: (2,2,1) weight16
+}
+{src:(0,1,2) weight: 128
+dst: (1,1,2) weight64
+}
+{src:(1,1,2) weight: 64
+dst: (2,1,2) weight64
+}
+{src:(3,1,3) weight: 128
+dst: (3,1,0) weight64
+dst: (3,1,2) weight64
+}
+{src:(3,1,0) weight: 64
+dst: (3,1,1) weight64
+}
+{src:(3,1,1) weight: 64
+dst: (3,1,2) weight32
+}
+{src:(3,1,2) weight: 64
+dst: (3,1,1) weight64
+}
+{src: (0,1,0) weight: 128
+dst: (0,1,1) weight64
+}
+{src:(0,1,1) weight: 64
+dst: (1,1,1) weight32
+}
+{src:(1,1,1) weight: 32
+dst: (2,1,1) weight32
+}
+{src: (0,3,3) weight: 256
+dst: (0,3,2) weight128
+dst: (3,3,3) weight128
+dst: (0,3,0) weight128
+}
+{src:(0,3,2) weight: 128
+dst: (1,3,2) weight64
+}
+{src:(1,3,2) weight: 64
+dst: (2,3,2) weight64
+}
+{src:(3,3,3) weight: 128
+dst: (3,3,0) weight64
+dst: (3,3,2) weight64
+}
+{src:(3,3,0) weight: 64
+dst: (3,3,1) weight64
+}
+{src:(3,3,1) weight: 64
+dst: (3,3,2) weight32
+}
+{src:(3,3,2) weight: 64
+dst: (3,3,1) weight64
+}
+{src: (0,3,0) weight: 128
+dst: (0,3,1) weight64
+}
+{src:(0,3,1) weight: 64
+dst: (1,3,1) weight32
+}
+{src:(1,3,1) weight: 32
+dst: (2,3,1) weight32
+}
+{src:(0,0,2) weight: 256
+dst: (1,0,2) weight128
+}
+{src:(1,0,2) weight: 128
+dst: (2,0,2) weight128
+}
+{src:(3,0,3) weight: 256
+dst: (3,0,0) weight128
+dst: (3,0,2) weight128
+}
+{src:(3,0,0) weight: 128
+dst: (3,0,1) weight128
+}
+{src:(3,0,1) weight: 128
+dst: (3,0,2) weight64
+}
+{src:(3,0,2) weight: 128
+dst: (3,0,1) weight128
+}
+{src: (0,0,0) weight: 256
+dst: (0,0,1) weight128
+}
+{src:(0,0,1) weight: 128
+dst: (1,0,1) weight64
+}
+{src:(1,0,1) weight: 64
+dst: (2,0,1) weight64
+}
+{src: (0,1,0) weight: 512
+dst: (0,2,0) weight256
+dst: (0,0,0) weight256
+dst: (0,1,3) weight256
+dst: (0,1,1) weight256
+}
+{src: (0,2,0) weight: 256
+dst: (0,3,0) weight128
+dst: (0,2,3) weight128
+dst: (0,2,1) weight128
+}
+{src: (0,3,0) weight: 128
+dst: (0,3,3) weight64
+dst: (0,3,1) weight64
+}
+{src:(0,3,3) weight: 64
+dst: (1,3,3) weight32
+dst: (3,3,3) weight32
+}
+{src:(1,3,3) weight: 32
+dst: (2,3,3) weight32
+}
+{src:(2,3,3) weight: 32
+dst: (3,3,3) weight16
+}
+{src:(3,3,3) weight: 32
+dst: (2,3,3) weight32
+}
+{src: (0,3,1) weight: 64
+dst: (0,3,2) weight32
+}
+{src:(0,3,2) weight: 32
+dst: (1,3,2) weight16
+dst: (3,3,2) weight16
+}
+{src:(1,3,2) weight: 16
+dst: (2,3,2) weight16
+}
+{src:(2,3,2) weight: 16
+dst: (3,3,2) weight8
+}
+{src:(3,3,2) weight: 16
+dst: (2,3,2) weight16
+}
+{src:(0,2,3) weight: 128
+dst: (1,2,3) weight64
+dst: (3,2,3) weight64
+}
+{src:(1,2,3) weight: 64
+dst: (2,2,3) weight64
+}
+{src:(2,2,3) weight: 64
+dst: (3,2,3) weight32
+}
+{src:(3,2,3) weight: 64
+dst: (2,2,3) weight64
+}
+{src: (0,2,1) weight: 128
+dst: (0,2,2) weight64
+}
+{src:(0,2,2) weight: 64
+dst: (1,2,2) weight32
+dst: (3,2,2) weight32
+}
+{src:(1,2,2) weight: 32
+dst: (2,2,2) weight32
+}
+{src:(2,2,2) weight: 32
+dst: (3,2,2) weight16
+}
+{src:(3,2,2) weight: 32
+dst: (2,2,2) weight32
+}
+{src: (0,0,0) weight: 256
+dst: (0,0,3) weight128
+dst: (0,0,1) weight128
+}
+{src:(0,0,3) weight: 128
+dst: (1,0,3) weight64
+dst: (3,0,3) weight64
+}
+{src:(1,0,3) weight: 64
+dst: (2,0,3) weight64
+}
+{src:(2,0,3) weight: 64
+dst: (3,0,3) weight32
+}
+{src:(3,0,3) weight: 64
+dst: (2,0,3) weight64
+}
+{src: (0,0,1) weight: 128
+dst: (0,0,2) weight64
+}
+{src:(0,0,2) weight: 64
+dst: (1,0,2) weight32
+dst: (3,0,2) weight32
+}
+{src:(1,0,2) weight: 32
+dst: (2,0,2) weight32
+}
+{src:(2,0,2) weight: 32
+dst: (3,0,2) weight16
+}
+{src:(3,0,2) weight: 32
+dst: (2,0,2) weight32
+}
+{src:(0,1,3) weight: 256
+dst: (1,1,3) weight128
+dst: (3,1,3) weight128
+}
+{src:(1,1,3) weight: 128
+dst: (2,1,3) weight128
+}
+{src:(2,1,3) weight: 128
+dst: (3,1,3) weight64
+}
+{src:(3,1,3) weight: 128
+dst: (2,1,3) weight128
+}
+{src: (0,1,1) weight: 256
+dst: (0,1,2) weight128
+}
+{src:(0,1,2) weight: 128
+dst: (1,1,2) weight64
+dst: (3,1,2) weight64
+}
+{src:(1,1,2) weight: 64
+dst: (2,1,2) weight64
+}
+{src:(2,1,2) weight: 64
+dst: (3,1,2) weight32
+}
+{src:(3,1,2) weight: 64
+dst: (2,1,2) weight64
+}
+{src: (0,1,1) weight: 512
+dst: (0,2,1) weight256
+dst: (0,0,1) weight256
+dst: (0,1,0) weight256
+dst: (0,1,2) weight256
+}
+{src: (0,2,1) weight: 256
+dst: (0,3,1) weight128
+dst: (0,2,0) weight128
+dst: (0,2,2) weight128
+}
+{src: (0,3,1) weight: 128
+dst: (0,3,0) weight64
+dst: (0,3,2) weight64
+}
+{src:(0,3,0) weight: 64
+dst: (1,3,0) weight32
+dst: (3,3,0) weight32
+}
+{src:(1,3,0) weight: 32
+dst: (2,3,0) weight32
+}
+{src:(2,3,0) weight: 32
+dst: (3,3,0) weight16
+}
+{src:(3,3,0) weight: 32
+dst: (2,3,0) weight32
+}
+{src: (0,3,2) weight: 64
+dst: (0,3,3) weight32
+}
+{src:(0,3,3) weight: 32
+dst: (1,3,3) weight16
+dst: (3,3,3) weight16
+}
+{src:(1,3,3) weight: 16
+dst: (2,3,3) weight16
+}
+{src:(2,3,3) weight: 16
+dst: (3,3,3) weight8
+}
+{src:(3,3,3) weight: 16
+dst: (2,3,3) weight16
+}
+{src:(0,2,0) weight: 128
+dst: (1,2,0) weight64
+dst: (3,2,0) weight64
+}
+{src:(1,2,0) weight: 64
+dst: (2,2,0) weight64
+}
+{src:(2,2,0) weight: 64
+dst: (3,2,0) weight32
+}
+{src:(3,2,0) weight: 64
+dst: (2,2,0) weight64
+}
+{src: (0,2,2) weight: 128
+dst: (0,2,3) weight64
+}
+{src:(0,2,3) weight: 64
+dst: (1,2,3) weight32
+dst: (3,2,3) weight32
+}
+{src:(1,2,3) weight: 32
+dst: (2,2,3) weight32
+}
+{src:(2,2,3) weight: 32
+dst: (3,2,3) weight16
+}
+{src:(3,2,3) weight: 32
+dst: (2,2,3) weight32
+}
+{src: (0,0,1) weight: 256
+dst: (0,0,0) weight128
+dst: (0,0,2) weight128
+}
+{src:(0,0,0) weight: 128
+dst: (1,0,0) weight64
+dst: (3,0,0) weight64
+}
+{src:(1,0,0) weight: 64
+dst: (2,0,0) weight64
+}
+{src:(2,0,0) weight: 64
+dst: (3,0,0) weight32
+}
+{src:(3,0,0) weight: 64
+dst: (2,0,0) weight64
+}
+{src: (0,0,2) weight: 128
+dst: (0,0,3) weight64
+}
+{src:(0,0,3) weight: 64
+dst: (1,0,3) weight32
+dst: (3,0,3) weight32
+}
+{src:(1,0,3) weight: 32
+dst: (2,0,3) weight32
+}
+{src:(2,0,3) weight: 32
+dst: (3,0,3) weight16
+}
+{src:(3,0,3) weight: 32
+dst: (2,0,3) weight32
+}
+{src:(0,1,0) weight: 256
+dst: (1,1,0) weight128
+dst: (3,1,0) weight128
+}
+{src:(1,1,0) weight: 128
+dst: (2,1,0) weight128
+}
+{src:(2,1,0) weight: 128
+dst: (3,1,0) weight64
+}
+{src:(3,1,0) weight: 128
+dst: (2,1,0) weight128
+}
+{src: (0,1,2) weight: 256
+dst: (0,1,3) weight128
+}
+{src:(0,1,3) weight: 128
+dst: (1,1,3) weight64
+dst: (3,1,3) weight64
+}
+{src:(1,1,3) weight: 64
+dst: (2,1,3) weight64
+}
+{src:(2,1,3) weight: 64
+dst: (3,1,3) weight32
+}
+{src:(3,1,3) weight: 64
+dst: (2,1,3) weight64
+}
+{src: (0,1,2) weight: 512
+dst: (0,2,2) weight256
+dst: (0,0,2) weight256
+dst: (0,1,1) weight256
+dst: (0,1,3) weight256
+}
+{src: (0,2,2) weight: 256
+dst: (0,3,2) weight128
+dst: (0,2,1) weight128
+dst: (0,2,3) weight128
+}
+{src: (0,3,2) weight: 128
+dst: (0,3,1) weight64
+dst: (0,3,3) weight64
+}
+{src:(0,3,1) weight: 64
+dst: (1,3,1) weight32
+dst: (3,3,1) weight32
+}
+{src:(1,3,1) weight: 32
+dst: (2,3,1) weight32
+}
+{src:(2,3,1) weight: 32
+dst: (3,3,1) weight16
+}
+{src:(3,3,1) weight: 32
+dst: (2,3,1) weight32
+}
+{src: (0,3,3) weight: 64
+dst: (0,3,0) weight32
+}
+{src:(0,3,0) weight: 32
+dst: (1,3,0) weight16
+dst: (3,3,0) weight16
+}
+{src:(1,3,0) weight: 16
+dst: (2,3,0) weight16
+}
+{src:(2,3,0) weight: 16
+dst: (3,3,0) weight8
+}
+{src:(3,3,0) weight: 16
+dst: (2,3,0) weight16
+}
+{src:(0,2,1) weight: 128
+dst: (1,2,1) weight64
+dst: (3,2,1) weight64
+}
+{src:(1,2,1) weight: 64
+dst: (2,2,1) weight64
+}
+{src:(2,2,1) weight: 64
+dst: (3,2,1) weight32
+}
+{src:(3,2,1) weight: 64
+dst: (2,2,1) weight64
+}
+{src: (0,2,3) weight: 128
+dst: (0,2,0) weight64
+}
+{src:(0,2,0) weight: 64
+dst: (1,2,0) weight32
+dst: (3,2,0) weight32
+}
+{src:(1,2,0) weight: 32
+dst: (2,2,0) weight32
+}
+{src:(2,2,0) weight: 32
+dst: (3,2,0) weight16
+}
+{src:(3,2,0) weight: 32
+dst: (2,2,0) weight32
+}
+{src: (0,0,2) weight: 256
+dst: (0,0,1) weight128
+dst: (0,0,3) weight128
+}
+{src:(0,0,1) weight: 128
+dst: (1,0,1) weight64
+dst: (3,0,1) weight64
+}
+{src:(1,0,1) weight: 64
+dst: (2,0,1) weight64
+}
+{src:(2,0,1) weight: 64
+dst: (3,0,1) weight32
+}
+{src:(3,0,1) weight: 64
+dst: (2,0,1) weight64
+}
+{src: (0,0,3) weight: 128
+dst: (0,0,0) weight64
+}
+{src:(0,0,0) weight: 64
+dst: (1,0,0) weight32
+dst: (3,0,0) weight32
+}
+{src:(1,0,0) weight: 32
+dst: (2,0,0) weight32
+}
+{src:(2,0,0) weight: 32
+dst: (3,0,0) weight16
+}
+{src:(3,0,0) weight: 32
+dst: (2,0,0) weight32
+}
+{src:(0,1,1) weight: 256
+dst: (1,1,1) weight128
+dst: (3,1,1) weight128
+}
+{src:(1,1,1) weight: 128
+dst: (2,1,1) weight128
+}
+{src:(2,1,1) weight: 128
+dst: (3,1,1) weight64
+}
+{src:(3,1,1) weight: 128
+dst: (2,1,1) weight128
+}
+{src: (0,1,3) weight: 256
+dst: (0,1,0) weight128
 }
 {src:(0,1,0) weight: 128
 dst: (1,1,0) weight64
@@ -45,10 +940,6645 @@ dst: (2,1,0) weight64
 {src:(2,1,0) weight: 64
 dst: (3,1,0) weight32
 }
-{src: (0,1,2) weight: 128
+{src:(3,1,0) weight: 64
+dst: (2,1,0) weight64
+}
+{src: (0,1,3) weight: 512
+dst: (0,2,3) weight256
+dst: (0,0,3) weight256
+dst: (0,1,2) weight256
+dst: (0,1,0) weight256
+}
+{src: (0,2,3) weight: 256
+dst: (0,3,3) weight128
+dst: (0,2,2) weight128
+dst: (0,2,0) weight128
+}
+{src: (0,3,3) weight: 128
+dst: (0,3,2) weight64
+dst: (0,3,0) weight64
+}
+{src:(0,3,2) weight: 64
+dst: (1,3,2) weight32
+dst: (3,3,2) weight32
+}
+{src:(1,3,2) weight: 32
+dst: (2,3,2) weight32
+}
+{src:(2,3,2) weight: 32
+dst: (3,3,2) weight16
+}
+{src:(3,3,2) weight: 32
+dst: (2,3,2) weight32
+}
+{src: (0,3,0) weight: 64
+dst: (0,3,1) weight32
+}
+{src:(0,3,1) weight: 32
+dst: (1,3,1) weight16
+dst: (3,3,1) weight16
+}
+{src:(1,3,1) weight: 16
+dst: (2,3,1) weight16
+}
+{src:(2,3,1) weight: 16
+dst: (3,3,1) weight8
+}
+{src:(3,3,1) weight: 16
+dst: (2,3,1) weight16
+}
+{src:(0,2,2) weight: 128
+dst: (1,2,2) weight64
+dst: (3,2,2) weight64
+}
+{src:(1,2,2) weight: 64
+dst: (2,2,2) weight64
+}
+{src:(2,2,2) weight: 64
+dst: (3,2,2) weight32
+}
+{src:(3,2,2) weight: 64
+dst: (2,2,2) weight64
+}
+{src: (0,2,0) weight: 128
+dst: (0,2,1) weight64
+}
+{src:(0,2,1) weight: 64
+dst: (1,2,1) weight32
+dst: (3,2,1) weight32
+}
+{src:(1,2,1) weight: 32
+dst: (2,2,1) weight32
+}
+{src:(2,2,1) weight: 32
+dst: (3,2,1) weight16
+}
+{src:(3,2,1) weight: 32
+dst: (2,2,1) weight32
+}
+{src: (0,0,3) weight: 256
+dst: (0,0,2) weight128
+dst: (0,0,0) weight128
+}
+{src:(0,0,2) weight: 128
+dst: (1,0,2) weight64
+dst: (3,0,2) weight64
+}
+{src:(1,0,2) weight: 64
+dst: (2,0,2) weight64
+}
+{src:(2,0,2) weight: 64
+dst: (3,0,2) weight32
+}
+{src:(3,0,2) weight: 64
+dst: (2,0,2) weight64
+}
+{src: (0,0,0) weight: 128
+dst: (0,0,1) weight64
+}
+{src:(0,0,1) weight: 64
+dst: (1,0,1) weight32
+dst: (3,0,1) weight32
+}
+{src:(1,0,1) weight: 32
+dst: (2,0,1) weight32
+}
+{src:(2,0,1) weight: 32
+dst: (3,0,1) weight16
+}
+{src:(3,0,1) weight: 32
+dst: (2,0,1) weight32
+}
+{src:(0,1,2) weight: 256
+dst: (1,1,2) weight128
+dst: (3,1,2) weight128
+}
+{src:(1,1,2) weight: 128
+dst: (2,1,2) weight128
+}
+{src:(2,1,2) weight: 128
 dst: (3,1,2) weight64
+}
+{src:(3,1,2) weight: 128
+dst: (2,1,2) weight128
+}
+{src: (0,1,0) weight: 256
+dst: (0,1,1) weight128
+}
+{src:(0,1,1) weight: 128
+dst: (1,1,1) weight64
+dst: (3,1,1) weight64
+}
+{src:(1,1,1) weight: 64
+dst: (2,1,1) weight64
+}
+{src:(2,1,1) weight: 64
+dst: (3,1,1) weight32
+}
+{src:(3,1,1) weight: 64
+dst: (2,1,1) weight64
+}
+{src: (0,2,0) weight: 512
+dst: (0,3,0) weight256
+dst: (0,1,0) weight256
+dst: (0,2,3) weight256
+dst: (0,2,1) weight256
+}
+{src: (0,3,0) weight: 256
+dst: (0,0,0) weight128
+dst: (0,3,3) weight128
+dst: (0,3,1) weight128
+}
+{src:(0,3,3) weight: 128
+dst: (1,3,3) weight64
+dst: (3,3,3) weight64
+}
+{src:(1,3,3) weight: 64
+dst: (2,3,3) weight64
+}
+{src:(2,3,3) weight: 64
+dst: (3,3,3) weight32
+}
+{src:(3,3,3) weight: 64
+dst: (2,3,3) weight64
+}
+{src: (0,3,1) weight: 128
+dst: (0,3,2) weight64
+}
+{src:(0,3,2) weight: 64
+dst: (1,3,2) weight32
+dst: (3,3,2) weight32
+}
+{src:(1,3,2) weight: 32
+dst: (2,3,2) weight32
+}
+{src:(2,3,2) weight: 32
+dst: (3,3,2) weight16
+}
+{src:(3,3,2) weight: 32
+dst: (2,3,2) weight32
+}
+{src: (0,1,0) weight: 256
+dst: (0,1,3) weight128
+dst: (0,1,1) weight128
+}
+{src:(0,1,3) weight: 128
+dst: (1,1,3) weight64
+dst: (3,1,3) weight64
+}
+{src:(1,1,3) weight: 64
+dst: (2,1,3) weight64
+}
+{src:(2,1,3) weight: 64
+dst: (3,1,3) weight32
+}
+{src:(3,1,3) weight: 64
+dst: (2,1,3) weight64
+}
+{src: (0,1,1) weight: 128
+dst: (0,1,2) weight64
+}
+{src:(0,1,2) weight: 64
+dst: (1,1,2) weight32
+dst: (3,1,2) weight32
+}
+{src:(1,1,2) weight: 32
+dst: (2,1,2) weight32
+}
+{src:(2,1,2) weight: 32
+dst: (3,1,2) weight16
+}
+{src:(3,1,2) weight: 32
+dst: (2,1,2) weight32
+}
+{src:(0,2,3) weight: 256
+dst: (1,2,3) weight128
+dst: (3,2,3) weight128
+}
+{src:(1,2,3) weight: 128
+dst: (2,2,3) weight128
+}
+{src:(2,2,3) weight: 128
+dst: (3,2,3) weight64
+}
+{src:(3,2,3) weight: 128
+dst: (2,2,3) weight128
+}
+{src: (0,2,1) weight: 256
+dst: (0,2,2) weight128
+}
+{src:(0,2,2) weight: 128
+dst: (1,2,2) weight64
+dst: (3,2,2) weight64
+}
+{src:(1,2,2) weight: 64
+dst: (2,2,2) weight64
+}
+{src:(2,2,2) weight: 64
+dst: (3,2,2) weight32
+}
+{src:(3,2,2) weight: 64
+dst: (2,2,2) weight64
+}
+{src: (0,2,1) weight: 512
+dst: (0,3,1) weight256
+dst: (0,1,1) weight256
+dst: (0,2,0) weight256
+dst: (0,2,2) weight256
+}
+{src: (0,3,1) weight: 256
+dst: (0,0,1) weight128
+dst: (0,3,0) weight128
+dst: (0,3,2) weight128
+}
+{src:(0,3,0) weight: 128
+dst: (1,3,0) weight64
+dst: (3,3,0) weight64
+}
+{src:(1,3,0) weight: 64
+dst: (2,3,0) weight64
+}
+{src:(2,3,0) weight: 64
+dst: (3,3,0) weight32
+}
+{src:(3,3,0) weight: 64
+dst: (2,3,0) weight64
+}
+{src: (0,3,2) weight: 128
+dst: (0,3,3) weight64
+}
+{src:(0,3,3) weight: 64
+dst: (1,3,3) weight32
+dst: (3,3,3) weight32
+}
+{src:(1,3,3) weight: 32
+dst: (2,3,3) weight32
+}
+{src:(2,3,3) weight: 32
+dst: (3,3,3) weight16
+}
+{src:(3,3,3) weight: 32
+dst: (2,3,3) weight32
+}
+{src: (0,1,1) weight: 256
+dst: (0,1,0) weight128
+dst: (0,1,2) weight128
+}
+{src:(0,1,0) weight: 128
+dst: (1,1,0) weight64
+dst: (3,1,0) weight64
+}
+{src:(1,1,0) weight: 64
+dst: (2,1,0) weight64
+}
+{src:(2,1,0) weight: 64
+dst: (3,1,0) weight32
+}
+{src:(3,1,0) weight: 64
+dst: (2,1,0) weight64
+}
+{src: (0,1,2) weight: 128
+dst: (0,1,3) weight64
+}
+{src:(0,1,3) weight: 64
+dst: (1,1,3) weight32
+dst: (3,1,3) weight32
+}
+{src:(1,1,3) weight: 32
+dst: (2,1,3) weight32
+}
+{src:(2,1,3) weight: 32
+dst: (3,1,3) weight16
+}
+{src:(3,1,3) weight: 32
+dst: (2,1,3) weight32
+}
+{src:(0,2,0) weight: 256
+dst: (1,2,0) weight128
+dst: (3,2,0) weight128
+}
+{src:(1,2,0) weight: 128
+dst: (2,2,0) weight128
+}
+{src:(2,2,0) weight: 128
+dst: (3,2,0) weight64
+}
+{src:(3,2,0) weight: 128
+dst: (2,2,0) weight128
+}
+{src: (0,2,2) weight: 256
+dst: (0,2,3) weight128
+}
+{src:(0,2,3) weight: 128
+dst: (1,2,3) weight64
+dst: (3,2,3) weight64
+}
+{src:(1,2,3) weight: 64
+dst: (2,2,3) weight64
+}
+{src:(2,2,3) weight: 64
+dst: (3,2,3) weight32
+}
+{src:(3,2,3) weight: 64
+dst: (2,2,3) weight64
+}
+{src: (0,2,2) weight: 512
+dst: (0,3,2) weight256
+dst: (0,1,2) weight256
+dst: (0,2,1) weight256
+dst: (0,2,3) weight256
+}
+{src: (0,3,2) weight: 256
+dst: (0,0,2) weight128
+dst: (0,3,1) weight128
+dst: (0,3,3) weight128
+}
+{src:(0,3,1) weight: 128
+dst: (1,3,1) weight64
+dst: (3,3,1) weight64
+}
+{src:(1,3,1) weight: 64
+dst: (2,3,1) weight64
+}
+{src:(2,3,1) weight: 64
+dst: (3,3,1) weight32
+}
+{src:(3,3,1) weight: 64
+dst: (2,3,1) weight64
+}
+{src: (0,3,3) weight: 128
+dst: (0,3,0) weight64
+}
+{src:(0,3,0) weight: 64
+dst: (1,3,0) weight32
+dst: (3,3,0) weight32
+}
+{src:(1,3,0) weight: 32
+dst: (2,3,0) weight32
+}
+{src:(2,3,0) weight: 32
+dst: (3,3,0) weight16
+}
+{src:(3,3,0) weight: 32
+dst: (2,3,0) weight32
+}
+{src: (0,1,2) weight: 256
+dst: (0,1,1) weight128
+dst: (0,1,3) weight128
+}
+{src:(0,1,1) weight: 128
+dst: (1,1,1) weight64
+dst: (3,1,1) weight64
+}
+{src:(1,1,1) weight: 64
+dst: (2,1,1) weight64
+}
+{src:(2,1,1) weight: 64
+dst: (3,1,1) weight32
+}
+{src:(3,1,1) weight: 64
+dst: (2,1,1) weight64
+}
+{src: (0,1,3) weight: 128
+dst: (0,1,0) weight64
+}
+{src:(0,1,0) weight: 64
+dst: (1,1,0) weight32
+dst: (3,1,0) weight32
+}
+{src:(1,1,0) weight: 32
+dst: (2,1,0) weight32
+}
+{src:(2,1,0) weight: 32
+dst: (3,1,0) weight16
+}
+{src:(3,1,0) weight: 32
+dst: (2,1,0) weight32
+}
+{src:(0,2,1) weight: 256
+dst: (1,2,1) weight128
+dst: (3,2,1) weight128
+}
+{src:(1,2,1) weight: 128
+dst: (2,2,1) weight128
+}
+{src:(2,2,1) weight: 128
+dst: (3,2,1) weight64
+}
+{src:(3,2,1) weight: 128
+dst: (2,2,1) weight128
+}
+{src: (0,2,3) weight: 256
+dst: (0,2,0) weight128
+}
+{src:(0,2,0) weight: 128
+dst: (1,2,0) weight64
+dst: (3,2,0) weight64
+}
+{src:(1,2,0) weight: 64
+dst: (2,2,0) weight64
+}
+{src:(2,2,0) weight: 64
+dst: (3,2,0) weight32
+}
+{src:(3,2,0) weight: 64
+dst: (2,2,0) weight64
+}
+{src: (0,2,3) weight: 512
+dst: (0,3,3) weight256
+dst: (0,1,3) weight256
+dst: (0,2,2) weight256
+dst: (0,2,0) weight256
+}
+{src: (0,3,3) weight: 256
+dst: (0,0,3) weight128
+dst: (0,3,2) weight128
+dst: (0,3,0) weight128
+}
+{src:(0,3,2) weight: 128
+dst: (1,3,2) weight64
+dst: (3,3,2) weight64
+}
+{src:(1,3,2) weight: 64
+dst: (2,3,2) weight64
+}
+{src:(2,3,2) weight: 64
+dst: (3,3,2) weight32
+}
+{src:(3,3,2) weight: 64
+dst: (2,3,2) weight64
+}
+{src: (0,3,0) weight: 128
+dst: (0,3,1) weight64
+}
+{src:(0,3,1) weight: 64
+dst: (1,3,1) weight32
+dst: (3,3,1) weight32
+}
+{src:(1,3,1) weight: 32
+dst: (2,3,1) weight32
+}
+{src:(2,3,1) weight: 32
+dst: (3,3,1) weight16
+}
+{src:(3,3,1) weight: 32
+dst: (2,3,1) weight32
+}
+{src: (0,1,3) weight: 256
+dst: (0,1,2) weight128
+dst: (0,1,0) weight128
+}
+{src:(0,1,2) weight: 128
 dst: (1,1,2) weight64
+dst: (3,1,2) weight64
+}
+{src:(1,1,2) weight: 64
+dst: (2,1,2) weight64
+}
+{src:(2,1,2) weight: 64
+dst: (3,1,2) weight32
 }
 {src:(3,1,2) weight: 64
+dst: (2,1,2) weight64
+}
+{src: (0,1,0) weight: 128
+dst: (0,1,1) weight64
+}
+{src:(0,1,1) weight: 64
+dst: (1,1,1) weight32
+dst: (3,1,1) weight32
+}
+{src:(1,1,1) weight: 32
+dst: (2,1,1) weight32
+}
+{src:(2,1,1) weight: 32
+dst: (3,1,1) weight16
+}
+{src:(3,1,1) weight: 32
+dst: (2,1,1) weight32
+}
+{src:(0,2,2) weight: 256
+dst: (1,2,2) weight128
+dst: (3,2,2) weight128
+}
+{src:(1,2,2) weight: 128
+dst: (2,2,2) weight128
+}
+{src:(2,2,2) weight: 128
+dst: (3,2,2) weight64
+}
+{src:(3,2,2) weight: 128
+dst: (2,2,2) weight128
+}
+{src: (0,2,0) weight: 256
+dst: (0,2,1) weight128
+}
+{src:(0,2,1) weight: 128
+dst: (1,2,1) weight64
+dst: (3,2,1) weight64
+}
+{src:(1,2,1) weight: 64
+dst: (2,2,1) weight64
+}
+{src:(2,2,1) weight: 64
+dst: (3,2,1) weight32
+}
+{src:(3,2,1) weight: 64
+dst: (2,2,1) weight64
+}
+{src: (0,3,0) weight: 512
+dst: (0,0,0) weight256
+dst: (0,2,0) weight256
+dst: (0,3,3) weight256
+dst: (0,3,1) weight256
+}
+{src: (0,0,0) weight: 256
+dst: (0,1,0) weight128
+dst: (0,0,3) weight128
+dst: (0,0,1) weight128
+}
+{src:(0,0,3) weight: 128
+dst: (1,0,3) weight64
+dst: (3,0,3) weight64
+}
+{src:(1,0,3) weight: 64
+dst: (2,0,3) weight64
+}
+{src:(2,0,3) weight: 64
+dst: (3,0,3) weight32
+}
+{src:(3,0,3) weight: 64
+dst: (2,0,3) weight64
+}
+{src: (0,0,1) weight: 128
+dst: (0,0,2) weight64
+}
+{src:(0,0,2) weight: 64
+dst: (1,0,2) weight32
+dst: (3,0,2) weight32
+}
+{src:(1,0,2) weight: 32
+dst: (2,0,2) weight32
+}
+{src:(2,0,2) weight: 32
+dst: (3,0,2) weight16
+}
+{src:(3,0,2) weight: 32
+dst: (2,0,2) weight32
+}
+{src: (0,2,0) weight: 256
+dst: (0,2,3) weight128
+dst: (0,2,1) weight128
+}
+{src:(0,2,3) weight: 128
+dst: (1,2,3) weight64
+dst: (3,2,3) weight64
+}
+{src:(1,2,3) weight: 64
+dst: (2,2,3) weight64
+}
+{src:(2,2,3) weight: 64
+dst: (3,2,3) weight32
+}
+{src:(3,2,3) weight: 64
+dst: (2,2,3) weight64
+}
+{src: (0,2,1) weight: 128
+dst: (0,2,2) weight64
+}
+{src:(0,2,2) weight: 64
+dst: (1,2,2) weight32
+dst: (3,2,2) weight32
+}
+{src:(1,2,2) weight: 32
+dst: (2,2,2) weight32
+}
+{src:(2,2,2) weight: 32
+dst: (3,2,2) weight16
+}
+{src:(3,2,2) weight: 32
+dst: (2,2,2) weight32
+}
+{src:(0,3,3) weight: 256
+dst: (1,3,3) weight128
+dst: (3,3,3) weight128
+}
+{src:(1,3,3) weight: 128
+dst: (2,3,3) weight128
+}
+{src:(2,3,3) weight: 128
+dst: (3,3,3) weight64
+}
+{src:(3,3,3) weight: 128
+dst: (2,3,3) weight128
+}
+{src: (0,3,1) weight: 256
+dst: (0,3,2) weight128
+}
+{src:(0,3,2) weight: 128
+dst: (1,3,2) weight64
+dst: (3,3,2) weight64
+}
+{src:(1,3,2) weight: 64
+dst: (2,3,2) weight64
+}
+{src:(2,3,2) weight: 64
+dst: (3,3,2) weight32
+}
+{src:(3,3,2) weight: 64
+dst: (2,3,2) weight64
+}
+{src: (0,3,1) weight: 512
+dst: (0,0,1) weight256
+dst: (0,2,1) weight256
+dst: (0,3,0) weight256
+dst: (0,3,2) weight256
+}
+{src: (0,0,1) weight: 256
+dst: (0,1,1) weight128
+dst: (0,0,0) weight128
+dst: (0,0,2) weight128
+}
+{src:(0,0,0) weight: 128
+dst: (1,0,0) weight64
+dst: (3,0,0) weight64
+}
+{src:(1,0,0) weight: 64
+dst: (2,0,0) weight64
+}
+{src:(2,0,0) weight: 64
+dst: (3,0,0) weight32
+}
+{src:(3,0,0) weight: 64
+dst: (2,0,0) weight64
+}
+{src: (0,0,2) weight: 128
+dst: (0,0,3) weight64
+}
+{src:(0,0,3) weight: 64
+dst: (1,0,3) weight32
+dst: (3,0,3) weight32
+}
+{src:(1,0,3) weight: 32
+dst: (2,0,3) weight32
+}
+{src:(2,0,3) weight: 32
+dst: (3,0,3) weight16
+}
+{src:(3,0,3) weight: 32
+dst: (2,0,3) weight32
+}
+{src: (0,2,1) weight: 256
+dst: (0,2,0) weight128
+dst: (0,2,2) weight128
+}
+{src:(0,2,0) weight: 128
+dst: (1,2,0) weight64
+dst: (3,2,0) weight64
+}
+{src:(1,2,0) weight: 64
+dst: (2,2,0) weight64
+}
+{src:(2,2,0) weight: 64
+dst: (3,2,0) weight32
+}
+{src:(3,2,0) weight: 64
+dst: (2,2,0) weight64
+}
+{src: (0,2,2) weight: 128
+dst: (0,2,3) weight64
+}
+{src:(0,2,3) weight: 64
+dst: (1,2,3) weight32
+dst: (3,2,3) weight32
+}
+{src:(1,2,3) weight: 32
+dst: (2,2,3) weight32
+}
+{src:(2,2,3) weight: 32
+dst: (3,2,3) weight16
+}
+{src:(3,2,3) weight: 32
+dst: (2,2,3) weight32
+}
+{src:(0,3,0) weight: 256
+dst: (1,3,0) weight128
+dst: (3,3,0) weight128
+}
+{src:(1,3,0) weight: 128
+dst: (2,3,0) weight128
+}
+{src:(2,3,0) weight: 128
+dst: (3,3,0) weight64
+}
+{src:(3,3,0) weight: 128
+dst: (2,3,0) weight128
+}
+{src: (0,3,2) weight: 256
+dst: (0,3,3) weight128
+}
+{src:(0,3,3) weight: 128
+dst: (1,3,3) weight64
+dst: (3,3,3) weight64
+}
+{src:(1,3,3) weight: 64
+dst: (2,3,3) weight64
+}
+{src:(2,3,3) weight: 64
+dst: (3,3,3) weight32
+}
+{src:(3,3,3) weight: 64
+dst: (2,3,3) weight64
+}
+{src: (0,3,2) weight: 512
+dst: (0,0,2) weight256
+dst: (0,2,2) weight256
+dst: (0,3,1) weight256
+dst: (0,3,3) weight256
+}
+{src: (0,0,2) weight: 256
+dst: (0,1,2) weight128
+dst: (0,0,1) weight128
+dst: (0,0,3) weight128
+}
+{src:(0,0,1) weight: 128
+dst: (1,0,1) weight64
+dst: (3,0,1) weight64
+}
+{src:(1,0,1) weight: 64
+dst: (2,0,1) weight64
+}
+{src:(2,0,1) weight: 64
+dst: (3,0,1) weight32
+}
+{src:(3,0,1) weight: 64
+dst: (2,0,1) weight64
+}
+{src: (0,0,3) weight: 128
+dst: (0,0,0) weight64
+}
+{src:(0,0,0) weight: 64
+dst: (1,0,0) weight32
+dst: (3,0,0) weight32
+}
+{src:(1,0,0) weight: 32
+dst: (2,0,0) weight32
+}
+{src:(2,0,0) weight: 32
+dst: (3,0,0) weight16
+}
+{src:(3,0,0) weight: 32
+dst: (2,0,0) weight32
+}
+{src: (0,2,2) weight: 256
+dst: (0,2,1) weight128
+dst: (0,2,3) weight128
+}
+{src:(0,2,1) weight: 128
+dst: (1,2,1) weight64
+dst: (3,2,1) weight64
+}
+{src:(1,2,1) weight: 64
+dst: (2,2,1) weight64
+}
+{src:(2,2,1) weight: 64
+dst: (3,2,1) weight32
+}
+{src:(3,2,1) weight: 64
+dst: (2,2,1) weight64
+}
+{src: (0,2,3) weight: 128
+dst: (0,2,0) weight64
+}
+{src:(0,2,0) weight: 64
+dst: (1,2,0) weight32
+dst: (3,2,0) weight32
+}
+{src:(1,2,0) weight: 32
+dst: (2,2,0) weight32
+}
+{src:(2,2,0) weight: 32
+dst: (3,2,0) weight16
+}
+{src:(3,2,0) weight: 32
+dst: (2,2,0) weight32
+}
+{src:(0,3,1) weight: 256
+dst: (1,3,1) weight128
+dst: (3,3,1) weight128
+}
+{src:(1,3,1) weight: 128
+dst: (2,3,1) weight128
+}
+{src:(2,3,1) weight: 128
+dst: (3,3,1) weight64
+}
+{src:(3,3,1) weight: 128
+dst: (2,3,1) weight128
+}
+{src: (0,3,3) weight: 256
+dst: (0,3,0) weight128
+}
+{src:(0,3,0) weight: 128
+dst: (1,3,0) weight64
+dst: (3,3,0) weight64
+}
+{src:(1,3,0) weight: 64
+dst: (2,3,0) weight64
+}
+{src:(2,3,0) weight: 64
+dst: (3,3,0) weight32
+}
+{src:(3,3,0) weight: 64
+dst: (2,3,0) weight64
+}
+{src: (0,3,3) weight: 512
+dst: (0,0,3) weight256
+dst: (0,2,3) weight256
+dst: (0,3,2) weight256
+dst: (0,3,0) weight256
+}
+{src: (0,0,3) weight: 256
+dst: (0,1,3) weight128
+dst: (0,0,2) weight128
+dst: (0,0,0) weight128
+}
+{src:(0,0,2) weight: 128
+dst: (1,0,2) weight64
+dst: (3,0,2) weight64
+}
+{src:(1,0,2) weight: 64
+dst: (2,0,2) weight64
+}
+{src:(2,0,2) weight: 64
+dst: (3,0,2) weight32
+}
+{src:(3,0,2) weight: 64
+dst: (2,0,2) weight64
+}
+{src: (0,0,0) weight: 128
+dst: (0,0,1) weight64
+}
+{src:(0,0,1) weight: 64
+dst: (1,0,1) weight32
+dst: (3,0,1) weight32
+}
+{src:(1,0,1) weight: 32
+dst: (2,0,1) weight32
+}
+{src:(2,0,1) weight: 32
+dst: (3,0,1) weight16
+}
+{src:(3,0,1) weight: 32
+dst: (2,0,1) weight32
+}
+{src: (0,2,3) weight: 256
+dst: (0,2,2) weight128
+dst: (0,2,0) weight128
+}
+{src:(0,2,2) weight: 128
+dst: (1,2,2) weight64
+dst: (3,2,2) weight64
+}
+{src:(1,2,2) weight: 64
+dst: (2,2,2) weight64
+}
+{src:(2,2,2) weight: 64
+dst: (3,2,2) weight32
+}
+{src:(3,2,2) weight: 64
+dst: (2,2,2) weight64
+}
+{src: (0,2,0) weight: 128
+dst: (0,2,1) weight64
+}
+{src:(0,2,1) weight: 64
+dst: (1,2,1) weight32
+dst: (3,2,1) weight32
+}
+{src:(1,2,1) weight: 32
+dst: (2,2,1) weight32
+}
+{src:(2,2,1) weight: 32
+dst: (3,2,1) weight16
+}
+{src:(3,2,1) weight: 32
+dst: (2,2,1) weight32
+}
+{src:(0,3,2) weight: 256
+dst: (1,3,2) weight128
+dst: (3,3,2) weight128
+}
+{src:(1,3,2) weight: 128
+dst: (2,3,2) weight128
+}
+{src:(2,3,2) weight: 128
+dst: (3,3,2) weight64
+}
+{src:(3,3,2) weight: 128
+dst: (2,3,2) weight128
+}
+{src: (0,3,0) weight: 256
+dst: (0,3,1) weight128
+}
+{src:(0,3,1) weight: 128
+dst: (1,3,1) weight64
+dst: (3,3,1) weight64
+}
+{src:(1,3,1) weight: 64
+dst: (2,3,1) weight64
+}
+{src:(2,3,1) weight: 64
+dst: (3,3,1) weight32
+}
+{src:(3,3,1) weight: 64
+dst: (2,3,1) weight64
+}
+{src: (1,0,0) weight: 512
+dst: (1,1,0) weight256
+dst: (1,3,0) weight256
+dst: (1,0,3) weight256
+dst: (0,0,0) weight256
+dst: (1,0,1) weight256
+}
+{src: (1,1,0) weight: 256
+dst: (1,2,0) weight128
+dst: (1,1,3) weight128
+dst: (0,1,0) weight128
+dst: (1,1,1) weight128
+}
+{src: (1,2,0) weight: 128
+dst: (1,2,3) weight64
+dst: (0,2,0) weight64
+dst: (1,2,1) weight64
+}
+{src:(1,2,3) weight: 64
+dst: (2,2,3) weight32
+}
+{src:(2,2,3) weight: 32
+dst: (3,2,3) weight32
+}
+{src:(0,2,0) weight: 64
+dst: (0,2,1) weight32
+dst: (0,2,3) weight32
+}
+{src:(0,2,1) weight: 32
+dst: (0,2,2) weight32
+}
+{src:(0,2,2) weight: 32
+dst: (0,2,3) weight16
+}
+{src:(0,2,3) weight: 32
+dst: (0,2,2) weight32
+}
+{src: (1,2,1) weight: 64
+dst: (1,2,2) weight32
+}
+{src:(1,2,2) weight: 32
+dst: (2,2,2) weight16
+}
+{src:(2,2,2) weight: 16
+dst: (3,2,2) weight16
+}
+{src:(1,1,3) weight: 128
+dst: (2,1,3) weight64
+}
+{src:(2,1,3) weight: 64
+dst: (3,1,3) weight64
+}
+{src:(0,1,0) weight: 128
+dst: (0,1,1) weight64
+dst: (0,1,3) weight64
+}
+{src:(0,1,1) weight: 64
+dst: (0,1,2) weight64
+}
+{src:(0,1,2) weight: 64
+dst: (0,1,3) weight32
+}
+{src:(0,1,3) weight: 64
+dst: (0,1,2) weight64
+}
+{src: (1,1,1) weight: 128
+dst: (1,1,2) weight64
+}
+{src:(1,1,2) weight: 64
+dst: (2,1,2) weight32
+}
+{src:(2,1,2) weight: 32
+dst: (3,1,2) weight32
+}
+{src: (1,3,0) weight: 256
+dst: (1,3,3) weight128
+dst: (0,3,0) weight128
+dst: (1,3,1) weight128
+}
+{src:(1,3,3) weight: 128
+dst: (2,3,3) weight64
+}
+{src:(2,3,3) weight: 64
+dst: (3,3,3) weight64
+}
+{src:(0,3,0) weight: 128
+dst: (0,3,1) weight64
+dst: (0,3,3) weight64
+}
+{src:(0,3,1) weight: 64
+dst: (0,3,2) weight64
+}
+{src:(0,3,2) weight: 64
+dst: (0,3,3) weight32
+}
+{src:(0,3,3) weight: 64
+dst: (0,3,2) weight64
+}
+{src: (1,3,1) weight: 128
+dst: (1,3,2) weight64
+}
+{src:(1,3,2) weight: 64
+dst: (2,3,2) weight32
+}
+{src:(2,3,2) weight: 32
+dst: (3,3,2) weight32
+}
+{src:(1,0,3) weight: 256
+dst: (2,0,3) weight128
+}
+{src:(2,0,3) weight: 128
+dst: (3,0,3) weight128
+}
+{src:(0,0,0) weight: 256
+dst: (0,0,1) weight128
+dst: (0,0,3) weight128
+}
+{src:(0,0,1) weight: 128
+dst: (0,0,2) weight128
+}
+{src:(0,0,2) weight: 128
+dst: (0,0,3) weight64
+}
+{src:(0,0,3) weight: 128
+dst: (0,0,2) weight128
+}
+{src: (1,0,1) weight: 256
+dst: (1,0,2) weight128
+}
+{src:(1,0,2) weight: 128
+dst: (2,0,2) weight64
+}
+{src:(2,0,2) weight: 64
+dst: (3,0,2) weight64
+}
+{src: (1,0,1) weight: 512
+dst: (1,1,1) weight256
+dst: (1,3,1) weight256
+dst: (1,0,0) weight256
+dst: (0,0,1) weight256
+dst: (1,0,2) weight256
+}
+{src: (1,1,1) weight: 256
+dst: (1,2,1) weight128
+dst: (1,1,0) weight128
+dst: (0,1,1) weight128
+dst: (1,1,2) weight128
+}
+{src: (1,2,1) weight: 128
+dst: (1,2,0) weight64
+dst: (0,2,1) weight64
+dst: (1,2,2) weight64
+}
+{src:(1,2,0) weight: 64
+dst: (2,2,0) weight32
+}
+{src:(2,2,0) weight: 32
+dst: (3,2,0) weight32
+}
+{src:(0,2,1) weight: 64
+dst: (0,2,2) weight32
+dst: (0,2,0) weight32
+}
+{src:(0,2,2) weight: 32
+dst: (0,2,3) weight32
+}
+{src:(0,2,3) weight: 32
+dst: (0,2,0) weight16
+}
+{src:(0,2,0) weight: 32
+dst: (0,2,3) weight32
+}
+{src: (1,2,2) weight: 64
+dst: (1,2,3) weight32
+}
+{src:(1,2,3) weight: 32
+dst: (2,2,3) weight16
+}
+{src:(2,2,3) weight: 16
+dst: (3,2,3) weight16
+}
+{src:(1,1,0) weight: 128
+dst: (2,1,0) weight64
+}
+{src:(2,1,0) weight: 64
+dst: (3,1,0) weight64
+}
+{src:(0,1,1) weight: 128
+dst: (0,1,2) weight64
+dst: (0,1,0) weight64
+}
+{src:(0,1,2) weight: 64
+dst: (0,1,3) weight64
+}
+{src:(0,1,3) weight: 64
+dst: (0,1,0) weight32
+}
+{src:(0,1,0) weight: 64
+dst: (0,1,3) weight64
+}
+{src: (1,1,2) weight: 128
+dst: (1,1,3) weight64
+}
+{src:(1,1,3) weight: 64
+dst: (2,1,3) weight32
+}
+{src:(2,1,3) weight: 32
 dst: (3,1,3) weight32
+}
+{src: (1,3,1) weight: 256
+dst: (1,3,0) weight128
+dst: (0,3,1) weight128
+dst: (1,3,2) weight128
+}
+{src:(1,3,0) weight: 128
+dst: (2,3,0) weight64
+}
+{src:(2,3,0) weight: 64
+dst: (3,3,0) weight64
+}
+{src:(0,3,1) weight: 128
+dst: (0,3,2) weight64
+dst: (0,3,0) weight64
+}
+{src:(0,3,2) weight: 64
+dst: (0,3,3) weight64
+}
+{src:(0,3,3) weight: 64
+dst: (0,3,0) weight32
+}
+{src:(0,3,0) weight: 64
+dst: (0,3,3) weight64
+}
+{src: (1,3,2) weight: 128
+dst: (1,3,3) weight64
+}
+{src:(1,3,3) weight: 64
+dst: (2,3,3) weight32
+}
+{src:(2,3,3) weight: 32
+dst: (3,3,3) weight32
+}
+{src:(1,0,0) weight: 256
+dst: (2,0,0) weight128
+}
+{src:(2,0,0) weight: 128
+dst: (3,0,0) weight128
+}
+{src:(0,0,1) weight: 256
+dst: (0,0,2) weight128
+dst: (0,0,0) weight128
+}
+{src:(0,0,2) weight: 128
+dst: (0,0,3) weight128
+}
+{src:(0,0,3) weight: 128
+dst: (0,0,0) weight64
+}
+{src:(0,0,0) weight: 128
+dst: (0,0,3) weight128
+}
+{src: (1,0,2) weight: 256
+dst: (1,0,3) weight128
+}
+{src:(1,0,3) weight: 128
+dst: (2,0,3) weight64
+}
+{src:(2,0,3) weight: 64
+dst: (3,0,3) weight64
+}
+{src: (1,0,2) weight: 512
+dst: (1,1,2) weight256
+dst: (1,3,2) weight256
+dst: (1,0,1) weight256
+dst: (0,0,2) weight256
+dst: (1,0,3) weight256
+}
+{src: (1,1,2) weight: 256
+dst: (1,2,2) weight128
+dst: (1,1,1) weight128
+dst: (0,1,2) weight128
+dst: (1,1,3) weight128
+}
+{src: (1,2,2) weight: 128
+dst: (1,2,1) weight64
+dst: (0,2,2) weight64
+dst: (1,2,3) weight64
+}
+{src:(1,2,1) weight: 64
+dst: (2,2,1) weight32
+}
+{src:(2,2,1) weight: 32
+dst: (3,2,1) weight32
+}
+{src:(0,2,2) weight: 64
+dst: (0,2,3) weight32
+dst: (0,2,1) weight32
+}
+{src:(0,2,3) weight: 32
+dst: (0,2,0) weight32
+}
+{src:(0,2,0) weight: 32
+dst: (0,2,1) weight16
+}
+{src:(0,2,1) weight: 32
+dst: (0,2,0) weight32
+}
+{src: (1,2,3) weight: 64
+dst: (1,2,0) weight32
+}
+{src:(1,2,0) weight: 32
+dst: (2,2,0) weight16
+}
+{src:(2,2,0) weight: 16
+dst: (3,2,0) weight16
+}
+{src:(1,1,1) weight: 128
+dst: (2,1,1) weight64
+}
+{src:(2,1,1) weight: 64
+dst: (3,1,1) weight64
+}
+{src:(0,1,2) weight: 128
+dst: (0,1,3) weight64
+dst: (0,1,1) weight64
+}
+{src:(0,1,3) weight: 64
+dst: (0,1,0) weight64
+}
+{src:(0,1,0) weight: 64
+dst: (0,1,1) weight32
+}
+{src:(0,1,1) weight: 64
+dst: (0,1,0) weight64
+}
+{src: (1,1,3) weight: 128
+dst: (1,1,0) weight64
+}
+{src:(1,1,0) weight: 64
+dst: (2,1,0) weight32
+}
+{src:(2,1,0) weight: 32
+dst: (3,1,0) weight32
+}
+{src: (1,3,2) weight: 256
+dst: (1,3,1) weight128
+dst: (0,3,2) weight128
+dst: (1,3,3) weight128
+}
+{src:(1,3,1) weight: 128
+dst: (2,3,1) weight64
+}
+{src:(2,3,1) weight: 64
+dst: (3,3,1) weight64
+}
+{src:(0,3,2) weight: 128
+dst: (0,3,3) weight64
+dst: (0,3,1) weight64
+}
+{src:(0,3,3) weight: 64
+dst: (0,3,0) weight64
+}
+{src:(0,3,0) weight: 64
+dst: (0,3,1) weight32
+}
+{src:(0,3,1) weight: 64
+dst: (0,3,0) weight64
+}
+{src: (1,3,3) weight: 128
+dst: (1,3,0) weight64
+}
+{src:(1,3,0) weight: 64
+dst: (2,3,0) weight32
+}
+{src:(2,3,0) weight: 32
+dst: (3,3,0) weight32
+}
+{src:(1,0,1) weight: 256
+dst: (2,0,1) weight128
+}
+{src:(2,0,1) weight: 128
+dst: (3,0,1) weight128
+}
+{src:(0,0,2) weight: 256
+dst: (0,0,3) weight128
+dst: (0,0,1) weight128
+}
+{src:(0,0,3) weight: 128
+dst: (0,0,0) weight128
+}
+{src:(0,0,0) weight: 128
+dst: (0,0,1) weight64
+}
+{src:(0,0,1) weight: 128
+dst: (0,0,0) weight128
+}
+{src: (1,0,3) weight: 256
+dst: (1,0,0) weight128
+}
+{src:(1,0,0) weight: 128
+dst: (2,0,0) weight64
+}
+{src:(2,0,0) weight: 64
+dst: (3,0,0) weight64
+}
+{src: (1,0,3) weight: 512
+dst: (1,1,3) weight256
+dst: (1,3,3) weight256
+dst: (1,0,2) weight256
+dst: (0,0,3) weight256
+dst: (1,0,0) weight256
+}
+{src: (1,1,3) weight: 256
+dst: (1,2,3) weight128
+dst: (1,1,2) weight128
+dst: (0,1,3) weight128
+dst: (1,1,0) weight128
+}
+{src: (1,2,3) weight: 128
+dst: (1,2,2) weight64
+dst: (0,2,3) weight64
+dst: (1,2,0) weight64
+}
+{src:(1,2,2) weight: 64
+dst: (2,2,2) weight32
+}
+{src:(2,2,2) weight: 32
+dst: (3,2,2) weight32
+}
+{src:(0,2,3) weight: 64
+dst: (0,2,0) weight32
+dst: (0,2,2) weight32
+}
+{src:(0,2,0) weight: 32
+dst: (0,2,1) weight32
+}
+{src:(0,2,1) weight: 32
+dst: (0,2,2) weight16
+}
+{src:(0,2,2) weight: 32
+dst: (0,2,1) weight32
+}
+{src: (1,2,0) weight: 64
+dst: (1,2,1) weight32
+}
+{src:(1,2,1) weight: 32
+dst: (2,2,1) weight16
+}
+{src:(2,2,1) weight: 16
+dst: (3,2,1) weight16
+}
+{src:(1,1,2) weight: 128
+dst: (2,1,2) weight64
+}
+{src:(2,1,2) weight: 64
+dst: (3,1,2) weight64
+}
+{src:(0,1,3) weight: 128
+dst: (0,1,0) weight64
+dst: (0,1,2) weight64
+}
+{src:(0,1,0) weight: 64
+dst: (0,1,1) weight64
+}
+{src:(0,1,1) weight: 64
+dst: (0,1,2) weight32
+}
+{src:(0,1,2) weight: 64
+dst: (0,1,1) weight64
+}
+{src: (1,1,0) weight: 128
+dst: (1,1,1) weight64
+}
+{src:(1,1,1) weight: 64
+dst: (2,1,1) weight32
+}
+{src:(2,1,1) weight: 32
+dst: (3,1,1) weight32
+}
+{src: (1,3,3) weight: 256
+dst: (1,3,2) weight128
+dst: (0,3,3) weight128
+dst: (1,3,0) weight128
+}
+{src:(1,3,2) weight: 128
+dst: (2,3,2) weight64
+}
+{src:(2,3,2) weight: 64
+dst: (3,3,2) weight64
+}
+{src:(0,3,3) weight: 128
+dst: (0,3,0) weight64
+dst: (0,3,2) weight64
+}
+{src:(0,3,0) weight: 64
+dst: (0,3,1) weight64
+}
+{src:(0,3,1) weight: 64
+dst: (0,3,2) weight32
+}
+{src:(0,3,2) weight: 64
+dst: (0,3,1) weight64
+}
+{src: (1,3,0) weight: 128
+dst: (1,3,1) weight64
+}
+{src:(1,3,1) weight: 64
+dst: (2,3,1) weight32
+}
+{src:(2,3,1) weight: 32
+dst: (3,3,1) weight32
+}
+{src:(1,0,2) weight: 256
+dst: (2,0,2) weight128
+}
+{src:(2,0,2) weight: 128
+dst: (3,0,2) weight128
+}
+{src:(0,0,3) weight: 256
+dst: (0,0,0) weight128
+dst: (0,0,2) weight128
+}
+{src:(0,0,0) weight: 128
+dst: (0,0,1) weight128
+}
+{src:(0,0,1) weight: 128
+dst: (0,0,2) weight64
+}
+{src:(0,0,2) weight: 128
+dst: (0,0,1) weight128
+}
+{src: (1,0,0) weight: 256
+dst: (1,0,1) weight128
+}
+{src:(1,0,1) weight: 128
+dst: (2,0,1) weight64
+}
+{src:(2,0,1) weight: 64
+dst: (3,0,1) weight64
+}
+{src: (1,1,0) weight: 512
+dst: (1,2,0) weight256
+dst: (1,0,0) weight256
+dst: (1,1,3) weight256
+dst: (0,1,0) weight256
+dst: (1,1,1) weight256
+}
+{src: (1,2,0) weight: 256
+dst: (1,3,0) weight128
+dst: (1,2,3) weight128
+dst: (0,2,0) weight128
+dst: (1,2,1) weight128
+}
+{src: (1,3,0) weight: 128
+dst: (1,3,3) weight64
+dst: (0,3,0) weight64
+dst: (1,3,1) weight64
+}
+{src:(1,3,3) weight: 64
+dst: (2,3,3) weight32
+}
+{src:(2,3,3) weight: 32
+dst: (3,3,3) weight32
+}
+{src:(0,3,0) weight: 64
+dst: (0,3,1) weight32
+dst: (0,3,3) weight32
+}
+{src:(0,3,1) weight: 32
+dst: (0,3,2) weight32
+}
+{src:(0,3,2) weight: 32
+dst: (0,3,3) weight16
+}
+{src:(0,3,3) weight: 32
+dst: (0,3,2) weight32
+}
+{src: (1,3,1) weight: 64
+dst: (1,3,2) weight32
+}
+{src:(1,3,2) weight: 32
+dst: (2,3,2) weight16
+}
+{src:(2,3,2) weight: 16
+dst: (3,3,2) weight16
+}
+{src:(1,2,3) weight: 128
+dst: (2,2,3) weight64
+}
+{src:(2,2,3) weight: 64
+dst: (3,2,3) weight64
+}
+{src:(0,2,0) weight: 128
+dst: (0,2,1) weight64
+dst: (0,2,3) weight64
+}
+{src:(0,2,1) weight: 64
+dst: (0,2,2) weight64
+}
+{src:(0,2,2) weight: 64
+dst: (0,2,3) weight32
+}
+{src:(0,2,3) weight: 64
+dst: (0,2,2) weight64
+}
+{src: (1,2,1) weight: 128
+dst: (1,2,2) weight64
+}
+{src:(1,2,2) weight: 64
+dst: (2,2,2) weight32
+}
+{src:(2,2,2) weight: 32
+dst: (3,2,2) weight32
+}
+{src: (1,0,0) weight: 256
+dst: (1,0,3) weight128
+dst: (0,0,0) weight128
+dst: (1,0,1) weight128
+}
+{src:(1,0,3) weight: 128
+dst: (2,0,3) weight64
+}
+{src:(2,0,3) weight: 64
+dst: (3,0,3) weight64
+}
+{src:(0,0,0) weight: 128
+dst: (0,0,1) weight64
+dst: (0,0,3) weight64
+}
+{src:(0,0,1) weight: 64
+dst: (0,0,2) weight64
+}
+{src:(0,0,2) weight: 64
+dst: (0,0,3) weight32
+}
+{src:(0,0,3) weight: 64
+dst: (0,0,2) weight64
+}
+{src: (1,0,1) weight: 128
+dst: (1,0,2) weight64
+}
+{src:(1,0,2) weight: 64
+dst: (2,0,2) weight32
+}
+{src:(2,0,2) weight: 32
+dst: (3,0,2) weight32
+}
+{src:(1,1,3) weight: 256
+dst: (2,1,3) weight128
+}
+{src:(2,1,3) weight: 128
+dst: (3,1,3) weight128
+}
+{src:(0,1,0) weight: 256
+dst: (0,1,1) weight128
+dst: (0,1,3) weight128
+}
+{src:(0,1,1) weight: 128
+dst: (0,1,2) weight128
+}
+{src:(0,1,2) weight: 128
+dst: (0,1,3) weight64
+}
+{src:(0,1,3) weight: 128
+dst: (0,1,2) weight128
+}
+{src: (1,1,1) weight: 256
+dst: (1,1,2) weight128
+}
+{src:(1,1,2) weight: 128
+dst: (2,1,2) weight64
+}
+{src:(2,1,2) weight: 64
+dst: (3,1,2) weight64
+}
+{src: (1,1,1) weight: 512
+dst: (1,2,1) weight256
+dst: (1,0,1) weight256
+dst: (1,1,0) weight256
+dst: (0,1,1) weight256
+dst: (1,1,2) weight256
+}
+{src: (1,2,1) weight: 256
+dst: (1,3,1) weight128
+dst: (1,2,0) weight128
+dst: (0,2,1) weight128
+dst: (1,2,2) weight128
+}
+{src: (1,3,1) weight: 128
+dst: (1,3,0) weight64
+dst: (0,3,1) weight64
+dst: (1,3,2) weight64
+}
+{src:(1,3,0) weight: 64
+dst: (2,3,0) weight32
+}
+{src:(2,3,0) weight: 32
+dst: (3,3,0) weight32
+}
+{src:(0,3,1) weight: 64
+dst: (0,3,2) weight32
+dst: (0,3,0) weight32
+}
+{src:(0,3,2) weight: 32
+dst: (0,3,3) weight32
+}
+{src:(0,3,3) weight: 32
+dst: (0,3,0) weight16
+}
+{src:(0,3,0) weight: 32
+dst: (0,3,3) weight32
+}
+{src: (1,3,2) weight: 64
+dst: (1,3,3) weight32
+}
+{src:(1,3,3) weight: 32
+dst: (2,3,3) weight16
+}
+{src:(2,3,3) weight: 16
+dst: (3,3,3) weight16
+}
+{src:(1,2,0) weight: 128
+dst: (2,2,0) weight64
+}
+{src:(2,2,0) weight: 64
+dst: (3,2,0) weight64
+}
+{src:(0,2,1) weight: 128
+dst: (0,2,2) weight64
+dst: (0,2,0) weight64
+}
+{src:(0,2,2) weight: 64
+dst: (0,2,3) weight64
+}
+{src:(0,2,3) weight: 64
+dst: (0,2,0) weight32
+}
+{src:(0,2,0) weight: 64
+dst: (0,2,3) weight64
+}
+{src: (1,2,2) weight: 128
+dst: (1,2,3) weight64
+}
+{src:(1,2,3) weight: 64
+dst: (2,2,3) weight32
+}
+{src:(2,2,3) weight: 32
+dst: (3,2,3) weight32
+}
+{src: (1,0,1) weight: 256
+dst: (1,0,0) weight128
+dst: (0,0,1) weight128
+dst: (1,0,2) weight128
+}
+{src:(1,0,0) weight: 128
+dst: (2,0,0) weight64
+}
+{src:(2,0,0) weight: 64
+dst: (3,0,0) weight64
+}
+{src:(0,0,1) weight: 128
+dst: (0,0,2) weight64
+dst: (0,0,0) weight64
+}
+{src:(0,0,2) weight: 64
+dst: (0,0,3) weight64
+}
+{src:(0,0,3) weight: 64
+dst: (0,0,0) weight32
+}
+{src:(0,0,0) weight: 64
+dst: (0,0,3) weight64
+}
+{src: (1,0,2) weight: 128
+dst: (1,0,3) weight64
+}
+{src:(1,0,3) weight: 64
+dst: (2,0,3) weight32
+}
+{src:(2,0,3) weight: 32
+dst: (3,0,3) weight32
+}
+{src:(1,1,0) weight: 256
+dst: (2,1,0) weight128
+}
+{src:(2,1,0) weight: 128
+dst: (3,1,0) weight128
+}
+{src:(0,1,1) weight: 256
+dst: (0,1,2) weight128
+dst: (0,1,0) weight128
+}
+{src:(0,1,2) weight: 128
+dst: (0,1,3) weight128
+}
+{src:(0,1,3) weight: 128
+dst: (0,1,0) weight64
+}
+{src:(0,1,0) weight: 128
+dst: (0,1,3) weight128
+}
+{src: (1,1,2) weight: 256
+dst: (1,1,3) weight128
+}
+{src:(1,1,3) weight: 128
+dst: (2,1,3) weight64
+}
+{src:(2,1,3) weight: 64
+dst: (3,1,3) weight64
+}
+{src: (1,1,2) weight: 512
+dst: (1,2,2) weight256
+dst: (1,0,2) weight256
+dst: (1,1,1) weight256
+dst: (0,1,2) weight256
+dst: (1,1,3) weight256
+}
+{src: (1,2,2) weight: 256
+dst: (1,3,2) weight128
+dst: (1,2,1) weight128
+dst: (0,2,2) weight128
+dst: (1,2,3) weight128
+}
+{src: (1,3,2) weight: 128
+dst: (1,3,1) weight64
+dst: (0,3,2) weight64
+dst: (1,3,3) weight64
+}
+{src:(1,3,1) weight: 64
+dst: (2,3,1) weight32
+}
+{src:(2,3,1) weight: 32
+dst: (3,3,1) weight32
+}
+{src:(0,3,2) weight: 64
+dst: (0,3,3) weight32
+dst: (0,3,1) weight32
+}
+{src:(0,3,3) weight: 32
+dst: (0,3,0) weight32
+}
+{src:(0,3,0) weight: 32
+dst: (0,3,1) weight16
+}
+{src:(0,3,1) weight: 32
+dst: (0,3,0) weight32
+}
+{src: (1,3,3) weight: 64
+dst: (1,3,0) weight32
+}
+{src:(1,3,0) weight: 32
+dst: (2,3,0) weight16
+}
+{src:(2,3,0) weight: 16
+dst: (3,3,0) weight16
+}
+{src:(1,2,1) weight: 128
+dst: (2,2,1) weight64
+}
+{src:(2,2,1) weight: 64
+dst: (3,2,1) weight64
+}
+{src:(0,2,2) weight: 128
+dst: (0,2,3) weight64
+dst: (0,2,1) weight64
+}
+{src:(0,2,3) weight: 64
+dst: (0,2,0) weight64
+}
+{src:(0,2,0) weight: 64
+dst: (0,2,1) weight32
+}
+{src:(0,2,1) weight: 64
+dst: (0,2,0) weight64
+}
+{src: (1,2,3) weight: 128
+dst: (1,2,0) weight64
+}
+{src:(1,2,0) weight: 64
+dst: (2,2,0) weight32
+}
+{src:(2,2,0) weight: 32
+dst: (3,2,0) weight32
+}
+{src: (1,0,2) weight: 256
+dst: (1,0,1) weight128
+dst: (0,0,2) weight128
+dst: (1,0,3) weight128
+}
+{src:(1,0,1) weight: 128
+dst: (2,0,1) weight64
+}
+{src:(2,0,1) weight: 64
+dst: (3,0,1) weight64
+}
+{src:(0,0,2) weight: 128
+dst: (0,0,3) weight64
+dst: (0,0,1) weight64
+}
+{src:(0,0,3) weight: 64
+dst: (0,0,0) weight64
+}
+{src:(0,0,0) weight: 64
+dst: (0,0,1) weight32
+}
+{src:(0,0,1) weight: 64
+dst: (0,0,0) weight64
+}
+{src: (1,0,3) weight: 128
+dst: (1,0,0) weight64
+}
+{src:(1,0,0) weight: 64
+dst: (2,0,0) weight32
+}
+{src:(2,0,0) weight: 32
+dst: (3,0,0) weight32
+}
+{src:(1,1,1) weight: 256
+dst: (2,1,1) weight128
+}
+{src:(2,1,1) weight: 128
+dst: (3,1,1) weight128
+}
+{src:(0,1,2) weight: 256
+dst: (0,1,3) weight128
+dst: (0,1,1) weight128
+}
+{src:(0,1,3) weight: 128
+dst: (0,1,0) weight128
+}
+{src:(0,1,0) weight: 128
+dst: (0,1,1) weight64
+}
+{src:(0,1,1) weight: 128
+dst: (0,1,0) weight128
+}
+{src: (1,1,3) weight: 256
+dst: (1,1,0) weight128
+}
+{src:(1,1,0) weight: 128
+dst: (2,1,0) weight64
+}
+{src:(2,1,0) weight: 64
+dst: (3,1,0) weight64
+}
+{src: (1,1,3) weight: 512
+dst: (1,2,3) weight256
+dst: (1,0,3) weight256
+dst: (1,1,2) weight256
+dst: (0,1,3) weight256
+dst: (1,1,0) weight256
+}
+{src: (1,2,3) weight: 256
+dst: (1,3,3) weight128
+dst: (1,2,2) weight128
+dst: (0,2,3) weight128
+dst: (1,2,0) weight128
+}
+{src: (1,3,3) weight: 128
+dst: (1,3,2) weight64
+dst: (0,3,3) weight64
+dst: (1,3,0) weight64
+}
+{src:(1,3,2) weight: 64
+dst: (2,3,2) weight32
+}
+{src:(2,3,2) weight: 32
+dst: (3,3,2) weight32
+}
+{src:(0,3,3) weight: 64
+dst: (0,3,0) weight32
+dst: (0,3,2) weight32
+}
+{src:(0,3,0) weight: 32
+dst: (0,3,1) weight32
+}
+{src:(0,3,1) weight: 32
+dst: (0,3,2) weight16
+}
+{src:(0,3,2) weight: 32
+dst: (0,3,1) weight32
+}
+{src: (1,3,0) weight: 64
+dst: (1,3,1) weight32
+}
+{src:(1,3,1) weight: 32
+dst: (2,3,1) weight16
+}
+{src:(2,3,1) weight: 16
+dst: (3,3,1) weight16
+}
+{src:(1,2,2) weight: 128
+dst: (2,2,2) weight64
+}
+{src:(2,2,2) weight: 64
+dst: (3,2,2) weight64
+}
+{src:(0,2,3) weight: 128
+dst: (0,2,0) weight64
+dst: (0,2,2) weight64
+}
+{src:(0,2,0) weight: 64
+dst: (0,2,1) weight64
+}
+{src:(0,2,1) weight: 64
+dst: (0,2,2) weight32
+}
+{src:(0,2,2) weight: 64
+dst: (0,2,1) weight64
+}
+{src: (1,2,0) weight: 128
+dst: (1,2,1) weight64
+}
+{src:(1,2,1) weight: 64
+dst: (2,2,1) weight32
+}
+{src:(2,2,1) weight: 32
+dst: (3,2,1) weight32
+}
+{src: (1,0,3) weight: 256
+dst: (1,0,2) weight128
+dst: (0,0,3) weight128
+dst: (1,0,0) weight128
+}
+{src:(1,0,2) weight: 128
+dst: (2,0,2) weight64
+}
+{src:(2,0,2) weight: 64
+dst: (3,0,2) weight64
+}
+{src:(0,0,3) weight: 128
+dst: (0,0,0) weight64
+dst: (0,0,2) weight64
+}
+{src:(0,0,0) weight: 64
+dst: (0,0,1) weight64
+}
+{src:(0,0,1) weight: 64
+dst: (0,0,2) weight32
+}
+{src:(0,0,2) weight: 64
+dst: (0,0,1) weight64
+}
+{src: (1,0,0) weight: 128
+dst: (1,0,1) weight64
+}
+{src:(1,0,1) weight: 64
+dst: (2,0,1) weight32
+}
+{src:(2,0,1) weight: 32
+dst: (3,0,1) weight32
+}
+{src:(1,1,2) weight: 256
+dst: (2,1,2) weight128
+}
+{src:(2,1,2) weight: 128
+dst: (3,1,2) weight128
+}
+{src:(0,1,3) weight: 256
+dst: (0,1,0) weight128
+dst: (0,1,2) weight128
+}
+{src:(0,1,0) weight: 128
+dst: (0,1,1) weight128
+}
+{src:(0,1,1) weight: 128
+dst: (0,1,2) weight64
+}
+{src:(0,1,2) weight: 128
+dst: (0,1,1) weight128
+}
+{src: (1,1,0) weight: 256
+dst: (1,1,1) weight128
+}
+{src:(1,1,1) weight: 128
+dst: (2,1,1) weight64
+}
+{src:(2,1,1) weight: 64
+dst: (3,1,1) weight64
+}
+{src: (1,2,0) weight: 512
+dst: (1,3,0) weight256
+dst: (1,1,0) weight256
+dst: (1,2,3) weight256
+dst: (0,2,0) weight256
+dst: (1,2,1) weight256
+}
+{src: (1,3,0) weight: 256
+dst: (1,0,0) weight128
+dst: (1,3,3) weight128
+dst: (0,3,0) weight128
+dst: (1,3,1) weight128
+}
+{src:(1,3,3) weight: 128
+dst: (2,3,3) weight64
+}
+{src:(2,3,3) weight: 64
+dst: (3,3,3) weight64
+}
+{src:(0,3,0) weight: 128
+dst: (0,3,1) weight64
+dst: (0,3,3) weight64
+}
+{src:(0,3,1) weight: 64
+dst: (0,3,2) weight64
+}
+{src:(0,3,2) weight: 64
+dst: (0,3,3) weight32
+}
+{src:(0,3,3) weight: 64
+dst: (0,3,2) weight64
+}
+{src: (1,3,1) weight: 128
+dst: (1,3,2) weight64
+}
+{src:(1,3,2) weight: 64
+dst: (2,3,2) weight32
+}
+{src:(2,3,2) weight: 32
+dst: (3,3,2) weight32
+}
+{src: (1,1,0) weight: 256
+dst: (1,1,3) weight128
+dst: (0,1,0) weight128
+dst: (1,1,1) weight128
+}
+{src:(1,1,3) weight: 128
+dst: (2,1,3) weight64
+}
+{src:(2,1,3) weight: 64
+dst: (3,1,3) weight64
+}
+{src:(0,1,0) weight: 128
+dst: (0,1,1) weight64
+dst: (0,1,3) weight64
+}
+{src:(0,1,1) weight: 64
+dst: (0,1,2) weight64
+}
+{src:(0,1,2) weight: 64
+dst: (0,1,3) weight32
+}
+{src:(0,1,3) weight: 64
+dst: (0,1,2) weight64
+}
+{src: (1,1,1) weight: 128
+dst: (1,1,2) weight64
+}
+{src:(1,1,2) weight: 64
+dst: (2,1,2) weight32
+}
+{src:(2,1,2) weight: 32
+dst: (3,1,2) weight32
+}
+{src:(1,2,3) weight: 256
+dst: (2,2,3) weight128
+}
+{src:(2,2,3) weight: 128
+dst: (3,2,3) weight128
+}
+{src:(0,2,0) weight: 256
+dst: (0,2,1) weight128
+dst: (0,2,3) weight128
+}
+{src:(0,2,1) weight: 128
+dst: (0,2,2) weight128
+}
+{src:(0,2,2) weight: 128
+dst: (0,2,3) weight64
+}
+{src:(0,2,3) weight: 128
+dst: (0,2,2) weight128
+}
+{src: (1,2,1) weight: 256
+dst: (1,2,2) weight128
+}
+{src:(1,2,2) weight: 128
+dst: (2,2,2) weight64
+}
+{src:(2,2,2) weight: 64
+dst: (3,2,2) weight64
+}
+{src: (1,2,1) weight: 512
+dst: (1,3,1) weight256
+dst: (1,1,1) weight256
+dst: (1,2,0) weight256
+dst: (0,2,1) weight256
+dst: (1,2,2) weight256
+}
+{src: (1,3,1) weight: 256
+dst: (1,0,1) weight128
+dst: (1,3,0) weight128
+dst: (0,3,1) weight128
+dst: (1,3,2) weight128
+}
+{src:(1,3,0) weight: 128
+dst: (2,3,0) weight64
+}
+{src:(2,3,0) weight: 64
+dst: (3,3,0) weight64
+}
+{src:(0,3,1) weight: 128
+dst: (0,3,2) weight64
+dst: (0,3,0) weight64
+}
+{src:(0,3,2) weight: 64
+dst: (0,3,3) weight64
+}
+{src:(0,3,3) weight: 64
+dst: (0,3,0) weight32
+}
+{src:(0,3,0) weight: 64
+dst: (0,3,3) weight64
+}
+{src: (1,3,2) weight: 128
+dst: (1,3,3) weight64
+}
+{src:(1,3,3) weight: 64
+dst: (2,3,3) weight32
+}
+{src:(2,3,3) weight: 32
+dst: (3,3,3) weight32
+}
+{src: (1,1,1) weight: 256
+dst: (1,1,0) weight128
+dst: (0,1,1) weight128
+dst: (1,1,2) weight128
+}
+{src:(1,1,0) weight: 128
+dst: (2,1,0) weight64
+}
+{src:(2,1,0) weight: 64
+dst: (3,1,0) weight64
+}
+{src:(0,1,1) weight: 128
+dst: (0,1,2) weight64
+dst: (0,1,0) weight64
+}
+{src:(0,1,2) weight: 64
+dst: (0,1,3) weight64
+}
+{src:(0,1,3) weight: 64
+dst: (0,1,0) weight32
+}
+{src:(0,1,0) weight: 64
+dst: (0,1,3) weight64
+}
+{src: (1,1,2) weight: 128
+dst: (1,1,3) weight64
+}
+{src:(1,1,3) weight: 64
+dst: (2,1,3) weight32
+}
+{src:(2,1,3) weight: 32
+dst: (3,1,3) weight32
+}
+{src:(1,2,0) weight: 256
+dst: (2,2,0) weight128
+}
+{src:(2,2,0) weight: 128
+dst: (3,2,0) weight128
+}
+{src:(0,2,1) weight: 256
+dst: (0,2,2) weight128
+dst: (0,2,0) weight128
+}
+{src:(0,2,2) weight: 128
+dst: (0,2,3) weight128
+}
+{src:(0,2,3) weight: 128
+dst: (0,2,0) weight64
+}
+{src:(0,2,0) weight: 128
+dst: (0,2,3) weight128
+}
+{src: (1,2,2) weight: 256
+dst: (1,2,3) weight128
+}
+{src:(1,2,3) weight: 128
+dst: (2,2,3) weight64
+}
+{src:(2,2,3) weight: 64
+dst: (3,2,3) weight64
+}
+{src: (1,2,2) weight: 512
+dst: (1,3,2) weight256
+dst: (1,1,2) weight256
+dst: (1,2,1) weight256
+dst: (0,2,2) weight256
+dst: (1,2,3) weight256
+}
+{src: (1,3,2) weight: 256
+dst: (1,0,2) weight128
+dst: (1,3,1) weight128
+dst: (0,3,2) weight128
+dst: (1,3,3) weight128
+}
+{src:(1,3,1) weight: 128
+dst: (2,3,1) weight64
+}
+{src:(2,3,1) weight: 64
+dst: (3,3,1) weight64
+}
+{src:(0,3,2) weight: 128
+dst: (0,3,3) weight64
+dst: (0,3,1) weight64
+}
+{src:(0,3,3) weight: 64
+dst: (0,3,0) weight64
+}
+{src:(0,3,0) weight: 64
+dst: (0,3,1) weight32
+}
+{src:(0,3,1) weight: 64
+dst: (0,3,0) weight64
+}
+{src: (1,3,3) weight: 128
+dst: (1,3,0) weight64
+}
+{src:(1,3,0) weight: 64
+dst: (2,3,0) weight32
+}
+{src:(2,3,0) weight: 32
+dst: (3,3,0) weight32
+}
+{src: (1,1,2) weight: 256
+dst: (1,1,1) weight128
+dst: (0,1,2) weight128
+dst: (1,1,3) weight128
+}
+{src:(1,1,1) weight: 128
+dst: (2,1,1) weight64
+}
+{src:(2,1,1) weight: 64
+dst: (3,1,1) weight64
+}
+{src:(0,1,2) weight: 128
+dst: (0,1,3) weight64
+dst: (0,1,1) weight64
+}
+{src:(0,1,3) weight: 64
+dst: (0,1,0) weight64
+}
+{src:(0,1,0) weight: 64
+dst: (0,1,1) weight32
+}
+{src:(0,1,1) weight: 64
+dst: (0,1,0) weight64
+}
+{src: (1,1,3) weight: 128
+dst: (1,1,0) weight64
+}
+{src:(1,1,0) weight: 64
+dst: (2,1,0) weight32
+}
+{src:(2,1,0) weight: 32
+dst: (3,1,0) weight32
+}
+{src:(1,2,1) weight: 256
+dst: (2,2,1) weight128
+}
+{src:(2,2,1) weight: 128
+dst: (3,2,1) weight128
+}
+{src:(0,2,2) weight: 256
+dst: (0,2,3) weight128
+dst: (0,2,1) weight128
+}
+{src:(0,2,3) weight: 128
+dst: (0,2,0) weight128
+}
+{src:(0,2,0) weight: 128
+dst: (0,2,1) weight64
+}
+{src:(0,2,1) weight: 128
+dst: (0,2,0) weight128
+}
+{src: (1,2,3) weight: 256
+dst: (1,2,0) weight128
+}
+{src:(1,2,0) weight: 128
+dst: (2,2,0) weight64
+}
+{src:(2,2,0) weight: 64
+dst: (3,2,0) weight64
+}
+{src: (1,2,3) weight: 512
+dst: (1,3,3) weight256
+dst: (1,1,3) weight256
+dst: (1,2,2) weight256
+dst: (0,2,3) weight256
+dst: (1,2,0) weight256
+}
+{src: (1,3,3) weight: 256
+dst: (1,0,3) weight128
+dst: (1,3,2) weight128
+dst: (0,3,3) weight128
+dst: (1,3,0) weight128
+}
+{src:(1,3,2) weight: 128
+dst: (2,3,2) weight64
+}
+{src:(2,3,2) weight: 64
+dst: (3,3,2) weight64
+}
+{src:(0,3,3) weight: 128
+dst: (0,3,0) weight64
+dst: (0,3,2) weight64
+}
+{src:(0,3,0) weight: 64
+dst: (0,3,1) weight64
+}
+{src:(0,3,1) weight: 64
+dst: (0,3,2) weight32
+}
+{src:(0,3,2) weight: 64
+dst: (0,3,1) weight64
+}
+{src: (1,3,0) weight: 128
+dst: (1,3,1) weight64
+}
+{src:(1,3,1) weight: 64
+dst: (2,3,1) weight32
+}
+{src:(2,3,1) weight: 32
+dst: (3,3,1) weight32
+}
+{src: (1,1,3) weight: 256
+dst: (1,1,2) weight128
+dst: (0,1,3) weight128
+dst: (1,1,0) weight128
+}
+{src:(1,1,2) weight: 128
+dst: (2,1,2) weight64
+}
+{src:(2,1,2) weight: 64
+dst: (3,1,2) weight64
+}
+{src:(0,1,3) weight: 128
+dst: (0,1,0) weight64
+dst: (0,1,2) weight64
+}
+{src:(0,1,0) weight: 64
+dst: (0,1,1) weight64
+}
+{src:(0,1,1) weight: 64
+dst: (0,1,2) weight32
+}
+{src:(0,1,2) weight: 64
+dst: (0,1,1) weight64
+}
+{src: (1,1,0) weight: 128
+dst: (1,1,1) weight64
+}
+{src:(1,1,1) weight: 64
+dst: (2,1,1) weight32
+}
+{src:(2,1,1) weight: 32
+dst: (3,1,1) weight32
+}
+{src:(1,2,2) weight: 256
+dst: (2,2,2) weight128
+}
+{src:(2,2,2) weight: 128
+dst: (3,2,2) weight128
+}
+{src:(0,2,3) weight: 256
+dst: (0,2,0) weight128
+dst: (0,2,2) weight128
+}
+{src:(0,2,0) weight: 128
+dst: (0,2,1) weight128
+}
+{src:(0,2,1) weight: 128
+dst: (0,2,2) weight64
+}
+{src:(0,2,2) weight: 128
+dst: (0,2,1) weight128
+}
+{src: (1,2,0) weight: 256
+dst: (1,2,1) weight128
+}
+{src:(1,2,1) weight: 128
+dst: (2,2,1) weight64
+}
+{src:(2,2,1) weight: 64
+dst: (3,2,1) weight64
+}
+{src: (1,3,0) weight: 512
+dst: (1,0,0) weight256
+dst: (1,2,0) weight256
+dst: (1,3,3) weight256
+dst: (0,3,0) weight256
+dst: (1,3,1) weight256
+}
+{src: (1,0,0) weight: 256
+dst: (1,1,0) weight128
+dst: (1,0,3) weight128
+dst: (0,0,0) weight128
+dst: (1,0,1) weight128
+}
+{src:(1,0,3) weight: 128
+dst: (2,0,3) weight64
+}
+{src:(2,0,3) weight: 64
+dst: (3,0,3) weight64
+}
+{src:(0,0,0) weight: 128
+dst: (0,0,1) weight64
+dst: (0,0,3) weight64
+}
+{src:(0,0,1) weight: 64
+dst: (0,0,2) weight64
+}
+{src:(0,0,2) weight: 64
+dst: (0,0,3) weight32
+}
+{src:(0,0,3) weight: 64
+dst: (0,0,2) weight64
+}
+{src: (1,0,1) weight: 128
+dst: (1,0,2) weight64
+}
+{src:(1,0,2) weight: 64
+dst: (2,0,2) weight32
+}
+{src:(2,0,2) weight: 32
+dst: (3,0,2) weight32
+}
+{src: (1,2,0) weight: 256
+dst: (1,2,3) weight128
+dst: (0,2,0) weight128
+dst: (1,2,1) weight128
+}
+{src:(1,2,3) weight: 128
+dst: (2,2,3) weight64
+}
+{src:(2,2,3) weight: 64
+dst: (3,2,3) weight64
+}
+{src:(0,2,0) weight: 128
+dst: (0,2,1) weight64
+dst: (0,2,3) weight64
+}
+{src:(0,2,1) weight: 64
+dst: (0,2,2) weight64
+}
+{src:(0,2,2) weight: 64
+dst: (0,2,3) weight32
+}
+{src:(0,2,3) weight: 64
+dst: (0,2,2) weight64
+}
+{src: (1,2,1) weight: 128
+dst: (1,2,2) weight64
+}
+{src:(1,2,2) weight: 64
+dst: (2,2,2) weight32
+}
+{src:(2,2,2) weight: 32
+dst: (3,2,2) weight32
+}
+{src:(1,3,3) weight: 256
+dst: (2,3,3) weight128
+}
+{src:(2,3,3) weight: 128
+dst: (3,3,3) weight128
+}
+{src:(0,3,0) weight: 256
+dst: (0,3,1) weight128
+dst: (0,3,3) weight128
+}
+{src:(0,3,1) weight: 128
+dst: (0,3,2) weight128
+}
+{src:(0,3,2) weight: 128
+dst: (0,3,3) weight64
+}
+{src:(0,3,3) weight: 128
+dst: (0,3,2) weight128
+}
+{src: (1,3,1) weight: 256
+dst: (1,3,2) weight128
+}
+{src:(1,3,2) weight: 128
+dst: (2,3,2) weight64
+}
+{src:(2,3,2) weight: 64
+dst: (3,3,2) weight64
+}
+{src: (1,3,1) weight: 512
+dst: (1,0,1) weight256
+dst: (1,2,1) weight256
+dst: (1,3,0) weight256
+dst: (0,3,1) weight256
+dst: (1,3,2) weight256
+}
+{src: (1,0,1) weight: 256
+dst: (1,1,1) weight128
+dst: (1,0,0) weight128
+dst: (0,0,1) weight128
+dst: (1,0,2) weight128
+}
+{src:(1,0,0) weight: 128
+dst: (2,0,0) weight64
+}
+{src:(2,0,0) weight: 64
+dst: (3,0,0) weight64
+}
+{src:(0,0,1) weight: 128
+dst: (0,0,2) weight64
+dst: (0,0,0) weight64
+}
+{src:(0,0,2) weight: 64
+dst: (0,0,3) weight64
+}
+{src:(0,0,3) weight: 64
+dst: (0,0,0) weight32
+}
+{src:(0,0,0) weight: 64
+dst: (0,0,3) weight64
+}
+{src: (1,0,2) weight: 128
+dst: (1,0,3) weight64
+}
+{src:(1,0,3) weight: 64
+dst: (2,0,3) weight32
+}
+{src:(2,0,3) weight: 32
+dst: (3,0,3) weight32
+}
+{src: (1,2,1) weight: 256
+dst: (1,2,0) weight128
+dst: (0,2,1) weight128
+dst: (1,2,2) weight128
+}
+{src:(1,2,0) weight: 128
+dst: (2,2,0) weight64
+}
+{src:(2,2,0) weight: 64
+dst: (3,2,0) weight64
+}
+{src:(0,2,1) weight: 128
+dst: (0,2,2) weight64
+dst: (0,2,0) weight64
+}
+{src:(0,2,2) weight: 64
+dst: (0,2,3) weight64
+}
+{src:(0,2,3) weight: 64
+dst: (0,2,0) weight32
+}
+{src:(0,2,0) weight: 64
+dst: (0,2,3) weight64
+}
+{src: (1,2,2) weight: 128
+dst: (1,2,3) weight64
+}
+{src:(1,2,3) weight: 64
+dst: (2,2,3) weight32
+}
+{src:(2,2,3) weight: 32
+dst: (3,2,3) weight32
+}
+{src:(1,3,0) weight: 256
+dst: (2,3,0) weight128
+}
+{src:(2,3,0) weight: 128
+dst: (3,3,0) weight128
+}
+{src:(0,3,1) weight: 256
+dst: (0,3,2) weight128
+dst: (0,3,0) weight128
+}
+{src:(0,3,2) weight: 128
+dst: (0,3,3) weight128
+}
+{src:(0,3,3) weight: 128
+dst: (0,3,0) weight64
+}
+{src:(0,3,0) weight: 128
+dst: (0,3,3) weight128
+}
+{src: (1,3,2) weight: 256
+dst: (1,3,3) weight128
+}
+{src:(1,3,3) weight: 128
+dst: (2,3,3) weight64
+}
+{src:(2,3,3) weight: 64
+dst: (3,3,3) weight64
+}
+{src: (1,3,2) weight: 512
+dst: (1,0,2) weight256
+dst: (1,2,2) weight256
+dst: (1,3,1) weight256
+dst: (0,3,2) weight256
+dst: (1,3,3) weight256
+}
+{src: (1,0,2) weight: 256
+dst: (1,1,2) weight128
+dst: (1,0,1) weight128
+dst: (0,0,2) weight128
+dst: (1,0,3) weight128
+}
+{src:(1,0,1) weight: 128
+dst: (2,0,1) weight64
+}
+{src:(2,0,1) weight: 64
+dst: (3,0,1) weight64
+}
+{src:(0,0,2) weight: 128
+dst: (0,0,3) weight64
+dst: (0,0,1) weight64
+}
+{src:(0,0,3) weight: 64
+dst: (0,0,0) weight64
+}
+{src:(0,0,0) weight: 64
+dst: (0,0,1) weight32
+}
+{src:(0,0,1) weight: 64
+dst: (0,0,0) weight64
+}
+{src: (1,0,3) weight: 128
+dst: (1,0,0) weight64
+}
+{src:(1,0,0) weight: 64
+dst: (2,0,0) weight32
+}
+{src:(2,0,0) weight: 32
+dst: (3,0,0) weight32
+}
+{src: (1,2,2) weight: 256
+dst: (1,2,1) weight128
+dst: (0,2,2) weight128
+dst: (1,2,3) weight128
+}
+{src:(1,2,1) weight: 128
+dst: (2,2,1) weight64
+}
+{src:(2,2,1) weight: 64
+dst: (3,2,1) weight64
+}
+{src:(0,2,2) weight: 128
+dst: (0,2,3) weight64
+dst: (0,2,1) weight64
+}
+{src:(0,2,3) weight: 64
+dst: (0,2,0) weight64
+}
+{src:(0,2,0) weight: 64
+dst: (0,2,1) weight32
+}
+{src:(0,2,1) weight: 64
+dst: (0,2,0) weight64
+}
+{src: (1,2,3) weight: 128
+dst: (1,2,0) weight64
+}
+{src:(1,2,0) weight: 64
+dst: (2,2,0) weight32
+}
+{src:(2,2,0) weight: 32
+dst: (3,2,0) weight32
+}
+{src:(1,3,1) weight: 256
+dst: (2,3,1) weight128
+}
+{src:(2,3,1) weight: 128
+dst: (3,3,1) weight128
+}
+{src:(0,3,2) weight: 256
+dst: (0,3,3) weight128
+dst: (0,3,1) weight128
+}
+{src:(0,3,3) weight: 128
+dst: (0,3,0) weight128
+}
+{src:(0,3,0) weight: 128
+dst: (0,3,1) weight64
+}
+{src:(0,3,1) weight: 128
+dst: (0,3,0) weight128
+}
+{src: (1,3,3) weight: 256
+dst: (1,3,0) weight128
+}
+{src:(1,3,0) weight: 128
+dst: (2,3,0) weight64
+}
+{src:(2,3,0) weight: 64
+dst: (3,3,0) weight64
+}
+{src: (1,3,3) weight: 512
+dst: (1,0,3) weight256
+dst: (1,2,3) weight256
+dst: (1,3,2) weight256
+dst: (0,3,3) weight256
+dst: (1,3,0) weight256
+}
+{src: (1,0,3) weight: 256
+dst: (1,1,3) weight128
+dst: (1,0,2) weight128
+dst: (0,0,3) weight128
+dst: (1,0,0) weight128
+}
+{src:(1,0,2) weight: 128
+dst: (2,0,2) weight64
+}
+{src:(2,0,2) weight: 64
+dst: (3,0,2) weight64
+}
+{src:(0,0,3) weight: 128
+dst: (0,0,0) weight64
+dst: (0,0,2) weight64
+}
+{src:(0,0,0) weight: 64
+dst: (0,0,1) weight64
+}
+{src:(0,0,1) weight: 64
+dst: (0,0,2) weight32
+}
+{src:(0,0,2) weight: 64
+dst: (0,0,1) weight64
+}
+{src: (1,0,0) weight: 128
+dst: (1,0,1) weight64
+}
+{src:(1,0,1) weight: 64
+dst: (2,0,1) weight32
+}
+{src:(2,0,1) weight: 32
+dst: (3,0,1) weight32
+}
+{src: (1,2,3) weight: 256
+dst: (1,2,2) weight128
+dst: (0,2,3) weight128
+dst: (1,2,0) weight128
+}
+{src:(1,2,2) weight: 128
+dst: (2,2,2) weight64
+}
+{src:(2,2,2) weight: 64
+dst: (3,2,2) weight64
+}
+{src:(0,2,3) weight: 128
+dst: (0,2,0) weight64
+dst: (0,2,2) weight64
+}
+{src:(0,2,0) weight: 64
+dst: (0,2,1) weight64
+}
+{src:(0,2,1) weight: 64
+dst: (0,2,2) weight32
+}
+{src:(0,2,2) weight: 64
+dst: (0,2,1) weight64
+}
+{src: (1,2,0) weight: 128
+dst: (1,2,1) weight64
+}
+{src:(1,2,1) weight: 64
+dst: (2,2,1) weight32
+}
+{src:(2,2,1) weight: 32
+dst: (3,2,1) weight32
+}
+{src:(1,3,2) weight: 256
+dst: (2,3,2) weight128
+}
+{src:(2,3,2) weight: 128
+dst: (3,3,2) weight128
+}
+{src:(0,3,3) weight: 256
+dst: (0,3,0) weight128
+dst: (0,3,2) weight128
+}
+{src:(0,3,0) weight: 128
+dst: (0,3,1) weight128
+}
+{src:(0,3,1) weight: 128
+dst: (0,3,2) weight64
+}
+{src:(0,3,2) weight: 128
+dst: (0,3,1) weight128
+}
+{src: (1,3,0) weight: 256
+dst: (1,3,1) weight128
+}
+{src:(1,3,1) weight: 128
+dst: (2,3,1) weight64
+}
+{src:(2,3,1) weight: 64
+dst: (3,3,1) weight64
+}
+{src: (2,0,0) weight: 512
+dst: (2,1,0) weight256
+dst: (2,3,0) weight256
+dst: (2,0,3) weight256
+dst: (1,0,0) weight256
+dst: (2,0,1) weight256
+}
+{src: (2,1,0) weight: 256
+dst: (2,2,0) weight128
+dst: (2,1,3) weight128
+dst: (1,1,0) weight128
+dst: (2,1,1) weight128
+}
+{src: (2,2,0) weight: 128
+dst: (2,2,3) weight64
+dst: (1,2,0) weight64
+dst: (2,2,1) weight64
+}
+{src:(2,2,3) weight: 64
+dst: (3,2,3) weight32
+}
+{src:(3,2,3) weight: 32
+dst: (0,2,3) weight32
+}
+{src:(1,2,0) weight: 64
+dst: (1,2,1) weight32
+dst: (1,2,3) weight32
+}
+{src:(1,2,1) weight: 32
+dst: (1,2,2) weight32
+}
+{src:(1,2,2) weight: 32
+dst: (1,2,3) weight16
+}
+{src:(1,2,3) weight: 32
+dst: (1,2,2) weight32
+}
+{src: (2,2,1) weight: 64
+dst: (2,2,2) weight32
+}
+{src:(2,2,2) weight: 32
+dst: (3,2,2) weight16
+}
+{src:(3,2,2) weight: 16
+dst: (0,2,2) weight16
+}
+{src:(2,1,3) weight: 128
+dst: (3,1,3) weight64
+}
+{src:(3,1,3) weight: 64
+dst: (0,1,3) weight64
+}
+{src:(1,1,0) weight: 128
+dst: (1,1,1) weight64
+dst: (1,1,3) weight64
+}
+{src:(1,1,1) weight: 64
+dst: (1,1,2) weight64
+}
+{src:(1,1,2) weight: 64
+dst: (1,1,3) weight32
+}
+{src:(1,1,3) weight: 64
+dst: (1,1,2) weight64
+}
+{src: (2,1,1) weight: 128
+dst: (2,1,2) weight64
+}
+{src:(2,1,2) weight: 64
+dst: (3,1,2) weight32
+}
+{src:(3,1,2) weight: 32
+dst: (0,1,2) weight32
+}
+{src: (2,3,0) weight: 256
+dst: (2,3,3) weight128
+dst: (1,3,0) weight128
+dst: (2,3,1) weight128
+}
+{src:(2,3,3) weight: 128
+dst: (3,3,3) weight64
+}
+{src:(3,3,3) weight: 64
+dst: (0,3,3) weight64
+}
+{src:(1,3,0) weight: 128
+dst: (1,3,1) weight64
+dst: (1,3,3) weight64
+}
+{src:(1,3,1) weight: 64
+dst: (1,3,2) weight64
+}
+{src:(1,3,2) weight: 64
+dst: (1,3,3) weight32
+}
+{src:(1,3,3) weight: 64
+dst: (1,3,2) weight64
+}
+{src: (2,3,1) weight: 128
+dst: (2,3,2) weight64
+}
+{src:(2,3,2) weight: 64
+dst: (3,3,2) weight32
+}
+{src:(3,3,2) weight: 32
+dst: (0,3,2) weight32
+}
+{src:(2,0,3) weight: 256
+dst: (3,0,3) weight128
+}
+{src:(3,0,3) weight: 128
+dst: (0,0,3) weight128
+}
+{src:(1,0,0) weight: 256
+dst: (1,0,1) weight128
+dst: (1,0,3) weight128
+}
+{src:(1,0,1) weight: 128
+dst: (1,0,2) weight128
+}
+{src:(1,0,2) weight: 128
+dst: (1,0,3) weight64
+}
+{src:(1,0,3) weight: 128
+dst: (1,0,2) weight128
+}
+{src: (2,0,1) weight: 256
+dst: (2,0,2) weight128
+}
+{src:(2,0,2) weight: 128
+dst: (3,0,2) weight64
+}
+{src:(3,0,2) weight: 64
+dst: (0,0,2) weight64
+}
+{src: (2,0,1) weight: 512
+dst: (2,1,1) weight256
+dst: (2,3,1) weight256
+dst: (2,0,0) weight256
+dst: (1,0,1) weight256
+dst: (2,0,2) weight256
+}
+{src: (2,1,1) weight: 256
+dst: (2,2,1) weight128
+dst: (2,1,0) weight128
+dst: (1,1,1) weight128
+dst: (2,1,2) weight128
+}
+{src: (2,2,1) weight: 128
+dst: (2,2,0) weight64
+dst: (1,2,1) weight64
+dst: (2,2,2) weight64
+}
+{src:(2,2,0) weight: 64
+dst: (3,2,0) weight32
+}
+{src:(3,2,0) weight: 32
+dst: (0,2,0) weight32
+}
+{src:(1,2,1) weight: 64
+dst: (1,2,2) weight32
+dst: (1,2,0) weight32
+}
+{src:(1,2,2) weight: 32
+dst: (1,2,3) weight32
+}
+{src:(1,2,3) weight: 32
+dst: (1,2,0) weight16
+}
+{src:(1,2,0) weight: 32
+dst: (1,2,3) weight32
+}
+{src: (2,2,2) weight: 64
+dst: (2,2,3) weight32
+}
+{src:(2,2,3) weight: 32
+dst: (3,2,3) weight16
+}
+{src:(3,2,3) weight: 16
+dst: (0,2,3) weight16
+}
+{src:(2,1,0) weight: 128
+dst: (3,1,0) weight64
+}
+{src:(3,1,0) weight: 64
+dst: (0,1,0) weight64
+}
+{src:(1,1,1) weight: 128
+dst: (1,1,2) weight64
+dst: (1,1,0) weight64
+}
+{src:(1,1,2) weight: 64
+dst: (1,1,3) weight64
+}
+{src:(1,1,3) weight: 64
+dst: (1,1,0) weight32
+}
+{src:(1,1,0) weight: 64
+dst: (1,1,3) weight64
+}
+{src: (2,1,2) weight: 128
+dst: (2,1,3) weight64
+}
+{src:(2,1,3) weight: 64
+dst: (3,1,3) weight32
+}
+{src:(3,1,3) weight: 32
+dst: (0,1,3) weight32
+}
+{src: (2,3,1) weight: 256
+dst: (2,3,0) weight128
+dst: (1,3,1) weight128
+dst: (2,3,2) weight128
+}
+{src:(2,3,0) weight: 128
+dst: (3,3,0) weight64
+}
+{src:(3,3,0) weight: 64
+dst: (0,3,0) weight64
+}
+{src:(1,3,1) weight: 128
+dst: (1,3,2) weight64
+dst: (1,3,0) weight64
+}
+{src:(1,3,2) weight: 64
+dst: (1,3,3) weight64
+}
+{src:(1,3,3) weight: 64
+dst: (1,3,0) weight32
+}
+{src:(1,3,0) weight: 64
+dst: (1,3,3) weight64
+}
+{src: (2,3,2) weight: 128
+dst: (2,3,3) weight64
+}
+{src:(2,3,3) weight: 64
+dst: (3,3,3) weight32
+}
+{src:(3,3,3) weight: 32
+dst: (0,3,3) weight32
+}
+{src:(2,0,0) weight: 256
+dst: (3,0,0) weight128
+}
+{src:(3,0,0) weight: 128
+dst: (0,0,0) weight128
+}
+{src:(1,0,1) weight: 256
+dst: (1,0,2) weight128
+dst: (1,0,0) weight128
+}
+{src:(1,0,2) weight: 128
+dst: (1,0,3) weight128
+}
+{src:(1,0,3) weight: 128
+dst: (1,0,0) weight64
+}
+{src:(1,0,0) weight: 128
+dst: (1,0,3) weight128
+}
+{src: (2,0,2) weight: 256
+dst: (2,0,3) weight128
+}
+{src:(2,0,3) weight: 128
+dst: (3,0,3) weight64
+}
+{src:(3,0,3) weight: 64
+dst: (0,0,3) weight64
+}
+{src: (2,0,2) weight: 512
+dst: (2,1,2) weight256
+dst: (2,3,2) weight256
+dst: (2,0,1) weight256
+dst: (1,0,2) weight256
+dst: (2,0,3) weight256
+}
+{src: (2,1,2) weight: 256
+dst: (2,2,2) weight128
+dst: (2,1,1) weight128
+dst: (1,1,2) weight128
+dst: (2,1,3) weight128
+}
+{src: (2,2,2) weight: 128
+dst: (2,2,1) weight64
+dst: (1,2,2) weight64
+dst: (2,2,3) weight64
+}
+{src:(2,2,1) weight: 64
+dst: (3,2,1) weight32
+}
+{src:(3,2,1) weight: 32
+dst: (0,2,1) weight32
+}
+{src:(1,2,2) weight: 64
+dst: (1,2,3) weight32
+dst: (1,2,1) weight32
+}
+{src:(1,2,3) weight: 32
+dst: (1,2,0) weight32
+}
+{src:(1,2,0) weight: 32
+dst: (1,2,1) weight16
+}
+{src:(1,2,1) weight: 32
+dst: (1,2,0) weight32
+}
+{src: (2,2,3) weight: 64
+dst: (2,2,0) weight32
+}
+{src:(2,2,0) weight: 32
+dst: (3,2,0) weight16
+}
+{src:(3,2,0) weight: 16
+dst: (0,2,0) weight16
+}
+{src:(2,1,1) weight: 128
+dst: (3,1,1) weight64
+}
+{src:(3,1,1) weight: 64
+dst: (0,1,1) weight64
+}
+{src:(1,1,2) weight: 128
+dst: (1,1,3) weight64
+dst: (1,1,1) weight64
+}
+{src:(1,1,3) weight: 64
+dst: (1,1,0) weight64
+}
+{src:(1,1,0) weight: 64
+dst: (1,1,1) weight32
+}
+{src:(1,1,1) weight: 64
+dst: (1,1,0) weight64
+}
+{src: (2,1,3) weight: 128
+dst: (2,1,0) weight64
+}
+{src:(2,1,0) weight: 64
+dst: (3,1,0) weight32
+}
+{src:(3,1,0) weight: 32
+dst: (0,1,0) weight32
+}
+{src: (2,3,2) weight: 256
+dst: (2,3,1) weight128
+dst: (1,3,2) weight128
+dst: (2,3,3) weight128
+}
+{src:(2,3,1) weight: 128
+dst: (3,3,1) weight64
+}
+{src:(3,3,1) weight: 64
+dst: (0,3,1) weight64
+}
+{src:(1,3,2) weight: 128
+dst: (1,3,3) weight64
+dst: (1,3,1) weight64
+}
+{src:(1,3,3) weight: 64
+dst: (1,3,0) weight64
+}
+{src:(1,3,0) weight: 64
+dst: (1,3,1) weight32
+}
+{src:(1,3,1) weight: 64
+dst: (1,3,0) weight64
+}
+{src: (2,3,3) weight: 128
+dst: (2,3,0) weight64
+}
+{src:(2,3,0) weight: 64
+dst: (3,3,0) weight32
+}
+{src:(3,3,0) weight: 32
+dst: (0,3,0) weight32
+}
+{src:(2,0,1) weight: 256
+dst: (3,0,1) weight128
+}
+{src:(3,0,1) weight: 128
+dst: (0,0,1) weight128
+}
+{src:(1,0,2) weight: 256
+dst: (1,0,3) weight128
+dst: (1,0,1) weight128
+}
+{src:(1,0,3) weight: 128
+dst: (1,0,0) weight128
+}
+{src:(1,0,0) weight: 128
+dst: (1,0,1) weight64
+}
+{src:(1,0,1) weight: 128
+dst: (1,0,0) weight128
+}
+{src: (2,0,3) weight: 256
+dst: (2,0,0) weight128
+}
+{src:(2,0,0) weight: 128
+dst: (3,0,0) weight64
+}
+{src:(3,0,0) weight: 64
+dst: (0,0,0) weight64
+}
+{src: (2,0,3) weight: 512
+dst: (2,1,3) weight256
+dst: (2,3,3) weight256
+dst: (2,0,2) weight256
+dst: (1,0,3) weight256
+dst: (2,0,0) weight256
+}
+{src: (2,1,3) weight: 256
+dst: (2,2,3) weight128
+dst: (2,1,2) weight128
+dst: (1,1,3) weight128
+dst: (2,1,0) weight128
+}
+{src: (2,2,3) weight: 128
+dst: (2,2,2) weight64
+dst: (1,2,3) weight64
+dst: (2,2,0) weight64
+}
+{src:(2,2,2) weight: 64
+dst: (3,2,2) weight32
+}
+{src:(3,2,2) weight: 32
+dst: (0,2,2) weight32
+}
+{src:(1,2,3) weight: 64
+dst: (1,2,0) weight32
+dst: (1,2,2) weight32
+}
+{src:(1,2,0) weight: 32
+dst: (1,2,1) weight32
+}
+{src:(1,2,1) weight: 32
+dst: (1,2,2) weight16
+}
+{src:(1,2,2) weight: 32
+dst: (1,2,1) weight32
+}
+{src: (2,2,0) weight: 64
+dst: (2,2,1) weight32
+}
+{src:(2,2,1) weight: 32
+dst: (3,2,1) weight16
+}
+{src:(3,2,1) weight: 16
+dst: (0,2,1) weight16
+}
+{src:(2,1,2) weight: 128
+dst: (3,1,2) weight64
+}
+{src:(3,1,2) weight: 64
+dst: (0,1,2) weight64
+}
+{src:(1,1,3) weight: 128
+dst: (1,1,0) weight64
+dst: (1,1,2) weight64
+}
+{src:(1,1,0) weight: 64
+dst: (1,1,1) weight64
+}
+{src:(1,1,1) weight: 64
+dst: (1,1,2) weight32
+}
+{src:(1,1,2) weight: 64
+dst: (1,1,1) weight64
+}
+{src: (2,1,0) weight: 128
+dst: (2,1,1) weight64
+}
+{src:(2,1,1) weight: 64
+dst: (3,1,1) weight32
+}
+{src:(3,1,1) weight: 32
+dst: (0,1,1) weight32
+}
+{src: (2,3,3) weight: 256
+dst: (2,3,2) weight128
+dst: (1,3,3) weight128
+dst: (2,3,0) weight128
+}
+{src:(2,3,2) weight: 128
+dst: (3,3,2) weight64
+}
+{src:(3,3,2) weight: 64
+dst: (0,3,2) weight64
+}
+{src:(1,3,3) weight: 128
+dst: (1,3,0) weight64
+dst: (1,3,2) weight64
+}
+{src:(1,3,0) weight: 64
+dst: (1,3,1) weight64
+}
+{src:(1,3,1) weight: 64
+dst: (1,3,2) weight32
+}
+{src:(1,3,2) weight: 64
+dst: (1,3,1) weight64
+}
+{src: (2,3,0) weight: 128
+dst: (2,3,1) weight64
+}
+{src:(2,3,1) weight: 64
+dst: (3,3,1) weight32
+}
+{src:(3,3,1) weight: 32
+dst: (0,3,1) weight32
+}
+{src:(2,0,2) weight: 256
+dst: (3,0,2) weight128
+}
+{src:(3,0,2) weight: 128
+dst: (0,0,2) weight128
+}
+{src:(1,0,3) weight: 256
+dst: (1,0,0) weight128
+dst: (1,0,2) weight128
+}
+{src:(1,0,0) weight: 128
+dst: (1,0,1) weight128
+}
+{src:(1,0,1) weight: 128
+dst: (1,0,2) weight64
+}
+{src:(1,0,2) weight: 128
+dst: (1,0,1) weight128
+}
+{src: (2,0,0) weight: 256
+dst: (2,0,1) weight128
+}
+{src:(2,0,1) weight: 128
+dst: (3,0,1) weight64
+}
+{src:(3,0,1) weight: 64
+dst: (0,0,1) weight64
+}
+{src: (2,1,0) weight: 512
+dst: (2,2,0) weight256
+dst: (2,0,0) weight256
+dst: (2,1,3) weight256
+dst: (1,1,0) weight256
+dst: (2,1,1) weight256
+}
+{src: (2,2,0) weight: 256
+dst: (2,3,0) weight128
+dst: (2,2,3) weight128
+dst: (1,2,0) weight128
+dst: (2,2,1) weight128
+}
+{src: (2,3,0) weight: 128
+dst: (2,3,3) weight64
+dst: (1,3,0) weight64
+dst: (2,3,1) weight64
+}
+{src:(2,3,3) weight: 64
+dst: (3,3,3) weight32
+}
+{src:(3,3,3) weight: 32
+dst: (0,3,3) weight32
+}
+{src:(1,3,0) weight: 64
+dst: (1,3,1) weight32
+dst: (1,3,3) weight32
+}
+{src:(1,3,1) weight: 32
+dst: (1,3,2) weight32
+}
+{src:(1,3,2) weight: 32
+dst: (1,3,3) weight16
+}
+{src:(1,3,3) weight: 32
+dst: (1,3,2) weight32
+}
+{src: (2,3,1) weight: 64
+dst: (2,3,2) weight32
+}
+{src:(2,3,2) weight: 32
+dst: (3,3,2) weight16
+}
+{src:(3,3,2) weight: 16
+dst: (0,3,2) weight16
+}
+{src:(2,2,3) weight: 128
+dst: (3,2,3) weight64
+}
+{src:(3,2,3) weight: 64
+dst: (0,2,3) weight64
+}
+{src:(1,2,0) weight: 128
+dst: (1,2,1) weight64
+dst: (1,2,3) weight64
+}
+{src:(1,2,1) weight: 64
+dst: (1,2,2) weight64
+}
+{src:(1,2,2) weight: 64
+dst: (1,2,3) weight32
+}
+{src:(1,2,3) weight: 64
+dst: (1,2,2) weight64
+}
+{src: (2,2,1) weight: 128
+dst: (2,2,2) weight64
+}
+{src:(2,2,2) weight: 64
+dst: (3,2,2) weight32
+}
+{src:(3,2,2) weight: 32
+dst: (0,2,2) weight32
+}
+{src: (2,0,0) weight: 256
+dst: (2,0,3) weight128
+dst: (1,0,0) weight128
+dst: (2,0,1) weight128
+}
+{src:(2,0,3) weight: 128
+dst: (3,0,3) weight64
+}
+{src:(3,0,3) weight: 64
+dst: (0,0,3) weight64
+}
+{src:(1,0,0) weight: 128
+dst: (1,0,1) weight64
+dst: (1,0,3) weight64
+}
+{src:(1,0,1) weight: 64
+dst: (1,0,2) weight64
+}
+{src:(1,0,2) weight: 64
+dst: (1,0,3) weight32
+}
+{src:(1,0,3) weight: 64
+dst: (1,0,2) weight64
+}
+{src: (2,0,1) weight: 128
+dst: (2,0,2) weight64
+}
+{src:(2,0,2) weight: 64
+dst: (3,0,2) weight32
+}
+{src:(3,0,2) weight: 32
+dst: (0,0,2) weight32
+}
+{src:(2,1,3) weight: 256
+dst: (3,1,3) weight128
+}
+{src:(3,1,3) weight: 128
+dst: (0,1,3) weight128
+}
+{src:(1,1,0) weight: 256
+dst: (1,1,1) weight128
+dst: (1,1,3) weight128
+}
+{src:(1,1,1) weight: 128
+dst: (1,1,2) weight128
+}
+{src:(1,1,2) weight: 128
+dst: (1,1,3) weight64
+}
+{src:(1,1,3) weight: 128
+dst: (1,1,2) weight128
+}
+{src: (2,1,1) weight: 256
+dst: (2,1,2) weight128
+}
+{src:(2,1,2) weight: 128
+dst: (3,1,2) weight64
+}
+{src:(3,1,2) weight: 64
+dst: (0,1,2) weight64
+}
+{src: (2,1,1) weight: 512
+dst: (2,2,1) weight256
+dst: (2,0,1) weight256
+dst: (2,1,0) weight256
+dst: (1,1,1) weight256
+dst: (2,1,2) weight256
+}
+{src: (2,2,1) weight: 256
+dst: (2,3,1) weight128
+dst: (2,2,0) weight128
+dst: (1,2,1) weight128
+dst: (2,2,2) weight128
+}
+{src: (2,3,1) weight: 128
+dst: (2,3,0) weight64
+dst: (1,3,1) weight64
+dst: (2,3,2) weight64
+}
+{src:(2,3,0) weight: 64
+dst: (3,3,0) weight32
+}
+{src:(3,3,0) weight: 32
+dst: (0,3,0) weight32
+}
+{src:(1,3,1) weight: 64
+dst: (1,3,2) weight32
+dst: (1,3,0) weight32
+}
+{src:(1,3,2) weight: 32
+dst: (1,3,3) weight32
+}
+{src:(1,3,3) weight: 32
+dst: (1,3,0) weight16
+}
+{src:(1,3,0) weight: 32
+dst: (1,3,3) weight32
+}
+{src: (2,3,2) weight: 64
+dst: (2,3,3) weight32
+}
+{src:(2,3,3) weight: 32
+dst: (3,3,3) weight16
+}
+{src:(3,3,3) weight: 16
+dst: (0,3,3) weight16
+}
+{src:(2,2,0) weight: 128
+dst: (3,2,0) weight64
+}
+{src:(3,2,0) weight: 64
+dst: (0,2,0) weight64
+}
+{src:(1,2,1) weight: 128
+dst: (1,2,2) weight64
+dst: (1,2,0) weight64
+}
+{src:(1,2,2) weight: 64
+dst: (1,2,3) weight64
+}
+{src:(1,2,3) weight: 64
+dst: (1,2,0) weight32
+}
+{src:(1,2,0) weight: 64
+dst: (1,2,3) weight64
+}
+{src: (2,2,2) weight: 128
+dst: (2,2,3) weight64
+}
+{src:(2,2,3) weight: 64
+dst: (3,2,3) weight32
+}
+{src:(3,2,3) weight: 32
+dst: (0,2,3) weight32
+}
+{src: (2,0,1) weight: 256
+dst: (2,0,0) weight128
+dst: (1,0,1) weight128
+dst: (2,0,2) weight128
+}
+{src:(2,0,0) weight: 128
+dst: (3,0,0) weight64
+}
+{src:(3,0,0) weight: 64
+dst: (0,0,0) weight64
+}
+{src:(1,0,1) weight: 128
+dst: (1,0,2) weight64
+dst: (1,0,0) weight64
+}
+{src:(1,0,2) weight: 64
+dst: (1,0,3) weight64
+}
+{src:(1,0,3) weight: 64
+dst: (1,0,0) weight32
+}
+{src:(1,0,0) weight: 64
+dst: (1,0,3) weight64
+}
+{src: (2,0,2) weight: 128
+dst: (2,0,3) weight64
+}
+{src:(2,0,3) weight: 64
+dst: (3,0,3) weight32
+}
+{src:(3,0,3) weight: 32
+dst: (0,0,3) weight32
+}
+{src:(2,1,0) weight: 256
+dst: (3,1,0) weight128
+}
+{src:(3,1,0) weight: 128
+dst: (0,1,0) weight128
+}
+{src:(1,1,1) weight: 256
+dst: (1,1,2) weight128
+dst: (1,1,0) weight128
+}
+{src:(1,1,2) weight: 128
+dst: (1,1,3) weight128
+}
+{src:(1,1,3) weight: 128
+dst: (1,1,0) weight64
+}
+{src:(1,1,0) weight: 128
+dst: (1,1,3) weight128
+}
+{src: (2,1,2) weight: 256
+dst: (2,1,3) weight128
+}
+{src:(2,1,3) weight: 128
+dst: (3,1,3) weight64
+}
+{src:(3,1,3) weight: 64
+dst: (0,1,3) weight64
+}
+{src: (2,1,2) weight: 512
+dst: (2,2,2) weight256
+dst: (2,0,2) weight256
+dst: (2,1,1) weight256
+dst: (1,1,2) weight256
+dst: (2,1,3) weight256
+}
+{src: (2,2,2) weight: 256
+dst: (2,3,2) weight128
+dst: (2,2,1) weight128
+dst: (1,2,2) weight128
+dst: (2,2,3) weight128
+}
+{src: (2,3,2) weight: 128
+dst: (2,3,1) weight64
+dst: (1,3,2) weight64
+dst: (2,3,3) weight64
+}
+{src:(2,3,1) weight: 64
+dst: (3,3,1) weight32
+}
+{src:(3,3,1) weight: 32
+dst: (0,3,1) weight32
+}
+{src:(1,3,2) weight: 64
+dst: (1,3,3) weight32
+dst: (1,3,1) weight32
+}
+{src:(1,3,3) weight: 32
+dst: (1,3,0) weight32
+}
+{src:(1,3,0) weight: 32
+dst: (1,3,1) weight16
+}
+{src:(1,3,1) weight: 32
+dst: (1,3,0) weight32
+}
+{src: (2,3,3) weight: 64
+dst: (2,3,0) weight32
+}
+{src:(2,3,0) weight: 32
+dst: (3,3,0) weight16
+}
+{src:(3,3,0) weight: 16
+dst: (0,3,0) weight16
+}
+{src:(2,2,1) weight: 128
+dst: (3,2,1) weight64
+}
+{src:(3,2,1) weight: 64
+dst: (0,2,1) weight64
+}
+{src:(1,2,2) weight: 128
+dst: (1,2,3) weight64
+dst: (1,2,1) weight64
+}
+{src:(1,2,3) weight: 64
+dst: (1,2,0) weight64
+}
+{src:(1,2,0) weight: 64
+dst: (1,2,1) weight32
+}
+{src:(1,2,1) weight: 64
+dst: (1,2,0) weight64
+}
+{src: (2,2,3) weight: 128
+dst: (2,2,0) weight64
+}
+{src:(2,2,0) weight: 64
+dst: (3,2,0) weight32
+}
+{src:(3,2,0) weight: 32
+dst: (0,2,0) weight32
+}
+{src: (2,0,2) weight: 256
+dst: (2,0,1) weight128
+dst: (1,0,2) weight128
+dst: (2,0,3) weight128
+}
+{src:(2,0,1) weight: 128
+dst: (3,0,1) weight64
+}
+{src:(3,0,1) weight: 64
+dst: (0,0,1) weight64
+}
+{src:(1,0,2) weight: 128
+dst: (1,0,3) weight64
+dst: (1,0,1) weight64
+}
+{src:(1,0,3) weight: 64
+dst: (1,0,0) weight64
+}
+{src:(1,0,0) weight: 64
+dst: (1,0,1) weight32
+}
+{src:(1,0,1) weight: 64
+dst: (1,0,0) weight64
+}
+{src: (2,0,3) weight: 128
+dst: (2,0,0) weight64
+}
+{src:(2,0,0) weight: 64
+dst: (3,0,0) weight32
+}
+{src:(3,0,0) weight: 32
+dst: (0,0,0) weight32
+}
+{src:(2,1,1) weight: 256
+dst: (3,1,1) weight128
+}
+{src:(3,1,1) weight: 128
+dst: (0,1,1) weight128
+}
+{src:(1,1,2) weight: 256
+dst: (1,1,3) weight128
+dst: (1,1,1) weight128
+}
+{src:(1,1,3) weight: 128
+dst: (1,1,0) weight128
+}
+{src:(1,1,0) weight: 128
+dst: (1,1,1) weight64
+}
+{src:(1,1,1) weight: 128
+dst: (1,1,0) weight128
+}
+{src: (2,1,3) weight: 256
+dst: (2,1,0) weight128
+}
+{src:(2,1,0) weight: 128
+dst: (3,1,0) weight64
+}
+{src:(3,1,0) weight: 64
+dst: (0,1,0) weight64
+}
+{src: (2,1,3) weight: 512
+dst: (2,2,3) weight256
+dst: (2,0,3) weight256
+dst: (2,1,2) weight256
+dst: (1,1,3) weight256
+dst: (2,1,0) weight256
+}
+{src: (2,2,3) weight: 256
+dst: (2,3,3) weight128
+dst: (2,2,2) weight128
+dst: (1,2,3) weight128
+dst: (2,2,0) weight128
+}
+{src: (2,3,3) weight: 128
+dst: (2,3,2) weight64
+dst: (1,3,3) weight64
+dst: (2,3,0) weight64
+}
+{src:(2,3,2) weight: 64
+dst: (3,3,2) weight32
+}
+{src:(3,3,2) weight: 32
+dst: (0,3,2) weight32
+}
+{src:(1,3,3) weight: 64
+dst: (1,3,0) weight32
+dst: (1,3,2) weight32
+}
+{src:(1,3,0) weight: 32
+dst: (1,3,1) weight32
+}
+{src:(1,3,1) weight: 32
+dst: (1,3,2) weight16
+}
+{src:(1,3,2) weight: 32
+dst: (1,3,1) weight32
+}
+{src: (2,3,0) weight: 64
+dst: (2,3,1) weight32
+}
+{src:(2,3,1) weight: 32
+dst: (3,3,1) weight16
+}
+{src:(3,3,1) weight: 16
+dst: (0,3,1) weight16
+}
+{src:(2,2,2) weight: 128
+dst: (3,2,2) weight64
+}
+{src:(3,2,2) weight: 64
+dst: (0,2,2) weight64
+}
+{src:(1,2,3) weight: 128
+dst: (1,2,0) weight64
+dst: (1,2,2) weight64
+}
+{src:(1,2,0) weight: 64
+dst: (1,2,1) weight64
+}
+{src:(1,2,1) weight: 64
+dst: (1,2,2) weight32
+}
+{src:(1,2,2) weight: 64
+dst: (1,2,1) weight64
+}
+{src: (2,2,0) weight: 128
+dst: (2,2,1) weight64
+}
+{src:(2,2,1) weight: 64
+dst: (3,2,1) weight32
+}
+{src:(3,2,1) weight: 32
+dst: (0,2,1) weight32
+}
+{src: (2,0,3) weight: 256
+dst: (2,0,2) weight128
+dst: (1,0,3) weight128
+dst: (2,0,0) weight128
+}
+{src:(2,0,2) weight: 128
+dst: (3,0,2) weight64
+}
+{src:(3,0,2) weight: 64
+dst: (0,0,2) weight64
+}
+{src:(1,0,3) weight: 128
+dst: (1,0,0) weight64
+dst: (1,0,2) weight64
+}
+{src:(1,0,0) weight: 64
+dst: (1,0,1) weight64
+}
+{src:(1,0,1) weight: 64
+dst: (1,0,2) weight32
+}
+{src:(1,0,2) weight: 64
+dst: (1,0,1) weight64
+}
+{src: (2,0,0) weight: 128
+dst: (2,0,1) weight64
+}
+{src:(2,0,1) weight: 64
+dst: (3,0,1) weight32
+}
+{src:(3,0,1) weight: 32
+dst: (0,0,1) weight32
+}
+{src:(2,1,2) weight: 256
+dst: (3,1,2) weight128
+}
+{src:(3,1,2) weight: 128
+dst: (0,1,2) weight128
+}
+{src:(1,1,3) weight: 256
+dst: (1,1,0) weight128
+dst: (1,1,2) weight128
+}
+{src:(1,1,0) weight: 128
+dst: (1,1,1) weight128
+}
+{src:(1,1,1) weight: 128
+dst: (1,1,2) weight64
+}
+{src:(1,1,2) weight: 128
+dst: (1,1,1) weight128
+}
+{src: (2,1,0) weight: 256
+dst: (2,1,1) weight128
+}
+{src:(2,1,1) weight: 128
+dst: (3,1,1) weight64
+}
+{src:(3,1,1) weight: 64
+dst: (0,1,1) weight64
+}
+{src: (2,2,0) weight: 512
+dst: (2,3,0) weight256
+dst: (2,1,0) weight256
+dst: (2,2,3) weight256
+dst: (1,2,0) weight256
+dst: (2,2,1) weight256
+}
+{src: (2,3,0) weight: 256
+dst: (2,0,0) weight128
+dst: (2,3,3) weight128
+dst: (1,3,0) weight128
+dst: (2,3,1) weight128
+}
+{src:(2,3,3) weight: 128
+dst: (3,3,3) weight64
+}
+{src:(3,3,3) weight: 64
+dst: (0,3,3) weight64
+}
+{src:(1,3,0) weight: 128
+dst: (1,3,1) weight64
+dst: (1,3,3) weight64
+}
+{src:(1,3,1) weight: 64
+dst: (1,3,2) weight64
+}
+{src:(1,3,2) weight: 64
+dst: (1,3,3) weight32
+}
+{src:(1,3,3) weight: 64
+dst: (1,3,2) weight64
+}
+{src: (2,3,1) weight: 128
+dst: (2,3,2) weight64
+}
+{src:(2,3,2) weight: 64
+dst: (3,3,2) weight32
+}
+{src:(3,3,2) weight: 32
+dst: (0,3,2) weight32
+}
+{src: (2,1,0) weight: 256
+dst: (2,1,3) weight128
+dst: (1,1,0) weight128
+dst: (2,1,1) weight128
+}
+{src:(2,1,3) weight: 128
+dst: (3,1,3) weight64
+}
+{src:(3,1,3) weight: 64
+dst: (0,1,3) weight64
+}
+{src:(1,1,0) weight: 128
+dst: (1,1,1) weight64
+dst: (1,1,3) weight64
+}
+{src:(1,1,1) weight: 64
+dst: (1,1,2) weight64
+}
+{src:(1,1,2) weight: 64
+dst: (1,1,3) weight32
+}
+{src:(1,1,3) weight: 64
+dst: (1,1,2) weight64
+}
+{src: (2,1,1) weight: 128
+dst: (2,1,2) weight64
+}
+{src:(2,1,2) weight: 64
+dst: (3,1,2) weight32
+}
+{src:(3,1,2) weight: 32
+dst: (0,1,2) weight32
+}
+{src:(2,2,3) weight: 256
+dst: (3,2,3) weight128
+}
+{src:(3,2,3) weight: 128
+dst: (0,2,3) weight128
+}
+{src:(1,2,0) weight: 256
+dst: (1,2,1) weight128
+dst: (1,2,3) weight128
+}
+{src:(1,2,1) weight: 128
+dst: (1,2,2) weight128
+}
+{src:(1,2,2) weight: 128
+dst: (1,2,3) weight64
+}
+{src:(1,2,3) weight: 128
+dst: (1,2,2) weight128
+}
+{src: (2,2,1) weight: 256
+dst: (2,2,2) weight128
+}
+{src:(2,2,2) weight: 128
+dst: (3,2,2) weight64
+}
+{src:(3,2,2) weight: 64
+dst: (0,2,2) weight64
+}
+{src: (2,2,1) weight: 512
+dst: (2,3,1) weight256
+dst: (2,1,1) weight256
+dst: (2,2,0) weight256
+dst: (1,2,1) weight256
+dst: (2,2,2) weight256
+}
+{src: (2,3,1) weight: 256
+dst: (2,0,1) weight128
+dst: (2,3,0) weight128
+dst: (1,3,1) weight128
+dst: (2,3,2) weight128
+}
+{src:(2,3,0) weight: 128
+dst: (3,3,0) weight64
+}
+{src:(3,3,0) weight: 64
+dst: (0,3,0) weight64
+}
+{src:(1,3,1) weight: 128
+dst: (1,3,2) weight64
+dst: (1,3,0) weight64
+}
+{src:(1,3,2) weight: 64
+dst: (1,3,3) weight64
+}
+{src:(1,3,3) weight: 64
+dst: (1,3,0) weight32
+}
+{src:(1,3,0) weight: 64
+dst: (1,3,3) weight64
+}
+{src: (2,3,2) weight: 128
+dst: (2,3,3) weight64
+}
+{src:(2,3,3) weight: 64
+dst: (3,3,3) weight32
+}
+{src:(3,3,3) weight: 32
+dst: (0,3,3) weight32
+}
+{src: (2,1,1) weight: 256
+dst: (2,1,0) weight128
+dst: (1,1,1) weight128
+dst: (2,1,2) weight128
+}
+{src:(2,1,0) weight: 128
+dst: (3,1,0) weight64
+}
+{src:(3,1,0) weight: 64
+dst: (0,1,0) weight64
+}
+{src:(1,1,1) weight: 128
+dst: (1,1,2) weight64
+dst: (1,1,0) weight64
+}
+{src:(1,1,2) weight: 64
+dst: (1,1,3) weight64
+}
+{src:(1,1,3) weight: 64
+dst: (1,1,0) weight32
+}
+{src:(1,1,0) weight: 64
+dst: (1,1,3) weight64
+}
+{src: (2,1,2) weight: 128
+dst: (2,1,3) weight64
+}
+{src:(2,1,3) weight: 64
+dst: (3,1,3) weight32
+}
+{src:(3,1,3) weight: 32
+dst: (0,1,3) weight32
+}
+{src:(2,2,0) weight: 256
+dst: (3,2,0) weight128
+}
+{src:(3,2,0) weight: 128
+dst: (0,2,0) weight128
+}
+{src:(1,2,1) weight: 256
+dst: (1,2,2) weight128
+dst: (1,2,0) weight128
+}
+{src:(1,2,2) weight: 128
+dst: (1,2,3) weight128
+}
+{src:(1,2,3) weight: 128
+dst: (1,2,0) weight64
+}
+{src:(1,2,0) weight: 128
+dst: (1,2,3) weight128
+}
+{src: (2,2,2) weight: 256
+dst: (2,2,3) weight128
+}
+{src:(2,2,3) weight: 128
+dst: (3,2,3) weight64
+}
+{src:(3,2,3) weight: 64
+dst: (0,2,3) weight64
+}
+{src: (2,2,2) weight: 512
+dst: (2,3,2) weight256
+dst: (2,1,2) weight256
+dst: (2,2,1) weight256
+dst: (1,2,2) weight256
+dst: (2,2,3) weight256
+}
+{src: (2,3,2) weight: 256
+dst: (2,0,2) weight128
+dst: (2,3,1) weight128
+dst: (1,3,2) weight128
+dst: (2,3,3) weight128
+}
+{src:(2,3,1) weight: 128
+dst: (3,3,1) weight64
+}
+{src:(3,3,1) weight: 64
+dst: (0,3,1) weight64
+}
+{src:(1,3,2) weight: 128
+dst: (1,3,3) weight64
+dst: (1,3,1) weight64
+}
+{src:(1,3,3) weight: 64
+dst: (1,3,0) weight64
+}
+{src:(1,3,0) weight: 64
+dst: (1,3,1) weight32
+}
+{src:(1,3,1) weight: 64
+dst: (1,3,0) weight64
+}
+{src: (2,3,3) weight: 128
+dst: (2,3,0) weight64
+}
+{src:(2,3,0) weight: 64
+dst: (3,3,0) weight32
+}
+{src:(3,3,0) weight: 32
+dst: (0,3,0) weight32
+}
+{src: (2,1,2) weight: 256
+dst: (2,1,1) weight128
+dst: (1,1,2) weight128
+dst: (2,1,3) weight128
+}
+{src:(2,1,1) weight: 128
+dst: (3,1,1) weight64
+}
+{src:(3,1,1) weight: 64
+dst: (0,1,1) weight64
+}
+{src:(1,1,2) weight: 128
+dst: (1,1,3) weight64
+dst: (1,1,1) weight64
+}
+{src:(1,1,3) weight: 64
+dst: (1,1,0) weight64
+}
+{src:(1,1,0) weight: 64
+dst: (1,1,1) weight32
+}
+{src:(1,1,1) weight: 64
+dst: (1,1,0) weight64
+}
+{src: (2,1,3) weight: 128
+dst: (2,1,0) weight64
+}
+{src:(2,1,0) weight: 64
+dst: (3,1,0) weight32
+}
+{src:(3,1,0) weight: 32
+dst: (0,1,0) weight32
+}
+{src:(2,2,1) weight: 256
+dst: (3,2,1) weight128
+}
+{src:(3,2,1) weight: 128
+dst: (0,2,1) weight128
+}
+{src:(1,2,2) weight: 256
+dst: (1,2,3) weight128
+dst: (1,2,1) weight128
+}
+{src:(1,2,3) weight: 128
+dst: (1,2,0) weight128
+}
+{src:(1,2,0) weight: 128
+dst: (1,2,1) weight64
+}
+{src:(1,2,1) weight: 128
+dst: (1,2,0) weight128
+}
+{src: (2,2,3) weight: 256
+dst: (2,2,0) weight128
+}
+{src:(2,2,0) weight: 128
+dst: (3,2,0) weight64
+}
+{src:(3,2,0) weight: 64
+dst: (0,2,0) weight64
+}
+{src: (2,2,3) weight: 512
+dst: (2,3,3) weight256
+dst: (2,1,3) weight256
+dst: (2,2,2) weight256
+dst: (1,2,3) weight256
+dst: (2,2,0) weight256
+}
+{src: (2,3,3) weight: 256
+dst: (2,0,3) weight128
+dst: (2,3,2) weight128
+dst: (1,3,3) weight128
+dst: (2,3,0) weight128
+}
+{src:(2,3,2) weight: 128
+dst: (3,3,2) weight64
+}
+{src:(3,3,2) weight: 64
+dst: (0,3,2) weight64
+}
+{src:(1,3,3) weight: 128
+dst: (1,3,0) weight64
+dst: (1,3,2) weight64
+}
+{src:(1,3,0) weight: 64
+dst: (1,3,1) weight64
+}
+{src:(1,3,1) weight: 64
+dst: (1,3,2) weight32
+}
+{src:(1,3,2) weight: 64
+dst: (1,3,1) weight64
+}
+{src: (2,3,0) weight: 128
+dst: (2,3,1) weight64
+}
+{src:(2,3,1) weight: 64
+dst: (3,3,1) weight32
+}
+{src:(3,3,1) weight: 32
+dst: (0,3,1) weight32
+}
+{src: (2,1,3) weight: 256
+dst: (2,1,2) weight128
+dst: (1,1,3) weight128
+dst: (2,1,0) weight128
+}
+{src:(2,1,2) weight: 128
+dst: (3,1,2) weight64
+}
+{src:(3,1,2) weight: 64
+dst: (0,1,2) weight64
+}
+{src:(1,1,3) weight: 128
+dst: (1,1,0) weight64
+dst: (1,1,2) weight64
+}
+{src:(1,1,0) weight: 64
+dst: (1,1,1) weight64
+}
+{src:(1,1,1) weight: 64
+dst: (1,1,2) weight32
+}
+{src:(1,1,2) weight: 64
+dst: (1,1,1) weight64
+}
+{src: (2,1,0) weight: 128
+dst: (2,1,1) weight64
+}
+{src:(2,1,1) weight: 64
+dst: (3,1,1) weight32
+}
+{src:(3,1,1) weight: 32
+dst: (0,1,1) weight32
+}
+{src:(2,2,2) weight: 256
+dst: (3,2,2) weight128
+}
+{src:(3,2,2) weight: 128
+dst: (0,2,2) weight128
+}
+{src:(1,2,3) weight: 256
+dst: (1,2,0) weight128
+dst: (1,2,2) weight128
+}
+{src:(1,2,0) weight: 128
+dst: (1,2,1) weight128
+}
+{src:(1,2,1) weight: 128
+dst: (1,2,2) weight64
+}
+{src:(1,2,2) weight: 128
+dst: (1,2,1) weight128
+}
+{src: (2,2,0) weight: 256
+dst: (2,2,1) weight128
+}
+{src:(2,2,1) weight: 128
+dst: (3,2,1) weight64
+}
+{src:(3,2,1) weight: 64
+dst: (0,2,1) weight64
+}
+{src: (2,3,0) weight: 512
+dst: (2,0,0) weight256
+dst: (2,2,0) weight256
+dst: (2,3,3) weight256
+dst: (1,3,0) weight256
+dst: (2,3,1) weight256
+}
+{src: (2,0,0) weight: 256
+dst: (2,1,0) weight128
+dst: (2,0,3) weight128
+dst: (1,0,0) weight128
+dst: (2,0,1) weight128
+}
+{src:(2,0,3) weight: 128
+dst: (3,0,3) weight64
+}
+{src:(3,0,3) weight: 64
+dst: (0,0,3) weight64
+}
+{src:(1,0,0) weight: 128
+dst: (1,0,1) weight64
+dst: (1,0,3) weight64
+}
+{src:(1,0,1) weight: 64
+dst: (1,0,2) weight64
+}
+{src:(1,0,2) weight: 64
+dst: (1,0,3) weight32
+}
+{src:(1,0,3) weight: 64
+dst: (1,0,2) weight64
+}
+{src: (2,0,1) weight: 128
+dst: (2,0,2) weight64
+}
+{src:(2,0,2) weight: 64
+dst: (3,0,2) weight32
+}
+{src:(3,0,2) weight: 32
+dst: (0,0,2) weight32
+}
+{src: (2,2,0) weight: 256
+dst: (2,2,3) weight128
+dst: (1,2,0) weight128
+dst: (2,2,1) weight128
+}
+{src:(2,2,3) weight: 128
+dst: (3,2,3) weight64
+}
+{src:(3,2,3) weight: 64
+dst: (0,2,3) weight64
+}
+{src:(1,2,0) weight: 128
+dst: (1,2,1) weight64
+dst: (1,2,3) weight64
+}
+{src:(1,2,1) weight: 64
+dst: (1,2,2) weight64
+}
+{src:(1,2,2) weight: 64
+dst: (1,2,3) weight32
+}
+{src:(1,2,3) weight: 64
+dst: (1,2,2) weight64
+}
+{src: (2,2,1) weight: 128
+dst: (2,2,2) weight64
+}
+{src:(2,2,2) weight: 64
+dst: (3,2,2) weight32
+}
+{src:(3,2,2) weight: 32
+dst: (0,2,2) weight32
+}
+{src:(2,3,3) weight: 256
+dst: (3,3,3) weight128
+}
+{src:(3,3,3) weight: 128
+dst: (0,3,3) weight128
+}
+{src:(1,3,0) weight: 256
+dst: (1,3,1) weight128
+dst: (1,3,3) weight128
+}
+{src:(1,3,1) weight: 128
+dst: (1,3,2) weight128
+}
+{src:(1,3,2) weight: 128
+dst: (1,3,3) weight64
+}
+{src:(1,3,3) weight: 128
+dst: (1,3,2) weight128
+}
+{src: (2,3,1) weight: 256
+dst: (2,3,2) weight128
+}
+{src:(2,3,2) weight: 128
+dst: (3,3,2) weight64
+}
+{src:(3,3,2) weight: 64
+dst: (0,3,2) weight64
+}
+{src: (2,3,1) weight: 512
+dst: (2,0,1) weight256
+dst: (2,2,1) weight256
+dst: (2,3,0) weight256
+dst: (1,3,1) weight256
+dst: (2,3,2) weight256
+}
+{src: (2,0,1) weight: 256
+dst: (2,1,1) weight128
+dst: (2,0,0) weight128
+dst: (1,0,1) weight128
+dst: (2,0,2) weight128
+}
+{src:(2,0,0) weight: 128
+dst: (3,0,0) weight64
+}
+{src:(3,0,0) weight: 64
+dst: (0,0,0) weight64
+}
+{src:(1,0,1) weight: 128
+dst: (1,0,2) weight64
+dst: (1,0,0) weight64
+}
+{src:(1,0,2) weight: 64
+dst: (1,0,3) weight64
+}
+{src:(1,0,3) weight: 64
+dst: (1,0,0) weight32
+}
+{src:(1,0,0) weight: 64
+dst: (1,0,3) weight64
+}
+{src: (2,0,2) weight: 128
+dst: (2,0,3) weight64
+}
+{src:(2,0,3) weight: 64
+dst: (3,0,3) weight32
+}
+{src:(3,0,3) weight: 32
+dst: (0,0,3) weight32
+}
+{src: (2,2,1) weight: 256
+dst: (2,2,0) weight128
+dst: (1,2,1) weight128
+dst: (2,2,2) weight128
+}
+{src:(2,2,0) weight: 128
+dst: (3,2,0) weight64
+}
+{src:(3,2,0) weight: 64
+dst: (0,2,0) weight64
+}
+{src:(1,2,1) weight: 128
+dst: (1,2,2) weight64
+dst: (1,2,0) weight64
+}
+{src:(1,2,2) weight: 64
+dst: (1,2,3) weight64
+}
+{src:(1,2,3) weight: 64
+dst: (1,2,0) weight32
+}
+{src:(1,2,0) weight: 64
+dst: (1,2,3) weight64
+}
+{src: (2,2,2) weight: 128
+dst: (2,2,3) weight64
+}
+{src:(2,2,3) weight: 64
+dst: (3,2,3) weight32
+}
+{src:(3,2,3) weight: 32
+dst: (0,2,3) weight32
+}
+{src:(2,3,0) weight: 256
+dst: (3,3,0) weight128
+}
+{src:(3,3,0) weight: 128
+dst: (0,3,0) weight128
+}
+{src:(1,3,1) weight: 256
+dst: (1,3,2) weight128
+dst: (1,3,0) weight128
+}
+{src:(1,3,2) weight: 128
+dst: (1,3,3) weight128
+}
+{src:(1,3,3) weight: 128
+dst: (1,3,0) weight64
+}
+{src:(1,3,0) weight: 128
+dst: (1,3,3) weight128
+}
+{src: (2,3,2) weight: 256
+dst: (2,3,3) weight128
+}
+{src:(2,3,3) weight: 128
+dst: (3,3,3) weight64
+}
+{src:(3,3,3) weight: 64
+dst: (0,3,3) weight64
+}
+{src: (2,3,2) weight: 512
+dst: (2,0,2) weight256
+dst: (2,2,2) weight256
+dst: (2,3,1) weight256
+dst: (1,3,2) weight256
+dst: (2,3,3) weight256
+}
+{src: (2,0,2) weight: 256
+dst: (2,1,2) weight128
+dst: (2,0,1) weight128
+dst: (1,0,2) weight128
+dst: (2,0,3) weight128
+}
+{src:(2,0,1) weight: 128
+dst: (3,0,1) weight64
+}
+{src:(3,0,1) weight: 64
+dst: (0,0,1) weight64
+}
+{src:(1,0,2) weight: 128
+dst: (1,0,3) weight64
+dst: (1,0,1) weight64
+}
+{src:(1,0,3) weight: 64
+dst: (1,0,0) weight64
+}
+{src:(1,0,0) weight: 64
+dst: (1,0,1) weight32
+}
+{src:(1,0,1) weight: 64
+dst: (1,0,0) weight64
+}
+{src: (2,0,3) weight: 128
+dst: (2,0,0) weight64
+}
+{src:(2,0,0) weight: 64
+dst: (3,0,0) weight32
+}
+{src:(3,0,0) weight: 32
+dst: (0,0,0) weight32
+}
+{src: (2,2,2) weight: 256
+dst: (2,2,1) weight128
+dst: (1,2,2) weight128
+dst: (2,2,3) weight128
+}
+{src:(2,2,1) weight: 128
+dst: (3,2,1) weight64
+}
+{src:(3,2,1) weight: 64
+dst: (0,2,1) weight64
+}
+{src:(1,2,2) weight: 128
+dst: (1,2,3) weight64
+dst: (1,2,1) weight64
+}
+{src:(1,2,3) weight: 64
+dst: (1,2,0) weight64
+}
+{src:(1,2,0) weight: 64
+dst: (1,2,1) weight32
+}
+{src:(1,2,1) weight: 64
+dst: (1,2,0) weight64
+}
+{src: (2,2,3) weight: 128
+dst: (2,2,0) weight64
+}
+{src:(2,2,0) weight: 64
+dst: (3,2,0) weight32
+}
+{src:(3,2,0) weight: 32
+dst: (0,2,0) weight32
+}
+{src:(2,3,1) weight: 256
+dst: (3,3,1) weight128
+}
+{src:(3,3,1) weight: 128
+dst: (0,3,1) weight128
+}
+{src:(1,3,2) weight: 256
+dst: (1,3,3) weight128
+dst: (1,3,1) weight128
+}
+{src:(1,3,3) weight: 128
+dst: (1,3,0) weight128
+}
+{src:(1,3,0) weight: 128
+dst: (1,3,1) weight64
+}
+{src:(1,3,1) weight: 128
+dst: (1,3,0) weight128
+}
+{src: (2,3,3) weight: 256
+dst: (2,3,0) weight128
+}
+{src:(2,3,0) weight: 128
+dst: (3,3,0) weight64
+}
+{src:(3,3,0) weight: 64
+dst: (0,3,0) weight64
+}
+{src: (2,3,3) weight: 512
+dst: (2,0,3) weight256
+dst: (2,2,3) weight256
+dst: (2,3,2) weight256
+dst: (1,3,3) weight256
+dst: (2,3,0) weight256
+}
+{src: (2,0,3) weight: 256
+dst: (2,1,3) weight128
+dst: (2,0,2) weight128
+dst: (1,0,3) weight128
+dst: (2,0,0) weight128
+}
+{src:(2,0,2) weight: 128
+dst: (3,0,2) weight64
+}
+{src:(3,0,2) weight: 64
+dst: (0,0,2) weight64
+}
+{src:(1,0,3) weight: 128
+dst: (1,0,0) weight64
+dst: (1,0,2) weight64
+}
+{src:(1,0,0) weight: 64
+dst: (1,0,1) weight64
+}
+{src:(1,0,1) weight: 64
+dst: (1,0,2) weight32
+}
+{src:(1,0,2) weight: 64
+dst: (1,0,1) weight64
+}
+{src: (2,0,0) weight: 128
+dst: (2,0,1) weight64
+}
+{src:(2,0,1) weight: 64
+dst: (3,0,1) weight32
+}
+{src:(3,0,1) weight: 32
+dst: (0,0,1) weight32
+}
+{src: (2,2,3) weight: 256
+dst: (2,2,2) weight128
+dst: (1,2,3) weight128
+dst: (2,2,0) weight128
+}
+{src:(2,2,2) weight: 128
+dst: (3,2,2) weight64
+}
+{src:(3,2,2) weight: 64
+dst: (0,2,2) weight64
+}
+{src:(1,2,3) weight: 128
+dst: (1,2,0) weight64
+dst: (1,2,2) weight64
+}
+{src:(1,2,0) weight: 64
+dst: (1,2,1) weight64
+}
+{src:(1,2,1) weight: 64
+dst: (1,2,2) weight32
+}
+{src:(1,2,2) weight: 64
+dst: (1,2,1) weight64
+}
+{src: (2,2,0) weight: 128
+dst: (2,2,1) weight64
+}
+{src:(2,2,1) weight: 64
+dst: (3,2,1) weight32
+}
+{src:(3,2,1) weight: 32
+dst: (0,2,1) weight32
+}
+{src:(2,3,2) weight: 256
+dst: (3,3,2) weight128
+}
+{src:(3,3,2) weight: 128
+dst: (0,3,2) weight128
+}
+{src:(1,3,3) weight: 256
+dst: (1,3,0) weight128
+dst: (1,3,2) weight128
+}
+{src:(1,3,0) weight: 128
+dst: (1,3,1) weight128
+}
+{src:(1,3,1) weight: 128
+dst: (1,3,2) weight64
+}
+{src:(1,3,2) weight: 128
+dst: (1,3,1) weight128
+}
+{src: (2,3,0) weight: 256
+dst: (2,3,1) weight128
+}
+{src:(2,3,1) weight: 128
+dst: (3,3,1) weight64
+}
+{src:(3,3,1) weight: 64
+dst: (0,3,1) weight64
+}
+{src: (3,0,0) weight: 512
+dst: (3,1,0) weight256
+dst: (3,3,0) weight256
+dst: (3,0,3) weight256
+dst: (3,0,1) weight256
+}
+{src: (3,1,0) weight: 256
+dst: (3,2,0) weight128
+dst: (3,1,3) weight128
+dst: (3,1,1) weight128
+}
+{src: (3,2,0) weight: 128
+dst: (3,2,3) weight64
+dst: (3,2,1) weight64
+}
+{src:(3,2,3) weight: 64
+dst: (0,2,3) weight32
+dst: (2,2,3) weight32
+}
+{src:(0,2,3) weight: 32
+dst: (1,2,3) weight32
+}
+{src:(1,2,3) weight: 32
+dst: (2,2,3) weight16
+}
+{src:(2,2,3) weight: 32
+dst: (1,2,3) weight32
+}
+{src: (3,2,1) weight: 64
+dst: (3,2,2) weight32
+}
+{src:(3,2,2) weight: 32
+dst: (0,2,2) weight16
+dst: (2,2,2) weight16
+}
+{src:(0,2,2) weight: 16
+dst: (1,2,2) weight16
+}
+{src:(1,2,2) weight: 16
+dst: (2,2,2) weight8
+}
+{src:(2,2,2) weight: 16
+dst: (1,2,2) weight16
+}
+{src:(3,1,3) weight: 128
+dst: (0,1,3) weight64
+dst: (2,1,3) weight64
+}
+{src:(0,1,3) weight: 64
+dst: (1,1,3) weight64
+}
+{src:(1,1,3) weight: 64
+dst: (2,1,3) weight32
+}
+{src:(2,1,3) weight: 64
+dst: (1,1,3) weight64
+}
+{src: (3,1,1) weight: 128
+dst: (3,1,2) weight64
+}
+{src:(3,1,2) weight: 64
+dst: (0,1,2) weight32
+dst: (2,1,2) weight32
+}
+{src:(0,1,2) weight: 32
+dst: (1,1,2) weight32
+}
+{src:(1,1,2) weight: 32
+dst: (2,1,2) weight16
+}
+{src:(2,1,2) weight: 32
+dst: (1,1,2) weight32
+}
+{src: (3,3,0) weight: 256
+dst: (3,3,3) weight128
+dst: (3,3,1) weight128
+}
+{src:(3,3,3) weight: 128
+dst: (0,3,3) weight64
+dst: (2,3,3) weight64
+}
+{src:(0,3,3) weight: 64
+dst: (1,3,3) weight64
+}
+{src:(1,3,3) weight: 64
+dst: (2,3,3) weight32
+}
+{src:(2,3,3) weight: 64
+dst: (1,3,3) weight64
+}
+{src: (3,3,1) weight: 128
+dst: (3,3,2) weight64
+}
+{src:(3,3,2) weight: 64
+dst: (0,3,2) weight32
+dst: (2,3,2) weight32
+}
+{src:(0,3,2) weight: 32
+dst: (1,3,2) weight32
+}
+{src:(1,3,2) weight: 32
+dst: (2,3,2) weight16
+}
+{src:(2,3,2) weight: 32
+dst: (1,3,2) weight32
+}
+{src:(3,0,3) weight: 256
+dst: (0,0,3) weight128
+dst: (2,0,3) weight128
+}
+{src:(0,0,3) weight: 128
+dst: (1,0,3) weight128
+}
+{src:(1,0,3) weight: 128
+dst: (2,0,3) weight64
+}
+{src:(2,0,3) weight: 128
+dst: (1,0,3) weight128
+}
+{src: (3,0,1) weight: 256
+dst: (3,0,2) weight128
+}
+{src:(3,0,2) weight: 128
+dst: (0,0,2) weight64
+dst: (2,0,2) weight64
+}
+{src:(0,0,2) weight: 64
+dst: (1,0,2) weight64
+}
+{src:(1,0,2) weight: 64
+dst: (2,0,2) weight32
+}
+{src:(2,0,2) weight: 64
+dst: (1,0,2) weight64
+}
+{src: (3,0,1) weight: 512
+dst: (3,1,1) weight256
+dst: (3,3,1) weight256
+dst: (3,0,0) weight256
+dst: (3,0,2) weight256
+}
+{src: (3,1,1) weight: 256
+dst: (3,2,1) weight128
+dst: (3,1,0) weight128
+dst: (3,1,2) weight128
+}
+{src: (3,2,1) weight: 128
+dst: (3,2,0) weight64
+dst: (3,2,2) weight64
+}
+{src:(3,2,0) weight: 64
+dst: (0,2,0) weight32
+dst: (2,2,0) weight32
+}
+{src:(0,2,0) weight: 32
+dst: (1,2,0) weight32
+}
+{src:(1,2,0) weight: 32
+dst: (2,2,0) weight16
+}
+{src:(2,2,0) weight: 32
+dst: (1,2,0) weight32
+}
+{src: (3,2,2) weight: 64
+dst: (3,2,3) weight32
+}
+{src:(3,2,3) weight: 32
+dst: (0,2,3) weight16
+dst: (2,2,3) weight16
+}
+{src:(0,2,3) weight: 16
+dst: (1,2,3) weight16
+}
+{src:(1,2,3) weight: 16
+dst: (2,2,3) weight8
+}
+{src:(2,2,3) weight: 16
+dst: (1,2,3) weight16
+}
+{src:(3,1,0) weight: 128
+dst: (0,1,0) weight64
+dst: (2,1,0) weight64
+}
+{src:(0,1,0) weight: 64
+dst: (1,1,0) weight64
+}
+{src:(1,1,0) weight: 64
+dst: (2,1,0) weight32
+}
+{src:(2,1,0) weight: 64
+dst: (1,1,0) weight64
+}
+{src: (3,1,2) weight: 128
+dst: (3,1,3) weight64
+}
+{src:(3,1,3) weight: 64
+dst: (0,1,3) weight32
+dst: (2,1,3) weight32
+}
+{src:(0,1,3) weight: 32
+dst: (1,1,3) weight32
+}
+{src:(1,1,3) weight: 32
+dst: (2,1,3) weight16
+}
+{src:(2,1,3) weight: 32
+dst: (1,1,3) weight32
+}
+{src: (3,3,1) weight: 256
+dst: (3,3,0) weight128
+dst: (3,3,2) weight128
+}
+{src:(3,3,0) weight: 128
+dst: (0,3,0) weight64
+dst: (2,3,0) weight64
+}
+{src:(0,3,0) weight: 64
+dst: (1,3,0) weight64
+}
+{src:(1,3,0) weight: 64
+dst: (2,3,0) weight32
+}
+{src:(2,3,0) weight: 64
+dst: (1,3,0) weight64
+}
+{src: (3,3,2) weight: 128
+dst: (3,3,3) weight64
+}
+{src:(3,3,3) weight: 64
+dst: (0,3,3) weight32
+dst: (2,3,3) weight32
+}
+{src:(0,3,3) weight: 32
+dst: (1,3,3) weight32
+}
+{src:(1,3,3) weight: 32
+dst: (2,3,3) weight16
+}
+{src:(2,3,3) weight: 32
+dst: (1,3,3) weight32
+}
+{src:(3,0,0) weight: 256
+dst: (0,0,0) weight128
+dst: (2,0,0) weight128
+}
+{src:(0,0,0) weight: 128
+dst: (1,0,0) weight128
+}
+{src:(1,0,0) weight: 128
+dst: (2,0,0) weight64
+}
+{src:(2,0,0) weight: 128
+dst: (1,0,0) weight128
+}
+{src: (3,0,2) weight: 256
+dst: (3,0,3) weight128
+}
+{src:(3,0,3) weight: 128
+dst: (0,0,3) weight64
+dst: (2,0,3) weight64
+}
+{src:(0,0,3) weight: 64
+dst: (1,0,3) weight64
+}
+{src:(1,0,3) weight: 64
+dst: (2,0,3) weight32
+}
+{src:(2,0,3) weight: 64
+dst: (1,0,3) weight64
+}
+{src: (3,0,2) weight: 512
+dst: (3,1,2) weight256
+dst: (3,3,2) weight256
+dst: (3,0,1) weight256
+dst: (3,0,3) weight256
+}
+{src: (3,1,2) weight: 256
+dst: (3,2,2) weight128
+dst: (3,1,1) weight128
+dst: (3,1,3) weight128
+}
+{src: (3,2,2) weight: 128
+dst: (3,2,1) weight64
+dst: (3,2,3) weight64
+}
+{src:(3,2,1) weight: 64
+dst: (0,2,1) weight32
+dst: (2,2,1) weight32
+}
+{src:(0,2,1) weight: 32
+dst: (1,2,1) weight32
+}
+{src:(1,2,1) weight: 32
+dst: (2,2,1) weight16
+}
+{src:(2,2,1) weight: 32
+dst: (1,2,1) weight32
+}
+{src: (3,2,3) weight: 64
+dst: (3,2,0) weight32
+}
+{src:(3,2,0) weight: 32
+dst: (0,2,0) weight16
+dst: (2,2,0) weight16
+}
+{src:(0,2,0) weight: 16
+dst: (1,2,0) weight16
+}
+{src:(1,2,0) weight: 16
+dst: (2,2,0) weight8
+}
+{src:(2,2,0) weight: 16
+dst: (1,2,0) weight16
+}
+{src:(3,1,1) weight: 128
+dst: (0,1,1) weight64
+dst: (2,1,1) weight64
+}
+{src:(0,1,1) weight: 64
+dst: (1,1,1) weight64
+}
+{src:(1,1,1) weight: 64
+dst: (2,1,1) weight32
+}
+{src:(2,1,1) weight: 64
+dst: (1,1,1) weight64
+}
+{src: (3,1,3) weight: 128
+dst: (3,1,0) weight64
+}
+{src:(3,1,0) weight: 64
+dst: (0,1,0) weight32
+dst: (2,1,0) weight32
+}
+{src:(0,1,0) weight: 32
+dst: (1,1,0) weight32
+}
+{src:(1,1,0) weight: 32
+dst: (2,1,0) weight16
+}
+{src:(2,1,0) weight: 32
+dst: (1,1,0) weight32
+}
+{src: (3,3,2) weight: 256
+dst: (3,3,1) weight128
+dst: (3,3,3) weight128
+}
+{src:(3,3,1) weight: 128
+dst: (0,3,1) weight64
+dst: (2,3,1) weight64
+}
+{src:(0,3,1) weight: 64
+dst: (1,3,1) weight64
+}
+{src:(1,3,1) weight: 64
+dst: (2,3,1) weight32
+}
+{src:(2,3,1) weight: 64
+dst: (1,3,1) weight64
+}
+{src: (3,3,3) weight: 128
+dst: (3,3,0) weight64
+}
+{src:(3,3,0) weight: 64
+dst: (0,3,0) weight32
+dst: (2,3,0) weight32
+}
+{src:(0,3,0) weight: 32
+dst: (1,3,0) weight32
+}
+{src:(1,3,0) weight: 32
+dst: (2,3,0) weight16
+}
+{src:(2,3,0) weight: 32
+dst: (1,3,0) weight32
+}
+{src:(3,0,1) weight: 256
+dst: (0,0,1) weight128
+dst: (2,0,1) weight128
+}
+{src:(0,0,1) weight: 128
+dst: (1,0,1) weight128
+}
+{src:(1,0,1) weight: 128
+dst: (2,0,1) weight64
+}
+{src:(2,0,1) weight: 128
+dst: (1,0,1) weight128
+}
+{src: (3,0,3) weight: 256
+dst: (3,0,0) weight128
+}
+{src:(3,0,0) weight: 128
+dst: (0,0,0) weight64
+dst: (2,0,0) weight64
+}
+{src:(0,0,0) weight: 64
+dst: (1,0,0) weight64
+}
+{src:(1,0,0) weight: 64
+dst: (2,0,0) weight32
+}
+{src:(2,0,0) weight: 64
+dst: (1,0,0) weight64
+}
+{src: (3,0,3) weight: 512
+dst: (3,1,3) weight256
+dst: (3,3,3) weight256
+dst: (3,0,2) weight256
+dst: (3,0,0) weight256
+}
+{src: (3,1,3) weight: 256
+dst: (3,2,3) weight128
+dst: (3,1,2) weight128
+dst: (3,1,0) weight128
+}
+{src: (3,2,3) weight: 128
+dst: (3,2,2) weight64
+dst: (3,2,0) weight64
+}
+{src:(3,2,2) weight: 64
+dst: (0,2,2) weight32
+dst: (2,2,2) weight32
+}
+{src:(0,2,2) weight: 32
+dst: (1,2,2) weight32
+}
+{src:(1,2,2) weight: 32
+dst: (2,2,2) weight16
+}
+{src:(2,2,2) weight: 32
+dst: (1,2,2) weight32
+}
+{src: (3,2,0) weight: 64
+dst: (3,2,1) weight32
+}
+{src:(3,2,1) weight: 32
+dst: (0,2,1) weight16
+dst: (2,2,1) weight16
+}
+{src:(0,2,1) weight: 16
+dst: (1,2,1) weight16
+}
+{src:(1,2,1) weight: 16
+dst: (2,2,1) weight8
+}
+{src:(2,2,1) weight: 16
+dst: (1,2,1) weight16
+}
+{src:(3,1,2) weight: 128
+dst: (0,1,2) weight64
+dst: (2,1,2) weight64
+}
+{src:(0,1,2) weight: 64
+dst: (1,1,2) weight64
+}
+{src:(1,1,2) weight: 64
+dst: (2,1,2) weight32
+}
+{src:(2,1,2) weight: 64
+dst: (1,1,2) weight64
+}
+{src: (3,1,0) weight: 128
+dst: (3,1,1) weight64
+}
+{src:(3,1,1) weight: 64
+dst: (0,1,1) weight32
+dst: (2,1,1) weight32
+}
+{src:(0,1,1) weight: 32
+dst: (1,1,1) weight32
+}
+{src:(1,1,1) weight: 32
+dst: (2,1,1) weight16
+}
+{src:(2,1,1) weight: 32
+dst: (1,1,1) weight32
+}
+{src: (3,3,3) weight: 256
+dst: (3,3,2) weight128
+dst: (3,3,0) weight128
+}
+{src:(3,3,2) weight: 128
+dst: (0,3,2) weight64
+dst: (2,3,2) weight64
+}
+{src:(0,3,2) weight: 64
+dst: (1,3,2) weight64
+}
+{src:(1,3,2) weight: 64
+dst: (2,3,2) weight32
+}
+{src:(2,3,2) weight: 64
+dst: (1,3,2) weight64
+}
+{src: (3,3,0) weight: 128
+dst: (3,3,1) weight64
+}
+{src:(3,3,1) weight: 64
+dst: (0,3,1) weight32
+dst: (2,3,1) weight32
+}
+{src:(0,3,1) weight: 32
+dst: (1,3,1) weight32
+}
+{src:(1,3,1) weight: 32
+dst: (2,3,1) weight16
+}
+{src:(2,3,1) weight: 32
+dst: (1,3,1) weight32
+}
+{src:(3,0,2) weight: 256
+dst: (0,0,2) weight128
+dst: (2,0,2) weight128
+}
+{src:(0,0,2) weight: 128
+dst: (1,0,2) weight128
+}
+{src:(1,0,2) weight: 128
+dst: (2,0,2) weight64
+}
+{src:(2,0,2) weight: 128
+dst: (1,0,2) weight128
+}
+{src: (3,0,0) weight: 256
+dst: (3,0,1) weight128
+}
+{src:(3,0,1) weight: 128
+dst: (0,0,1) weight64
+dst: (2,0,1) weight64
+}
+{src:(0,0,1) weight: 64
+dst: (1,0,1) weight64
+}
+{src:(1,0,1) weight: 64
+dst: (2,0,1) weight32
+}
+{src:(2,0,1) weight: 64
+dst: (1,0,1) weight64
+}
+{src: (3,1,0) weight: 512
+dst: (3,2,0) weight256
+dst: (3,0,0) weight256
+dst: (3,1,3) weight256
+dst: (3,1,1) weight256
+}
+{src: (3,2,0) weight: 256
+dst: (3,3,0) weight128
+dst: (3,2,3) weight128
+dst: (3,2,1) weight128
+}
+{src: (3,3,0) weight: 128
+dst: (3,3,3) weight64
+dst: (3,3,1) weight64
+}
+{src:(3,3,3) weight: 64
+dst: (0,3,3) weight32
+dst: (2,3,3) weight32
+}
+{src:(0,3,3) weight: 32
+dst: (1,3,3) weight32
+}
+{src:(1,3,3) weight: 32
+dst: (2,3,3) weight16
+}
+{src:(2,3,3) weight: 32
+dst: (1,3,3) weight32
+}
+{src: (3,3,1) weight: 64
+dst: (3,3,2) weight32
+}
+{src:(3,3,2) weight: 32
+dst: (0,3,2) weight16
+dst: (2,3,2) weight16
+}
+{src:(0,3,2) weight: 16
+dst: (1,3,2) weight16
+}
+{src:(1,3,2) weight: 16
+dst: (2,3,2) weight8
+}
+{src:(2,3,2) weight: 16
+dst: (1,3,2) weight16
+}
+{src:(3,2,3) weight: 128
+dst: (0,2,3) weight64
+dst: (2,2,3) weight64
+}
+{src:(0,2,3) weight: 64
+dst: (1,2,3) weight64
+}
+{src:(1,2,3) weight: 64
+dst: (2,2,3) weight32
+}
+{src:(2,2,3) weight: 64
+dst: (1,2,3) weight64
+}
+{src: (3,2,1) weight: 128
+dst: (3,2,2) weight64
+}
+{src:(3,2,2) weight: 64
+dst: (0,2,2) weight32
+dst: (2,2,2) weight32
+}
+{src:(0,2,2) weight: 32
+dst: (1,2,2) weight32
+}
+{src:(1,2,2) weight: 32
+dst: (2,2,2) weight16
+}
+{src:(2,2,2) weight: 32
+dst: (1,2,2) weight32
+}
+{src: (3,0,0) weight: 256
+dst: (3,0,3) weight128
+dst: (3,0,1) weight128
+}
+{src:(3,0,3) weight: 128
+dst: (0,0,3) weight64
+dst: (2,0,3) weight64
+}
+{src:(0,0,3) weight: 64
+dst: (1,0,3) weight64
+}
+{src:(1,0,3) weight: 64
+dst: (2,0,3) weight32
+}
+{src:(2,0,3) weight: 64
+dst: (1,0,3) weight64
+}
+{src: (3,0,1) weight: 128
+dst: (3,0,2) weight64
+}
+{src:(3,0,2) weight: 64
+dst: (0,0,2) weight32
+dst: (2,0,2) weight32
+}
+{src:(0,0,2) weight: 32
+dst: (1,0,2) weight32
+}
+{src:(1,0,2) weight: 32
+dst: (2,0,2) weight16
+}
+{src:(2,0,2) weight: 32
+dst: (1,0,2) weight32
+}
+{src:(3,1,3) weight: 256
+dst: (0,1,3) weight128
+dst: (2,1,3) weight128
+}
+{src:(0,1,3) weight: 128
+dst: (1,1,3) weight128
+}
+{src:(1,1,3) weight: 128
+dst: (2,1,3) weight64
+}
+{src:(2,1,3) weight: 128
+dst: (1,1,3) weight128
+}
+{src: (3,1,1) weight: 256
+dst: (3,1,2) weight128
+}
+{src:(3,1,2) weight: 128
+dst: (0,1,2) weight64
+dst: (2,1,2) weight64
+}
+{src:(0,1,2) weight: 64
+dst: (1,1,2) weight64
+}
+{src:(1,1,2) weight: 64
+dst: (2,1,2) weight32
+}
+{src:(2,1,2) weight: 64
+dst: (1,1,2) weight64
+}
+{src: (3,1,1) weight: 512
+dst: (3,2,1) weight256
+dst: (3,0,1) weight256
+dst: (3,1,0) weight256
+dst: (3,1,2) weight256
+}
+{src: (3,2,1) weight: 256
+dst: (3,3,1) weight128
+dst: (3,2,0) weight128
+dst: (3,2,2) weight128
+}
+{src: (3,3,1) weight: 128
+dst: (3,3,0) weight64
+dst: (3,3,2) weight64
+}
+{src:(3,3,0) weight: 64
+dst: (0,3,0) weight32
+dst: (2,3,0) weight32
+}
+{src:(0,3,0) weight: 32
+dst: (1,3,0) weight32
+}
+{src:(1,3,0) weight: 32
+dst: (2,3,0) weight16
+}
+{src:(2,3,0) weight: 32
+dst: (1,3,0) weight32
+}
+{src: (3,3,2) weight: 64
+dst: (3,3,3) weight32
+}
+{src:(3,3,3) weight: 32
+dst: (0,3,3) weight16
+dst: (2,3,3) weight16
+}
+{src:(0,3,3) weight: 16
+dst: (1,3,3) weight16
+}
+{src:(1,3,3) weight: 16
+dst: (2,3,3) weight8
+}
+{src:(2,3,3) weight: 16
+dst: (1,3,3) weight16
+}
+{src:(3,2,0) weight: 128
+dst: (0,2,0) weight64
+dst: (2,2,0) weight64
+}
+{src:(0,2,0) weight: 64
+dst: (1,2,0) weight64
+}
+{src:(1,2,0) weight: 64
+dst: (2,2,0) weight32
+}
+{src:(2,2,0) weight: 64
+dst: (1,2,0) weight64
+}
+{src: (3,2,2) weight: 128
+dst: (3,2,3) weight64
+}
+{src:(3,2,3) weight: 64
+dst: (0,2,3) weight32
+dst: (2,2,3) weight32
+}
+{src:(0,2,3) weight: 32
+dst: (1,2,3) weight32
+}
+{src:(1,2,3) weight: 32
+dst: (2,2,3) weight16
+}
+{src:(2,2,3) weight: 32
+dst: (1,2,3) weight32
+}
+{src: (3,0,1) weight: 256
+dst: (3,0,0) weight128
+dst: (3,0,2) weight128
+}
+{src:(3,0,0) weight: 128
+dst: (0,0,0) weight64
+dst: (2,0,0) weight64
+}
+{src:(0,0,0) weight: 64
+dst: (1,0,0) weight64
+}
+{src:(1,0,0) weight: 64
+dst: (2,0,0) weight32
+}
+{src:(2,0,0) weight: 64
+dst: (1,0,0) weight64
+}
+{src: (3,0,2) weight: 128
+dst: (3,0,3) weight64
+}
+{src:(3,0,3) weight: 64
+dst: (0,0,3) weight32
+dst: (2,0,3) weight32
+}
+{src:(0,0,3) weight: 32
+dst: (1,0,3) weight32
+}
+{src:(1,0,3) weight: 32
+dst: (2,0,3) weight16
+}
+{src:(2,0,3) weight: 32
+dst: (1,0,3) weight32
+}
+{src:(3,1,0) weight: 256
+dst: (0,1,0) weight128
+dst: (2,1,0) weight128
+}
+{src:(0,1,0) weight: 128
+dst: (1,1,0) weight128
+}
+{src:(1,1,0) weight: 128
+dst: (2,1,0) weight64
+}
+{src:(2,1,0) weight: 128
+dst: (1,1,0) weight128
+}
+{src: (3,1,2) weight: 256
+dst: (3,1,3) weight128
+}
+{src:(3,1,3) weight: 128
+dst: (0,1,3) weight64
+dst: (2,1,3) weight64
+}
+{src:(0,1,3) weight: 64
+dst: (1,1,3) weight64
+}
+{src:(1,1,3) weight: 64
+dst: (2,1,3) weight32
+}
+{src:(2,1,3) weight: 64
+dst: (1,1,3) weight64
+}
+{src: (3,1,2) weight: 512
+dst: (3,2,2) weight256
+dst: (3,0,2) weight256
+dst: (3,1,1) weight256
+dst: (3,1,3) weight256
+}
+{src: (3,2,2) weight: 256
+dst: (3,3,2) weight128
+dst: (3,2,1) weight128
+dst: (3,2,3) weight128
+}
+{src: (3,3,2) weight: 128
+dst: (3,3,1) weight64
+dst: (3,3,3) weight64
+}
+{src:(3,3,1) weight: 64
+dst: (0,3,1) weight32
+dst: (2,3,1) weight32
+}
+{src:(0,3,1) weight: 32
+dst: (1,3,1) weight32
+}
+{src:(1,3,1) weight: 32
+dst: (2,3,1) weight16
+}
+{src:(2,3,1) weight: 32
+dst: (1,3,1) weight32
+}
+{src: (3,3,3) weight: 64
+dst: (3,3,0) weight32
+}
+{src:(3,3,0) weight: 32
+dst: (0,3,0) weight16
+dst: (2,3,0) weight16
+}
+{src:(0,3,0) weight: 16
+dst: (1,3,0) weight16
+}
+{src:(1,3,0) weight: 16
+dst: (2,3,0) weight8
+}
+{src:(2,3,0) weight: 16
+dst: (1,3,0) weight16
+}
+{src:(3,2,1) weight: 128
+dst: (0,2,1) weight64
+dst: (2,2,1) weight64
+}
+{src:(0,2,1) weight: 64
+dst: (1,2,1) weight64
+}
+{src:(1,2,1) weight: 64
+dst: (2,2,1) weight32
+}
+{src:(2,2,1) weight: 64
+dst: (1,2,1) weight64
+}
+{src: (3,2,3) weight: 128
+dst: (3,2,0) weight64
+}
+{src:(3,2,0) weight: 64
+dst: (0,2,0) weight32
+dst: (2,2,0) weight32
+}
+{src:(0,2,0) weight: 32
+dst: (1,2,0) weight32
+}
+{src:(1,2,0) weight: 32
+dst: (2,2,0) weight16
+}
+{src:(2,2,0) weight: 32
+dst: (1,2,0) weight32
+}
+{src: (3,0,2) weight: 256
+dst: (3,0,1) weight128
+dst: (3,0,3) weight128
+}
+{src:(3,0,1) weight: 128
+dst: (0,0,1) weight64
+dst: (2,0,1) weight64
+}
+{src:(0,0,1) weight: 64
+dst: (1,0,1) weight64
+}
+{src:(1,0,1) weight: 64
+dst: (2,0,1) weight32
+}
+{src:(2,0,1) weight: 64
+dst: (1,0,1) weight64
+}
+{src: (3,0,3) weight: 128
+dst: (3,0,0) weight64
+}
+{src:(3,0,0) weight: 64
+dst: (0,0,0) weight32
+dst: (2,0,0) weight32
+}
+{src:(0,0,0) weight: 32
+dst: (1,0,0) weight32
+}
+{src:(1,0,0) weight: 32
+dst: (2,0,0) weight16
+}
+{src:(2,0,0) weight: 32
+dst: (1,0,0) weight32
+}
+{src:(3,1,1) weight: 256
+dst: (0,1,1) weight128
+dst: (2,1,1) weight128
+}
+{src:(0,1,1) weight: 128
+dst: (1,1,1) weight128
+}
+{src:(1,1,1) weight: 128
+dst: (2,1,1) weight64
+}
+{src:(2,1,1) weight: 128
+dst: (1,1,1) weight128
+}
+{src: (3,1,3) weight: 256
+dst: (3,1,0) weight128
+}
+{src:(3,1,0) weight: 128
+dst: (0,1,0) weight64
+dst: (2,1,0) weight64
+}
+{src:(0,1,0) weight: 64
+dst: (1,1,0) weight64
+}
+{src:(1,1,0) weight: 64
+dst: (2,1,0) weight32
+}
+{src:(2,1,0) weight: 64
+dst: (1,1,0) weight64
+}
+{src: (3,1,3) weight: 512
+dst: (3,2,3) weight256
+dst: (3,0,3) weight256
+dst: (3,1,2) weight256
+dst: (3,1,0) weight256
+}
+{src: (3,2,3) weight: 256
+dst: (3,3,3) weight128
+dst: (3,2,2) weight128
+dst: (3,2,0) weight128
+}
+{src: (3,3,3) weight: 128
+dst: (3,3,2) weight64
+dst: (3,3,0) weight64
+}
+{src:(3,3,2) weight: 64
+dst: (0,3,2) weight32
+dst: (2,3,2) weight32
+}
+{src:(0,3,2) weight: 32
+dst: (1,3,2) weight32
+}
+{src:(1,3,2) weight: 32
+dst: (2,3,2) weight16
+}
+{src:(2,3,2) weight: 32
+dst: (1,3,2) weight32
+}
+{src: (3,3,0) weight: 64
+dst: (3,3,1) weight32
+}
+{src:(3,3,1) weight: 32
+dst: (0,3,1) weight16
+dst: (2,3,1) weight16
+}
+{src:(0,3,1) weight: 16
+dst: (1,3,1) weight16
+}
+{src:(1,3,1) weight: 16
+dst: (2,3,1) weight8
+}
+{src:(2,3,1) weight: 16
+dst: (1,3,1) weight16
+}
+{src:(3,2,2) weight: 128
+dst: (0,2,2) weight64
+dst: (2,2,2) weight64
+}
+{src:(0,2,2) weight: 64
+dst: (1,2,2) weight64
+}
+{src:(1,2,2) weight: 64
+dst: (2,2,2) weight32
+}
+{src:(2,2,2) weight: 64
+dst: (1,2,2) weight64
+}
+{src: (3,2,0) weight: 128
+dst: (3,2,1) weight64
+}
+{src:(3,2,1) weight: 64
+dst: (0,2,1) weight32
+dst: (2,2,1) weight32
+}
+{src:(0,2,1) weight: 32
+dst: (1,2,1) weight32
+}
+{src:(1,2,1) weight: 32
+dst: (2,2,1) weight16
+}
+{src:(2,2,1) weight: 32
+dst: (1,2,1) weight32
+}
+{src: (3,0,3) weight: 256
+dst: (3,0,2) weight128
+dst: (3,0,0) weight128
+}
+{src:(3,0,2) weight: 128
+dst: (0,0,2) weight64
+dst: (2,0,2) weight64
+}
+{src:(0,0,2) weight: 64
+dst: (1,0,2) weight64
+}
+{src:(1,0,2) weight: 64
+dst: (2,0,2) weight32
+}
+{src:(2,0,2) weight: 64
+dst: (1,0,2) weight64
+}
+{src: (3,0,0) weight: 128
+dst: (3,0,1) weight64
+}
+{src:(3,0,1) weight: 64
+dst: (0,0,1) weight32
+dst: (2,0,1) weight32
+}
+{src:(0,0,1) weight: 32
+dst: (1,0,1) weight32
+}
+{src:(1,0,1) weight: 32
+dst: (2,0,1) weight16
+}
+{src:(2,0,1) weight: 32
+dst: (1,0,1) weight32
+}
+{src:(3,1,2) weight: 256
+dst: (0,1,2) weight128
+dst: (2,1,2) weight128
+}
+{src:(0,1,2) weight: 128
+dst: (1,1,2) weight128
+}
+{src:(1,1,2) weight: 128
+dst: (2,1,2) weight64
+}
+{src:(2,1,2) weight: 128
+dst: (1,1,2) weight128
+}
+{src: (3,1,0) weight: 256
+dst: (3,1,1) weight128
+}
+{src:(3,1,1) weight: 128
+dst: (0,1,1) weight64
+dst: (2,1,1) weight64
+}
+{src:(0,1,1) weight: 64
+dst: (1,1,1) weight64
+}
+{src:(1,1,1) weight: 64
+dst: (2,1,1) weight32
+}
+{src:(2,1,1) weight: 64
+dst: (1,1,1) weight64
+}
+{src: (3,2,0) weight: 512
+dst: (3,3,0) weight256
+dst: (3,1,0) weight256
+dst: (3,2,3) weight256
+dst: (3,2,1) weight256
+}
+{src: (3,3,0) weight: 256
+dst: (3,0,0) weight128
+dst: (3,3,3) weight128
+dst: (3,3,1) weight128
+}
+{src:(3,3,3) weight: 128
+dst: (0,3,3) weight64
+dst: (2,3,3) weight64
+}
+{src:(0,3,3) weight: 64
+dst: (1,3,3) weight64
+}
+{src:(1,3,3) weight: 64
+dst: (2,3,3) weight32
+}
+{src:(2,3,3) weight: 64
+dst: (1,3,3) weight64
+}
+{src: (3,3,1) weight: 128
+dst: (3,3,2) weight64
+}
+{src:(3,3,2) weight: 64
+dst: (0,3,2) weight32
+dst: (2,3,2) weight32
+}
+{src:(0,3,2) weight: 32
+dst: (1,3,2) weight32
+}
+{src:(1,3,2) weight: 32
+dst: (2,3,2) weight16
+}
+{src:(2,3,2) weight: 32
+dst: (1,3,2) weight32
+}
+{src: (3,1,0) weight: 256
+dst: (3,1,3) weight128
+dst: (3,1,1) weight128
+}
+{src:(3,1,3) weight: 128
+dst: (0,1,3) weight64
+dst: (2,1,3) weight64
+}
+{src:(0,1,3) weight: 64
+dst: (1,1,3) weight64
+}
+{src:(1,1,3) weight: 64
+dst: (2,1,3) weight32
+}
+{src:(2,1,3) weight: 64
+dst: (1,1,3) weight64
+}
+{src: (3,1,1) weight: 128
+dst: (3,1,2) weight64
+}
+{src:(3,1,2) weight: 64
+dst: (0,1,2) weight32
+dst: (2,1,2) weight32
+}
+{src:(0,1,2) weight: 32
+dst: (1,1,2) weight32
+}
+{src:(1,1,2) weight: 32
+dst: (2,1,2) weight16
+}
+{src:(2,1,2) weight: 32
+dst: (1,1,2) weight32
+}
+{src:(3,2,3) weight: 256
+dst: (0,2,3) weight128
+dst: (2,2,3) weight128
+}
+{src:(0,2,3) weight: 128
+dst: (1,2,3) weight128
+}
+{src:(1,2,3) weight: 128
+dst: (2,2,3) weight64
+}
+{src:(2,2,3) weight: 128
+dst: (1,2,3) weight128
+}
+{src: (3,2,1) weight: 256
+dst: (3,2,2) weight128
+}
+{src:(3,2,2) weight: 128
+dst: (0,2,2) weight64
+dst: (2,2,2) weight64
+}
+{src:(0,2,2) weight: 64
+dst: (1,2,2) weight64
+}
+{src:(1,2,2) weight: 64
+dst: (2,2,2) weight32
+}
+{src:(2,2,2) weight: 64
+dst: (1,2,2) weight64
+}
+{src: (3,2,1) weight: 512
+dst: (3,3,1) weight256
+dst: (3,1,1) weight256
+dst: (3,2,0) weight256
+dst: (3,2,2) weight256
+}
+{src: (3,3,1) weight: 256
+dst: (3,0,1) weight128
+dst: (3,3,0) weight128
+dst: (3,3,2) weight128
+}
+{src:(3,3,0) weight: 128
+dst: (0,3,0) weight64
+dst: (2,3,0) weight64
+}
+{src:(0,3,0) weight: 64
+dst: (1,3,0) weight64
+}
+{src:(1,3,0) weight: 64
+dst: (2,3,0) weight32
+}
+{src:(2,3,0) weight: 64
+dst: (1,3,0) weight64
+}
+{src: (3,3,2) weight: 128
+dst: (3,3,3) weight64
+}
+{src:(3,3,3) weight: 64
+dst: (0,3,3) weight32
+dst: (2,3,3) weight32
+}
+{src:(0,3,3) weight: 32
+dst: (1,3,3) weight32
+}
+{src:(1,3,3) weight: 32
+dst: (2,3,3) weight16
+}
+{src:(2,3,3) weight: 32
+dst: (1,3,3) weight32
+}
+{src: (3,1,1) weight: 256
+dst: (3,1,0) weight128
+dst: (3,1,2) weight128
+}
+{src:(3,1,0) weight: 128
+dst: (0,1,0) weight64
+dst: (2,1,0) weight64
+}
+{src:(0,1,0) weight: 64
+dst: (1,1,0) weight64
+}
+{src:(1,1,0) weight: 64
+dst: (2,1,0) weight32
+}
+{src:(2,1,0) weight: 64
+dst: (1,1,0) weight64
+}
+{src: (3,1,2) weight: 128
+dst: (3,1,3) weight64
+}
+{src:(3,1,3) weight: 64
+dst: (0,1,3) weight32
+dst: (2,1,3) weight32
+}
+{src:(0,1,3) weight: 32
+dst: (1,1,3) weight32
+}
+{src:(1,1,3) weight: 32
+dst: (2,1,3) weight16
+}
+{src:(2,1,3) weight: 32
+dst: (1,1,3) weight32
+}
+{src:(3,2,0) weight: 256
+dst: (0,2,0) weight128
+dst: (2,2,0) weight128
+}
+{src:(0,2,0) weight: 128
+dst: (1,2,0) weight128
+}
+{src:(1,2,0) weight: 128
+dst: (2,2,0) weight64
+}
+{src:(2,2,0) weight: 128
+dst: (1,2,0) weight128
+}
+{src: (3,2,2) weight: 256
+dst: (3,2,3) weight128
+}
+{src:(3,2,3) weight: 128
+dst: (0,2,3) weight64
+dst: (2,2,3) weight64
+}
+{src:(0,2,3) weight: 64
+dst: (1,2,3) weight64
+}
+{src:(1,2,3) weight: 64
+dst: (2,2,3) weight32
+}
+{src:(2,2,3) weight: 64
+dst: (1,2,3) weight64
+}
+{src: (3,2,2) weight: 512
+dst: (3,3,2) weight256
+dst: (3,1,2) weight256
+dst: (3,2,1) weight256
+dst: (3,2,3) weight256
+}
+{src: (3,3,2) weight: 256
+dst: (3,0,2) weight128
+dst: (3,3,1) weight128
+dst: (3,3,3) weight128
+}
+{src:(3,3,1) weight: 128
+dst: (0,3,1) weight64
+dst: (2,3,1) weight64
+}
+{src:(0,3,1) weight: 64
+dst: (1,3,1) weight64
+}
+{src:(1,3,1) weight: 64
+dst: (2,3,1) weight32
+}
+{src:(2,3,1) weight: 64
+dst: (1,3,1) weight64
+}
+{src: (3,3,3) weight: 128
+dst: (3,3,0) weight64
+}
+{src:(3,3,0) weight: 64
+dst: (0,3,0) weight32
+dst: (2,3,0) weight32
+}
+{src:(0,3,0) weight: 32
+dst: (1,3,0) weight32
+}
+{src:(1,3,0) weight: 32
+dst: (2,3,0) weight16
+}
+{src:(2,3,0) weight: 32
+dst: (1,3,0) weight32
+}
+{src: (3,1,2) weight: 256
+dst: (3,1,1) weight128
+dst: (3,1,3) weight128
+}
+{src:(3,1,1) weight: 128
+dst: (0,1,1) weight64
+dst: (2,1,1) weight64
+}
+{src:(0,1,1) weight: 64
+dst: (1,1,1) weight64
+}
+{src:(1,1,1) weight: 64
+dst: (2,1,1) weight32
+}
+{src:(2,1,1) weight: 64
+dst: (1,1,1) weight64
+}
+{src: (3,1,3) weight: 128
+dst: (3,1,0) weight64
+}
+{src:(3,1,0) weight: 64
+dst: (0,1,0) weight32
+dst: (2,1,0) weight32
+}
+{src:(0,1,0) weight: 32
+dst: (1,1,0) weight32
+}
+{src:(1,1,0) weight: 32
+dst: (2,1,0) weight16
+}
+{src:(2,1,0) weight: 32
+dst: (1,1,0) weight32
+}
+{src:(3,2,1) weight: 256
+dst: (0,2,1) weight128
+dst: (2,2,1) weight128
+}
+{src:(0,2,1) weight: 128
+dst: (1,2,1) weight128
+}
+{src:(1,2,1) weight: 128
+dst: (2,2,1) weight64
+}
+{src:(2,2,1) weight: 128
+dst: (1,2,1) weight128
+}
+{src: (3,2,3) weight: 256
+dst: (3,2,0) weight128
+}
+{src:(3,2,0) weight: 128
+dst: (0,2,0) weight64
+dst: (2,2,0) weight64
+}
+{src:(0,2,0) weight: 64
+dst: (1,2,0) weight64
+}
+{src:(1,2,0) weight: 64
+dst: (2,2,0) weight32
+}
+{src:(2,2,0) weight: 64
+dst: (1,2,0) weight64
+}
+{src: (3,2,3) weight: 512
+dst: (3,3,3) weight256
+dst: (3,1,3) weight256
+dst: (3,2,2) weight256
+dst: (3,2,0) weight256
+}
+{src: (3,3,3) weight: 256
+dst: (3,0,3) weight128
+dst: (3,3,2) weight128
+dst: (3,3,0) weight128
+}
+{src:(3,3,2) weight: 128
+dst: (0,3,2) weight64
+dst: (2,3,2) weight64
+}
+{src:(0,3,2) weight: 64
+dst: (1,3,2) weight64
+}
+{src:(1,3,2) weight: 64
+dst: (2,3,2) weight32
+}
+{src:(2,3,2) weight: 64
+dst: (1,3,2) weight64
+}
+{src: (3,3,0) weight: 128
+dst: (3,3,1) weight64
+}
+{src:(3,3,1) weight: 64
+dst: (0,3,1) weight32
+dst: (2,3,1) weight32
+}
+{src:(0,3,1) weight: 32
+dst: (1,3,1) weight32
+}
+{src:(1,3,1) weight: 32
+dst: (2,3,1) weight16
+}
+{src:(2,3,1) weight: 32
+dst: (1,3,1) weight32
+}
+{src: (3,1,3) weight: 256
+dst: (3,1,2) weight128
+dst: (3,1,0) weight128
+}
+{src:(3,1,2) weight: 128
+dst: (0,1,2) weight64
+dst: (2,1,2) weight64
+}
+{src:(0,1,2) weight: 64
+dst: (1,1,2) weight64
+}
+{src:(1,1,2) weight: 64
+dst: (2,1,2) weight32
+}
+{src:(2,1,2) weight: 64
+dst: (1,1,2) weight64
+}
+{src: (3,1,0) weight: 128
+dst: (3,1,1) weight64
+}
+{src:(3,1,1) weight: 64
+dst: (0,1,1) weight32
+dst: (2,1,1) weight32
+}
+{src:(0,1,1) weight: 32
+dst: (1,1,1) weight32
+}
+{src:(1,1,1) weight: 32
+dst: (2,1,1) weight16
+}
+{src:(2,1,1) weight: 32
+dst: (1,1,1) weight32
+}
+{src:(3,2,2) weight: 256
+dst: (0,2,2) weight128
+dst: (2,2,2) weight128
+}
+{src:(0,2,2) weight: 128
+dst: (1,2,2) weight128
+}
+{src:(1,2,2) weight: 128
+dst: (2,2,2) weight64
+}
+{src:(2,2,2) weight: 128
+dst: (1,2,2) weight128
+}
+{src: (3,2,0) weight: 256
+dst: (3,2,1) weight128
+}
+{src:(3,2,1) weight: 128
+dst: (0,2,1) weight64
+dst: (2,2,1) weight64
+}
+{src:(0,2,1) weight: 64
+dst: (1,2,1) weight64
+}
+{src:(1,2,1) weight: 64
+dst: (2,2,1) weight32
+}
+{src:(2,2,1) weight: 64
+dst: (1,2,1) weight64
+}
+{src: (3,3,0) weight: 512
+dst: (3,0,0) weight256
+dst: (3,2,0) weight256
+dst: (3,3,3) weight256
+dst: (3,3,1) weight256
+}
+{src: (3,0,0) weight: 256
+dst: (3,1,0) weight128
+dst: (3,0,3) weight128
+dst: (3,0,1) weight128
+}
+{src:(3,0,3) weight: 128
+dst: (0,0,3) weight64
+dst: (2,0,3) weight64
+}
+{src:(0,0,3) weight: 64
+dst: (1,0,3) weight64
+}
+{src:(1,0,3) weight: 64
+dst: (2,0,3) weight32
+}
+{src:(2,0,3) weight: 64
+dst: (1,0,3) weight64
+}
+{src: (3,0,1) weight: 128
+dst: (3,0,2) weight64
+}
+{src:(3,0,2) weight: 64
+dst: (0,0,2) weight32
+dst: (2,0,2) weight32
+}
+{src:(0,0,2) weight: 32
+dst: (1,0,2) weight32
+}
+{src:(1,0,2) weight: 32
+dst: (2,0,2) weight16
+}
+{src:(2,0,2) weight: 32
+dst: (1,0,2) weight32
+}
+{src: (3,2,0) weight: 256
+dst: (3,2,3) weight128
+dst: (3,2,1) weight128
+}
+{src:(3,2,3) weight: 128
+dst: (0,2,3) weight64
+dst: (2,2,3) weight64
+}
+{src:(0,2,3) weight: 64
+dst: (1,2,3) weight64
+}
+{src:(1,2,3) weight: 64
+dst: (2,2,3) weight32
+}
+{src:(2,2,3) weight: 64
+dst: (1,2,3) weight64
+}
+{src: (3,2,1) weight: 128
+dst: (3,2,2) weight64
+}
+{src:(3,2,2) weight: 64
+dst: (0,2,2) weight32
+dst: (2,2,2) weight32
+}
+{src:(0,2,2) weight: 32
+dst: (1,2,2) weight32
+}
+{src:(1,2,2) weight: 32
+dst: (2,2,2) weight16
+}
+{src:(2,2,2) weight: 32
+dst: (1,2,2) weight32
+}
+{src:(3,3,3) weight: 256
+dst: (0,3,3) weight128
+dst: (2,3,3) weight128
+}
+{src:(0,3,3) weight: 128
+dst: (1,3,3) weight128
+}
+{src:(1,3,3) weight: 128
+dst: (2,3,3) weight64
+}
+{src:(2,3,3) weight: 128
+dst: (1,3,3) weight128
+}
+{src: (3,3,1) weight: 256
+dst: (3,3,2) weight128
+}
+{src:(3,3,2) weight: 128
+dst: (0,3,2) weight64
+dst: (2,3,2) weight64
+}
+{src:(0,3,2) weight: 64
+dst: (1,3,2) weight64
+}
+{src:(1,3,2) weight: 64
+dst: (2,3,2) weight32
+}
+{src:(2,3,2) weight: 64
+dst: (1,3,2) weight64
+}
+{src: (3,3,1) weight: 512
+dst: (3,0,1) weight256
+dst: (3,2,1) weight256
+dst: (3,3,0) weight256
+dst: (3,3,2) weight256
+}
+{src: (3,0,1) weight: 256
+dst: (3,1,1) weight128
+dst: (3,0,0) weight128
+dst: (3,0,2) weight128
+}
+{src:(3,0,0) weight: 128
+dst: (0,0,0) weight64
+dst: (2,0,0) weight64
+}
+{src:(0,0,0) weight: 64
+dst: (1,0,0) weight64
+}
+{src:(1,0,0) weight: 64
+dst: (2,0,0) weight32
+}
+{src:(2,0,0) weight: 64
+dst: (1,0,0) weight64
+}
+{src: (3,0,2) weight: 128
+dst: (3,0,3) weight64
+}
+{src:(3,0,3) weight: 64
+dst: (0,0,3) weight32
+dst: (2,0,3) weight32
+}
+{src:(0,0,3) weight: 32
+dst: (1,0,3) weight32
+}
+{src:(1,0,3) weight: 32
+dst: (2,0,3) weight16
+}
+{src:(2,0,3) weight: 32
+dst: (1,0,3) weight32
+}
+{src: (3,2,1) weight: 256
+dst: (3,2,0) weight128
+dst: (3,2,2) weight128
+}
+{src:(3,2,0) weight: 128
+dst: (0,2,0) weight64
+dst: (2,2,0) weight64
+}
+{src:(0,2,0) weight: 64
+dst: (1,2,0) weight64
+}
+{src:(1,2,0) weight: 64
+dst: (2,2,0) weight32
+}
+{src:(2,2,0) weight: 64
+dst: (1,2,0) weight64
+}
+{src: (3,2,2) weight: 128
+dst: (3,2,3) weight64
+}
+{src:(3,2,3) weight: 64
+dst: (0,2,3) weight32
+dst: (2,2,3) weight32
+}
+{src:(0,2,3) weight: 32
+dst: (1,2,3) weight32
+}
+{src:(1,2,3) weight: 32
+dst: (2,2,3) weight16
+}
+{src:(2,2,3) weight: 32
+dst: (1,2,3) weight32
+}
+{src:(3,3,0) weight: 256
+dst: (0,3,0) weight128
+dst: (2,3,0) weight128
+}
+{src:(0,3,0) weight: 128
+dst: (1,3,0) weight128
+}
+{src:(1,3,0) weight: 128
+dst: (2,3,0) weight64
+}
+{src:(2,3,0) weight: 128
+dst: (1,3,0) weight128
+}
+{src: (3,3,2) weight: 256
+dst: (3,3,3) weight128
+}
+{src:(3,3,3) weight: 128
+dst: (0,3,3) weight64
+dst: (2,3,3) weight64
+}
+{src:(0,3,3) weight: 64
+dst: (1,3,3) weight64
+}
+{src:(1,3,3) weight: 64
+dst: (2,3,3) weight32
+}
+{src:(2,3,3) weight: 64
+dst: (1,3,3) weight64
+}
+{src: (3,3,2) weight: 512
+dst: (3,0,2) weight256
+dst: (3,2,2) weight256
+dst: (3,3,1) weight256
+dst: (3,3,3) weight256
+}
+{src: (3,0,2) weight: 256
+dst: (3,1,2) weight128
+dst: (3,0,1) weight128
+dst: (3,0,3) weight128
+}
+{src:(3,0,1) weight: 128
+dst: (0,0,1) weight64
+dst: (2,0,1) weight64
+}
+{src:(0,0,1) weight: 64
+dst: (1,0,1) weight64
+}
+{src:(1,0,1) weight: 64
+dst: (2,0,1) weight32
+}
+{src:(2,0,1) weight: 64
+dst: (1,0,1) weight64
+}
+{src: (3,0,3) weight: 128
+dst: (3,0,0) weight64
+}
+{src:(3,0,0) weight: 64
+dst: (0,0,0) weight32
+dst: (2,0,0) weight32
+}
+{src:(0,0,0) weight: 32
+dst: (1,0,0) weight32
+}
+{src:(1,0,0) weight: 32
+dst: (2,0,0) weight16
+}
+{src:(2,0,0) weight: 32
+dst: (1,0,0) weight32
+}
+{src: (3,2,2) weight: 256
+dst: (3,2,1) weight128
+dst: (3,2,3) weight128
+}
+{src:(3,2,1) weight: 128
+dst: (0,2,1) weight64
+dst: (2,2,1) weight64
+}
+{src:(0,2,1) weight: 64
+dst: (1,2,1) weight64
+}
+{src:(1,2,1) weight: 64
+dst: (2,2,1) weight32
+}
+{src:(2,2,1) weight: 64
+dst: (1,2,1) weight64
+}
+{src: (3,2,3) weight: 128
+dst: (3,2,0) weight64
+}
+{src:(3,2,0) weight: 64
+dst: (0,2,0) weight32
+dst: (2,2,0) weight32
+}
+{src:(0,2,0) weight: 32
+dst: (1,2,0) weight32
+}
+{src:(1,2,0) weight: 32
+dst: (2,2,0) weight16
+}
+{src:(2,2,0) weight: 32
+dst: (1,2,0) weight32
+}
+{src:(3,3,1) weight: 256
+dst: (0,3,1) weight128
+dst: (2,3,1) weight128
+}
+{src:(0,3,1) weight: 128
+dst: (1,3,1) weight128
+}
+{src:(1,3,1) weight: 128
+dst: (2,3,1) weight64
+}
+{src:(2,3,1) weight: 128
+dst: (1,3,1) weight128
+}
+{src: (3,3,3) weight: 256
+dst: (3,3,0) weight128
+}
+{src:(3,3,0) weight: 128
+dst: (0,3,0) weight64
+dst: (2,3,0) weight64
+}
+{src:(0,3,0) weight: 64
+dst: (1,3,0) weight64
+}
+{src:(1,3,0) weight: 64
+dst: (2,3,0) weight32
+}
+{src:(2,3,0) weight: 64
+dst: (1,3,0) weight64
+}
+{src: (3,3,3) weight: 512
+dst: (3,0,3) weight256
+dst: (3,2,3) weight256
+dst: (3,3,2) weight256
+dst: (3,3,0) weight256
+}
+{src: (3,0,3) weight: 256
+dst: (3,1,3) weight128
+dst: (3,0,2) weight128
+dst: (3,0,0) weight128
+}
+{src:(3,0,2) weight: 128
+dst: (0,0,2) weight64
+dst: (2,0,2) weight64
+}
+{src:(0,0,2) weight: 64
+dst: (1,0,2) weight64
+}
+{src:(1,0,2) weight: 64
+dst: (2,0,2) weight32
+}
+{src:(2,0,2) weight: 64
+dst: (1,0,2) weight64
+}
+{src: (3,0,0) weight: 128
+dst: (3,0,1) weight64
+}
+{src:(3,0,1) weight: 64
+dst: (0,0,1) weight32
+dst: (2,0,1) weight32
+}
+{src:(0,0,1) weight: 32
+dst: (1,0,1) weight32
+}
+{src:(1,0,1) weight: 32
+dst: (2,0,1) weight16
+}
+{src:(2,0,1) weight: 32
+dst: (1,0,1) weight32
+}
+{src: (3,2,3) weight: 256
+dst: (3,2,2) weight128
+dst: (3,2,0) weight128
+}
+{src:(3,2,2) weight: 128
+dst: (0,2,2) weight64
+dst: (2,2,2) weight64
+}
+{src:(0,2,2) weight: 64
+dst: (1,2,2) weight64
+}
+{src:(1,2,2) weight: 64
+dst: (2,2,2) weight32
+}
+{src:(2,2,2) weight: 64
+dst: (1,2,2) weight64
+}
+{src: (3,2,0) weight: 128
+dst: (3,2,1) weight64
+}
+{src:(3,2,1) weight: 64
+dst: (0,2,1) weight32
+dst: (2,2,1) weight32
+}
+{src:(0,2,1) weight: 32
+dst: (1,2,1) weight32
+}
+{src:(1,2,1) weight: 32
+dst: (2,2,1) weight16
+}
+{src:(2,2,1) weight: 32
+dst: (1,2,1) weight32
+}
+{src:(3,3,2) weight: 256
+dst: (0,3,2) weight128
+dst: (2,3,2) weight128
+}
+{src:(0,3,2) weight: 128
+dst: (1,3,2) weight128
+}
+{src:(1,3,2) weight: 128
+dst: (2,3,2) weight64
+}
+{src:(2,3,2) weight: 128
+dst: (1,3,2) weight128
+}
+{src: (3,3,0) weight: 256
+dst: (3,3,1) weight128
+}
+{src:(3,3,1) weight: 128
+dst: (0,3,1) weight64
+dst: (2,3,1) weight64
+}
+{src:(0,3,1) weight: 64
+dst: (1,3,1) weight64
+}
+{src:(1,3,1) weight: 64
+dst: (2,3,1) weight32
+}
+{src:(2,3,1) weight: 64
+dst: (1,3,1) weight64
 }
