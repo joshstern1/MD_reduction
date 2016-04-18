@@ -1931,14 +1931,14 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 
 			fout<<"{src:("<<node_list->x<<","<<node_list->y<<","<<node_list->z<<") weight: "<<tree_src->weight<<endl;
 			for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-				fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << tree_src->children[children_idx]->weight << endl;
+				fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << tree_src->children[children_idx]->weight << endl;
 				accumulate_link(tree_src,tree_src->children[children_idx]);
 			}
 			fout<<"}"<<endl;
 
 			cout << "{src:(" << node_list->x << "," << node_list->y << "," << node_list->z << ") weight: " << tree_src->weight << endl;
 			for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-				cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << tree_src->children[children_idx]->weight << endl;
+				cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << tree_src->children[children_idx]->weight << endl;
 				//accumulate_link(tree_src, tree_src->children[children_idx]);
 			}
 			cout << "}" << endl;
@@ -1947,11 +1947,11 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 	
 				while(cur_xpos_node->children[0]){
 					fout<<"{src:("<<cur_xpos_node->x<<","<<cur_xpos_node->y<<","<<cur_xpos_node->z<<") weight: "<<cur_xpos_node->weight<<endl;
-					fout << "dst: (" << cur_xpos_node->children[0]->x << "," << cur_xpos_node->children[0]->y << "," << cur_xpos_node->children[0]->z << ") weight" <<  cur_xpos_node->children[0]->weight << endl;
+					fout << "dst: (" << cur_xpos_node->children[0]->x << "," << cur_xpos_node->children[0]->y << "," << cur_xpos_node->children[0]->z << ") weight: " <<  cur_xpos_node->children[0]->weight << endl;
 					accumulate_link(cur_xpos_node,cur_xpos_node->children[0]);
 					fout<<"}"<<endl;
 					cout << "{src:(" << cur_xpos_node->x << "," << cur_xpos_node->y << "," << cur_xpos_node->z << ") weight: " << cur_xpos_node->weight << endl;
-					cout << "dst: (" << cur_xpos_node->children[0]->x << "," << cur_xpos_node->children[0]->y << "," << cur_xpos_node->children[0]->z << ") weight" << cur_xpos_node->children[0]->weight << endl;
+					cout << "dst: (" << cur_xpos_node->children[0]->x << "," << cur_xpos_node->children[0]->y << "," << cur_xpos_node->children[0]->z << ") weight: " << cur_xpos_node->children[0]->weight << endl;
 					//accumulate_link(cur_xpos_node, cur_xpos_node->children[0]);
 					cout << "}" << endl;
 					cur_xpos_node=cur_xpos_node->children[0];
@@ -1968,12 +1968,12 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 				}
 				while(cur_xneg_node->children[0]){
 					fout<<"{src:("<<cur_xneg_node->x<<","<<cur_xneg_node->y<<","<<cur_xneg_node->z<<") weight: "<<cur_xneg_node->weight<<endl;
-					fout << "dst: (" << cur_xneg_node->children[0]->x << "," << cur_xneg_node->children[0]->y << "," << cur_xneg_node->children[0]->z << ") weight" <<  cur_xneg_node->children[0]->weight << endl;
+					fout << "dst: (" << cur_xneg_node->children[0]->x << "," << cur_xneg_node->children[0]->y << "," << cur_xneg_node->children[0]->z << ") weight: " <<  cur_xneg_node->children[0]->weight << endl;
 					accumulate_link(cur_xneg_node,cur_xneg_node->children[0]);
 					fout<<"}"<<endl;
 
 					cout << "{src:(" << cur_xneg_node->x << "," << cur_xneg_node->y << "," << cur_xneg_node->z << ") weight: " << cur_xneg_node->weight << endl;
-					cout << "dst: (" << cur_xneg_node->children[0]->x << "," << cur_xneg_node->children[0]->y << "," << cur_xneg_node->children[0]->z << ") weight" << cur_xneg_node->children[0]->weight << endl;
+					cout << "dst: (" << cur_xneg_node->children[0]->x << "," << cur_xneg_node->children[0]->y << "," << cur_xneg_node->children[0]->z << ") weight: " << cur_xneg_node->children[0]->weight << endl;
 					//accumulate_link(cur_xneg_node, cur_xneg_node->children[0]);
 					cout << "}" << endl;
 					cur_xneg_node=cur_xneg_node->children[0];
@@ -2047,14 +2047,14 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 
 			fout << "{src:(" << node_list->x << "," << node_list->y << "," << node_list->z << ") weight: " << tree_src->weight << endl;
 			for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-				fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << tree_src->children[children_idx]->weight << endl;
+				fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << tree_src->children[children_idx]->weight << endl;
 				accumulate_link(tree_src,tree_src->children[children_idx]);
 			}
 			fout << "}" << endl;
 
 			cout << "{src:(" << node_list->x << "," << node_list->y << "," << node_list->z << ") weight: " << tree_src->weight << endl;
 			for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-				cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << tree_src->children[children_idx]->weight << endl;
+				cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << tree_src->children[children_idx]->weight << endl;
 //				accumulate_link(tree_src, tree_src->children[children_idx]);
 			}
 			cout << "}" << endl;
@@ -2064,12 +2064,12 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 
 				while (cur_xpos_node->children[0]){
 					fout << "{src:(" << cur_xpos_node->x << "," << cur_xpos_node->y << "," << cur_xpos_node->z << ") weight: " << cur_xpos_node->weight << endl;
-					fout << "dst: (" << cur_xpos_node->children[0]->x << "," << cur_xpos_node->children[0]->y << "," << cur_xpos_node->children[0]->z << ") weight" << cur_xpos_node->children[0]->weight << endl;
+					fout << "dst: (" << cur_xpos_node->children[0]->x << "," << cur_xpos_node->children[0]->y << "," << cur_xpos_node->children[0]->z << ") weight: " << cur_xpos_node->children[0]->weight << endl;
 					accumulate_link(cur_xpos_node,cur_xpos_node->children[0]);
 					fout << "}" << endl;
 
 					cout << "{src:(" << cur_xpos_node->x << "," << cur_xpos_node->y << "," << cur_xpos_node->z << ") weight: " << cur_xpos_node->weight << endl;
-					cout << "dst: (" << cur_xpos_node->children[0]->x << "," << cur_xpos_node->children[0]->y << "," << cur_xpos_node->children[0]->z << ") weight" << cur_xpos_node->children[0]->weight << endl;
+					cout << "dst: (" << cur_xpos_node->children[0]->x << "," << cur_xpos_node->children[0]->y << "," << cur_xpos_node->children[0]->z << ") weight: " << cur_xpos_node->children[0]->weight << endl;
 //					accumulate_link(cur_xpos_node, cur_xpos_node->children[0]);
 					cout << "}" << endl;
 					cur_xpos_node = cur_xpos_node->children[0];
@@ -2084,12 +2084,12 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 				}
 				while (cur_xneg_node->children[0]){
 					fout << "{src:(" << cur_xneg_node->x << "," << cur_xneg_node->y << "," << cur_xneg_node->z << ") weight: " << cur_xneg_node->weight << endl;
-					fout << "dst: (" << cur_xneg_node->children[0]->x << "," << cur_xneg_node->children[0]->y << "," << cur_xneg_node->children[0]->z << ") weight" << cur_xneg_node->children[0]->weight << endl;
+					fout << "dst: (" << cur_xneg_node->children[0]->x << "," << cur_xneg_node->children[0]->y << "," << cur_xneg_node->children[0]->z << ") weight: " << cur_xneg_node->children[0]->weight << endl;
 					accumulate_link(cur_xneg_node,cur_xneg_node->children[0]);
 					fout << "}" << endl;
 
 					cout << "{src:(" << cur_xneg_node->x << "," << cur_xneg_node->y << "," << cur_xneg_node->z << ") weight: " << cur_xneg_node->weight << endl;
-					cout << "dst: (" << cur_xneg_node->children[0]->x << "," << cur_xneg_node->children[0]->y << "," << cur_xneg_node->children[0]->z << ") weight" << cur_xneg_node->children[0]->weight << endl;
+					cout << "dst: (" << cur_xneg_node->children[0]->x << "," << cur_xneg_node->children[0]->y << "," << cur_xneg_node->children[0]->z << ") weight: " << cur_xneg_node->children[0]->weight << endl;
 					//accumulate_link(cur_xneg_node, cur_xneg_node->children[0]);
 					cout << "}" << endl;
 					cur_xneg_node = cur_xneg_node->children[0];
@@ -2185,14 +2185,14 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 
 			fout << "{src:(" << node_list->x << "," << node_list->y << "," << node_list->z << ") weight: " << tree_src->weight << endl;
 			for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-				fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << tree_src->children[children_idx]->weight << endl;
+				fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << tree_src->children[children_idx]->weight << endl;
 				accumulate_link(tree_src, tree_src->children[children_idx]);
 			}
 			fout << "}" << endl;
 
 			cout << "{src:(" << node_list->x << "," << node_list->y << "," << node_list->z << ") weight: " << tree_src->weight << endl;
 			for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-				cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << tree_src->children[children_idx]->weight << endl;
+				cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << tree_src->children[children_idx]->weight << endl;
 			//	accumulate_link(tree_src, tree_src->children[children_idx]);
 			}
 			cout << "}" << endl;
@@ -2202,12 +2202,12 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 
 				while (cur_ypos_node->children[0]){
 					fout << "{src:(" << cur_ypos_node->x << "," << cur_ypos_node->y << "," << cur_ypos_node->z << ") weight: " << cur_ypos_node->weight << endl;
-					fout << "dst: (" << cur_ypos_node->children[0]->x << "," << cur_ypos_node->children[0]->y << "," << cur_ypos_node->children[0]->z << ") weight" << cur_ypos_node->children[0]->weight << endl;
+					fout << "dst: (" << cur_ypos_node->children[0]->x << "," << cur_ypos_node->children[0]->y << "," << cur_ypos_node->children[0]->z << ") weight: " << cur_ypos_node->children[0]->weight << endl;
 					accumulate_link(cur_ypos_node, cur_ypos_node->children[0]);
 					fout << "}" << endl;
 
 					cout << "{src:(" << cur_ypos_node->x << "," << cur_ypos_node->y << "," << cur_ypos_node->z << ") weight: " << cur_ypos_node->weight << endl;
-					cout << "dst: (" << cur_ypos_node->children[0]->x << "," << cur_ypos_node->children[0]->y << "," << cur_ypos_node->children[0]->z << ") weight" << cur_ypos_node->children[0]->weight << endl;
+					cout << "dst: (" << cur_ypos_node->children[0]->x << "," << cur_ypos_node->children[0]->y << "," << cur_ypos_node->children[0]->z << ") weight: " << cur_ypos_node->children[0]->weight << endl;
 				//	accumulate_link(cur_ypos_node, cur_ypos_node->children[0]);
 					cout << "}" << endl;
 					cur_ypos_node = cur_ypos_node->children[0];
@@ -2222,12 +2222,12 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 				}
 				while (cur_yneg_node->children[0]){
 					fout << "{src:(" << cur_yneg_node->x << "," << cur_yneg_node->y << "," << cur_yneg_node->z << ") weight: " << cur_yneg_node->weight << endl;
-					fout << "dst: (" << cur_yneg_node->children[0]->x << "," << cur_yneg_node->children[0]->y << "," << cur_yneg_node->children[0]->z << ") weight" << cur_yneg_node->children[0]->weight << endl;
+					fout << "dst: (" << cur_yneg_node->children[0]->x << "," << cur_yneg_node->children[0]->y << "," << cur_yneg_node->children[0]->z << ") weight: " << cur_yneg_node->children[0]->weight << endl;
 					accumulate_link(cur_yneg_node, cur_yneg_node->children[0]);
 					fout << "}" << endl;
 
 					cout << "{src:(" << cur_yneg_node->x << "," << cur_yneg_node->y << "," << cur_yneg_node->z << ") weight: " << cur_yneg_node->weight << endl;
-					cout << "dst: (" << cur_yneg_node->children[0]->x << "," << cur_yneg_node->children[0]->y << "," << cur_yneg_node->children[0]->z << ") weight" << cur_yneg_node->children[0]->weight << endl;
+					cout << "dst: (" << cur_yneg_node->children[0]->x << "," << cur_yneg_node->children[0]->y << "," << cur_yneg_node->children[0]->z << ") weight: " << cur_yneg_node->children[0]->weight << endl;
 					//accumulate_link(cur_yneg_node, cur_yneg_node->children[0]);
 					cout << "}" << endl;
 					cur_yneg_node = cur_yneg_node->children[0];
@@ -2301,14 +2301,14 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 
 			fout << "{src:(" << node_list->x << "," << node_list->y << "," << node_list->z << ") weight: " << tree_src->weight << endl;
 			for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-				fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << tree_src->children[children_idx]->weight << endl;
+				fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << tree_src->children[children_idx]->weight << endl;
 				accumulate_link(tree_src, tree_src->children[children_idx]);
 			}
 			fout << "}" << endl;
 			
 			cout << "{src:(" << node_list->x << "," << node_list->y << "," << node_list->z << ") weight: " << tree_src->weight << endl;
 			for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-				cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << tree_src->children[children_idx]->weight << endl;
+				cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << tree_src->children[children_idx]->weight << endl;
 				//accumulate_link(tree_src, tree_src->children[children_idx]);
 			}
 			cout << "}" << endl;
@@ -2317,12 +2317,12 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 
 				while (cur_ypos_node->children[0]){
 					fout << "{src:(" << cur_ypos_node->x << "," << cur_ypos_node->y << "," << cur_ypos_node->z << ") weight: " << cur_ypos_node->weight << endl;
-					fout << "dst: (" << cur_ypos_node->children[0]->x << "," << cur_ypos_node->children[0]->y << "," << cur_ypos_node->children[0]->z << ") weight" << cur_ypos_node->children[0]->weight << endl;
+					fout << "dst: (" << cur_ypos_node->children[0]->x << "," << cur_ypos_node->children[0]->y << "," << cur_ypos_node->children[0]->z << ") weight: " << cur_ypos_node->children[0]->weight << endl;
 					accumulate_link(cur_ypos_node, cur_ypos_node->children[0]);
 					fout << "}" << endl;
 
 					cout << "{src:(" << cur_ypos_node->x << "," << cur_ypos_node->y << "," << cur_ypos_node->z << ") weight: " << cur_ypos_node->weight << endl;
-					cout << "dst: (" << cur_ypos_node->children[0]->x << "," << cur_ypos_node->children[0]->y << "," << cur_ypos_node->children[0]->z << ") weight" << cur_ypos_node->children[0]->weight << endl;
+					cout << "dst: (" << cur_ypos_node->children[0]->x << "," << cur_ypos_node->children[0]->y << "," << cur_ypos_node->children[0]->z << ") weight: " << cur_ypos_node->children[0]->weight << endl;
 					//accumulate_link(cur_ypos_node, cur_ypos_node->children[0]);
 					cout << "}" << endl;
 					cur_ypos_node = cur_ypos_node->children[0];
@@ -2337,12 +2337,12 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 				}
 				while (cur_yneg_node->children[0]){
 					fout << "{src:(" << cur_yneg_node->x << "," << cur_yneg_node->y << "," << cur_yneg_node->z << ") weight: " << cur_yneg_node->weight << endl;
-					fout << "dst: (" << cur_yneg_node->children[0]->x << "," << cur_yneg_node->children[0]->y << "," << cur_yneg_node->children[0]->z << ") weight" << cur_yneg_node->children[0]->weight << endl;
+					fout << "dst: (" << cur_yneg_node->children[0]->x << "," << cur_yneg_node->children[0]->y << "," << cur_yneg_node->children[0]->z << ") weight: " << cur_yneg_node->children[0]->weight << endl;
 					accumulate_link(cur_yneg_node, cur_yneg_node->children[0]);
 					fout << "}" << endl;
 
 					cout << "{src:(" << cur_yneg_node->x << "," << cur_yneg_node->y << "," << cur_yneg_node->z << ") weight: " << cur_yneg_node->weight << endl;
-					cout << "dst: (" << cur_yneg_node->children[0]->x << "," << cur_yneg_node->children[0]->y << "," << cur_yneg_node->children[0]->z << ") weight" << cur_yneg_node->children[0]->weight << endl;
+					cout << "dst: (" << cur_yneg_node->children[0]->x << "," << cur_yneg_node->children[0]->y << "," << cur_yneg_node->children[0]->z << ") weight: " << cur_yneg_node->children[0]->weight << endl;
 					//accumulate_link(cur_yneg_node, cur_yneg_node->children[0]);
 					cout << "}" << endl;
 
@@ -2439,14 +2439,14 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 
 			fout << "{src:(" << node_list->x << "," << node_list->y << "," << node_list->z << ") weight: " << tree_src->weight << endl;
 			for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-				fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << tree_src->children[children_idx]->weight << endl;
+				fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << tree_src->children[children_idx]->weight << endl;
 				accumulate_link(tree_src, tree_src->children[children_idx]);
 			}
 			fout << "}" << endl;
 
 			cout << "{src:(" << node_list->x << "," << node_list->y << "," << node_list->z << ") weight: " << tree_src->weight << endl;
 			for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-				cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << tree_src->children[children_idx]->weight << endl;
+				cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << tree_src->children[children_idx]->weight << endl;
 				//accumulate_link(tree_src, tree_src->children[children_idx]);
 			}
 			cout << "}" << endl;
@@ -2456,12 +2456,12 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 
 				while (cur_zpos_node->children[0]){
 					fout << "{src:(" << cur_zpos_node->x << "," << cur_zpos_node->y << "," << cur_zpos_node->z << ") weight: " << cur_zpos_node->weight << endl;
-					fout << "dst: (" << cur_zpos_node->children[0]->x << "," << cur_zpos_node->children[0]->y << "," << cur_zpos_node->children[0]->z << ") weight" << cur_zpos_node->children[0]->weight << endl;
+					fout << "dst: (" << cur_zpos_node->children[0]->x << "," << cur_zpos_node->children[0]->y << "," << cur_zpos_node->children[0]->z << ") weight: " << cur_zpos_node->children[0]->weight << endl;
 					accumulate_link(cur_zpos_node, cur_zpos_node->children[0]);
 					fout << "}" << endl;
 
 					cout << "{src:(" << cur_zpos_node->x << "," << cur_zpos_node->y << "," << cur_zpos_node->z << ") weight: " << cur_zpos_node->weight << endl;
-					cout << "dst: (" << cur_zpos_node->children[0]->x << "," << cur_zpos_node->children[0]->y << "," << cur_zpos_node->children[0]->z << ") weight" << cur_zpos_node->children[0]->weight << endl;
+					cout << "dst: (" << cur_zpos_node->children[0]->x << "," << cur_zpos_node->children[0]->y << "," << cur_zpos_node->children[0]->z << ") weight: " << cur_zpos_node->children[0]->weight << endl;
 					//accumulate_link(cur_zpos_node, cur_zpos_node->children[0]);
 					cout << "}" << endl;
 
@@ -2478,12 +2478,12 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 				}
 				while (cur_zneg_node->children[0]){
 					fout << "{src:(" << cur_zneg_node->x << "," << cur_zneg_node->y << "," << cur_zneg_node->z << ") weight: " << cur_zneg_node->weight << endl;
-					fout << "dst: (" << cur_zneg_node->children[0]->x << "," << cur_zneg_node->children[0]->y << "," << cur_zneg_node->children[0]->z << ") weight" << cur_zneg_node->children[0]->weight << endl;
+					fout << "dst: (" << cur_zneg_node->children[0]->x << "," << cur_zneg_node->children[0]->y << "," << cur_zneg_node->children[0]->z << ") weight: " << cur_zneg_node->children[0]->weight << endl;
 					accumulate_link(cur_zneg_node, cur_zneg_node->children[0]);
 					fout << "}" << endl;
 
 					cout << "{src:(" << cur_zneg_node->x << "," << cur_zneg_node->y << "," << cur_zneg_node->z << ") weight: " << cur_zneg_node->weight << endl;
-					cout << "dst: (" << cur_zneg_node->children[0]->x << "," << cur_zneg_node->children[0]->y << "," << cur_zneg_node->children[0]->z << ") weight" << cur_zneg_node->children[0]->weight << endl;
+					cout << "dst: (" << cur_zneg_node->children[0]->x << "," << cur_zneg_node->children[0]->y << "," << cur_zneg_node->children[0]->z << ") weight: " << cur_zneg_node->children[0]->weight << endl;
 				//	accumulate_link(cur_zneg_node, cur_zneg_node->children[0]);
 					cout << "}" << endl;
 
@@ -2558,14 +2558,14 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 
 			fout << "{src:(" << node_list->x << "," << node_list->y << "," << node_list->z << ") weight: " << tree_src->weight << endl;
 			for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-				fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << tree_src->children[children_idx]->weight << endl;
+				fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << tree_src->children[children_idx]->weight << endl;
 				accumulate_link(tree_src, tree_src->children[children_idx]);
 			}
 			fout << "}" << endl;
 
 			cout << "{src:(" << node_list->x << "," << node_list->y << "," << node_list->z << ") weight: " << tree_src->weight << endl;
 			for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-				cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << tree_src->children[children_idx]->weight << endl;
+				cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << tree_src->children[children_idx]->weight << endl;
 				//accumulate_link(tree_src, tree_src->children[children_idx]);
 			}
 			cout << "}" << endl;
@@ -2575,12 +2575,12 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 
 				while (cur_zpos_node->children[0]){
 					fout << "{src:(" << cur_zpos_node->x << "," << cur_zpos_node->y << "," << cur_zpos_node->z << ") weight: " << cur_zpos_node->weight << endl;
-					fout << "dst: (" << cur_zpos_node->children[0]->x << "," << cur_zpos_node->children[0]->y << "," << cur_zpos_node->children[0]->z << ") weight" << cur_zpos_node->children[0]->weight << endl;
+					fout << "dst: (" << cur_zpos_node->children[0]->x << "," << cur_zpos_node->children[0]->y << "," << cur_zpos_node->children[0]->z << ") weight: " << cur_zpos_node->children[0]->weight << endl;
 					accumulate_link(cur_zpos_node, cur_zpos_node->children[0]);
 					fout << "}" << endl;
 
 					cout << "{src:(" << cur_zpos_node->x << "," << cur_zpos_node->y << "," << cur_zpos_node->z << ") weight: " << cur_zpos_node->weight << endl;
-					cout << "dst: (" << cur_zpos_node->children[0]->x << "," << cur_zpos_node->children[0]->y << "," << cur_zpos_node->children[0]->z << ") weight" << cur_zpos_node->children[0]->weight << endl;
+					cout << "dst: (" << cur_zpos_node->children[0]->x << "," << cur_zpos_node->children[0]->y << "," << cur_zpos_node->children[0]->z << ") weight: " << cur_zpos_node->children[0]->weight << endl;
 					//accumulate_link(cur_zpos_node, cur_zpos_node->children[0]);
 					cout << "}" << endl;
 
@@ -2596,12 +2596,12 @@ void RPM_partition_1D(struct src_dst_list* node_list, struct chunk Chunk_1D, nod
 				}
 				while (cur_zneg_node->children[0]){
 					fout << "{src:(" << cur_zneg_node->x << "," << cur_zneg_node->y << "," << cur_zneg_node->z << ") weight: " << cur_zneg_node->weight << endl;
-					fout << "dst: (" << cur_zneg_node->children[0]->x << "," << cur_zneg_node->children[0]->y << "," << cur_zneg_node->children[0]->z << ") weight" << cur_zneg_node->children[0]->weight << endl;
+					fout << "dst: (" << cur_zneg_node->children[0]->x << "," << cur_zneg_node->children[0]->y << "," << cur_zneg_node->children[0]->z << ") weight: " << cur_zneg_node->children[0]->weight << endl;
 					accumulate_link(cur_zneg_node, cur_zneg_node->children[0]);
 					fout << "}" << endl;
 
 					cout << "{src:(" << cur_zneg_node->x << "," << cur_zneg_node->y << "," << cur_zneg_node->z << ") weight: " << cur_zneg_node->weight << endl;
-					cout << "dst: (" << cur_zneg_node->children[0]->x << "," << cur_zneg_node->children[0]->y << "," << cur_zneg_node->children[0]->z << ") weight" << cur_zneg_node->children[0]->weight << endl;
+					cout << "dst: (" << cur_zneg_node->children[0]->x << "," << cur_zneg_node->children[0]->y << "," << cur_zneg_node->children[0]->z << ") weight: " << cur_zneg_node->children[0]->weight << endl;
 					//accumulate_link(cur_zneg_node, cur_zneg_node->children[0]);
 					cout << "}" << endl;
 
@@ -3139,14 +3139,14 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 		//print the current the src and dst nodes on the current node
 		fout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
+			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << new_weight << endl;
 			accumulate_link(tree_src,tree_src->children[children_idx]);
 		}
 		fout << "}" << endl;
 
 		cout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-			cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
+			cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << new_weight << endl;
 			//accumulate_link(tree_src, tree_src->children[children_idx]);
 		}
 		cout << "}" << endl;
@@ -3704,14 +3704,14 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 		//print the current the src and dst nodes on the current node
 		fout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
+			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << new_weight << endl;
 			accumulate_link(tree_src,tree_src->children[children_idx]);
 		}
 		fout << "}" << endl;
 
 		cout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-			cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
+			cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << new_weight << endl;
 			//accumulate_link(tree_src, tree_src->children[children_idx]);
 		}
 		cout << "}" << endl;
@@ -4273,14 +4273,14 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 		//print the current the src and dst nodes on the current node
 		fout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
+			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << new_weight << endl;
 			accumulate_link(tree_src,tree_src->children[children_idx]);
 		}
 		fout << "}" << endl;
 
 		cout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-			cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
+			cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << new_weight << endl;
 	//		accumulate_link(tree_src, tree_src->children[children_idx]);
 		}
 		cout << "}" << endl;
@@ -5063,14 +5063,14 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		//print the current the src and dst nodes on the current node
 		fout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
+			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << new_weight << endl;
 			accumulate_link(tree_src,tree_src->children[children_idx]);
 		}
 		fout << "}" << endl;
 
 		cout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-			cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
+			cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << new_weight << endl;
 		//	accumulate_link(tree_src, tree_src->children[children_idx]);
 		}
 		cout << "}" << endl;
@@ -5847,14 +5847,14 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		//print the current the src and dst nodes on the current node
 		fout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
+			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << new_weight << endl;
 			accumulate_link(tree_src,tree_src->children[children_idx]);
 		}
 		fout << "}" << endl;
 
 		cout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-			cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
+			cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << new_weight << endl;
 		}
 		cout << "}" << endl;
 
@@ -6634,14 +6634,14 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 		//print the current the src and dst nodes on the current node
 		fout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
+			fout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << new_weight << endl;
 			accumulate_link(tree_src,tree_src->children[children_idx]);
 		}
 		fout << "}" << endl;
 
 		cout << "{src: (" << tree_src->x << "," << tree_src->y << "," << tree_src->z << ") weight: " << tree_src->weight << endl;
 		for (int children_idx = 0; children_idx < tree_src->num_children; children_idx++){
-			cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight" << new_weight << endl;
+			cout << "dst: (" << tree_src->children[children_idx]->x << "," << tree_src->children[children_idx]->y << "," << tree_src->children[children_idx]->z << ") weight: " << new_weight << endl;
 		}
 		cout << "}" << endl;
 
@@ -6734,9 +6734,25 @@ int main(){
 	read_src_dst_file(filename);
 	node* tree_src_array[X*Y*Z];
 
+
+	fout<<"X"<<endl;
+	fout<<X<<endl;
+	fout<<"Y"<<endl;
+	fout<<Y<<endl;
+	fout<<"Z"<<endl;
+	fout<<Z<<endl;
+	fout<<"The r_to_c ratio is:"<<endl;
+	fout<<"1"<<endl;
+	fout<<"The number of particles of one box"<<endl;
+	fout<<"172"<<endl;
+	fout<<"***************************start calculation!******************************"<<endl;
+
 	for(int i=0;i<X*Y*Z;i++){
 		if(src_list[i]->valid){
 			tree_src_array[i]=new node(src_list[i]->x,src_list[i]->y,src_list[i]->z,512);
+
+			fout<<"Start generating BroadCast TREE pattern for this node: ("<<src_list[i]->x<<","<<src_list[i]->y<<","<src_list[i]->z<<"):"<<endl;
+			fout<<endl;
 			RPM_partition(src_list[i],entire_space,tree_src_array[i]);
 		}
 		else{
