@@ -21,6 +21,8 @@ using namespace std;
 
 ofstream fout;
 
+
+
 class node{
 public:
 	int x;
@@ -157,6 +159,9 @@ int zpos_link_counter[X*Y*Z];
 int xneg_link_counter[X*Y*Z];
 int yneg_link_counter[X*Y*Z];
 int zneg_link_counter[X*Y*Z];
+
+
+int global_partition_rr_choice;
 
 
 struct xyz extract_node_from_line(char* line){
@@ -1708,7 +1713,7 @@ int evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 		dst = dst->next;
 	}
 	struct plane_evaluation xy_plane_eval = evaluate_plane(xy_plane_dst_list, xy_plane_chunk, 2);
-	partition_along_xy_count = xy_plane_eval.xpos_enable + xy_plane_eval.xneg_enable + xy_plane_eval.ypos_enable + xz_plane_eval.yneg_enable + zpos_enable + zneg_enable;
+	partition_along_xy_count = xy_plane_eval.xpos_enable + xy_plane_eval.xneg_enable + xy_plane_eval.ypos_enable + xy_plane_eval.yneg_enable + zpos_enable + zneg_enable;
 	double xy_link_var = six_link_variance_delta(node_list, xy_plane_eval.xpos_enable, xy_plane_eval.xneg_enable, xy_plane_eval.ypos_enable, xy_plane_eval.yneg_enable, zpos_enable, zneg_enable);
 
 	
@@ -1719,6 +1724,13 @@ int evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 	int which_is_smallest;//0 is yz, 1 is xz, 2 is xy
 	int which_is_middle;//0 is yz, 1 is xz, 2 is xy
 
+	if (partition_along_xy_count == partition_along_yz_count && partition_along_xy_count == partition_along_xz_count && xy_link_var == yz_link_var && yz_link_var == xz_link_var){
+		//everything is the same, depends on the global rr pointer
+		int prev_global_partition_rr_choice = global_partition_rr_choice;
+		global_partition_rr_choice = (global_partition_rr_choice == 2) ? 0 : global_partition_rr_choice + 1;
+		return prev_global_partition_rr_choice;
+	}
+
 	if (partition_along_xy_count >= partition_along_yz_count && partition_along_xy_count>=partition_along_xz_count){
 		biggest_count = partition_along_xy_count;
 		if (partition_along_yz_count > partition_along_xz_count){
@@ -1726,25 +1738,48 @@ int evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 			smallest_count = partition_along_xz_count;
 			which_is_middle = 0;
 			which_is_smallest = 1;
+			global_partition_rr_choice = 2;
 		}
 		else if(partition_along_yz_count< partition_along_xz_count){
 			middle_count = partition_along_xz_count; 
 			smallest_count = partition_along_yz_count;
 			which_is_middle = 1;
 			which_is_smallest = 0;
+			global_partition_rr_choice = 1;
 		}
 		else{ // they are equal, now depends on the variance
-			if (yz_link_var >= xz_link_var){
+			if (yz_link_var > xz_link_var){
 				middle_count = partition_along_yz_count;
 				smallest_count = partition_along_xz_count;
 				which_is_middle = 0;
 				which_is_smallest = 1;
+				global_partition_rr_choice = 2;
 			}
-			else{
+			else if(yz_link_var<xz_link_var){
 				middle_count = partition_along_xz_count;
 				smallest_count = partition_along_yz_count;
 				which_is_middle = 1;
 				which_is_smallest = 0;
+				global_partition_rr_choice = 1;
+			}
+			else{
+				//if still same, use the global round robin index
+				if (global_partition_rr_choice == 2 || global_partition_rr_choice == 0){
+					//select the yz
+					middle_count = partition_along_xz_count;
+					smallest_count = partition_along_yz_count;
+					which_is_middle = 1;
+					which_is_smallest = 0;
+					global_partition_rr_choice = 1;
+				}
+				else{
+					//select the xz
+					middle_count = partition_along_yz_count;
+					smallest_count = partition_along_xz_count;
+					which_is_middle = 0;
+					which_is_smallest = 1;
+					global_partition_rr_choice = 2;
+				}
 			}
 
 		}
@@ -1756,25 +1791,49 @@ int evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 			smallest_count = partition_along_xz_count;
 			which_is_middle = 2;
 			which_is_smallest = 1;
+			global_partition_rr_choice = 2;
 		}
 		else if(partition_along_xy_count<partition_along_xz_count){
 			middle_count = partition_along_xz_count;
 			smallest_count = partition_along_xy_count;
 			which_is_middle = 1;
 			which_is_smallest = 2;
+			global_partition_rr_choice = 1;
 		}
 		else{
-			if (xy_link_var >= xz_link_var){
+			if (xy_link_var > xz_link_var){
 				middle_count = partition_along_xy_count;
 				smallest_count = partition_along_xz_count;
 				which_is_middle = 2;
 				which_is_smallest = 1;
+				global_partition_rr_choice = 2;
 			}
-			else{
+			else if(xy_link_var<xz_link_var){
 				middle_count = partition_along_xz_count;
 				smallest_count = partition_along_xy_count;
 				which_is_middle = 1;
 				which_is_smallest = 2;
+				global_partition_rr_choice = 1;
+			}
+			else{
+				//if still same, use the global round robin index
+				if (global_partition_rr_choice == 0 || global_partition_rr_choice == 1){
+					//select the xz
+					middle_count = partition_along_xy_count;
+					smallest_count = partition_along_xz_count;
+					which_is_middle = 2;
+					which_is_smallest = 1;
+					global_partition_rr_choice = 2;
+				}
+				else{
+					//select the xy
+					middle_count = partition_along_xz_count;
+					smallest_count = partition_along_xy_count;
+					which_is_middle = 1;
+					which_is_smallest = 2;
+					global_partition_rr_choice = 0;
+				}
+
 			}
 			
 		}
@@ -1787,25 +1846,47 @@ int evaluate_partition(struct src_dst_list* node_list,struct chunk region){
 			smallest_count = partition_along_yz_count;
 			which_is_middle = 2;
 			which_is_smallest = 0;
+			global_partition_rr_choice = 1;
 		}
 		else if(partition_along_xy_count<partition_along_yz_count){
 			middle_count = partition_along_yz_count;
 			smallest_count = partition_along_xy_count; 
 			which_is_middle = 0;
 			which_is_smallest = 2;
+			global_partition_rr_choice = 0;
 		}
 		else{
-			if (xy_link_var >= yz_link_var){
+			if (xy_link_var > yz_link_var){
 				middle_count = partition_along_xy_count;
 				smallest_count = partition_along_yz_count;
 				which_is_middle = 2;
 				which_is_smallest = 0;
+				global_partition_rr_choice = 1;
 			}
-			else{
+			else if (xy_link_var < yz_link_var){
 				middle_count = partition_along_yz_count;
 				smallest_count = partition_along_xy_count;
 				which_is_middle = 0;
 				which_is_smallest = 2;
+				global_partition_rr_choice = 0;
+			}
+			else{
+				//if still same, use the global round robin index
+				if (global_partition_rr_choice == 2 || global_partition_rr_choice == 1){
+					//select the xy
+					middle_count = partition_along_yz_count;
+					smallest_count = partition_along_xy_count;
+					which_is_middle = 0;
+					which_is_smallest = 2;
+					global_partition_rr_choice = 0;
+				}
+				else{
+					middle_count = partition_along_xy_count;
+					smallest_count = partition_along_yz_count;
+					which_is_middle = 2;
+					which_is_smallest = 0;
+					global_partition_rr_choice = 1;
+				}
 			}
 		}
 	}
@@ -2877,7 +2958,39 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 					part1_srcz = part1.z_uplim;
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 2){
+						part_valid[2] = 1;
+						part2.x_downlim = yz_plane.x_downlim;
+						part2.x_uplim = yz_plane.x_uplim;
+						part2.y_downlim = yz_plane_node_list->y;
+						part2.y_uplim = yz_plane_node_list->y;
+						part2.z_downlim = yz_plane.z_wrap() ? (yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) < 0 ? yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : yz_plane.z_downlim;
+						part2.z_uplim = yz_plane_node_list->z - 1 < 0 ? Z - 1 : yz_plane_node_list->z - 1;
+						part2_srcy = yz_plane_node_list->y;
+						part2_srcx = yz_plane.x_downlim;
+						part2_srcz = part2.z_uplim;
+					}
+					else if (part_idx == 3){
+						part_valid[3] = 1;
+						part3.x_downlim = yz_plane.x_downlim;
+						part3.x_uplim = yz_plane.x_uplim;
+						part3.y_downlim = yz_plane_node_list->y;
+						part3.y_uplim = yz_plane_node_list->y;
+						part3.z_downlim = yz_plane.z_wrap() ? (yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) < 0 ? yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : yz_plane.z_downlim;
+						part3.z_uplim = yz_plane_node_list->z - 1 < 0 ? Z - 1 : yz_plane_node_list->z - 1;
+						part3_srcy = yz_plane_node_list->y;
+						part3_srcx = yz_plane.x_downlim;
+						part3_srcz = part3.z_uplim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
@@ -2909,7 +3022,39 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 0){
+						part_valid[0] = 1;
+						part0.x_downlim = yz_plane.x_downlim;
+						part0.x_uplim = yz_plane.x_uplim;
+						part0.z_downlim = yz_plane_node_list->z;
+						part0.z_uplim = yz_plane_node_list->z;
+						part0.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) < 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
+						part0.y_uplim = yz_plane_node_list->y - 1 < 0 ? Y - 1 : yz_plane_node_list->y - 1;
+						part0_srcy = part0.y_uplim;
+						part0_srcx = yz_plane.x_downlim;
+						part0_srcz = part0.z_uplim;
+					}
+					else if (part_idx == 3){
+						part_valid[3] = 1;
+						part3.x_downlim = yz_plane.x_downlim;
+						part3.x_uplim = yz_plane.x_uplim;
+						part3.z_downlim = yz_plane_node_list->z;
+						part3.z_uplim = yz_plane_node_list->z;
+						part3.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) < 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
+						part3.y_uplim = yz_plane_node_list->y - 1 < 0 ? Y - 1 : yz_plane_node_list->y - 1;
+						part3_srcy = part3.y_uplim;
+						part3_srcx = yz_plane.x_downlim;
+						part3_srcz = part3.z_uplim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
@@ -2941,13 +3086,45 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 0){
+						part_valid[0] = 1;
+						part0.x_downlim = yz_plane.x_downlim;
+						part0.x_uplim = yz_plane.x_uplim;
+						part0.y_downlim = yz_plane_node_list->y;
+						part0.y_uplim = yz_plane_node_list->y;
+						part0.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
+						part0.z_downlim = yz_plane_node_list->z + 1 >= Z ? 0 : yz_plane_node_list->z + 1;
+						part0_srcy = part3.y_uplim;
+						part0_srcx = yz_plane.x_downlim;
+						part0_srcz = part3.z_downlim;
+					}
+					else if (part_idx == 1){
+						part_valid[1] = 1;
+						part1.x_downlim = yz_plane.x_downlim;
+						part1.x_uplim = yz_plane.x_uplim;
+						part1.y_downlim = yz_plane_node_list->y;
+						part1.y_uplim = yz_plane_node_list->y;
+						part1.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
+						part1.z_downlim = yz_plane_node_list->z + 1 >= Z ? 0 : yz_plane_node_list->z + 1;
+						part1_srcy = part1.y_uplim;
+						part1_srcx = yz_plane.x_downlim;
+						part1_srcz = part1.z_downlim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
 		if (yz_eval.region6_merge != 0 && yz_eval.region0_merge != 1){
 			if (yz_eval.ypos_enable){
-				if (yz_eval.region4_merge != 1){
+				if (yz_eval.region6_merge != 1){
 					part_valid[3] = 1;
 					part3.x_downlim = yz_plane.x_downlim;
 					part3.x_uplim = yz_plane.x_uplim;
@@ -2972,7 +3149,39 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 					part0_srcz = part0.z_downlim;
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 1){
+						part_valid[1] = 1;
+						part1.x_downlim = yz_plane.x_downlim;
+						part1.x_uplim = yz_plane.x_uplim;
+						part1.z_downlim = yz_plane_node_list->z;
+						part1.z_uplim = yz_plane_node_list->z;
+						part1.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
+						part1.y_downlim = yz_plane_node_list->y + 1 >= Y ? 0 : yz_plane_node_list->y + 1;
+						part1_srcy = part1.y_downlim;
+						part1_srcx = yz_plane.x_downlim;
+						part1_srcz = part1.z_downlim;
+					}
+					else if (part_idx == 2){
+						part_valid[2] = 1;
+						part2.x_downlim = yz_plane.x_downlim;
+						part2.x_uplim = yz_plane.x_uplim;
+						part2.z_downlim = yz_plane_node_list->z;
+						part2.z_uplim = yz_plane_node_list->z;
+						part2.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
+						part2.y_downlim = yz_plane_node_list->y + 1 >= Y ? 0 : yz_plane_node_list->y + 1;
+						part2_srcy = part2.y_downlim;
+						part2_srcx = yz_plane.x_downlim;
+						part2_srcz = part2.z_downlim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
@@ -3445,7 +3654,39 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 					part1_srcz = part1.z_uplim;
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 2){
+						part_valid[2] = 1;
+						part2.y_downlim = xz_plane.y_downlim;
+						part2.y_uplim = xz_plane.y_uplim;
+						part2.x_downlim = xz_plane_node_list->x;
+						part2.x_uplim = xz_plane_node_list->x;
+						part2.z_downlim = xz_plane.z_wrap() ? (xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) < 0 ? xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : xz_plane.z_downlim;
+						part2.z_uplim = xz_plane_node_list->z - 1 < 0 ? Z - 1 : xz_plane_node_list->z - 1;
+						part2_srcx = xz_plane_node_list->x;
+						part2_srcy = xz_plane.y_downlim;
+						part2_srcz = part2.z_uplim;
+					}
+					else if (part_idx == 3){
+						part_valid[3] = 1;
+						part3.y_downlim = xz_plane.y_downlim;
+						part3.y_uplim = xz_plane.y_uplim;
+						part3.x_downlim = xz_plane_node_list->x;
+						part3.x_uplim = xz_plane_node_list->x;
+						part3.z_downlim = xz_plane.z_wrap() ? (xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) < 0 ? xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : xz_plane.z_downlim;
+						part3.z_uplim = xz_plane_node_list->z - 1 < 0 ? Z - 1 : xz_plane_node_list->z - 1;
+						part3_srcx = xz_plane_node_list->x;
+						part3_srcy = xz_plane.y_downlim;
+						part3_srcz = part3.z_uplim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
@@ -3476,7 +3717,39 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 					part2_srcz = part2.z_uplim;
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 0){
+						part_valid[0] = 1;
+						part0.y_downlim = xz_plane.y_downlim;
+						part0.y_uplim = xz_plane.y_uplim;
+						part0.z_downlim = xz_plane_node_list->z;
+						part0.z_uplim = xz_plane_node_list->z;
+						part0.x_downlim = xz_plane.x_wrap() ? (xz_plane_node_list->x - X / 2 + (X % 2 == 0) < 0 ? xz_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xz_plane_node_list->x - X / 2 + (X % 2 == 0)) : xz_plane.x_downlim;
+						part0.x_uplim = xz_plane_node_list->x - 1 < 0 ? X - 1 : xz_plane_node_list->x - 1;
+						part0_srcx = part0.x_uplim;
+						part0_srcy = xz_plane.y_downlim;
+						part0_srcz = part0.z_uplim;
+					}
+					else if (part_idx == 3){
+						part_valid[3] = 1;
+						part3.y_downlim = xz_plane.y_downlim;
+						part3.y_uplim = xz_plane.y_uplim;
+						part3.z_downlim = xz_plane_node_list->z;
+						part3.z_uplim = xz_plane_node_list->z;
+						part3.x_downlim = xz_plane.x_wrap() ? (xz_plane_node_list->x - X / 2 + (X % 2 == 0) < 0 ? xz_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xz_plane_node_list->x - X / 2 + (X % 2 == 0)) : xz_plane.x_downlim;
+						part3.x_uplim = xz_plane_node_list->x - 1 < 0 ? X - 1 : xz_plane_node_list->x - 1;
+						part3_srcx = part3.x_uplim;
+						part3_srcy = xz_plane.y_downlim;
+						part3_srcz = part3.z_uplim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 
 			}
@@ -3509,7 +3782,39 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 0){
+						part_valid[0] = 1;
+						part0.y_downlim = xz_plane.y_downlim;
+						part0.y_uplim = xz_plane.y_uplim;
+						part0.x_downlim = xz_plane_node_list->x;
+						part0.x_uplim = xz_plane_node_list->x;
+						part0.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
+						part0.z_downlim = xz_plane_node_list->z + 1 >= Z ? 0 : xz_plane_node_list->z + 1;
+						part0_srcx = part0.x_uplim;
+						part0_srcy = xz_plane.y_downlim;
+						part0_srcz = part0.z_downlim;
+					}
+					else if (part_idx == 1){
+						part_valid[1] = 1;
+						part1.y_downlim = xz_plane.y_downlim;
+						part1.y_uplim = xz_plane.y_uplim;
+						part1.x_downlim = xz_plane_node_list->x;
+						part1.x_uplim = xz_plane_node_list->x;
+						part1.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
+						part1.z_downlim = xz_plane_node_list->z + 1 >= Z ? 0 : xz_plane_node_list->z + 1;
+						part1_srcx = part0.x_uplim;
+						part1_srcy = xz_plane.y_downlim;
+						part1_srcz = part0.z_downlim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
@@ -3538,6 +3843,41 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 					part0_srcx = part0.x_downlim;
 					part0_srcy = xz_plane.y_downlim;
 					part0_srcz = part0.z_downlim;
+				}
+				else{
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 1){
+						part_valid[1] = 1;
+						part1.y_downlim = xz_plane.y_downlim;
+						part1.y_uplim = xz_plane.y_uplim;
+						part1.z_downlim = xz_plane_node_list->z;
+						part1.z_uplim = xz_plane_node_list->z;
+						part1.x_uplim = xz_plane.x_wrap() ? (xz_plane_node_list->x + X / 2 >= X ? xz_plane_node_list->x + X / 2 - X : xz_plane_node_list->x + X / 2) : xz_plane.x_uplim;
+						part1.x_downlim = xz_plane_node_list->x + 1 >= X ? 0 : xz_plane_node_list->x + 1;
+						part1_srcx = part1.x_downlim;
+						part1_srcy = xz_plane.y_downlim;
+						part1_srcz = part1.z_downlim;
+					}
+					else if (part_idx == 2){
+						part_valid[2] = 1;
+						part2.y_downlim = xz_plane.y_downlim;
+						part2.y_uplim = xz_plane.y_uplim;
+						part2.z_downlim = xz_plane_node_list->z;
+						part2.z_uplim = xz_plane_node_list->z;
+						part2.x_uplim = xz_plane.x_wrap() ? (xz_plane_node_list->x + X / 2 >= X ? xz_plane_node_list->x + X / 2 - X : xz_plane_node_list->x + X / 2) : xz_plane.x_uplim;
+						part2.x_downlim = xz_plane_node_list->x + 1 >= X ? 0 : xz_plane_node_list->x + 1;
+						part2_srcx = part2.x_downlim;
+						part2_srcy = xz_plane.y_downlim;
+						part2_srcz = part2.z_downlim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
@@ -4012,7 +4352,40 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 2){
+						//this is region1, now use part1 to cover it(part1 is also ok, but we use part0 here
+						part_valid[2] = 1;
+						part2.z_downlim = xy_plane.z_downlim;
+						part2.z_uplim = xy_plane.z_uplim;
+						part2.x_downlim = xy_plane_node_list->x;
+						part2.x_uplim = xy_plane_node_list->x;
+						part2.y_downlim = xy_plane.y_wrap() ? (xy_plane_node_list->y - Y / 2 + (Y % 2 == 0) < 0 ? xy_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : xy_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : xy_plane.y_downlim;
+						part2.y_uplim = xy_plane_node_list->y - 1 < 0 ? Y - 1 : xy_plane_node_list->y - 1;
+						part2_srcx = xy_plane_node_list->x;
+						part2_srcz = xy_plane.z_downlim;
+						part2_srcy = part2.y_uplim;
+					}
+					else if (part_idx == 3){
+						part_valid[3] = 1;
+						part3.z_downlim = xy_plane.z_downlim;
+						part3.z_uplim = xy_plane.z_uplim;
+						part3.x_downlim = xy_plane_node_list->x;
+						part3.x_uplim = xy_plane_node_list->x;
+						part3.y_downlim = xy_plane.y_wrap() ? (xy_plane_node_list->y - Y / 2 + (Y % 2 == 0) < 0 ? xy_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : xy_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : xy_plane.y_downlim;
+						part3.y_uplim = xy_plane_node_list->y - 1 < 0 ? Y - 1 : xy_plane_node_list->y - 1;
+						part3_srcx = xy_plane_node_list->x;
+						part3_srcz = xy_plane.z_downlim;
+						part3_srcy = part3.y_uplim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
@@ -4043,7 +4416,40 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 					part2_srcy = part2.y_uplim;
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 0){
+						//this is region1, now use part1 to cover it(part1 is also ok, but we use part0 here
+						part_valid[0] = 1;
+						part0.z_downlim = xy_plane.z_downlim;
+						part0.z_uplim = xy_plane.z_uplim;
+						part0.y_downlim = xy_plane_node_list->y;
+						part0.y_uplim = xy_plane_node_list->y;
+						part0.x_downlim = xy_plane.x_wrap() ? (xy_plane_node_list->x - X / 2 + (X % 2 == 0) < 0 ? xy_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xy_plane_node_list->x - X / 2 + (X % 2 == 0)) : xy_plane.x_downlim;
+						part0.x_uplim = xy_plane_node_list->x - 1 < 0 ? X - 1 : xy_plane_node_list->x - 1;
+						part0_srcx = part0.x_uplim;
+						part0_srcz = xy_plane.z_downlim;
+						part0_srcy = part0.y_uplim;
+					}
+					else if (part_idx == 3){
+						part_valid[3] = 1;
+						part3.z_downlim = xy_plane.z_downlim;
+						part3.z_uplim = xy_plane.z_uplim;
+						part3.y_downlim = xy_plane_node_list->y;
+						part3.y_uplim = xy_plane_node_list->y;
+						part3.x_downlim = xy_plane.x_wrap() ? (xy_plane_node_list->x - X / 2 + (X % 2 == 0) < 0 ? xy_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xy_plane_node_list->x - X / 2 + (X % 2 == 0)) : xy_plane.x_downlim;
+						part3.x_uplim = xy_plane_node_list->x - 1 < 0 ? X - 1 : xy_plane_node_list->x - 1;
+						part3_srcx = part0.x_uplim;
+						part3_srcz = xy_plane.z_downlim;
+						part3_srcy = part0.y_uplim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
@@ -4074,7 +4480,40 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 					part3_srcy = part3.y_downlim;
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 0){
+						//this is region1, now use part1 to cover it(part1 is also ok, but we use part0 here
+						part_valid[0] = 1;
+						part0.z_downlim = xy_plane.z_downlim;
+						part0.z_uplim = xy_plane.z_uplim;
+						part0.x_downlim = xy_plane_node_list->x;
+						part0.x_uplim = xy_plane_node_list->x;
+						part0.y_uplim = xy_plane.y_wrap() ? (xy_plane_node_list->y + Y / 2 >= Y ? xy_plane_node_list->y + Y / 2 - Y : xy_plane_node_list->y + Y / 2) : xy_plane.y_uplim;
+						part0.y_downlim = xy_plane_node_list->y + 1 >= Y ? 0 : xy_plane_node_list->y + 1;
+						part0_srcx = part0.x_uplim;
+						part0_srcz = xy_plane.z_downlim;
+						part0_srcy = part0.y_downlim;
+					}
+					else if (part_idx == 1){
+						part_valid[1] = 1;
+						part1.z_downlim = xy_plane.z_downlim;
+						part1.z_uplim = xy_plane.z_uplim;
+						part1.x_downlim = xy_plane_node_list->x;
+						part1.x_uplim = xy_plane_node_list->x;
+						part1.y_uplim = xy_plane.y_wrap() ? (xy_plane_node_list->y + Y / 2 >= Y ? xy_plane_node_list->y + Y / 2 - Y : xy_plane_node_list->y + Y / 2) : xy_plane.y_uplim;
+						part1.y_downlim = xy_plane_node_list->y + 1 >= Y ? 0 : xy_plane_node_list->y + 1;
+						part1_srcx = part1.x_uplim;
+						part1_srcz = xy_plane.z_downlim;
+						part1_srcy = part1.y_downlim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
@@ -4105,7 +4544,39 @@ void RPM_partition_2D(struct src_dst_list* node_list, struct chunk Chunk_2D, nod
 					part0_srcy = part0.y_downlim;
 				}
 				else{
-					cout << "bug" << endl;
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 1){
+						//this is region1, now use part1 to cover it(part1 is also ok, but we use part0 here
+						part_valid[1] = 1;
+						part1.z_downlim = xy_plane.z_downlim;
+						part1.z_uplim = xy_plane.z_uplim;
+						part1.y_downlim = xy_plane_node_list->y;
+						part1.y_uplim = xy_plane_node_list->y;
+						part1.x_uplim = xy_plane.x_wrap() ? (xy_plane_node_list->x + X / 2 >= X ? xy_plane_node_list->x + X / 2 - X : xy_plane_node_list->x + X / 2) : xy_plane.x_uplim;
+						part1.x_downlim = xy_plane_node_list->x + 1 >= X ? 0 : xy_plane_node_list->x + 1;
+						part1_srcx = part1.x_downlim;
+						part1_srcz = xy_plane.z_downlim;
+						part1_srcy = part1.y_downlim;
+					}
+					else if (part_idx == 2){
+						part_valid[2] = 1;
+						part2.z_downlim = xy_plane.z_downlim;
+						part2.z_uplim = xy_plane.z_uplim;
+						part2.y_downlim = xy_plane_node_list->y;
+						part2.y_uplim = xy_plane_node_list->y;
+						part2.x_uplim = xy_plane.x_wrap() ? (xy_plane_node_list->x + X / 2 >= X ? xy_plane_node_list->x + X / 2 - X : xy_plane_node_list->x + X / 2) : xy_plane.x_uplim;
+						part2.x_downlim = xy_plane_node_list->x + 1 >= X ? 0 : xy_plane_node_list->x + 1;
+						part2_srcx = part2.x_downlim;
+						part2_srcz = xy_plane.z_downlim;
+						part2_srcy = part2.y_downlim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
@@ -4763,8 +5234,8 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 		if (yz_eval.region0_merge != 0 && yz_eval.region2_merge != 1){
 			if (yz_eval.zneg_enable){
-				//this is region1, now use part0 to cover it(part1 is also ok, but we use part0 here
 				if (yz_eval.region0_merge != 1){
+					//this is region1, now use part0 to cover it(part1 is also ok, but we use part0 here
 					part_valid[0] = 1;
 					part0.x_downlim = yz_plane.x_downlim;
 					part0.x_uplim = yz_plane.x_uplim;
@@ -4789,7 +5260,39 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 					part1_srcz = part1.z_uplim;
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 2){
+						part_valid[2] = 1;
+						part2.x_downlim = yz_plane.x_downlim;
+						part2.x_uplim = yz_plane.x_uplim;
+						part2.y_downlim = yz_plane_node_list->y;
+						part2.y_uplim = yz_plane_node_list->y;
+						part2.z_downlim = yz_plane.z_wrap() ? (yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) < 0 ? yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : yz_plane.z_downlim;
+						part2.z_uplim = yz_plane_node_list->z - 1 < 0 ? Z - 1 : yz_plane_node_list->z - 1;
+						part2_srcy = yz_plane_node_list->y;
+						part2_srcx = yz_plane.x_downlim;
+						part2_srcz = part2.z_uplim;
+					}
+					else if (part_idx == 3){
+						part_valid[3] = 1;
+						part3.x_downlim = yz_plane.x_downlim;
+						part3.x_uplim = yz_plane.x_uplim;
+						part3.y_downlim = yz_plane_node_list->y;
+						part3.y_uplim = yz_plane_node_list->y;
+						part3.z_downlim = yz_plane.z_wrap() ? (yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) < 0 ? yz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : yz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : yz_plane.z_downlim;
+						part3.z_uplim = yz_plane_node_list->z - 1 < 0 ? Z - 1 : yz_plane_node_list->z - 1;
+						part3_srcy = yz_plane_node_list->y;
+						part3_srcx = yz_plane.x_downlim;
+						part3_srcz = part3.z_uplim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
@@ -4807,7 +5310,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 					part1_srcx = yz_plane.x_downlim;
 					part1_srcz = part1.z_uplim;
 				}
-				else if(yz_eval.region4_merge != 0){
+				else if (yz_eval.region4_merge != 0){
 					part_valid[2] = 1;
 					part2.x_downlim = yz_plane.x_downlim;
 					part2.x_uplim = yz_plane.x_uplim;
@@ -4821,7 +5324,39 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 0){
+						part_valid[0] = 1;
+						part0.x_downlim = yz_plane.x_downlim;
+						part0.x_uplim = yz_plane.x_uplim;
+						part0.z_downlim = yz_plane_node_list->z;
+						part0.z_uplim = yz_plane_node_list->z;
+						part0.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) < 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
+						part0.y_uplim = yz_plane_node_list->y - 1 < 0 ? Y - 1 : yz_plane_node_list->y - 1;
+						part0_srcy = part0.y_uplim;
+						part0_srcx = yz_plane.x_downlim;
+						part0_srcz = part0.z_uplim;
+					}
+					else if (part_idx == 3){
+						part_valid[3] = 1;
+						part3.x_downlim = yz_plane.x_downlim;
+						part3.x_uplim = yz_plane.x_uplim;
+						part3.z_downlim = yz_plane_node_list->z;
+						part3.z_uplim = yz_plane_node_list->z;
+						part3.y_downlim = yz_plane.y_wrap() ? (yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) < 0 ? yz_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : yz_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : yz_plane.y_downlim;
+						part3.y_uplim = yz_plane_node_list->y - 1 < 0 ? Y - 1 : yz_plane_node_list->y - 1;
+						part3_srcy = part3.y_uplim;
+						part3_srcx = yz_plane.x_downlim;
+						part3_srcz = part3.z_uplim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
@@ -4850,9 +5385,42 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 					part3_srcy = part3.y_uplim;
 					part3_srcx = yz_plane.x_downlim;
 					part3_srcz = part3.z_downlim;
+
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 0){
+						part_valid[0] = 1;
+						part0.x_downlim = yz_plane.x_downlim;
+						part0.x_uplim = yz_plane.x_uplim;
+						part0.y_downlim = yz_plane_node_list->y;
+						part0.y_uplim = yz_plane_node_list->y;
+						part0.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
+						part0.z_downlim = yz_plane_node_list->z + 1 >= Z ? 0 : yz_plane_node_list->z + 1;
+						part0_srcy = part3.y_uplim;
+						part0_srcx = yz_plane.x_downlim;
+						part0_srcz = part3.z_downlim;
+					}
+					else if (part_idx == 1){
+						part_valid[1] = 1;
+						part1.x_downlim = yz_plane.x_downlim;
+						part1.x_uplim = yz_plane.x_uplim;
+						part1.y_downlim = yz_plane_node_list->y;
+						part1.y_uplim = yz_plane_node_list->y;
+						part1.z_uplim = yz_plane.z_wrap() ? (yz_plane_node_list->z + Z / 2 >= Z ? yz_plane_node_list->z + Z / 2 - Z : yz_plane_node_list->z + Z / 2) : yz_plane.z_uplim;
+						part1.z_downlim = yz_plane_node_list->z + 1 >= Z ? 0 : yz_plane_node_list->z + 1;
+						part1_srcy = part1.y_uplim;
+						part1_srcx = yz_plane.x_downlim;
+						part1_srcz = part1.z_downlim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
@@ -4883,7 +5451,39 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 					part0_srcz = part0.z_downlim;
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 1){
+						part_valid[1] = 1;
+						part1.x_downlim = yz_plane.x_downlim;
+						part1.x_uplim = yz_plane.x_uplim;
+						part1.z_downlim = yz_plane_node_list->z;
+						part1.z_uplim = yz_plane_node_list->z;
+						part1.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
+						part1.y_downlim = yz_plane_node_list->y + 1 >= Y ? 0 : yz_plane_node_list->y + 1;
+						part1_srcy = part1.y_downlim;
+						part1_srcx = yz_plane.x_downlim;
+						part1_srcz = part1.z_downlim;
+					}
+					else if (part_idx == 2){
+						part_valid[2] = 1;
+						part2.x_downlim = yz_plane.x_downlim;
+						part2.x_uplim = yz_plane.x_uplim;
+						part2.z_downlim = yz_plane_node_list->z;
+						part2.z_uplim = yz_plane_node_list->z;
+						part2.y_uplim = yz_plane.y_wrap() ? (yz_plane_node_list->y + Y / 2 >= Y ? yz_plane_node_list->y + Y / 2 - Y : yz_plane_node_list->y + Y / 2) : yz_plane.y_uplim;
+						part2.y_downlim = yz_plane_node_list->y + 1 >= Y ? 0 : yz_plane_node_list->y + 1;
+						part2_srcy = part2.y_downlim;
+						part2_srcx = yz_plane.x_downlim;
+						part2_srcz = part2.z_downlim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
@@ -5542,8 +6142,8 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 			part_valid[3] = 0;
 
 		}
-		if(xz_eval.region0_merge!=0 && xz_eval.region2_merge!=1){
-			if(xz_eval.zneg_enable){
+		if (xz_eval.region0_merge != 0 && xz_eval.region2_merge != 1){
+			if (xz_eval.zneg_enable){
 				if (xz_eval.region0_merge != 1){
 					//this is region1, now use part0 to cover it(part1 is also ok, but we use part0 here
 					part_valid[0] = 1;
@@ -5568,15 +6168,46 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 					part1_srcx = xz_plane_node_list->x;
 					part1_srcy = xz_plane.y_downlim;
 					part1_srcz = part1.z_uplim;
-
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 2){
+						part_valid[2] = 1;
+						part2.y_downlim = xz_plane.y_downlim;
+						part2.y_uplim = xz_plane.y_uplim;
+						part2.x_downlim = xz_plane_node_list->x;
+						part2.x_uplim = xz_plane_node_list->x;
+						part2.z_downlim = xz_plane.z_wrap() ? (xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) < 0 ? xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : xz_plane.z_downlim;
+						part2.z_uplim = xz_plane_node_list->z - 1 < 0 ? Z - 1 : xz_plane_node_list->z - 1;
+						part2_srcx = xz_plane_node_list->x;
+						part2_srcy = xz_plane.y_downlim;
+						part2_srcz = part2.z_uplim;
+					}
+					else if (part_idx == 3){
+						part_valid[3] = 1;
+						part3.y_downlim = xz_plane.y_downlim;
+						part3.y_uplim = xz_plane.y_uplim;
+						part3.x_downlim = xz_plane_node_list->x;
+						part3.x_uplim = xz_plane_node_list->x;
+						part3.z_downlim = xz_plane.z_wrap() ? (xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) < 0 ? xz_plane_node_list->z - Z / 2 + (Z % 2 == 0) + Z : xz_plane_node_list->z - Z / 2 + (Z % 2 == 0)) : xz_plane.z_downlim;
+						part3.z_uplim = xz_plane_node_list->z - 1 < 0 ? Z - 1 : xz_plane_node_list->z - 1;
+						part3_srcx = xz_plane_node_list->x;
+						part3_srcy = xz_plane.y_downlim;
+						part3_srcz = part3.z_uplim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
-		if(xz_eval.region2_merge!=0 && xz_eval.region4_merge!=1){
-			if(xz_eval.xneg_enable){
+		if (xz_eval.region2_merge != 0 && xz_eval.region4_merge != 1){
+			if (xz_eval.xneg_enable){
 				if (xz_eval.region2_merge != 1){
 					part_valid[1] = 1;
 					part1.y_downlim = xz_plane.y_downlim;
@@ -5602,13 +6233,45 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 					part2_srcz = part2.z_uplim;
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 0){
+						part_valid[0] = 1;
+						part0.y_downlim = xz_plane.y_downlim;
+						part0.y_uplim = xz_plane.y_uplim;
+						part0.z_downlim = xz_plane_node_list->z;
+						part0.z_uplim = xz_plane_node_list->z;
+						part0.x_downlim = xz_plane.x_wrap() ? (xz_plane_node_list->x - X / 2 + (X % 2 == 0) < 0 ? xz_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xz_plane_node_list->x - X / 2 + (X % 2 == 0)) : xz_plane.x_downlim;
+						part0.x_uplim = xz_plane_node_list->x - 1 < 0 ? X - 1 : xz_plane_node_list->x - 1;
+						part0_srcx = part0.x_uplim;
+						part0_srcy = xz_plane.y_downlim;
+						part0_srcz = part0.z_uplim;
+					}
+					else if (part_idx == 3){
+						part_valid[3] = 1;
+						part3.y_downlim = xz_plane.y_downlim;
+						part3.y_uplim = xz_plane.y_uplim;
+						part3.z_downlim = xz_plane_node_list->z;
+						part3.z_uplim = xz_plane_node_list->z;
+						part3.x_downlim = xz_plane.x_wrap() ? (xz_plane_node_list->x - X / 2 + (X % 2 == 0) < 0 ? xz_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xz_plane_node_list->x - X / 2 + (X % 2 == 0)) : xz_plane.x_downlim;
+						part3.x_uplim = xz_plane_node_list->x - 1 < 0 ? X - 1 : xz_plane_node_list->x - 1;
+						part3_srcx = part3.x_uplim;
+						part3_srcy = xz_plane.y_downlim;
+						part3_srcz = part3.z_uplim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 
 			}
 		}
-		if(xz_eval.region4_merge!=0 && xz_eval.region6_merge!=1){
-			if(xz_eval.zpos_enable){
+		if (xz_eval.region4_merge != 0 && xz_eval.region6_merge != 1){
+			if (xz_eval.zpos_enable){
 				if (xz_eval.region4_merge != 1){
 					part_valid[2] = 1;
 					part2.y_downlim = xz_plane.y_downlim;
@@ -5632,14 +6295,47 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 					part3_srcx = part3.x_uplim;
 					part3_srcy = xz_plane.y_downlim;
 					part3_srcz = part3.z_downlim;
+
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 0){
+						part_valid[0] = 1;
+						part0.y_downlim = xz_plane.y_downlim;
+						part0.y_uplim = xz_plane.y_uplim;
+						part0.x_downlim = xz_plane_node_list->x;
+						part0.x_uplim = xz_plane_node_list->x;
+						part0.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
+						part0.z_downlim = xz_plane_node_list->z + 1 >= Z ? 0 : xz_plane_node_list->z + 1;
+						part0_srcx = part0.x_uplim;
+						part0_srcy = xz_plane.y_downlim;
+						part0_srcz = part0.z_downlim;
+					}
+					else if (part_idx == 1){
+						part_valid[1] = 1;
+						part1.y_downlim = xz_plane.y_downlim;
+						part1.y_uplim = xz_plane.y_uplim;
+						part1.x_downlim = xz_plane_node_list->x;
+						part1.x_uplim = xz_plane_node_list->x;
+						part1.z_uplim = xz_plane.z_wrap() ? (xz_plane_node_list->z + Z / 2 >= Z ? xz_plane_node_list->z + Z / 2 - Z : xz_plane_node_list->z + Z / 2) : xz_plane.z_uplim;
+						part1.z_downlim = xz_plane_node_list->z + 1 >= Z ? 0 : xz_plane_node_list->z + 1;
+						part1_srcx = part0.x_uplim;
+						part1_srcy = xz_plane.y_downlim;
+						part1_srcz = part0.z_downlim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
-		if(xz_eval.region6_merge!=0 && xz_eval.region0_merge!=1){
-			if(xz_eval.xpos_enable){
+		if (xz_eval.region6_merge != 0 && xz_eval.region0_merge != 1){
+			if (xz_eval.xpos_enable){
 				if (xz_eval.region6_merge != 1){
 					part_valid[3] = 1;
 					part3.y_downlim = xz_plane.y_downlim;
@@ -5665,9 +6361,40 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 					part0_srcz = part0.z_downlim;
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 1){
+						part_valid[1] = 1;
+						part1.y_downlim = xz_plane.y_downlim;
+						part1.y_uplim = xz_plane.y_uplim;
+						part1.z_downlim = xz_plane_node_list->z;
+						part1.z_uplim = xz_plane_node_list->z;
+						part1.x_uplim = xz_plane.x_wrap() ? (xz_plane_node_list->x + X / 2 >= X ? xz_plane_node_list->x + X / 2 - X : xz_plane_node_list->x + X / 2) : xz_plane.x_uplim;
+						part1.x_downlim = xz_plane_node_list->x + 1 >= X ? 0 : xz_plane_node_list->x + 1;
+						part1_srcx = part1.x_downlim;
+						part1_srcy = xz_plane.y_downlim;
+						part1_srcz = part1.z_downlim;
+					}
+					else if (part_idx == 2){
+						part_valid[2] = 1;
+						part2.y_downlim = xz_plane.y_downlim;
+						part2.y_uplim = xz_plane.y_uplim;
+						part2.z_downlim = xz_plane_node_list->z;
+						part2.z_uplim = xz_plane_node_list->z;
+						part2.x_uplim = xz_plane.x_wrap() ? (xz_plane_node_list->x + X / 2 >= X ? xz_plane_node_list->x + X / 2 - X : xz_plane_node_list->x + X / 2) : xz_plane.x_uplim;
+						part2.x_downlim = xz_plane_node_list->x + 1 >= X ? 0 : xz_plane_node_list->x + 1;
+						part2_srcx = part2.x_downlim;
+						part2_srcy = xz_plane.y_downlim;
+						part2_srcz = part2.z_downlim;
+					}
+					else
+						cout << "bug" << endl;
 				}
-
 			}
 		}
 
@@ -6361,7 +7088,40 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 2){
+						//this is region1, now use part1 to cover it(part1 is also ok, but we use part0 here
+						part_valid[2] = 1;
+						part2.z_downlim = xy_plane.z_downlim;
+						part2.z_uplim = xy_plane.z_uplim;
+						part2.x_downlim = xy_plane_node_list->x;
+						part2.x_uplim = xy_plane_node_list->x;
+						part2.y_downlim = xy_plane.y_wrap() ? (xy_plane_node_list->y - Y / 2 + (Y % 2 == 0) < 0 ? xy_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : xy_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : xy_plane.y_downlim;
+						part2.y_uplim = xy_plane_node_list->y - 1 < 0 ? Y - 1 : xy_plane_node_list->y - 1;
+						part2_srcx = xy_plane_node_list->x;
+						part2_srcz = xy_plane.z_downlim;
+						part2_srcy = part2.y_uplim;
+					}
+					else if (part_idx == 3){
+						part_valid[3] = 1;
+						part3.z_downlim = xy_plane.z_downlim;
+						part3.z_uplim = xy_plane.z_uplim;
+						part3.x_downlim = xy_plane_node_list->x;
+						part3.x_uplim = xy_plane_node_list->x;
+						part3.y_downlim = xy_plane.y_wrap() ? (xy_plane_node_list->y - Y / 2 + (Y % 2 == 0) < 0 ? xy_plane_node_list->y - Y / 2 + (Y % 2 == 0) + Y : xy_plane_node_list->y - Y / 2 + (Y % 2 == 0)) : xy_plane.y_downlim;
+						part3.y_uplim = xy_plane_node_list->y - 1 < 0 ? Y - 1 : xy_plane_node_list->y - 1;
+						part3_srcx = xy_plane_node_list->x;
+						part3_srcz = xy_plane.z_downlim;
+						part3_srcy = part3.y_uplim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
@@ -6392,7 +7152,40 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 					part2_srcy = part2.y_uplim;
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 0){
+						//this is region1, now use part1 to cover it(part1 is also ok, but we use part0 here
+						part_valid[0] = 1;
+						part0.z_downlim = xy_plane.z_downlim;
+						part0.z_uplim = xy_plane.z_uplim;
+						part0.y_downlim = xy_plane_node_list->y;
+						part0.y_uplim = xy_plane_node_list->y;
+						part0.x_downlim = xy_plane.x_wrap() ? (xy_plane_node_list->x - X / 2 + (X % 2 == 0) < 0 ? xy_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xy_plane_node_list->x - X / 2 + (X % 2 == 0)) : xy_plane.x_downlim;
+						part0.x_uplim = xy_plane_node_list->x - 1 < 0 ? X - 1 : xy_plane_node_list->x - 1;
+						part0_srcx = part0.x_uplim;
+						part0_srcz = xy_plane.z_downlim;
+						part0_srcy = part0.y_uplim;
+					}
+					else if (part_idx == 3){
+						part_valid[3] = 1;
+						part3.z_downlim = xy_plane.z_downlim;
+						part3.z_uplim = xy_plane.z_uplim;
+						part3.y_downlim = xy_plane_node_list->y;
+						part3.y_uplim = xy_plane_node_list->y;
+						part3.x_downlim = xy_plane.x_wrap() ? (xy_plane_node_list->x - X / 2 + (X % 2 == 0) < 0 ? xy_plane_node_list->x - X / 2 + (X % 2 == 0) + X : xy_plane_node_list->x - X / 2 + (X % 2 == 0)) : xy_plane.x_downlim;
+						part3.x_uplim = xy_plane_node_list->x - 1 < 0 ? X - 1 : xy_plane_node_list->x - 1;
+						part3_srcx = part0.x_uplim;
+						part3_srcz = xy_plane.z_downlim;
+						part3_srcy = part0.y_uplim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
@@ -6423,7 +7216,40 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 					part3_srcy = part3.y_downlim;
 				}
 				else{
-					cout << "bug" << endl;
+					//find the available the part
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 0){
+						//this is region1, now use part1 to cover it(part1 is also ok, but we use part0 here
+						part_valid[0] = 1;
+						part0.z_downlim = xy_plane.z_downlim;
+						part0.z_uplim = xy_plane.z_uplim;
+						part0.x_downlim = xy_plane_node_list->x;
+						part0.x_uplim = xy_plane_node_list->x;
+						part0.y_uplim = xy_plane.y_wrap() ? (xy_plane_node_list->y + Y / 2 >= Y ? xy_plane_node_list->y + Y / 2 - Y : xy_plane_node_list->y + Y / 2) : xy_plane.y_uplim;
+						part0.y_downlim = xy_plane_node_list->y + 1 >= Y ? 0 : xy_plane_node_list->y + 1;
+						part0_srcx = part0.x_uplim;
+						part0_srcz = xy_plane.z_downlim;
+						part0_srcy = part0.y_downlim;
+					}
+					else if (part_idx == 1){
+						part_valid[1] = 1;
+						part1.z_downlim = xy_plane.z_downlim;
+						part1.z_uplim = xy_plane.z_uplim;
+						part1.x_downlim = xy_plane_node_list->x;
+						part1.x_uplim = xy_plane_node_list->x;
+						part1.y_uplim = xy_plane.y_wrap() ? (xy_plane_node_list->y + Y / 2 >= Y ? xy_plane_node_list->y + Y / 2 - Y : xy_plane_node_list->y + Y / 2) : xy_plane.y_uplim;
+						part1.y_downlim = xy_plane_node_list->y + 1 >= Y ? 0 : xy_plane_node_list->y + 1;
+						part1_srcx = part1.x_uplim;
+						part1_srcz = xy_plane.z_downlim;
+						part1_srcy = part1.y_downlim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
@@ -6454,7 +7280,39 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 					part0_srcy = part0.y_downlim;
 				}
 				else{
-					cout << "bug" << endl;
+					int part_idx;
+					for (part_idx = 0; part_idx < 4; part_idx++){
+						if (part_valid[part_idx] == 0){
+							break;
+						}
+					}
+					if (part_idx == 1){
+						//this is region1, now use part1 to cover it(part1 is also ok, but we use part0 here
+						part_valid[1] = 1;
+						part1.z_downlim = xy_plane.z_downlim;
+						part1.z_uplim = xy_plane.z_uplim;
+						part1.y_downlim = xy_plane_node_list->y;
+						part1.y_uplim = xy_plane_node_list->y;
+						part1.x_uplim = xy_plane.x_wrap() ? (xy_plane_node_list->x + X / 2 >= X ? xy_plane_node_list->x + X / 2 - X : xy_plane_node_list->x + X / 2) : xy_plane.x_uplim;
+						part1.x_downlim = xy_plane_node_list->x + 1 >= X ? 0 : xy_plane_node_list->x + 1;
+						part1_srcx = part1.x_downlim;
+						part1_srcz = xy_plane.z_downlim;
+						part1_srcy = part1.y_downlim;
+					}
+					else if (part_idx == 2){
+						part_valid[2] = 1;
+						part2.z_downlim = xy_plane.z_downlim;
+						part2.z_uplim = xy_plane.z_uplim;
+						part2.y_downlim = xy_plane_node_list->y;
+						part2.y_uplim = xy_plane_node_list->y;
+						part2.x_uplim = xy_plane.x_wrap() ? (xy_plane_node_list->x + X / 2 >= X ? xy_plane_node_list->x + X / 2 - X : xy_plane_node_list->x + X / 2) : xy_plane.x_uplim;
+						part2.x_downlim = xy_plane_node_list->x + 1 >= X ? 0 : xy_plane_node_list->x + 1;
+						part2_srcx = part2.x_downlim;
+						part2_srcz = xy_plane.z_downlim;
+						part2_srcy = part2.y_downlim;
+					}
+					else
+						cout << "bug" << endl;
 				}
 			}
 		}
@@ -6709,9 +7567,9 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 int main(){
 	string filename = "C:/Users/Jiayi/Documents/GitHub/MD_reduction/software/destination.txt";
-	string output="C:/Users/Jiayi/Documents/GitHub/MD_reduction/software/output.txt";
+	string output="C:/Users/Jiayi/Documents/GitHub/MD_reduction/software/reduction_tree.txt";
 	fout.open(output);
-	
+	global_partition_rr_choice = 0;
 	for (int i = 0; i < X; i++){
 		for (int j = 0; j < Y; j++){
 			for (int k = 0; k < Z; k++){
@@ -6749,9 +7607,9 @@ int main(){
 
 	for(int i=0;i<X*Y*Z;i++){
 		if(src_list[i]->valid){
-			tree_src_array[i]=new node(src_list[i]->x,src_list[i]->y,src_list[i]->z,512);
+			tree_src_array[i]=new node(src_list[i]->x,src_list[i]->y,src_list[i]->z,256);
 
-			fout<<"Start generating BroadCast TREE pattern for this node: ("<<src_list[i]->x<<","<<src_list[i]->y<<","<src_list[i]->z<<"):"<<endl;
+			fout<<"Start generating BroadCast TREE pattern for this node: ("<<src_list[i]->x<<","<<src_list[i]->y<<","<<src_list[i]->z<<"):"<<endl;
 			fout<<endl;
 			RPM_partition(src_list[i],entire_space,tree_src_array[i]);
 		}

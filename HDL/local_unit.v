@@ -36,7 +36,7 @@
         
     */
 
-`define SINGLECAST
+`define MULTICAST
 
 module local_unit
 #(

@@ -9,7 +9,7 @@ The r_to_c ratio is:
 The number of particles of one box
 172
 ***************************start calculation!******************************
-Start generating BroadCast TREE pattern for this node: (000):
+Start generating BroadCast TREE pattern for this node: (0,0,0):
 
 {src: (0,0,0) weight: 512
 dst: (0,0,1) weight: 256
@@ -154,7 +154,7 @@ dst: (1,2,0) weight: 64
 {src:(1,2,0) weight: 64
 dst: (2,2,0) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (001):
+Start generating BroadCast TREE pattern for this node: (0,0,1):
 
 {src: (0,0,1) weight: 512
 dst: (0,0,2) weight: 256
@@ -299,7 +299,7 @@ dst: (1,2,1) weight: 64
 {src:(1,2,1) weight: 64
 dst: (2,2,1) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (002):
+Start generating BroadCast TREE pattern for this node: (0,0,2):
 
 {src: (0,0,2) weight: 512
 dst: (0,0,3) weight: 256
@@ -409,7 +409,7 @@ dst: (1,2,2) weight: 64
 {src:(1,2,2) weight: 64
 dst: (2,2,2) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (003):
+Start generating BroadCast TREE pattern for this node: (0,0,3):
 
 {src: (0,0,3) weight: 512
 dst: (0,0,0) weight: 256
@@ -519,7 +519,7 @@ dst: (1,2,3) weight: 64
 {src:(1,2,3) weight: 64
 dst: (2,2,3) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (010):
+Start generating BroadCast TREE pattern for this node: (0,1,0):
 
 {src: (0,1,0) weight: 512
 dst: (0,1,1) weight: 256
@@ -648,7 +648,7 @@ dst: (1,3,0) weight: 64
 {src:(1,3,0) weight: 64
 dst: (2,3,0) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (011):
+Start generating BroadCast TREE pattern for this node: (0,1,1):
 
 {src: (0,1,1) weight: 512
 dst: (0,1,2) weight: 256
@@ -777,7 +777,7 @@ dst: (1,3,1) weight: 64
 {src:(1,3,1) weight: 64
 dst: (2,3,1) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (012):
+Start generating BroadCast TREE pattern for this node: (0,1,2):
 
 {src: (0,1,2) weight: 512
 dst: (0,1,3) weight: 256
@@ -875,7 +875,7 @@ dst: (1,3,2) weight: 64
 {src:(1,3,2) weight: 64
 dst: (2,3,2) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (013):
+Start generating BroadCast TREE pattern for this node: (0,1,3):
 
 {src: (0,1,3) weight: 512
 dst: (0,1,0) weight: 256
@@ -973,7 +973,7 @@ dst: (1,3,3) weight: 64
 {src:(1,3,3) weight: 64
 dst: (2,3,3) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (020):
+Start generating BroadCast TREE pattern for this node: (0,2,0):
 
 {src: (0,2,0) weight: 512
 dst: (0,2,1) weight: 256
@@ -1102,7 +1102,7 @@ dst: (1,0,0) weight: 64
 {src:(1,0,0) weight: 64
 dst: (2,0,0) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (021):
+Start generating BroadCast TREE pattern for this node: (0,2,1):
 
 {src: (0,2,1) weight: 512
 dst: (0,2,2) weight: 256
@@ -1231,7 +1231,7 @@ dst: (1,0,1) weight: 64
 {src:(1,0,1) weight: 64
 dst: (2,0,1) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (022):
+Start generating BroadCast TREE pattern for this node: (0,2,2):
 
 {src: (0,2,2) weight: 512
 dst: (0,2,3) weight: 256
@@ -1329,7 +1329,7 @@ dst: (1,0,2) weight: 64
 {src:(1,0,2) weight: 64
 dst: (2,0,2) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (023):
+Start generating BroadCast TREE pattern for this node: (0,2,3):
 
 {src: (0,2,3) weight: 512
 dst: (0,2,0) weight: 256
@@ -1427,7 +1427,7 @@ dst: (1,0,3) weight: 64
 {src:(1,0,3) weight: 64
 dst: (2,0,3) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (030):
+Start generating BroadCast TREE pattern for this node: (0,3,0):
 
 {src: (0,3,0) weight: 512
 dst: (0,3,1) weight: 256
@@ -1556,7 +1556,7 @@ dst: (1,1,0) weight: 64
 {src:(1,1,0) weight: 64
 dst: (2,1,0) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (031):
+Start generating BroadCast TREE pattern for this node: (0,3,1):
 
 {src: (0,3,1) weight: 512
 dst: (0,3,2) weight: 256
@@ -1685,7 +1685,7 @@ dst: (1,1,1) weight: 64
 {src:(1,1,1) weight: 64
 dst: (2,1,1) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (032):
+Start generating BroadCast TREE pattern for this node: (0,3,2):
 
 {src: (0,3,2) weight: 512
 dst: (0,3,3) weight: 256
@@ -1783,7 +1783,7 @@ dst: (1,1,2) weight: 64
 {src:(1,1,2) weight: 64
 dst: (2,1,2) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (033):
+Start generating BroadCast TREE pattern for this node: (0,3,3):
 
 {src: (0,3,3) weight: 512
 dst: (0,3,0) weight: 256
@@ -1881,7 +1881,7 @@ dst: (1,1,3) weight: 64
 {src:(1,1,3) weight: 64
 dst: (2,1,3) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (100):
+Start generating BroadCast TREE pattern for this node: (1,0,0):
 
 {src: (1,0,0) weight: 512
 dst: (1,0,1) weight: 256
@@ -2010,7 +2010,7 @@ dst: (2,2,0) weight: 64
 {src:(2,2,0) weight: 64
 dst: (3,2,0) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (101):
+Start generating BroadCast TREE pattern for this node: (1,0,1):
 
 {src: (1,0,1) weight: 512
 dst: (1,0,2) weight: 256
@@ -2139,7 +2139,7 @@ dst: (2,2,1) weight: 64
 {src:(2,2,1) weight: 64
 dst: (3,2,1) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (102):
+Start generating BroadCast TREE pattern for this node: (1,0,2):
 
 {src: (1,0,2) weight: 512
 dst: (1,0,3) weight: 256
@@ -2237,7 +2237,7 @@ dst: (2,2,2) weight: 64
 {src:(2,2,2) weight: 64
 dst: (3,2,2) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (103):
+Start generating BroadCast TREE pattern for this node: (1,0,3):
 
 {src: (1,0,3) weight: 512
 dst: (1,0,0) weight: 256
@@ -2335,7 +2335,7 @@ dst: (2,2,3) weight: 64
 {src:(2,2,3) weight: 64
 dst: (3,2,3) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (110):
+Start generating BroadCast TREE pattern for this node: (1,1,0):
 
 {src: (1,1,0) weight: 512
 dst: (1,1,1) weight: 256
@@ -2464,7 +2464,7 @@ dst: (2,3,0) weight: 64
 {src:(2,3,0) weight: 64
 dst: (3,3,0) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (111):
+Start generating BroadCast TREE pattern for this node: (1,1,1):
 
 {src: (1,1,1) weight: 512
 dst: (1,1,2) weight: 256
@@ -2593,7 +2593,7 @@ dst: (2,3,1) weight: 64
 {src:(2,3,1) weight: 64
 dst: (3,3,1) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (112):
+Start generating BroadCast TREE pattern for this node: (1,1,2):
 
 {src: (1,1,2) weight: 512
 dst: (1,1,3) weight: 256
@@ -2691,7 +2691,7 @@ dst: (2,3,2) weight: 64
 {src:(2,3,2) weight: 64
 dst: (3,3,2) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (113):
+Start generating BroadCast TREE pattern for this node: (1,1,3):
 
 {src: (1,1,3) weight: 512
 dst: (1,1,0) weight: 256
@@ -2789,7 +2789,7 @@ dst: (2,3,3) weight: 64
 {src:(2,3,3) weight: 64
 dst: (3,3,3) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (120):
+Start generating BroadCast TREE pattern for this node: (1,2,0):
 
 {src: (1,2,0) weight: 512
 dst: (1,2,1) weight: 256
@@ -2918,7 +2918,7 @@ dst: (2,0,0) weight: 64
 {src:(2,0,0) weight: 64
 dst: (3,0,0) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (121):
+Start generating BroadCast TREE pattern for this node: (1,2,1):
 
 {src: (1,2,1) weight: 512
 dst: (1,2,2) weight: 256
@@ -3047,7 +3047,7 @@ dst: (2,0,1) weight: 64
 {src:(2,0,1) weight: 64
 dst: (3,0,1) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (122):
+Start generating BroadCast TREE pattern for this node: (1,2,2):
 
 {src: (1,2,2) weight: 512
 dst: (1,2,3) weight: 256
@@ -3145,7 +3145,7 @@ dst: (2,0,2) weight: 64
 {src:(2,0,2) weight: 64
 dst: (3,0,2) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (123):
+Start generating BroadCast TREE pattern for this node: (1,2,3):
 
 {src: (1,2,3) weight: 512
 dst: (1,2,0) weight: 256
@@ -3243,7 +3243,7 @@ dst: (2,0,3) weight: 64
 {src:(2,0,3) weight: 64
 dst: (3,0,3) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (130):
+Start generating BroadCast TREE pattern for this node: (1,3,0):
 
 {src: (1,3,0) weight: 512
 dst: (1,3,1) weight: 256
@@ -3372,7 +3372,7 @@ dst: (2,1,0) weight: 64
 {src:(2,1,0) weight: 64
 dst: (3,1,0) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (131):
+Start generating BroadCast TREE pattern for this node: (1,3,1):
 
 {src: (1,3,1) weight: 512
 dst: (1,3,2) weight: 256
@@ -3501,7 +3501,7 @@ dst: (2,1,1) weight: 64
 {src:(2,1,1) weight: 64
 dst: (3,1,1) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (132):
+Start generating BroadCast TREE pattern for this node: (1,3,2):
 
 {src: (1,3,2) weight: 512
 dst: (1,3,3) weight: 256
@@ -3599,7 +3599,7 @@ dst: (2,1,2) weight: 64
 {src:(2,1,2) weight: 64
 dst: (3,1,2) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (133):
+Start generating BroadCast TREE pattern for this node: (1,3,3):
 
 {src: (1,3,3) weight: 512
 dst: (1,3,0) weight: 256
@@ -3697,7 +3697,7 @@ dst: (2,1,3) weight: 64
 {src:(2,1,3) weight: 64
 dst: (3,1,3) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (200):
+Start generating BroadCast TREE pattern for this node: (2,0,0):
 
 {src: (2,0,0) weight: 512
 dst: (2,0,1) weight: 256
@@ -3826,7 +3826,7 @@ dst: (3,2,0) weight: 64
 {src:(3,2,0) weight: 64
 dst: (0,2,0) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (201):
+Start generating BroadCast TREE pattern for this node: (2,0,1):
 
 {src: (2,0,1) weight: 512
 dst: (2,0,2) weight: 256
@@ -3955,7 +3955,7 @@ dst: (3,2,1) weight: 64
 {src:(3,2,1) weight: 64
 dst: (0,2,1) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (202):
+Start generating BroadCast TREE pattern for this node: (2,0,2):
 
 {src: (2,0,2) weight: 512
 dst: (2,0,3) weight: 256
@@ -4053,7 +4053,7 @@ dst: (3,2,2) weight: 64
 {src:(3,2,2) weight: 64
 dst: (0,2,2) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (203):
+Start generating BroadCast TREE pattern for this node: (2,0,3):
 
 {src: (2,0,3) weight: 512
 dst: (2,0,0) weight: 256
@@ -4151,7 +4151,7 @@ dst: (3,2,3) weight: 64
 {src:(3,2,3) weight: 64
 dst: (0,2,3) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (210):
+Start generating BroadCast TREE pattern for this node: (2,1,0):
 
 {src: (2,1,0) weight: 512
 dst: (2,1,1) weight: 256
@@ -4280,7 +4280,7 @@ dst: (3,3,0) weight: 64
 {src:(3,3,0) weight: 64
 dst: (0,3,0) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (211):
+Start generating BroadCast TREE pattern for this node: (2,1,1):
 
 {src: (2,1,1) weight: 512
 dst: (2,1,2) weight: 256
@@ -4409,7 +4409,7 @@ dst: (3,3,1) weight: 64
 {src:(3,3,1) weight: 64
 dst: (0,3,1) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (212):
+Start generating BroadCast TREE pattern for this node: (2,1,2):
 
 {src: (2,1,2) weight: 512
 dst: (2,1,3) weight: 256
@@ -4507,7 +4507,7 @@ dst: (3,3,2) weight: 64
 {src:(3,3,2) weight: 64
 dst: (0,3,2) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (213):
+Start generating BroadCast TREE pattern for this node: (2,1,3):
 
 {src: (2,1,3) weight: 512
 dst: (2,1,0) weight: 256
@@ -4605,7 +4605,7 @@ dst: (3,3,3) weight: 64
 {src:(3,3,3) weight: 64
 dst: (0,3,3) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (220):
+Start generating BroadCast TREE pattern for this node: (2,2,0):
 
 {src: (2,2,0) weight: 512
 dst: (2,2,1) weight: 256
@@ -4734,7 +4734,7 @@ dst: (3,0,0) weight: 64
 {src:(3,0,0) weight: 64
 dst: (0,0,0) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (221):
+Start generating BroadCast TREE pattern for this node: (2,2,1):
 
 {src: (2,2,1) weight: 512
 dst: (2,2,2) weight: 256
@@ -4863,7 +4863,7 @@ dst: (3,0,1) weight: 64
 {src:(3,0,1) weight: 64
 dst: (0,0,1) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (222):
+Start generating BroadCast TREE pattern for this node: (2,2,2):
 
 {src: (2,2,2) weight: 512
 dst: (2,2,3) weight: 256
@@ -4961,7 +4961,7 @@ dst: (3,0,2) weight: 64
 {src:(3,0,2) weight: 64
 dst: (0,0,2) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (223):
+Start generating BroadCast TREE pattern for this node: (2,2,3):
 
 {src: (2,2,3) weight: 512
 dst: (2,2,0) weight: 256
@@ -5059,7 +5059,7 @@ dst: (3,0,3) weight: 64
 {src:(3,0,3) weight: 64
 dst: (0,0,3) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (230):
+Start generating BroadCast TREE pattern for this node: (2,3,0):
 
 {src: (2,3,0) weight: 512
 dst: (2,3,1) weight: 256
@@ -5188,7 +5188,7 @@ dst: (3,1,0) weight: 64
 {src:(3,1,0) weight: 64
 dst: (0,1,0) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (231):
+Start generating BroadCast TREE pattern for this node: (2,3,1):
 
 {src: (2,3,1) weight: 512
 dst: (2,3,2) weight: 256
@@ -5317,7 +5317,7 @@ dst: (3,1,1) weight: 64
 {src:(3,1,1) weight: 64
 dst: (0,1,1) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (232):
+Start generating BroadCast TREE pattern for this node: (2,3,2):
 
 {src: (2,3,2) weight: 512
 dst: (2,3,3) weight: 256
@@ -5415,7 +5415,7 @@ dst: (3,1,2) weight: 64
 {src:(3,1,2) weight: 64
 dst: (0,1,2) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (233):
+Start generating BroadCast TREE pattern for this node: (2,3,3):
 
 {src: (2,3,3) weight: 512
 dst: (2,3,0) weight: 256
@@ -5513,7 +5513,7 @@ dst: (3,1,3) weight: 64
 {src:(3,1,3) weight: 64
 dst: (0,1,3) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (300):
+Start generating BroadCast TREE pattern for this node: (3,0,0):
 
 {src: (3,0,0) weight: 512
 dst: (3,0,1) weight: 256
@@ -5642,7 +5642,7 @@ dst: (0,2,0) weight: 64
 {src:(0,2,0) weight: 64
 dst: (1,2,0) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (301):
+Start generating BroadCast TREE pattern for this node: (3,0,1):
 
 {src: (3,0,1) weight: 512
 dst: (3,0,2) weight: 256
@@ -5771,7 +5771,7 @@ dst: (0,2,1) weight: 64
 {src:(0,2,1) weight: 64
 dst: (1,2,1) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (302):
+Start generating BroadCast TREE pattern for this node: (3,0,2):
 
 {src: (3,0,2) weight: 512
 dst: (3,0,3) weight: 256
@@ -5869,7 +5869,7 @@ dst: (0,2,2) weight: 64
 {src:(0,2,2) weight: 64
 dst: (1,2,2) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (303):
+Start generating BroadCast TREE pattern for this node: (3,0,3):
 
 {src: (3,0,3) weight: 512
 dst: (3,0,0) weight: 256
@@ -5967,7 +5967,7 @@ dst: (0,2,3) weight: 64
 {src:(0,2,3) weight: 64
 dst: (1,2,3) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (310):
+Start generating BroadCast TREE pattern for this node: (3,1,0):
 
 {src: (3,1,0) weight: 512
 dst: (3,1,1) weight: 256
@@ -6096,7 +6096,7 @@ dst: (0,3,0) weight: 64
 {src:(0,3,0) weight: 64
 dst: (1,3,0) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (311):
+Start generating BroadCast TREE pattern for this node: (3,1,1):
 
 {src: (3,1,1) weight: 512
 dst: (3,1,2) weight: 256
@@ -6225,7 +6225,7 @@ dst: (0,3,1) weight: 64
 {src:(0,3,1) weight: 64
 dst: (1,3,1) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (312):
+Start generating BroadCast TREE pattern for this node: (3,1,2):
 
 {src: (3,1,2) weight: 512
 dst: (3,1,3) weight: 256
@@ -6323,7 +6323,7 @@ dst: (0,3,2) weight: 64
 {src:(0,3,2) weight: 64
 dst: (1,3,2) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (313):
+Start generating BroadCast TREE pattern for this node: (3,1,3):
 
 {src: (3,1,3) weight: 512
 dst: (3,1,0) weight: 256
@@ -6421,7 +6421,7 @@ dst: (0,3,3) weight: 64
 {src:(0,3,3) weight: 64
 dst: (1,3,3) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (320):
+Start generating BroadCast TREE pattern for this node: (3,2,0):
 
 {src: (3,2,0) weight: 512
 dst: (3,2,1) weight: 256
@@ -6550,7 +6550,7 @@ dst: (0,0,0) weight: 64
 {src:(0,0,0) weight: 64
 dst: (1,0,0) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (321):
+Start generating BroadCast TREE pattern for this node: (3,2,1):
 
 {src: (3,2,1) weight: 512
 dst: (3,2,2) weight: 256
@@ -6679,7 +6679,7 @@ dst: (0,0,1) weight: 64
 {src:(0,0,1) weight: 64
 dst: (1,0,1) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (322):
+Start generating BroadCast TREE pattern for this node: (3,2,2):
 
 {src: (3,2,2) weight: 512
 dst: (3,2,3) weight: 256
@@ -6777,7 +6777,7 @@ dst: (0,0,2) weight: 64
 {src:(0,0,2) weight: 64
 dst: (1,0,2) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (323):
+Start generating BroadCast TREE pattern for this node: (3,2,3):
 
 {src: (3,2,3) weight: 512
 dst: (3,2,0) weight: 256
@@ -6875,7 +6875,7 @@ dst: (0,0,3) weight: 64
 {src:(0,0,3) weight: 64
 dst: (1,0,3) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (330):
+Start generating BroadCast TREE pattern for this node: (3,3,0):
 
 {src: (3,3,0) weight: 512
 dst: (3,3,1) weight: 256
@@ -7004,7 +7004,7 @@ dst: (0,1,0) weight: 64
 {src:(0,1,0) weight: 64
 dst: (1,1,0) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (331):
+Start generating BroadCast TREE pattern for this node: (3,3,1):
 
 {src: (3,3,1) weight: 512
 dst: (3,3,2) weight: 256
@@ -7133,7 +7133,7 @@ dst: (0,1,1) weight: 64
 {src:(0,1,1) weight: 64
 dst: (1,1,1) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (332):
+Start generating BroadCast TREE pattern for this node: (3,3,2):
 
 {src: (3,3,2) weight: 512
 dst: (3,3,3) weight: 256
@@ -7231,7 +7231,7 @@ dst: (0,1,2) weight: 64
 {src:(0,1,2) weight: 64
 dst: (1,1,2) weight: 32
 }
-Start generating BroadCast TREE pattern for this node: (333):
+Start generating BroadCast TREE pattern for this node: (3,3,3):
 
 {src: (3,3,3) weight: 512
 dst: (3,3,0) weight: 256

@@ -85,7 +85,7 @@ struct pattern{
 
 
 
-struct src_dst_list** src_list;
+struct src_dst_list** src_list; 
 struct xyz extract_node_from_line(char* line){
 	struct xyz ret;
 	int i = 0;
@@ -150,7 +150,7 @@ void read_src_dst_file(string filename){
 	int line_counter = 0;
 	char line[LINEMAX];
 	int src_id;
-	int dst_id;
+	int dst_id; 
 	struct xyz cur_xyz;
 	struct src_dst_list* head;
 	struct src_dst_list* tail;
@@ -161,9 +161,9 @@ void read_src_dst_file(string filename){
 		cout << "No mem" << endl;
 		exit(-1);
 	}
-	for (int i = 0; i<X*Y*Z; i++){
-		if (!(src_list[i] = (struct src_dst_list*) malloc(sizeof(struct src_dst_list)))){
-			cout << "no mem" << endl;
+	for(int i=0;i<X*Y*Z;i++){
+		if(!(src_list[i]=(struct src_dst_list*) malloc(sizeof(struct src_dst_list)))){
+			cout<<"no mem"<<endl;
 			exit(-1);
 		}
 	}
@@ -187,10 +187,10 @@ void read_src_dst_file(string filename){
 			head = src_list[src_id];
 			tail = src_list[src_id];
 			prev_node = src_list[src_id];
+			
 
-
-
-
+			
+			
 		}
 		else if (line[0] == 'D'){
 			cur_xyz = extract_node_from_line(line);
@@ -208,14 +208,14 @@ void read_src_dst_file(string filename){
 			new_dst->z = cur_xyz.z;
 			prev_node->next = new_dst;
 			prev_node = new_dst;
-
+				
 		}
 
-
+		
 	}
+		
 
-
-
+	
 
 }
 coord trans(coord a);
@@ -546,10 +546,10 @@ bool itself(coord root, coord d){
 int weight(coord source, coord dest){
 	int diff = abs(dest.x - source.x) + abs(dest.y - source.y) + abs(dest.z - source.z);
 	if (diff == 0) {
-		return 257;
+		return 256;
 	}
 	else {
-		return 257 - diff;
+		return 256/diff;
 	}
 }
 
@@ -806,111 +806,111 @@ struct greater_than_weight{
 int main() {
 
 	//violated definations 
-	string input_filename = "C:/Users/Jiayi/Documents/GitHub/MD_reduction/software/destination.txt";
+	string input_filename="C:/Users/Jiayi/Documents/GitHub/MD_reduction/software/destination.txt";
 	ofstream outputFile;
 	outputFile.open("C:/Users/Jiayi/Documents/GitHub/MD_reduction/software/reduction_tree.txt");
 
 
-	outputFile << "X" << endl;
-	outputFile << X << endl;
-	outputFile << "Y" << endl;
-	outputFile << Y << endl;
-	outputFile << "Z" << endl;
-	outputFile << Z << endl;
-	outputFile << "The r_to_c ratio is:" << endl;
-	outputFile << "1" << endl;
-	outputFile << "The number of particles of one box" << endl;
-	outputFile << "172" << endl;
-	outputFile << "***************************start calculation!******************************" << endl;
+	outputFile<<"X"<<endl;
+	outputFile<<X<<endl;
+	outputFile<<"Y"<<endl;
+	outputFile<<Y<<endl;
+	outputFile<<"Z"<<endl;
+	outputFile<<Z<<endl;
+	outputFile<<"The r_to_c ratio is:"<<endl;
+	outputFile<<"1"<<endl;
+	outputFile<<"The number of particles of one box"<<endl;
+	outputFile<<"172"<<endl;
+	outputFile<<"***************************start calculation!******************************"<<endl;
 	read_src_dst_file(input_filename);
 	int count = 257;
-	vector<pattern> result;
+	vector<pattern> result;	
 	vector<coord> dest;	//stores all the destinations
-	/*#if A_TO_A
+/*#if A_TO_A
 	for (int i = 0; i < Z; ++i){
-	for (int j = 0; j < Y; ++j){
-	for (int k = 0; k < X; ++k){
-	if ((i == root_z) && (j == root_y) && (k == root_x)){
-	continue;
-	}
-	else{
-	dest.push_back(coord(k,j,i));
-	}
-	}
-	}
+		for (int j = 0; j < Y; ++j){
+			for (int k = 0; k < X; ++k){
+				if ((i == root_z) && (j == root_y) && (k == root_x)){
+					continue;
+				}
+				else{
+					dest.push_back(coord(k,j,i));
+				}
+			}
+		}
 	}
 
 
-	#else
+#else
 
-
+	
 	ifstream inputfile("destinations.txt");
 	string line;
 
-
+	
 	if (inputfile.is_open()){
 
 
-	while (getline(inputfile, line)){
+		while (getline(inputfile, line)){
 
-	cout << line << endl;
-	int a[3];
-	int i = 0;
-	for (string::iterator it = line.begin(); it != line.end(); ++it){
+			cout << line << endl;
+			int a[3];
+			int i = 0;
+			for (string::iterator it = line.begin(); it != line.end(); ++it){
 
-	if ((*it == '(') || (*it == ',') || (*it == ')')){
-	continue;
-	}
-	else{
-	a[i] = (int)(*it) - 48;
-	i++;
-	}
-	}
-	dest.push_back(coord(a[0], a[1], a[2]));
+				if ((*it == '(') || (*it == ',') || (*it == ')')){
+					continue;
+				}
+				else{
+					a[i] = (int)(*it) - 48;
+					i++;
+				}
+			}
+			dest.push_back(coord(a[0], a[1], a[2]));
 
-	}
+		}
 	}
 	else {
 
-	cout << "no file~~~~~~";
+		cout << "no file~~~~~~";
 	}
 
 
 
 	inputfile.close();
 
-	#endif*/
+#endif*/
 	//start generating pattern
 	int cur_root_x;
 	int cur_root_y;
 	int cur_root_z;
 	struct src_dst_list* ptr;
-	for (int i = 0; i<X*Y*Z; i++){
-		if (src_list[i]->valid){
+	for(int i=0;i<X*Y*Z;i++){
+		if(src_list[i]->valid){
 			//init the dest
 			result.clear();
 			dest.clear();
-			count = 257;
-			ptr = src_list[i]->next;
-			while (ptr){
-				if (ptr->x != src_list[i]->x || ptr->y != src_list[i]->y || ptr->z != src_list[i]->z){
-					dest.push_back(coord(ptr->x, ptr->y, ptr->z));
+			count=257;
+			ptr=src_list[i]->next;
+			while(ptr){
+				if(ptr->x!=src_list[i]->x || ptr->y!=src_list[i]->y || ptr->z!=src_list[i]->z){
+					dest.push_back(coord(ptr->x,ptr->y,ptr->z));
 				}
-				ptr = ptr->next;
+				ptr=ptr->next;
 			}
-			root_x = src_list[i]->x;
-			root_y = src_list[i]->y;
-			root_z = src_list[i]->z;
+			root_x=src_list[i]->x;
+			root_y=src_list[i]->y;
+			root_z=src_list[i]->z;
 			coord root_0(src_list[i]->x, src_list[i]->y, src_list[i]->z);
 			gen_pattern_2(root_0, dest, result, count);
 
-			//ofstream outfile;
-			//sort(result.begin(), result.end(), greater_than_weight()); cannot use this since sort is O(nlongn) sorting algorithm
+	//ofstream outfile;
+	//sort(result.begin(), result.end(), greater_than_weight()); cannot use this since sort is O(nlongn) sorting algorithm
 			int wt = 256;
-
+	
 			vector<pattern> result_new;
-
-			while (wt > 240){
+	
+			while (wt > 1){
 				for (vector<pattern>::iterator it = result.begin(); it != result.end(); ++it){
 					if (it->weight == wt){
 						result_new.push_back(*it);
@@ -932,19 +932,19 @@ int main() {
 
 
 			outputFile << "Start generating RM BroadCast TREE pattern for this node: (" << src_list[i]->x << "," << src_list[i]->y << "," << src_list[i]->z << "):\n\n";
-
+	
 			int fanout = 0;
 			outputFile << "{";
-			outputFile << "src: (" << current.x << "," << current.y << "," << current.z << ") weight: 256\n";
+			outputFile << "src: (" << current.x << "," << current.y << "," << current.z << ")\n";
 			for (vector<pattern>::iterator it = result_new.begin(); it != result_new.end(); ++it){
 				coord tmp_src = it->source;
 				coord tmp_dst = it->dest;
 				if (it->weight == level){
-
+			
 					if (itself(tmp_src, current)){
 
 						outputFile << "dst: (" << tmp_dst.x << "," << tmp_dst.y << "," << tmp_dst.z << ")  ";
-						outputFile << "weight: " << 256/(1<<(256-it->weight+1)) << "\n";
+						outputFile << "weight: " << it->weight << "\n";
 						fanout++;
 					}
 					else {
@@ -956,9 +956,9 @@ int main() {
 						}
 						fanout = 1;
 						outputFile << "\n{";
-						outputFile << "src: (" << tmp_src.x << "," << tmp_src.y << "," << tmp_src.z << ")weight: " << 256 / (1 << (256 - it->weight)) << "\n";
+						outputFile << "src: (" << tmp_src.x << "," << tmp_src.y << "," << tmp_src.z << ")\n";
 						outputFile << "dst: (" << tmp_dst.x << "," << tmp_dst.y << "," << tmp_dst.z << ")  ";
-						outputFile << "weight: " << 256 / (1<<(256 - it->weight+1) )<< "\n";
+						outputFile << "weight: " << it->weight << "\n";
 						current = tmp_src;
 					}
 
@@ -972,9 +972,9 @@ int main() {
 					}
 					fanout = 1;
 					outputFile << "\n{";
-					outputFile << "src: (" << tmp_src.x << "," << tmp_src.y << "," << tmp_src.z << ")weight: " << 256 / (1 << (256 - it->weight)) << "\n";
+					outputFile << "src: (" << tmp_src.x << "," << tmp_src.y << "," << tmp_src.z << ")\n";
 					outputFile << "dst: (" << tmp_dst.x << "," << tmp_dst.y << "," << tmp_dst.z << ")  ";
-					outputFile << "weight: " << 256 / (1 << (256 - it->weight + 1)) << "\n";
+					outputFile << "weight: " << it->weight << "\n";
 					level = it->weight;
 					current = it->source;
 				}
