@@ -4911,7 +4911,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 				}
 				else{
-					if (yz_plane_node_list->x - node_ptr->x <= X / 2){
+					if (yz_plane_node_list->x - node_ptr->x < X / 2){
 						//insert this node into the x_down_node_list
 						if (x_down_node_list == NULL){
 							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
@@ -5817,7 +5817,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 				}
 				else{
-					if (xz_plane_node_list->y - node_ptr->y <= Y / 2){
+					if (xz_plane_node_list->y - node_ptr->y < Y / 2){
 						//insert this node into the x_down_node_list
 						if (y_down_node_list == NULL){
 							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
@@ -6732,7 +6732,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 				}
 				else{
-					if (xy_plane_node_list->z - node_ptr->z <= Z / 2){
+					if (xy_plane_node_list->z - node_ptr->z < Z / 2){
 						//insert this node into the z_down_node_list
 						if (z_down_node_list == NULL){
 							cout << "THe bug has happened at the node" << node_ptr->x << " " << node_ptr->y << " " << node_ptr->z << " " << endl;
