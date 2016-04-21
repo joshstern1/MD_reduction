@@ -8,7 +8,7 @@
 #include<iostream>
 #include<fstream>
 #include<string>
-#define LINEMAX 100
+#define LINEMAX 1000
 using namespace std;
 
 int main(){
@@ -23,12 +23,13 @@ int main(){
 	input_file.open(filename);
 	if (input_file.fail()){
 		cout << "open file failed" << filename << endl;
-		return;
+		return -1;
 	}
 	while (!input_file.eof()){
 		input_file.getline(line, LINEMAX);
 		line_counter++;
 		tokens = strtok(line, " ");
+		if (tokens == NULL) break;
 		cur_size = atoi(tokens);
 		tokens = strtok(NULL, " ");
 		total_size = atoi(tokens);

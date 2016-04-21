@@ -11,8 +11,8 @@
 #include<stdlib.h>
 #include<time.h>
 #define MODE 0 //mode 0 is synthetic pattern
-#define MULTICAST_RATIO 1// the number of dst nodes / the total number of nodes
-#define SRC_RATIO 1 //the number of src nodes/ the total number of nodes
+#define MULTICAST_RATIO 0.5// the number of dst nodes / the total number of nodes
+#define SRC_RATIO 0.5 //the number of src nodes/ the total number of nodes
 #define X 4
 #define Y 4
 #define Z 4
@@ -38,8 +38,35 @@ using namespace std;
 
 int mode =MODE;
 
+int abs(int a, int b){
+	return a > b ? a - b : b - a;
+}
+
+int oneD_distance(int src, int dst, int direction){
+	int size;
+	if (direction == 0){
+		size = X;
+	}
+	else if (direction == 1){
+		size = Y;
+	}
+	else if (direction == 2){
+		size = Z;
+	}
+	return abs(src, dst) <= size / 2 ? abs(src, dst): (size - abs(src, dst));
+
+}
+
+int distance(int srcx, int srcy, int srcz, int dstx, int dsty, int dstz){
+	int ret0 = oneD_distance(srcx, dstx, 0);
+	int ret1 = oneD_distance(srcy, dsty, 1);
+	int ret2 = oneD_distance(srcz, dstz, 2);
+	return ret0 + ret1 + ret2;
+}
+
 
 int main(){
+	int max_distance = 0;
 	if(mode==0){
 		string output_file="C:/Users/Jiayi/Documents/GitHub/MD_reduction/software/destination.txt";
 		ofstream fout;
@@ -115,15 +142,18 @@ int main(){
 				int dst_y=(src_y+get_y(dst_list[j])>Y-1)?src_y+get_y(dst_list[j])-Y:src_y+get_y(dst_list[j]);
 				int dst_z=(src_z+get_z(dst_list[j])>Z-1)?src_z+get_z(dst_list[j])-Z:src_z+get_z(dst_list[j]);
 				fout<<"Dst("<<dst_x<<","<<dst_y<<","<<dst_z<<")"<<endl;
+				if (distance(src_x, src_y, src_z, dst_x, dst_y, dst_z) > max_distance)
+					max_distance = distance(src_x, src_y, src_z, dst_x, dst_y, dst_z);
 			}
 			fout<<"}"<<endl;
 		}
 
 		fout.close();
 			
+		cout << "max distance is" << max_distance << endl;
 			
 
-		
+		cout << "ideal latency is" << 20 * max_distance + 8 * (max_distance + 1) << endl;
 
 	}
 	

@@ -17,9 +17,9 @@
 #define LINEMAX 100
 #define MAX_NUM_CHILDREN 6
 #define INIT_WEIGHT 512
-#define ROUTING_TABLE_SIZE  2300
+#define ROUTING_TABLE_SIZE  4100
 #define MULTICAST_TABLE_SIZE 256
-#define REDUCTION_TABLE_SIZE 512
+#define REDUCTION_TABLE_SIZE 4096
 #define MAX_TREE_DEPTH 8
 
 #define LOCAL 0
@@ -1174,15 +1174,31 @@ void print_tables(){
 	string suffix = ".txt";
 	ofstream fout;
 	string filename;
-	int largest_table_size=0;
+	int largest_single_routing_table_size=0;
+	int largest_single_multicast_table_size = 0;
+	int largest_single_reduction_table_size = 0;
+
+	int largest_total_routing_table_size = 0;
+	int largest_total_multicast_table_size = 0;
+	int largest_total_reduction_table_size = 0;
+
+	int cur_total_routing_table_size = 0;
+	int cur_total_multicast_table_size = 0;
+	int cur_total_reduction_table_size = 0;
+
 
 
 	//write the routing table
 	for (int x = 0; x < X; x++){
 		for (int y = 0; y < Y; y++){
 			for (int z = 0; z < Z; z++){
+				cur_total_routing_table_size = 0;
+				cur_total_multicast_table_size = 0;
+				cur_total_reduction_table_size = 0;
 				for (int i = 0; i < 7; i++){
-					
+					cur_total_routing_table_size += global_routing_table_array[x*Y*Z + y*Z + z].table_ptr[i];
+					cur_total_multicast_table_size += global_multicast_table_array[x*Y*Z + y*Z + z].table_ptr[i];
+					cur_total_reduction_table_size += global_reduction_table_array[x*Y*Z + y*Z + z].table_ptr[i];
 					filename = path + routing_table_file_common + to_string(x) + "_" + to_string(y) + "_" + to_string(z) + "_" + port_name[i] + suffix;			
 					fout.open(filename);
 					for (int j = 0; j < ROUTING_TABLE_SIZE; j++){
@@ -1191,8 +1207,8 @@ void print_tables(){
 						else
 							fout << "00000000" << endl;
 					}
-					if (largest_table_size < global_routing_table_array[x*Y*Z + y*Z + z].table_ptr[i])
-						largest_table_size = global_routing_table_array[x*Y*Z + y*Z + z].table_ptr[i];
+					if (largest_single_routing_table_size < global_routing_table_array[x*Y*Z + y*Z + z].table_ptr[i])
+						largest_single_routing_table_size = global_routing_table_array[x*Y*Z + y*Z + z].table_ptr[i];
 					fout.close();
 					filename = path  + multicast_table_file_common + to_string(x) + "_" + to_string(y) + "_" + to_string(z) + "_" + port_name[i] + suffix;
 					fout.open(filename);
@@ -1202,8 +1218,8 @@ void print_tables(){
 						else
 							fout << "00000000000000000000000000" << endl;
 					}
-					if (largest_table_size < global_routing_table_array[x*Y*Z + y*Z + z].table_ptr[i])
-						largest_table_size = global_routing_table_array[x*Y*Z + y*Z + z].table_ptr[i];
+					if (largest_single_multicast_table_size < global_multicast_table_array[x*Y*Z + y*Z + z].table_ptr[i])
+						largest_single_multicast_table_size = global_multicast_table_array[x*Y*Z + y*Z + z].table_ptr[i];
 					fout.close();
 					filename = path + reduction_table_file_common + to_string(x) + "_" + to_string(y) + "_" + to_string(z) + "_" + port_name[i] + suffix;
 					fout.open(filename);
@@ -1213,15 +1229,30 @@ void print_tables(){
 						else
 							fout << "0" << endl;
 					}
-					if (largest_table_size < global_routing_table_array[x*Y*Z + y*Z + z].table_ptr[i])
-						largest_table_size = global_routing_table_array[x*Y*Z + y*Z + z].table_ptr[i];
+					if (largest_single_reduction_table_size < global_reduction_table_array[x*Y*Z + y*Z + z].table_ptr[i])
+						largest_single_reduction_table_size = global_reduction_table_array[x*Y*Z + y*Z + z].table_ptr[i];
 					fout.close();
 				}
+
+				if (cur_total_multicast_table_size>largest_total_multicast_table_size)
+					largest_total_multicast_table_size = cur_total_multicast_table_size;
+				if (cur_total_reduction_table_size > largest_total_reduction_table_size)
+					largest_total_reduction_table_size = cur_total_reduction_table_size;
+				if (cur_total_routing_table_size > largest_total_routing_table_size)
+					largest_total_routing_table_size = cur_total_routing_table_size;
+
 			}
 		}
 		
 	}
-	cout << "Largest table size is " << largest_table_size;
+	cout << "Largest routing table size is " << largest_single_routing_table_size <<endl;
+	cout << "Largest multicast table size is " << largest_single_multicast_table_size <<endl;
+	cout << "Largest reduction table size is" << largest_single_reduction_table_size<<endl;
+	cout << "Largest total routing table size is " << largest_total_routing_table_size<<endl;
+	cout << "Largest total multicast table size is " << largest_total_multicast_table_size<<endl;
+	cout << "Largest total reduction table size is" << largest_total_reduction_table_size<<endl;
+
+	
 }
 
 int main(int argc, char* argv[]){

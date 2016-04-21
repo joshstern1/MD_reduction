@@ -15,6 +15,7 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+#include<queue>
 using namespace std;
 
 
@@ -5200,7 +5201,7 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 		}
 		else if (yz_eval.region6_merge == 1){
-			if (part_valid[2]==1 && yz_eval.region4_merge == 1){
+			if (part_valid[2]==1 && yz_eval.region4_merge == 0){
 				//region4 and region6 should be merged together
 				part_valid[3] = 0;
 				part2.y_downlim = yz_plane.y_downlim;
@@ -7563,6 +7564,44 @@ void RPM_partition(struct src_dst_list* node_list, struct chunk Chunk, node* tre
 
 
 
+node* BFS_find_node(node* root, int x, int y, int z){
+	if (!root)
+		return NULL;
+	else{
+		queue<node*> Q;
+		node* tmp = root;
+		Q.push(tmp);
+		while (!Q.empty()){
+			tmp = Q.front();
+			Q.pop();
+			if (tmp->x == x && tmp->y == y && tmp->z == z){
+				return tmp;
+			}
+			for (int i = 0; i < MAX_NUM_CHILDREN; i++){
+				if (tmp->children[i]){
+					Q.push(tmp->children[i]);
+				}
+			}
+		}
+		return NULL;
+	}
+
+
+}
+void verify(struct src_dst_list* src_list, node* root){
+	struct src_dst_list* src_list_ptr = src_list;
+	node* node_find;
+	while (src_list_ptr){
+		node_find = BFS_find_node(root, src_list_ptr->x, src_list_ptr->y, src_list_ptr->z);
+		if (node_find == NULL){
+			cout << "node (" << src_list_ptr->x << "," << src_list_ptr->y << "," << src_list_ptr->z << ") at root(" << root->x << root->y << root->z << ") does not exist" << endl;
+			fout << "node (" << src_list_ptr->x << "," << src_list_ptr->y << "," << src_list_ptr->z << ") at root(" << root->x << root->y << root->z << ") does not exist" << endl;
+		}
+		src_list_ptr = src_list_ptr->next;
+	}
+}
+
+
 
 
 int main(){
@@ -7612,6 +7651,7 @@ int main(){
 			fout<<"Start generating BroadCast TREE pattern for this node: ("<<src_list[i]->x<<","<<src_list[i]->y<<","<<src_list[i]->z<<"):"<<endl;
 			fout<<endl;
 			RPM_partition(src_list[i],entire_space,tree_src_array[i]);
+			verify(src_list[i], tree_src_array[i]);
 		}
 		else{
 			tree_src_array[i]=NULL;

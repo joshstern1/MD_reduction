@@ -20,8 +20,8 @@ using namespace std;
 
 #define LINEMAX 100
 
-#define PARTICLE_PER_BOX 10
-#define MODE 3 // 1 is multicast mode, 2 is reduction mode, 3 is the singlecast multicastmode, 4 is the singlecast reduction mode
+#define PARTICLE_PER_BOX 64
+#define MODE 1 // 1 is multicast mode, 2 is reduction mode, 3 is the singlecast multicastmode, 4 is the singlecast reduction mode
 #define MAX_NUM_CHILDREN 6
 
 #define LOCAL 0
@@ -70,7 +70,8 @@ struct reduction_packet_timing{
 int avg_reduction_departure_time[PARTICLE_PER_BOX];
 int reduction_depart_counter[PARTICLE_PER_BOX];
 int avg_reduction_arrival_time[PARTICLE_PER_BOX];
-
+int latest_reduction_arrival_time;
+int avg_reduction_depart_counter;
 struct packet_timing** multicast_timing;
 struct reduction_packet_timing** reduction_timing;
 
@@ -304,6 +305,8 @@ void read_dump_reduction(char* filename){
 
 			tokens = strtok(NULL, " ");
 			arrival_time = atoi(tokens);
+			if (arrival_time > latest_reduction_arrival_time)
+				latest_reduction_arrival_time = arrival_time;
 			reduction_timing[dst_x*Y*Z + dst_y*Z + dst_z][id].arrival_time = arrival_time;
 			reduction_timing[dst_x*Y*Z + dst_y*Z + dst_z][id].valid = true;
 
@@ -317,6 +320,17 @@ void read_dump_reduction(char* filename){
 		avg_reduction_departure_time[i] = avg_reduction_departure_time[i] / reduction_depart_counter[i];
 	}
 
+	avg_reduction_depart_counter = 0;
+	int valid_node_count = 0;
+	for (int i = 0; i < X*Y*Z; i++){
+		if (reduction_depart_counter>0){
+			valid_node_count++;
+			avg_reduction_depart_counter += reduction_depart_counter[i];
+		}
+		
+	}
+	avg_reduction_depart_counter = avg_reduction_depart_counter / valid_node_count;
+	
 
 	
 	input_file.close();
@@ -359,6 +373,7 @@ void read_dump_multicast(char* filename){
 			tokens = strtok(NULL, " ");
 			depart_time = atoi(tokens);
 			multicast_timing[src_x*Y*Z + src_y*Z + src_z][id].depart_time = depart_time;
+			multicast_timing[src_x*Y*Z + src_y*Z + src_z][id].valid = true;
 			for (int i = 0; i < X*Y*Z; i++){
 				multicast_timing[src_x*Y*Z + src_y*Z + src_z][id].arrival_time[i] = -1;
 			}
@@ -417,11 +432,16 @@ void verify_reduction(){
 		avg_reduction_arrival_time[i] = avg_reduction_arrival_time[i] / (X*Y*Z); 
 	}
 	int latency = 0;
+	int valid_counter = 0;
 	for (int i = 0; i < PARTICLE_PER_BOX; i++){
-		latency += avg_reduction_arrival_time[i] - avg_reduction_departure_time[i];
+		if (avg_reduction_arrival_time[i] != 0 && avg_reduction_departure_time[i] != 0){
+			latency += avg_reduction_arrival_time[i] - avg_reduction_departure_time[i];
+			valid_counter++;
+		}
 	}
-	latency = latency / PARTICLE_PER_BOX;
+	latency = latency / valid_counter;
 	cout << "avg latency is " << latency << endl;
+	cout << "actual latency is" << latest_reduction_arrival_time;
 	
 }
 
@@ -441,15 +461,17 @@ void verify_multicast(){
 
 	for (int i = 0; i < X*Y*Z; i++){
 		for (int j = 0; j < PARTICLE_PER_BOX; j++){
-			counter = 0;
-			for (int k = 0; k < X*Y*Z; k++){
-				if (multicast_timing[i][j].arrival_time[k] != -1){
-					counter++;
+			if (multicast_timing[i][j].valid){
+				counter = 0;
+				for (int k = 0; k < X*Y*Z; k++){
+					if (multicast_timing[i][j].arrival_time[k] != -1){
+						counter++;
+					}
 				}
-			}
-			if (counter != ref_counter) {
-				cout << "error at" << i << " " << j << endl;
-				cout << "counter=" << counter << " ref_counter=" << ref_counter << endl;
+				if (counter != ref_counter) {
+					cout << "error at" << i << " " << j << endl;
+					cout << "counter=" << counter << " ref_counter=" << ref_counter << endl;
+				}
 			}
 		}
 	}
@@ -459,21 +481,26 @@ void verify_multicast(){
 	int aggregate_latency = 0;
 	int latency = 0;
 	float avg_latency = 0;
+	int total_valid_counter = 0;
 	for (int i = 0; i<X*Y*Z; i++){
 		for (int j = 0; j<PARTICLE_PER_BOX; j++){
-			depart_time = multicast_timing[i][j].depart_time;
-			last_arrival_time = 0;
-			for (int k = 0; k<X*Y*Z; k++){
-				if (multicast_timing[i][j].arrival_time[k]>last_arrival_time){
-					last_arrival_time = multicast_timing[i][j].arrival_time[k];
+			if (multicast_timing[i][j].valid){
+				total_valid_counter++;
+				depart_time = multicast_timing[i][j].depart_time;
+				last_arrival_time = 0;
+				for (int k = 0; k<X*Y*Z; k++){
+					if (multicast_timing[i][j].arrival_time[k]>last_arrival_time){
+						last_arrival_time = multicast_timing[i][j].arrival_time[k];
+					}
 				}
+				latency = last_arrival_time - depart_time;
+				aggregate_latency += latency;
 			}
-			latency = last_arrival_time - depart_time;
-			aggregate_latency += latency;
 		}
 	}
-	avg_latency = (float)aggregate_latency / (float)(X*Y*Z*PARTICLE_PER_BOX);
+	avg_latency = (float)aggregate_latency / (float)(total_valid_counter);
 	cout << "avg latency is" << avg_latency << endl;
+	
 }
 
 /*void verify_singlecast(){

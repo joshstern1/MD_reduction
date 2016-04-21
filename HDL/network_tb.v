@@ -1,5 +1,5 @@
 module network_tb;
- parameter DataSize=16'd64;
+ parameter DataSize=16'd4100;
     parameter PayloadLen=128;
     parameter DataWidth=256;
     parameter WeightPos=144;
@@ -10,14 +10,14 @@ module network_tb;
     parameter PriorityWidth=8;
     parameter ExitPos=160;
     parameter ExitWidth=4;
-    parameter InterNodeFIFODepth=1024;
+    parameter InterNodeFIFODepth=2048;
     parameter IntraNodeFIFODepth=1;
     parameter RoutingTableWidth=32;
-    parameter RoutingTablesize=128;
+    parameter RoutingTablesize=4096;
     parameter MulticastTableWidth=123;
     parameter MulticastTablesize=32;
     parameter ReductionTableWidth=170;
-    parameter ReductionTablesize=512;
+    parameter ReductionTablesize=1024;
     parameter PcktTypeLen=4;
     parameter LinkDelay=20;
 
