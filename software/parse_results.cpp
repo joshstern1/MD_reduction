@@ -449,16 +449,27 @@ void verify_multicast(){
 	int bitmap[X*Y*Z];
 	int ref_counter = 0;
 	int counter;
+	bool find_ref=false;
 	for (int i = 0; i < X*Y*Z; i++){
 		bitmap[i] = 0;
 	}
 	for (int i = 0; i < X*Y*Z; i++){
-		if (multicast_timing[0][0].arrival_time[i] != -1){
-			bitmap[i] = 1;
-			ref_counter++;
+		for (int j = 0; j < PARTICLE_PER_BOX; j++){
+			if (multicast_timing[i][j].valid){
+				find_ref=true;
+				for (int k = 0; k < X*Y*Z; k++){
+					if (multicast_timing[i][j].arrival_time[k] != -1){
+						ref_counter++;
+					}
+				}
+				break;
+			}
+			
 		}
+		if(find_ref)
+			break;
 	}
-
+	
 	for (int i = 0; i < X*Y*Z; i++){
 		for (int j = 0; j < PARTICLE_PER_BOX; j++){
 			if (multicast_timing[i][j].valid){

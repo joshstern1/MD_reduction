@@ -10,7 +10,7 @@
 #include<string>
 #include<stdlib.h>
 #include<time.h>
-#define MODE 0 //mode 0 is synthetic pattern
+#define MODE 1 //mode 0 is synthetic pattern, mode 1 is the neighour neighbor pattern
 #define MULTICAST_RATIO 0.1// the number of dst nodes / the total number of nodes
 #define SRC_RATIO 0.1 //the number of src nodes/ the total number of nodes
 #define X 4
@@ -62,6 +62,40 @@ int distance(int srcx, int srcy, int srcz, int dstx, int dsty, int dstz){
 	int ret1 = oneD_distance(srcy, dsty, 1);
 	int ret2 = oneD_distance(srcz, dstz, 2);
 	return ret0 + ret1 + ret2;
+}
+
+inline int change_value(int value, int change,int direction){
+	if(change==-1)
+		return value==0?direction-1:value-1;
+	else if(change==1)
+		return value==direction-1?0:value+1;
+	else
+		return value;
+
+}
+
+
+void print_nearest_neighbour(int neighbour_distance){
+	string output_file="C:/Users/Jiayi/Documents/GitHub/MD_reduction/software/destination.txt";
+	ofstream fout;
+	fout.open(output_file);
+	if(neighbour_distance==3){
+		for(int i=0;i<X*Y*Z;i++){
+			int src_x=get_x(i);
+			int src_y=get_y(i);
+			int src_z=get_z(i);
+			fout<<"{Src("<<src_x<<","<<src_y<<","<<src_z<<")"<<endl;
+			for(int j0=-1;j0<=1;j0++){
+				for(int j1=-1;j1<=1;j1++){
+					for(int j2=-1;j2<=1;j2++){
+						if(j0!=0&&j1!=0&&j2!=0)
+							fout<<"Dst("<<change_value(src_x, j0,X)<<","<<change_value(src_y, j1,Y)<<","<<change_value(src_z, j2,Z)<<")"<<endl;
+					}
+				}
+			}
+			fout<<"}"<<endl;
+		}
+	}
 }
 
 
@@ -157,6 +191,9 @@ int main(){
 
 	}
 	
+	else if(mode==1){
+		print_nearest_neighbour(3);
+	}
 	
 	return 0;
 }
