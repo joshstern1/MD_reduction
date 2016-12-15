@@ -103,9 +103,9 @@ module local_unit
     output EjectSlotAvail_local
 );
 
-    parameter injection_rate=4'd1; //injection rate means inject one packet per injection_rate cycles
+    parameter injection_rate=10'd1; //injection rate means inject one packet per injection_rate cycles
 
-    reg [3:0] injection_control_counter;
+    reg [9:0] injection_control_counter;
 
 
     wire local_fifo_full;

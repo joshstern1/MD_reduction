@@ -33,7 +33,7 @@ def parameter_gen():
     parameter ReductionTableWidth=170;
     parameter ReductionTablesize=1024;
     parameter PcktTypeLen=4;
-    parameter LinkDelay=20;\n
+    parameter LinkDelay=28;\n
 \n '''
     return parameter
 

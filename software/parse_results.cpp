@@ -20,8 +20,8 @@ using namespace std;
 
 #define LINEMAX 100
 
-#define PARTICLE_PER_BOX 64
-#define MODE 1 // 1 is multicast mode, 2 is reduction mode, 3 is the singlecast multicastmode, 4 is the singlecast reduction mode
+#define PARTICLE_PER_BOX 192
+#define MODE 2 // 1 is multicast mode, 2 is reduction mode, 3 is the singlecast multicastmode, 4 is the singlecast reduction mode
 #define MAX_NUM_CHILDREN 6
 
 #define LOCAL 0
@@ -440,8 +440,8 @@ void verify_reduction(){
 		}
 	}
 	latency = latency / valid_counter;
-	cout << "avg latency is " << latency << endl;
-	cout << "actual latency is" << latest_reduction_arrival_time;
+	cout << "avg latency is " << latency *6.4 << endl;
+	cout << "actual latency has not times 6.4 is" << latest_reduction_arrival_time;
 	
 }
 
@@ -510,7 +510,7 @@ void verify_multicast(){
 		}
 	}
 	avg_latency = (float)aggregate_latency / (float)(total_valid_counter);
-	cout << "avg latency is" << avg_latency << endl;
+	cout << "avg latency is" << avg_latency*6.4 << endl;
 	
 }
 

@@ -17,7 +17,7 @@
 #define LINEMAX 100
 #define MAX_NUM_CHILDREN 6
 #define INIT_WEIGHT 512
-#define ROUTING_TABLE_SIZE  4100
+#define ROUTING_TABLE_SIZE  5000
 #define MULTICAST_TABLE_SIZE 256
 #define REDUCTION_TABLE_SIZE 4096
 #define MAX_TREE_DEPTH 8
@@ -34,7 +34,7 @@
 #define MULTICASTPCKT 9
 #define REDUCTIONPCKT 10
 
-#define MODE 1
+#define MODE 2
 
 
 int mode = MODE; //1 is the multicast mode, 2 is the reduction mode, 3 is the forward singlecast mode, 4 is the reverse singlecast mode.
@@ -47,8 +47,8 @@ int X=4; // number of nodes on X dimension
 int Y=4; // number of nodes on Y dimension
 int Z=4; // number of nodes on Z dimension
 double r2c=1;// the ratio between the cutoff radius and box size
-int particle_per_box=64;
-int particle_per_cell = 64;
+int particle_per_box=172;
+int particle_per_cell = 172;
 float r = 12;
 float xsize = 108;
 float ysize = 108;

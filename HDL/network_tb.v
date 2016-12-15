@@ -1,5 +1,5 @@
 module network_tb;
- parameter DataSize=16'd4100;
+ parameter DataSize=16'5000;
     parameter PayloadLen=128;
     parameter DataWidth=256;
     parameter WeightPos=144;
@@ -19,7 +19,7 @@ module network_tb;
     parameter ReductionTableWidth=170;
     parameter ReductionTablesize=1024;
     parameter PcktTypeLen=4;
-    parameter LinkDelay=20;
+    parameter LinkDelay=2;
 
 
  	reg clk,rst;

@@ -10,9 +10,9 @@
 #include<string>
 #include<stdlib.h>
 #include<time.h>
-#define MODE 1 //mode 0 is synthetic pattern, mode 1 is the neighour neighbor pattern
-#define MULTICAST_RATIO 0.1// the number of dst nodes / the total number of nodes
-#define SRC_RATIO 0.1 //the number of src nodes/ the total number of nodes
+#define MODE 1 //mode 0 is synthetic pattern, mode 1 is the neighour neighbor pattern, mode 2 is the bit rotation
+#define MULTICAST_RATIO 1// the number of dst nodes / the total number of nodes
+#define SRC_RATIO 1 //the number of src nodes/ the total number of nodes
 #define X 4
 #define Y 4
 #define Z 4
@@ -65,13 +65,82 @@ int distance(int srcx, int srcy, int srcz, int dstx, int dsty, int dstz){
 }
 
 inline int change_value(int value, int change,int direction){
-	if(change==-1)
-		return value==0?direction-1:value-1;
-	else if(change==1)
-		return value==direction-1?0:value+1;
+	if(change<0)
+		return value+change<0?value+direction+change:value+change;
+	else if(change>0)
+		return value+change>=direction?value+change-direction:value+change;
 	else
 		return value;
 
+}
+
+int bit_rotation(int in, int shift_bits,int N){
+	if (N == 2){
+		if (shift_bits == 0)
+			return in;
+		else{
+			if (in == 1)
+				return 2;
+			else if (in == 2)
+				return 1;
+			else
+				return in;
+		}
+	}
+	if (N == 3){
+		if (shift_bits == 0)
+			return in;
+		else if (shift_bits == 1){
+			if (in == 1)
+				return 2;
+			else if (in == 3)
+				return 6;
+			else if (in == 4)
+				return 1;
+			else if (in == 6)
+				return 5;
+			else
+				return in;
+		}
+		else{
+			if (in == 1)
+				return 4;
+			else if (in == 2)
+				return 1;
+			else if (in == 5)
+				return 6;
+			else if (in == 6)
+				return 3;
+			else
+				return in;
+		}
+	}
+
+}
+
+void print_bit_rotation(int N){// the bits in index
+	string output_file = "C:/Users/Jiayi/Documents/GitHub/MD_reduction/software/destination.txt";
+	ofstream fout;
+	fout.open(output_file);
+	for (int i = 0; i < X*Y*Z; i++){
+		int src_x = get_x(i);
+		int src_y = get_y(i);
+		int src_z = get_z(i);
+		if ((src_x == 0 || src_x == 3) && (src_y == 0 || src_y == 3) && (src_z == 0 || src_z == 3))
+			continue;
+		fout << "{Src(" << src_x << "," << src_y << "," << src_z << ")" << endl;
+		for (int j0 = 0; j0 < N; j0++){
+			for (int j1 = 0; j1 < N; j1++){
+				for (int j2 = 0; j2 < N; j2++){
+					if (bit_rotation(src_x, j0, N) == src_x && bit_rotation(src_y, j1, N) == src_y && bit_rotation(src_z, j2, N) == src_z)
+						continue;
+					else
+						fout << "Dst(" << bit_rotation(src_x, j0, N) << "," << bit_rotation(src_y, j1, N) << "," << bit_rotation(src_z, j2, N) << ")" << endl;
+				}
+			}
+		}
+		fout << "}" << endl;
+	}
 }
 
 
@@ -88,7 +157,7 @@ void print_nearest_neighbour(int neighbour_distance){
 			for(int j0=-1;j0<=1;j0++){
 				for(int j1=-1;j1<=1;j1++){
 					for(int j2=-1;j2<=1;j2++){
-						if(j0!=0&&j1!=0&&j2!=0)
+						if(j0!=0||j1!=0||j2!=0)
 							fout<<"Dst("<<change_value(src_x, j0,X)<<","<<change_value(src_y, j1,Y)<<","<<change_value(src_z, j2,Z)<<")"<<endl;
 					}
 				}
@@ -96,6 +165,24 @@ void print_nearest_neighbour(int neighbour_distance){
 			fout<<"}"<<endl;
 		}
 	}
+	else if (neighbour_distance == 5){
+		for (int i = 0; i<X*Y*Z; i++){
+			int src_x = get_x(i);
+			int src_y = get_y(i);
+			int src_z = get_z(i);
+			fout << "{Src(" << src_x << "," << src_y << "," << src_z << ")" << endl;
+			for (int j0 = -2; j0 <= 2; j0++){
+				for (int j1 = -2; j1 <= 2; j1++){
+					for (int j2 = -2; j2 <= 2; j2++){
+						if (j0 != 0 || j1 != 0 || j2 != 0)
+							fout << "Dst(" << change_value(src_x, j0, X) << "," << change_value(src_y, j1, Y) << "," << change_value(src_z, j2, Z) << ")" << endl;
+					}
+				}
+			}
+			fout << "}" << endl;
+		}
+	}
+	fout.close();
 }
 
 
@@ -187,12 +274,25 @@ int main(){
 		cout << "max distance is" << max_distance << endl;
 			
 
-		cout << "ideal latency is" << 20 * max_distance + 8 * (max_distance + 1) << endl;
+		cout << "ideal latency is" << (28 * max_distance + 6 * (max_distance + 1))*6.4 << endl;
 
 	}
 	
 	else if(mode==1){
 		print_nearest_neighbour(3);
+
+		cout << "max distance is" << 3 << endl;
+
+
+		cout << "ideal latency is" << (28 * 3 + 7 * (3 + 1))*6.4 << endl;
+	}
+	else if (mode == 2){
+		print_bit_rotation(2);
+
+		cout << "max distance is" << 3 << endl;
+
+
+		cout << "ideal latency is" << (28 * 3 + 7 * (3 + 1))*6.4 << endl;
 	}
 	
 	return 0;
